@@ -1,0 +1,6 @@
+Bundle-Name: de.uhh.l2g.plugins.admin.categories
+Bundle-SymbolicName: de.uhh.l2g.plugins.admin.categories
+Bundle-Version: 1.0.0
+Export-Package: \
+	de.uhh.l2g.plugins.admin.categories.constants,\
+	de.uhh.l2g.docs.category.search

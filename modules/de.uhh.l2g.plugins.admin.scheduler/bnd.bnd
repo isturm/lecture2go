@@ -1,0 +1,9 @@
+Bundle-Name: de.uhh.l2g.plugins.admin.scheduler
+Bundle-SymbolicName: de.uhh.l2g.plugins.admin.scheduler
+Bundle-Version: 1.0.0
+Export-Package: \
+	de.uhh.l2g.plugins.util,\
+	de.uhh.l2g.plugins.admin.scheduler.portlet,\
+	de.uhh.l2g.plugins.admin.scheduler.constants
+Import-Package: *
+Private-Package: de.uhh.l2g.plugins.util

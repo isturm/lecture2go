@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE routes PUBLIC "-//Liferay//DTD Friendly URL Routes 7.0.0//EN" "http://www.liferay.com/dtd/liferay-friendly-url-routes_7_0_0.dtd">
+
+<routes>
+    <route>
+         <pattern>/{objectType}/{objectId}</pattern>
+         <implicit-parameter name="mvcRenderCommandName">/view/render/details</implicit-parameter> 
+    </route>
+    <route>
+        <pattern>/{objectType}/{objectId}/{timeStart}/{timeEnd}</pattern>
+		<implicit-parameter name="mvcRenderCommandName">/view/render/details</implicit-parameter>
+    </route>
+    <route>
+        <pattern>/{institutionId}/{parentInstitutionId}/{categoryId}/{creatorId}/{termId}/{findVideos}</pattern>
+		<implicit-parameter name="mvcRenderCommandName">/view/render/list</implicit-parameter>
+    </route> 
+    <route>
+        <pattern>/{institutionId}/{parentInstitutionId}/{categoryId}/{creatorId}/{termId}</pattern>
+		<implicit-parameter name="mvcRenderCommandName">/view/render/list</implicit-parameter>
+    </route> 
+</routes>
