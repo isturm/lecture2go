@@ -46,7 +46,7 @@ deploy:
      - chmod 700 ~/.ssh/*
    script:
     - echo "test-docker-ci-cd" > ~/README.txt 
-    - rsync -e 'ssh -p 17071' --progress ~/README.txt root@l2migra.rrz.uni-hamburg.de:/home/nutzer
+    - rsync -e 'ssh -p 17071' --progress ~/README.txt root@l2gmigra.rrz.uni-hamburg.de:/home/root/
 
 after_script:
   - echo "End CI"
