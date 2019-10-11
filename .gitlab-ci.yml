@@ -32,7 +32,7 @@ test:
     - ./gradlew check
 
 deploy:
-#  stage: deploy
+   stage: deploy
 #  script:
 #    - ./deploy
  
