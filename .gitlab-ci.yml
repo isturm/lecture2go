@@ -42,7 +42,6 @@ deploy:
      - cat ~/.ssh/config
      - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
      - apt-get -y install rsync
-     - cat ~/.ssh/id_rsa
      - chmod 700 ~/.ssh/*
    script:
     - echo "test-docker-ci-cd" > ~/README.txt 
