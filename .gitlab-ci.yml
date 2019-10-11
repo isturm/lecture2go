@@ -32,9 +32,26 @@ test:
     - ./gradlew check
 
 deploy:
-  stage: deploy
+#  stage: deploy
+#  script:
+#    - ./deploy
+stage: deploy
+  image: ubuntu
+ 
+  before_script:
+    - which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )
+    - mkdir -p ~/.ssh
+    - eval $(ssh-agent -s)
+    - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+    - cat ~/.ssh/config
+    - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+    - apt-get -y install rsync
+    - cat ~/.ssh/id_rsa
+    - chmod 700 ~/.ssh/*
+
   script:
-    - ./deploy
+    - echo "test-docker-ci-cd" > ~/README.txt 
+    - rsync -e 'ssh -p 17071' --progress ~/README.txt nutzer@l2gstaging.rrz.uni-hamburg.de:/home/nutzer
 
 after_script:
   - echo "End CI"
