@@ -37,7 +37,6 @@ deploy:
 #    - ./deploy
 stage: deploy
   image: ubuntu
- 
   before_script:
     - which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )
     - mkdir -p ~/.ssh
