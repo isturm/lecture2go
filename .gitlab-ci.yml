@@ -1,0 +1,51 @@
+image: java:8-jdk
+
+stages:
+  - build
+  - test
+  - deploy
+
+before_script:
+#  - echo `pwd` # debug
+#  - echo "$CI_BUILD_NAME, $CI_BUILD_REF_NAME $CI_BUILD_STAGE" # debug
+  - export GRADLE_USER_HOME=`pwd`/.gradle
+
+cache:
+  paths:
+    - .gradle/wrapper
+    - .gradle/caches
+
+build:
+  stage: build
+  script:
+    - ./gradlew assemble
+  artifacts:
+    paths:
+      - build/libs/*.jar
+    expire_in: 1 week
+  only:
+    - master
+
+test:
+  stage: test
+  script:
+    - ./gradlew check
+
+deploy:
+   stage: deploy
+   image: ubuntu
+   before_script:
+     - which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )
+     - mkdir -p ~/.ssh
+     - eval $(ssh-agent -s)
+     - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
+     - cat ~/.ssh/config
+     - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
+     - apt-get -y install rsync
+     - chmod 700 ~/.ssh/*
+   script:
+    - echo "test-docker-ci-cd" > ~/README.txt 
+    - rsync -e 'ssh -p 17071' --progress ~/README.txt root@l2gmigra.rrz.uni-hamburg.de:/home/root/
+
+after_script:
+  - echo "End CI"
