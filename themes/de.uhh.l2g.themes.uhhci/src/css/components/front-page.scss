@@ -1,32 +1,27 @@
 .front-page-teaser {
+  position: relative;
+  height: 380px;
   padding: 0;
   border: 2px solid red;
-  position: relative;
-
-  #bg-vid {
-    width: 100%;
-  }
+  margin-bottom: $global-margin-lg;
+  overflow: hidden;
 
   .bg-video-container {
-    width: 100%;
-    display: flex;
+    border: 2px dotted purple;
 
-    .bg-video {
-
+    #bg-vid {
+      position: absolute;
+      height: 100%;
     }
   }
 
   .l2go-info-container {
-    position: absolute;
     display: flex;
     flex-direction: column;
-
-    width: 100%;
-    top: 0;
-    border: 2px dashed green;
     align-items: center;
     justify-content: center;
-    height: 100%;
+    border: 2px dashed green;
+    margin: $global-padding-lg;
 
     .l2go-info {
       display: flex;
@@ -38,23 +33,26 @@
         opacity: 0.8;
         padding: $global-padding-lg;
         font-size: $title-font-size;
+        text-align: center;
+      }
+
+      .form-group {
+        margin: 0;
       }
 
       .l2go-subtitle {
         color: white;
+        z-index: 0;
+
         @media only screen and (max-width: $mobile-screen-portrait) {
-          //l2go-subtitle {
           display: none;
-          //}
         }
       }
 
-      .form-group {
+      .form-control {
         border-radius: 0;
-      }
 
-      @media only screen and (max-width: $mobile-screen-portrait) {
-        .l2go-subtitle, .form-group {
+        @media only screen and (max-width: $mobile-screen-portrait) {
           display: none;
         }
       }
@@ -62,9 +60,9 @@
       #outer-catalogue-button {
         background-color: $button-color;
         border: none;
-        color: white;
+        color: $button-text-color;
         padding: $global-padding-lg;
-        z-index: 100;
+        z-index: 0;
 
         &:hover {
           background-color: $button-hover-color;
@@ -72,4 +70,9 @@
       }
     }
   }
+}
+
+#front-page-content {
+background-color: red;
+
 }

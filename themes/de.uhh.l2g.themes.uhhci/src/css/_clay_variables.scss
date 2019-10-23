@@ -8,12 +8,19 @@ $light-color: #E7E7ED;
 
 $button-color: #027bcb;
 $button-hover-color: #006ab0;
+$button-text-color: white;
+
 
 //paddings
-$global-padding-sm: 0.25rem; /* 5px; */
-$global-padding-md: 0.5rem; /* 10px; */
-$global-padding-lg: 1rem; /* 20px; */
+$global-padding-sm: 0.25rem;
+$global-padding-md: 0.5rem;
+$global-padding-lg: 1rem;
 
+//margins
+$global-margin-sm: 0.25rem;
+$global-margin-md: 0.5rem;
+$global-margin-lg: 1rem;
+$global-margin-x-lg: 1.5rem;
 
 //font-size
 $title-font-size: 1.5rem;
@@ -25,7 +32,7 @@ $portlet-decorate-bg: #FFF;
 $portlet-decorate-border: 1px solid $light-color;
 
 //screen-sizes
-$mobile-screen-portrait: 700px;
+$mobile-screen-portrait: 768px;
 
 
 
