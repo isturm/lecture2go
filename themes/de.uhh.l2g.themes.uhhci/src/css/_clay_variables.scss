@@ -1,3 +1,4 @@
+//colors
 $body-bg: #FFF;
 $bright-color: #1865FB;
 $complementary-color: #30313F;
@@ -5,8 +6,26 @@ $dark-color: #272833;
 $input-bg: #F1F2F5;
 $light-color: #E7E7ED;
 
+$button-color: #027bcb;
+$button-hover-color: #006ab0;
+
+//paddings
+$global-padding-sm: 0.25rem; /* 5px; */
+$global-padding-md: 0.5rem; /* 10px; */
+$global-padding-lg: 1rem; /* 20px; */
+
+
+//font-size
+$title-font-size: 1.5rem;
+
 $lead-font-weight: 400;
 $small-font-size: 0.875rem;
 
 $portlet-decorate-bg: #FFF;
 $portlet-decorate-border: 1px solid $light-color;
+
+//screen-sizes
+$mobile-screen-portrait: 700px;
+
+
+

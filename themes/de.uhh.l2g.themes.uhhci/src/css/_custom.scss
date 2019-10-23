@@ -11,6 +11,7 @@
 @import "components/widget";
 @import "portlet/portlet";
 @import "portlet/portlet_decorators";
+@import "components/front-page-teaser";
 
 body {
 	header {
@@ -20,7 +21,7 @@ body {
 			top: 2px;
 
 			a {
-				color: #FFF;
+				color: red;
 			}
 		}
 

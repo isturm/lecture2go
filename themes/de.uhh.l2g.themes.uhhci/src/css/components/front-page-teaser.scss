@@ -1,0 +1,75 @@
+.front-page-teaser {
+  padding: 0;
+  border: 2px solid red;
+  position: relative;
+
+  #bg-vid {
+    width: 100%;
+  }
+
+  .bg-video-container {
+    width: 100%;
+    display: flex;
+
+    .bg-video {
+
+    }
+  }
+
+  .l2go-info-container {
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+
+    width: 100%;
+    top: 0;
+    border: 2px dashed green;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+
+    .l2go-info {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      .l2go-title {
+        background-color: white;
+        opacity: 0.8;
+        padding: $global-padding-lg;
+        font-size: $title-font-size;
+      }
+
+      .l2go-subtitle {
+        color: white;
+        @media only screen and (max-width: $mobile-screen-portrait) {
+          //l2go-subtitle {
+          display: none;
+          //}
+        }
+      }
+
+      .form-group {
+        border-radius: 0;
+      }
+
+      @media only screen and (max-width: $mobile-screen-portrait) {
+        .l2go-subtitle, .form-group {
+          display: none;
+        }
+      }
+
+      #outer-catalogue-button {
+        background-color: $button-color;
+        border: none;
+        color: white;
+        padding: $global-padding-lg;
+        z-index: 100;
+
+        &:hover {
+          background-color: $button-hover-color;
+        }
+      }
+    }
+  }
+}
