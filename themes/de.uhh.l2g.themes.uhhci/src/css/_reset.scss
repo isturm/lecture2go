@@ -1,0 +1,23 @@
+$font-sizes: (
+        h1: $h1-size,
+        h2: $h2-size,
+        h3: $h3-size,
+        h4: $h4-size,
+        p: $p-size,
+        "h1.secondary": 1.733rem,
+        "h2.secondary": 1.467rem,
+        "h3.secondary": 1.2rem,
+        "h4.secondary": 0.9333rem
+);
+
+$line-heights: (
+        h1: 1.25,
+        h2: 1.25,
+        h3: 1.25,
+        h4: 1.25,
+        p: 1.0,
+        "h1.secondary": 1.25,
+        "h2.secondary": 1.25,
+        "h3.secondary": 1.25,
+        "h4.secondary": 1.0
+);

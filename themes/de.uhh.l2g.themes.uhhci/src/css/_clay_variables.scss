@@ -6,10 +6,12 @@ $dark-color: #272833;
 $input-bg: #F1F2F5;
 $light-color: #E7E7ED;
 
-$button-color: #027bcb;
-$button-hover-color: #006ab0;
-$button-text-color: white;
 
+$font-color: #4e4e4e;
+
+$light-blue: #027bcb;
+$dark-blue: #006ab0;
+$button-text-color: white;
 
 //paddings
 $global-padding-sm: 0.25rem;
@@ -23,7 +25,11 @@ $global-margin-lg: 1rem;
 $global-margin-x-lg: 1.5rem;
 
 //font-size
-$title-font-size: 1.5rem;
+$h1-size: 2.5rem;
+$h2-size: 2rem;
+$h3-size: 1.8rem;
+$h4-size: 1.5rem;
+$p-size: 1rem;
 
 $lead-font-weight: 400;
 $small-font-size: 0.875rem;
@@ -34,5 +40,7 @@ $portlet-decorate-border: 1px solid $light-color;
 //screen-sizes
 $mobile-screen-portrait: 768px;
 
+
+$control-icon-size: 75px
 
 

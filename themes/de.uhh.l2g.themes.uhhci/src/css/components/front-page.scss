@@ -1,17 +1,23 @@
 .front-page-teaser {
   position: relative;
   height: 380px;
-  padding: 0;
+  padding: $global-padding-lg 0 $global-padding-lg 0;
   border: 2px solid red;
-  margin-bottom: $global-margin-lg;
   overflow: hidden;
+  background-color: red;
 
   .bg-video-container {
     border: 2px dotted purple;
+    position: absolute;
+    width: 100%;
 
     #bg-vid {
-      position: absolute;
-      height: 100%;
+      width: 100%;
+    }
+
+    #vid-control {
+      //display:none;
+      color: white;
     }
   }
 
@@ -20,7 +26,6 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
-    border: 2px dashed green;
     margin: $global-padding-lg;
 
     .l2go-info {
@@ -32,7 +37,8 @@
         background-color: white;
         opacity: 0.8;
         padding: $global-padding-lg;
-        font-size: $title-font-size;
+        font-size: $h4-size;
+        font-weight: 700;
         text-align: center;
       }
 
@@ -58,14 +64,15 @@
       }
 
       #outer-catalogue-button {
-        background-color: $button-color;
+        background-color: $light-blue;
         border: none;
         color: $button-text-color;
         padding: $global-padding-lg;
         z-index: 0;
+        font-size: 16px;
 
         &:hover {
-          background-color: $button-hover-color;
+          background-color: $dark-blue;
         }
       }
     }
@@ -73,6 +80,43 @@
 }
 
 #front-page-content {
-background-color: red;
+  padding: $global-padding-lg 0 $global-padding-lg 0;
+  background-color: blueviolet;
+  border: 2px dashed blueviolet;
 
+  h4 {
+    margin: $global-padding-lg;
+  }
+}
+
+.video-box-list {
+  background-color: green;
+  display: flex;
+
+
+  .video-box {
+    background-color: salmon;
+    margin: $global-margin-lg;
+
+    .date {
+      margin-top: $global-margin-sm;
+      color: $dark-blue;
+      font-weight: 900;
+    }
+
+    .title-small {
+      font-size: $h3-size;
+      color: $font-color;
+      font-weight: 500;
+    }
+
+    a {
+      color: $font-color;
+    }
+  }
+}
+
+.carousel-control-prev-icon, .carousel-control-next-icon {
+  width: $control-icon-size;
+  height: $control-icon-size;
 }
