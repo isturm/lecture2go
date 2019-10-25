@@ -49,8 +49,8 @@
 <div id="front-page-content">
 
 	<!-- latest videos -->
-		<h4><liferay-ui:message key="last-added"/></h4>
-			<div id="news-carousel" class="carousel slide" data-ride="carousel">
+		<h2><liferay-ui:message key="last-added"/></h2>
+			 <div id="news-carousel" class="caroh2usel slide" data-ride="carousel">
             <!-- Carousel items -->
 	            <div class="carousel-inner">
 	                <div class="carousel-item active">
@@ -82,7 +82,7 @@
 						<div class="carousel-item">
 		                    <div class="row-fluid video-box-list">
 		        	</c:if>
-								<div class="span3 video-box" onClick="window.location='${vid.url}'">											
+								<div class="col-md-4 col-12 video-box" onClick="window.location='${vid.url}'">											
 									<div class="video-box-image-container">
 										<div class="video-box-image">
 											<img src="${vid.imageMedium}">
@@ -129,9 +129,11 @@
 				<a class="carousel-control-prev" href="#news-carousel" role="button" data-slide="prev"> <span class="carousel-control-prev-icon" aria-hidden="true"></span> <span class="sr-only">Previous</span> </a> 
 				<a class="carousel-control-next" href="#news-carousel" role="button" data-slide="next"> <span class="carousel-control-next-icon" aria-hidden="true"></span> <span class="sr-only">Next</span> </a>
 			</div>
+	 <div id="news-carousel" class="carousel slide" data-ride="carousel">
+
 	
 	<!-- popular videos -->
-		<h4><liferay-ui:message key="popular-videos"/></h4>
+		<h2><liferay-ui:message key="popular-videos"/></h2>
 			<div id="popular-carousel" class="carousel slide" data-ride="carousel">
             <!-- Carousel items -->
 	            <div class="carousel-inner">
@@ -160,7 +162,7 @@
 									<div class="carousel-item active">
 	                    				<div class="row-fluid video-box-list">
 	                    		</c:if>
-									<div class="span3 video-box" onClick="window.location='${vid.url}'">	
+									<div class="col-md-4  col-12 video-box" onClick="window.location='${vid.url}'">	
 										<div class="video-box-image-container">
 											<div class="video-box-image"> 
 												<img src="${vid.imageMedium}">
