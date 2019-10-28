@@ -124,9 +124,9 @@ header {
 	b {
 		letter-spacing: 1px;
 		font-family: $font-family-bold-caps;
-		color: $font-color;
-		@include media-breakpoint-up(md) {
-			color: rgb(29,29,27);
+		color: rgb(29,29,27);
+		@include media-breakpoint-down(md) {
+			color: $font-color;
 		}
 	}
 	
