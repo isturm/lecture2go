@@ -80,8 +80,8 @@
 	padding-right: 12px;
 	
 	.site-description {
-		width: 300px;
-		@include media-breakpoint-down(sm) {
+		max-width: 300px;
+		@include media-breakpoint-down(md) {
 			display:none;
 		}
 		color: $light-blue;
