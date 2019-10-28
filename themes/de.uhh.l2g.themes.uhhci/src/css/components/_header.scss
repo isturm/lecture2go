@@ -1,4 +1,5 @@
 header {
+	font-size:$h2-font-size;
 	.field-wrapper {
 		position: absolute;
 		right: 4px;
@@ -113,8 +114,24 @@ header {
 	padding-bottom: 0.907rem;
 	padding-top: 0.907rem;
 	padding-right: 12px;
+	font-size: 24px;
+	line-height: 1.1em;
+	@include media-breakpoint-down(md) {
+		line-height: 1.25em;
+		font-size: 16px;
+	}
+	
+	b {
+		letter-spacing: 1px;
+		font-family: $font-family-bold-caps;
+		color: $font-color;
+		@include media-breakpoint-up(md) {
+			color: rgb(29,29,27);
+		}
+	}
 	
 	.site-description {
+	    font-family: $font-family-semi-light-caps;
 		max-width: 300px;
 		@include media-breakpoint-down(md) {
 			display:none;

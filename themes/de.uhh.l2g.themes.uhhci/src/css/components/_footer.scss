@@ -17,6 +17,10 @@
 				position: relative;
 				padding-left: 12px;
 				margin-left: 20px;
+				font-family: $font-family-bold;
+				font-size: 14px;
+				line-height: normal;
+				color: $font-color;
 			}
 			
 			a::before {
@@ -24,6 +28,10 @@
 				position: absolute;
 				left: 0;
 				top: 0;
+			}
+			
+			a:hover {
+				text-decoration: underline;
 			}
 		}
 	}

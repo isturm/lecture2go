@@ -34,8 +34,10 @@
 
 				<#if show_site_name>
 					<div class="autofit-col header-site-names">
-						<h2>${site_name}</h2>
-						<h2 class="site-description text-highlight-color">${site_description}</h2>
+						<a href="https://www.rrz.uni-hamburg.de">
+							<b>${site_name}</b>
+							<div class="site-description text-highlight-color">${site_description}</div>
+						</a>
 					</div>
 				</#if>
 			</div>
@@ -70,7 +72,7 @@
 				<ul>
 		          <li><a class="feedback" href="/feedback.html?local_url=https%3A%2F%2Fwww.uni-hamburg.de%2Fde.html">Feedback</a></li>
 		          <li><a class="impressum" href="/impressum.html">Impressum</a></li>
-		          <li><a href="#">Datenschutzerkl‰rung</a></li>
+		          <li><a href="#">Datenschutzerkl√§rung</a></li>
 		        </ul>
 			</div>
 		</footer>

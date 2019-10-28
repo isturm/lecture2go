@@ -1,0 +1,17 @@
+.titel {
+  font-family: $font-family-bold-caps;
+  color: #fff;
+  background-color: #027bcb;
+  font-size: $h2-font-size;
+}
+
+.tt:after {
+  content: "";
+  position: absolute;
+  width: 20px;
+  height: 19px;
+  left: 18px;
+  top: 50%;
+  margin-top: -8px;
+  background-image: url(../../images/plus-blau.svg);
+}

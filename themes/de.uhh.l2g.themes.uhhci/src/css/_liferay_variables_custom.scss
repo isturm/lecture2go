@@ -2,5 +2,6 @@ $theme-color-palette: () !default;
 $theme-color-palette: map-merge((
 	lighter: $gray-100,
 	gray-dark: $gray-800,
-	highlight-color: #027BCB
+	highlight-color: #027BCB,
+	font-color: #4E4E4E
 ), $theme-color-palette);

@@ -9,9 +9,12 @@ $light-color: #E7E7ED;
 
 $font-color: #4e4e4e;
 
-$light-blue: #027BCB;
+$header-font-black: #333;
+
+$light-blue: #027bcb;
 $dark-blue: #006ab0;
 $button-text-color: white;
+$toggle-collapsed-color: #faf9f9;
 
 //paddings
 $global-padding-sm: 0.25rem;
@@ -24,12 +27,15 @@ $global-margin-md: 0.5rem;
 $global-margin-lg: 1rem;
 $global-margin-x-lg: 1.5rem;
 
-//font-size
-$h1-size: 2.5rem;
-$h2-size: 2rem;
-$h3-size: 1.8rem;
-$h4-size: 1.5rem;
-$p-size: 1rem;
+// font-families
+$font-family-default: TheSansUHH, sans-serif;
+$font-family-regular-caps: TheSansUHHRegularCaps, sans-serif;
+$font-family-semi-light-caps: TheSansUHHSemiLightCaps, sans-serif;
+$font-family-bold: TheSansUHHBold, sans-serif;
+$font-family-bold-caps: TheSansUHHBoldCaps, sans-serif;
+
+$h2-font-size: 24px;
+
 
 $lead-font-weight: 400;
 $small-font-size: 0.875rem;

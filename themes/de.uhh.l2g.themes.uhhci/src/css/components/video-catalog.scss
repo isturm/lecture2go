@@ -1,0 +1,44 @@
+.catalogue-container {
+  display:flex;
+  flex-direction: row-reverse;
+
+  .panel-default {
+    border: 0;
+  }
+
+  .panel {
+    margin: 40px;
+  }
+
+  .panel-heading {
+    font-size: $h3-font-size;
+    font-family: $font-family-bold-caps;
+    padding: $global-padding-lg;
+  }
+
+  .toggler-header-expanded, .toggler-header-collapsed:hover {
+    background-color: $light-blue;
+    color: white;
+    background-image: url(../../images/minus-weiss.svg);
+  }
+
+  .toggler-header-collapsed {
+    background-color: $toggle-collapsed-color;
+    color: $font-color;
+    background-image: url(../../images/plus-blau.svg);
+  }
+
+  img {
+    width: 100%;
+  }
+
+  ul {
+    color: red;
+    list-style-type: square;
+  }
+
+  a {
+    color: $font-color;
+  }
+
+}
