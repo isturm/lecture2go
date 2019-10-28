@@ -35,7 +35,7 @@
 				<#if show_site_name>
 					<div class="autofit-col header-site-names">
 						<h2>${site_name}</h2>
-						<h2 class="site-description">${site_description}</h2>
+						<h2 class="site-description text-highlight-color">${site_description}</h2>
 					</div>
 				</#if>
 			</div>
@@ -67,13 +67,11 @@
 	<#if show_footer>
 		<footer id="footer" role="contentinfo">
 			<div class="container">
-				<div class="row">
-					<div class="col-md-12 text-center text-md-left">
-						<@liferay.language key="powered-by" />
-
-						<a class="text-white" href="http://www.liferay.com" rel="external">Liferay</a>
-					</div>
-				</div>
+				<ul>
+		          <li><a class="feedback" href="/feedback.html?local_url=https%3A%2F%2Fwww.uni-hamburg.de%2Fde.html">Feedback</a></li>
+		          <li><a class="impressum" href="/impressum.html">Impressum</a></li>
+		          <li><a href="#">Datenschutzerklärung</a></li>
+		        </ul>
 			</div>
 		</footer>
 	</#if>

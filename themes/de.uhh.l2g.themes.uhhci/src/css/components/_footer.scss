@@ -1,0 +1,30 @@
+#footer {
+	margin-top: 1rem;
+
+	> .container {
+		padding-bottom: 3rem;
+		padding-top: 3rem;
+	}
+	
+	ul {
+		list-style-type: none;
+		float: right;
+		
+		li {
+			display: inline-block;
+			
+			a {
+				position: relative;
+				padding-left: 12px;
+				margin-left: 20px;
+			}
+			
+			a::before {
+				content: ">";
+				position: absolute;
+				left: 0;
+				top: 0;
+			}
+		}
+	}
+}

@@ -1,3 +1,38 @@
+header {
+	.field-wrapper {
+		position: absolute;
+		right: 4px;
+		top: 2px;
+
+		a {
+			color: red;
+		}
+	}
+
+	.field-wrapper, .form-group {
+		margin-bottom: 0;
+	}
+
+	.portlet {
+		margin-bottom: 0;
+
+		&:hover {
+			z-index: 1034;
+		}
+	}
+
+	.search-input {
+		font-size: 0.88rem;
+		padding: 0.28rem 2rem 0.28rem 1rem;
+	}
+
+	.user-personal-bar {
+		.fieldset {
+			position: relative;
+		}
+	}
+}
+
 .navbar-top {
 	padding-bottom: 0.907rem;
 	padding-top: 0.907rem;
@@ -84,7 +119,6 @@
 		@include media-breakpoint-down(md) {
 			display:none;
 		}
-		color: $light-blue;
 	}
 }
 
