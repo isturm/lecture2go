@@ -5,6 +5,7 @@
 @import "components/group-item";
 @import "components/info-panel";
 @import "components/header";
+@import "components/navigation";
 @import "components/footer";
 @import "components/sidebar";
 @import "components/splitter";
@@ -37,5 +38,9 @@ body {
 
 li a {
 	font-family: $font-family-bold;
+}
+
+.portal-content {
+	margin-top: 129px;
 }
 

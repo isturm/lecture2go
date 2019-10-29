@@ -1,18 +1,5 @@
 header {
 	font-size:$h2-font-size;
-	.field-wrapper {
-		position: absolute;
-		right: 4px;
-		top: 2px;
-
-		a {
-			color: red;
-		}
-	}
-
-	.field-wrapper, .form-group {
-		margin-bottom: 0;
-	}
 
 	.portlet {
 		margin-bottom: 0;
@@ -38,6 +25,7 @@ header {
 	padding-bottom: 0.907rem;
 	padding-top: 0.907rem;
 	position: relative;
+	top: 69px;
 
 	.portlet {
 		&:hover, &.open {

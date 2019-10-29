@@ -1,0 +1,50 @@
+#navigation-mobile {
+	height: 45px;
+	padding: 0 0px 0 20px;
+	width: 100%;
+	align-items: center;
+	
+	a,span {
+		font-size: 17px;
+		font-family: $font-family-bold-caps;
+		color: #fff;
+	}
+	
+	#language {
+		.portlet {
+			margin-bottom: 0px
+		}
+	
+		.portlet-content {
+			padding: 0;
+			border: none;
+			border-radius: 0;
+			background-color: $highlight-color;
+		}
+	}
+	
+	#search a {
+		height: 45px;
+		width: 50px;
+		float: left;
+	}
+	
+	#search a::after{
+		content: "";
+		height: 100%;
+		width: 100%;
+		float: left;
+		background-image: url("../images/UHH_web_lupe_31x31.png");
+		background-position: center;
+		background-repeat: no-repeat;
+	}
+	
+	#menu span {
+		height: 45px;
+		width: 50px;
+		float: left;
+		background-image: url("../images/UHH_web_hamburger-menu_31x31tiny.png");
+		background-position: center;
+		background-repeat: no-repeat;
+	}
+}

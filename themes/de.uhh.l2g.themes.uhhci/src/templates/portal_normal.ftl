@@ -23,12 +23,16 @@
 <div class="pt-0" id="wrapper">
 	<#if show_header>
 		<header id="banner">
+			<#assign preferences = freeMarkerPortletPreferences.getPreferences({"portletSetupPortletDecoratorId": "barebone", "destination": "/search"}) />
+			<div class="navbar navbar-classic navbar-expand-md navbar-light pb-3">
+				<div class="container">
+					<#include "${full_templates_path}/navigation_mobile.ftl" />
+				</div>
+			</div>
 			<div class="align-items-baseline autofit-row container navbar-top">
 				<a class="${logo_css_class} align-items-center d-md-inline-flex logo-md" href="${site_default_url}" title="<@liferay.language_format arguments="" key="go-to-x" />">
 					<img alt="${logo_description}" class="mr-2" src="${site_logo}" />
 				</a>
-
-				<#assign preferences = freeMarkerPortletPreferences.getPreferences({"portletSetupPortletDecoratorId": "barebone", "destination": "/search"}) />
 
 				<div class="autofit-col autofit-col-expand"></div>
 
@@ -40,12 +44,6 @@
 						</a>
 					</div>
 				</#if>
-			</div>
-
-			<div class="navbar navbar-classic navbar-expand-md navbar-light pb-3">
-				<div class="container">
-					<#include "${full_templates_path}/navigation.ftl" />
-				</div>
 			</div>
 		</header>
 	</#if>
