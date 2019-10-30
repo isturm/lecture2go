@@ -23,13 +23,13 @@
 		}
 	}
 	
-	#search a {
+	#search span {
 		height: 45px;
 		width: 50px;
 		float: left;
 	}
 	
-	#search a::after{
+	#search span::after{
 		content: "";
 		height: 100%;
 		width: 100%;
@@ -39,12 +39,50 @@
 		background-repeat: no-repeat;
 	}
 	
-	#menu span {
-		height: 45px;
-		width: 50px;
-		float: left;
-		background-image: url("../images/UHH_web_hamburger-menu_31x31tiny.png");
-		background-position: center;
-		background-repeat: no-repeat;
+	#menu {
+		padding: 0;
+		span {
+			height: 45px;
+			width: 50px;
+			float: left;
+			background-image: url("../images/UHH_web_hamburger-menu_31x31tiny.png");
+			background-position: center;
+			background-repeat: no-repeat;
+		}
+	}
+	
+	#navigationCollapse {
+		background-color: $highlight-color;
+		right: 0;
+		transition: opacity 0.25s,right 0.1s;
+		opacity: 1;
+		overflow: hidden;
+		position: fixed;
+		bottom: 0;
+		width: 100%;
+		max-width: 420px;
+		z-index: 100000;
+		height: calc(100% - 45px);
+		border-top: 1px solid #fff;
+		
+		.nav-item {
+			border-bottom: 1px solid #fff;
+			
+			a {
+				height: 45px;
+				padding: 10px 10px 10px 14%;
+				width: calc(100% - 50px);
+				
+				span {
+					font-family: $font-family-semi-light-caps;
+					font-size: 19px;
+				}
+			}
+			
+			a:hover {
+				background-color: #fff !important;
+				color: $highlight-color !important;
+			}
+		}
 	}
 }

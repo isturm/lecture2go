@@ -1,5 +1,5 @@
 <#if has_navigation && is_setup_complete>
-	<div id="navigation-mobile" class="bg-highlight-color container autofit-row">
+	<div id="navigation-mobile" class="bg-highlight-color autofit-row">
 		<div class="autofit-col">
 			<a href="/">Universität Hamburg</a>
 		</div>
@@ -13,11 +13,11 @@
 			/>
 		</div>
 		<div id="search" class="autofit-col text-right">
-			<a href="#"></a>
+			<span></span>
 		</div>
-		<button id="menu" aria-controls="navigationCollapse" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler navbar-toggler-right" data-target="#navigationCollapse" data-toggle="collapse" type="button">
-			<span class="navbar-toggler-icon"></span>
-		</button>
+		<div id="menu" aria-controls="navigationCollapse" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler navbar-toggler-right" data-target="#navigationCollapse" data-toggle="collapse" type="button">
+			<span></span>
+		</div>
 	
 		<div aria-expanded="false" class="collapse navbar-collapse" id="navigationCollapse">
 			<@liferay.navigation_menu default_preferences="${preferences}" />
