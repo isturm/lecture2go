@@ -12,15 +12,19 @@
 		        portletProviderClassName="com.liferay.portal.kernel.servlet.taglib.ui.LanguageEntry"
 			/>
 		</div>
-		<div id="search" class="autofit-col text-right">
+		<div id="search" aria-controls="searchCollapse" aria-expanded="true" aria-label="Toggle search" data-target="#searchCollapse" data-toggle="collapse">
 			<span></span>
 		</div>
-		<div id="menu" aria-controls="navigationCollapse" aria-expanded="false" aria-label="Toggle navigation" class="navbar-toggler navbar-toggler-right" data-target="#navigationCollapse" data-toggle="collapse" type="button">
+		<div id="menu" aria-controls="navigationCollapse menuCover" aria-expanded="true" aria-label="Toggle navigation" data-target="#navigationCollapse, #menuCover" data-toggle="collapse">
 			<span></span>
+		</div>	
+		<div aria-expanded="false" class="collapse" id="searchCollapse">
+			<input name="q" type="text" placeholder="Universität Hamburg durchsuchen">
+			<input type="submit" value="Suchen">
 		</div>
-	
-		<div aria-expanded="false" class="collapse navbar-collapse" id="navigationCollapse">
+		<div aria-expanded="false" class="navbar-collapse collapse" id="navigationCollapse">
 			<@liferay.navigation_menu default_preferences="${preferences}" />
 		</div>
+		<div id="menuCover" aria-expanded="false" class="collapse" id="menuCover"/>
 	</div>
 </#if>

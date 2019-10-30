@@ -8,3 +8,28 @@ AUI().ready(
 		}
 	}
 );
+
+$("#menu").click(function(){
+    $('#menu').toggleClass('closeMenu');
+    $('#search').removeClass('closeSearch');
+    $('#searchCollapse').removeClass('show');
+});
+
+$("#search").click(function(){
+    $('#search').toggleClass('closeSearch');
+    $('#menu').removeClass('closeMenu');
+    $('#navigationCollapse').removeClass('show');
+    $('#menuCover').removeClass('show');
+});
+
+$("body").click(function(event){
+	if(event.target.id == "menu" || event.target.id == "search")
+		return;
+	if($(event.target).closest('#menu').length > 0 || $(event.target).closest('#search').length > 0)
+		return;
+	$('#search').removeClass('closeSearch');
+    $('#menu').removeClass('closeMenu');
+    $('#navigationCollapse').removeClass('show');
+    $('#searchCollapse').removeClass('show');
+    $('#menuCover').removeClass('show');
+});
