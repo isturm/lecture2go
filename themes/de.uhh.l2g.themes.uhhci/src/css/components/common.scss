@@ -15,3 +15,35 @@
   margin-top: -8px;
   background-image: url(../../images/plus-blau.svg);
 }
+
+a {
+  color: $font-color;
+}
+
+img {
+  width: 100%;
+}
+
+.video-label {
+  display: flex;
+  font-weight: bold;
+  color: $dark-blue;
+  padding: $global-padding-lg 0;
+  text-transform: uppercase;
+
+  a {
+    padding-right: $global-padding-sm;
+    color: $dark-blue;
+  }
+}
+
+.video-title {
+  font-size: $h3-font-size;
+  color: $font-color;
+  font-weight: 500;
+}
+
+.no-gutters {
+  padding: 0 !important;
+  margin: 0 !important;
+}

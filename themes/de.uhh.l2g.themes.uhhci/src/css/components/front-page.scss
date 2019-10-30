@@ -100,20 +100,12 @@
       width: 100%;
     }
 
-    .date {
-      margin-top: $global-margin-sm;
-      color: $dark-blue;
-      font-weight: 900;
-    }
+    .video-label {
+      padding: $global-padding-lg 0 0 $global-padding-md;
 
-    .title-small {
-      font-size: $h3-font-size;
-      color: $font-color;
-      font-weight: 500;
-    }
-
-    a {
-      color: $font-color;
+      .date {
+        padding-left: $global-padding-sm;
+      }
     }
   }
 }
@@ -129,24 +121,4 @@
 
 .carousel-control-next-icon {
   background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' fill='%23027BCB' viewBox='0 0 8 8'%3e%3cpath d='M2.75 0l-1.5 1.5 2.5 2.5-2.5 2.5 1.5 1.5 4-4-4-4z'/%3e%3c/svg%3e")
-}
-
-.catalogue-container {
-  .row {
-    display: flex;
-    flex-direction: row-reverse;
-  }
-
-  img {
-    width: 100%;
-  }
-
-  ul {
-    color: red;
-    list-style-type: square;
-  }
-
-  a {
-    color: $font-color;
-  }
 }
