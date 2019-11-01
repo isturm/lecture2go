@@ -64,9 +64,6 @@
 	
 	#navigationCollapse {
 		background-color: $highlight-color;
-		right: 0;
-		transition: opacity 0.25s,right 0.1s;
-		opacity: 1;
 		overflow: hidden;
 		position: fixed;
 		bottom: 0;
@@ -75,6 +72,15 @@
 		z-index: 100000;
 		height: calc(100% - 45px);
 		border-top: 1px solid #fff;
+		
+		right: -420px;
+		transition: opacity 0.25s,right 0.1s;
+		opacity: 0;
+		
+		&.show {
+			right: 0;
+			opacity: 1;
+		}
 		
 		.nav-item {
 			border-bottom: 1px solid #fff;
@@ -114,12 +120,18 @@
 	#menuCover {
 		position: fixed;
 		top: 45px;
-		left: 0;
 		right: 0;
 		bottom: 0;
-		opacity: 0.3;
 		background: $highlight-color;
 		z-index: 99999;
+		transition: opacity 0.25s,left 0s;
+		left: 100%;
+		opacity: 0;
+		
+		&.show {
+			left: 0;
+			opacity: 0.3;
+		}
 	}
 	
 	#searchCollapse {
@@ -131,6 +143,12 @@
 		z-index: 100000;
 		border-top: 1px solid #fff;
 		padding: 20px 20px 24px 20px;
+		transition: opacity 0.25s;
+		opacity: 0;
+		
+		&.show {
+			opacity: 1;
+		}
 		
 		input[type="text"] {
 			width: 100%;
