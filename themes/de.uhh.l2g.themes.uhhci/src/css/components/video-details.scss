@@ -1,0 +1,55 @@
+#license-and-views {
+  display: flex;
+  justify-content: flex-end;
+  margin-top: $global-margin-sm;
+
+  .views {
+    margin-left: $global-margin-sm;
+  }
+
+  .license {
+    margin-right: $global-margin-sm;
+  }
+}
+
+.meta-title {
+  font-size: $h3-font-size;
+  font-family: $font-family-bold;
+  margin: $global-margin-md 0;
+}
+
+.meta-creators{
+  margin: $global-margin-md 0;
+}
+
+.meta-description {
+  overflow: hidden;
+  margin: $global-margin-md 0;
+}
+
+.desc-toggle {
+  text-align: right;
+  font-family: $font-family-bold-caps;
+  margin-right: $icon-size;
+  margin-left: $icon-size;
+  cursor: pointer;
+
+  &:hover {
+    opacity:0.8;
+  }
+
+  &.more:after, &.less:after {
+    position: absolute;
+    content: "";
+    width: $icon-size;
+    height: $icon-size;
+  }
+
+  &.more:after {
+    background-image: url("../images/arrow_down.svg");
+  }
+
+  &.less:after {
+    background-image: url("../images/arrow_up.svg");
+  }
+}

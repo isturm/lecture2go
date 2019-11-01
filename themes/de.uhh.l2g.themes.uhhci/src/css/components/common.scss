@@ -5,17 +5,6 @@
   font-size: $h2-font-size;
 }
 
-.tt:after {
-  content: "";
-  position: absolute;
-  width: 20px;
-  height: 19px;
-  left: 18px;
-  top: 50%;
-  margin-top: -8px;
-  background-image: url(../../images/plus-blau.svg);
-}
-
 a {
   color: $font-color;
 }
@@ -28,8 +17,9 @@ img {
   display: flex;
   font-weight: bold;
   color: $dark-blue;
-  padding: $global-padding-lg 0;
-  text-transform: uppercase;
+  padding: $global-padding-sm 0;
+  font-family: $font-family-bold-caps;
+  font-size: $h3-font-size;
 
   a {
     padding-right: $global-padding-sm;
@@ -38,12 +28,36 @@ img {
 }
 
 .video-title {
-  font-size: $h3-font-size;
+  font-size: $h2-font-size;
   color: $font-color;
-  font-weight: 500;
+  font-family: $font-family-bold;
 }
 
 .no-gutters {
   padding: 0 !important;
   margin: 0 !important;
+}
+
+.panel-toggle {
+
+
+  .title-text {
+    margin-left: 30px;
+  }
+}
+
+.toggler-header-collapsed:after, .toggler-header-expanded:after {
+  content: "";
+  position: absolute;
+  width: $icon-size;
+  height: $icon-size;
+  top: 35%;
+}
+
+.toggler-header-collapsed:after {
+  background-image: url("../images/plus-blau.svg");
+}
+
+.toggler-header-expanded:after {
+  background-image: url("../images/minus-weiss.svg");
 }

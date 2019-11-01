@@ -35,7 +35,9 @@ $font-family-semi-light-caps: TheSansUHHSemiLightCaps, sans-serif;
 $font-family-bold: TheSansUHHBold, sans-serif;
 $font-family-bold-caps: TheSansUHHBoldCaps, sans-serif;
 
-$h2-font-size: 24px;
+$h2-font-size: 22px;
+$h3-font-size: 18px;
+$h4-font-size: 16px;
 
 
 $lead-font-weight: 400;
@@ -47,7 +49,8 @@ $portlet-decorate-border: 1px solid $light-color;
 //screen-sizes
 $mobile-screen-portrait: 575.98px;
 
+$icon-size: 20px;
 
-$control-icon-size: 35px
+$control-icon-size: 70px;
 
-
+$video-box-height: 400px;

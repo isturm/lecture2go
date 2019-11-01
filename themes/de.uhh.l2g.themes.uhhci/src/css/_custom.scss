@@ -13,8 +13,10 @@
 @import "components/fonts";
 @import "portlet/portlet";
 @import "portlet/portlet_decorators";
+@import "components/common";
 @import "components/front-page";
 @import "components/video-catalog";
+@import "components/video-details";
 
 .btn-group + .info-panel {
 	@include media-breakpoint-up(md) {
@@ -27,16 +29,12 @@ h1, h2, h3, h4, h5 {
 }
 
 h2 {
-	font-size: 24px;
+	font-size: $h2-font-size;
 }
 
 body {
 	font-family: $font-family-default;
 	@extend .text-font-color;
-}
-
-li a {
-	font-family: $font-family-bold;
 }
 
 .autofit-col-expand {
