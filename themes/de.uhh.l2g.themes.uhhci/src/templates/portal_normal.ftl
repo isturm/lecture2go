@@ -24,8 +24,8 @@
 	<#if show_header>
 		<header id="banner">
 			<#assign preferences = freeMarkerPortletPreferences.getPreferences({"portletSetupPortletDecoratorId": "barebone", "destination": "/search", "siteNavigationMenuType": "1", "displayDepth": "0"}) />
-			<div class="navbar navbar-expand-md">
-				<#include "${full_templates_path}/navigation_mobile.ftl" />
+			<div class="navbar navbar-expand-lg">
+				<#include "${full_templates_path}/navigation.ftl" />
 			</div>
 			<div class="align-items-baseline autofit-row container navbar-top">
 				<a class="${logo_css_class} align-items-center d-md-inline-flex logo-md" href="${site_default_url}" title="<@liferay.language_format arguments="" key="go-to-x" />">
@@ -42,6 +42,9 @@
 						</a>
 					</div>
 				</#if>
+			</div>
+			<div id="navigationDesktop" class="container">
+				<@liferay.navigation_menu default_preferences="${preferences}" />
 			</div>
 		</header>
 	</#if>

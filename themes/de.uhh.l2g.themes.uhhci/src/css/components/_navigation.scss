@@ -1,16 +1,26 @@
-#navigation-mobile {
+.navbar {
+	flex-wrap: wrap !important
+}
+
+#navigation {
 	height: 45px;
 	padding: 0 0px 0 20px;
 	width: 100%;
 	align-items: center;
 	
-	a,span {
-		font-size: 17px;
-		font-family: $font-family-bold-caps;
-		color: #fff;
+	#navigationTitle {
+		align-self: center;
+	
+		a {
+			font-family: $font-family-bold-caps;
+			font-size: 17px;
+			color: #fff;
+		}
 	}
 	
 	#language {
+		align-self: center;
+		
 		.portlet {
 			margin-bottom: 0px
 		}
@@ -20,6 +30,19 @@
 			border: none;
 			border-radius: 0;
 			background-color: $highlight-color;
+		}
+			
+		a,span {
+			font-size: 17px;
+			color: #fff;
+		}
+		
+		a {
+			font-family: $font-family-semi-light-caps;
+		}
+		
+		span {
+			font-family: $font-family-bold-caps;
 		}
 	}
 	
@@ -90,6 +113,7 @@
 				padding: 10px 10px 10px 7%;
 				font-family: $font-family-semi-light-caps;
 				font-size: 19px;
+				color: #fff;
 				
 				span {
 					font-family: $font-family-semi-light-caps;
@@ -174,5 +198,108 @@
 			background-size: 10px;
 			background-image: url(../images/pfeil-blaugross.svg);
 		}
+	}
+}
+
+#navigationDesktop {
+	display: none;
+	
+	.lexicon-icon {
+		display: none;
+	}
+	
+	.nav-item {
+		margin-left: 36px;
+		
+		> a {
+			color: #333;
+			font-family: $font-family-bold-caps;
+			font-size: 25px;
+			text-transform: uppercase;
+			padding: 0;
+		}
+	}
+	
+	.nav-item:first-child {
+		margin-left: 0;
+	}
+	
+	.child-menu {
+		display: block;
+		opacity: 0;
+		max-height: 0;
+		transition: all 0.15s ease-out;
+		width: 410px;
+		max-width: 410px;
+		margin-top: 0;
+		margin-left: -50px;
+		padding: 30px 70px 35px 50px;
+		background-color: #fff;
+		position: absolute;
+		border: none;
+		border-radius: 0;
+		box-shadow: none;
+		
+		li {
+			clear: left;
+			float: left;
+			width: 100%;
+			border-bottom: 1px solid #bbb;
+		}
+		
+		a {
+			color: #333;
+			font-family: $font-family-bold-caps;
+			font-size: 20px;
+			line-height: 30px;
+			padding: 20px 0;
+			margin: 0 -20px 0 0;
+		}
+		
+		a:hover {
+			color: $highlight-color;
+			background-color: #fff;
+		}
+		
+		li:not(:last-child) > a {
+			padding-right: 25px;
+		}
+	}
+}
+
+#navigationDesktop .nav-item:hover {
+	span {
+		color: $highlight-color;
+	}
+
+	.child-menu {
+		opacity: 1;
+		max-height: 500px;
+		transition: all 0.25s ease-in;
+	}
+}
+
+@include media-breakpoint-up(lg) {
+	#navigation #navigationTitle, #search, #menu {
+		display: none;
+	}
+	
+	#navigation {
+		height: 100%;
+		
+		a {
+			font-size: 16px;
+			font-family: $font-family-semi-light-caps; 
+		}
+	}
+	
+	#navigationDesktop {
+		display: flex !important;
+	}
+}
+
+@include media-breakpoint-down(md) {
+	#navigation .navbar-nav {
+		flex-direction: column !important;
 	}
 }
