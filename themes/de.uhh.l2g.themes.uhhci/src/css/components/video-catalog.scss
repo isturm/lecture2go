@@ -69,7 +69,7 @@
 
     ul {
       padding-inline-start: $global-padding-lg;
-      @media only screen and (max-width: $mobile-screen-portrait) {
+      @include media-breakpoint-down(md) {
         padding-inline-start: $global-padding-sm;
       }
     }
@@ -84,7 +84,7 @@
       font-family: $font-family-default;
     }
 
-    @media only screen and (max-width: $mobile-screen-portrait) {
+    @include media-breakpoint-down(md) {
       flex-direction: column;
     }
   }

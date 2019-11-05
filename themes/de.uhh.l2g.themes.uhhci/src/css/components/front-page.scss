@@ -12,7 +12,7 @@
     #bg-vid {
       width: 100%;
 
-      @media only screen and (max-width: $mobile-screen-portrait) {
+      @include media-breakpoint-down(sm) {
         height: 100%;
         width: auto;
       }
@@ -54,30 +54,39 @@
         color: white;
         z-index: 0;
 
-        @media only screen and (max-width: $mobile-screen-portrait) {
+        @include media-breakpoint-down(md) {
           display: none;
         }
       }
 
       .form-control {
         border-radius: 0;
+        margin-top: $global-margin-lg;
+        margin-bottom: $global-margin-lg;
 
-        @media only screen and (max-width: $mobile-screen-portrait) {
+        @include media-breakpoint-down(md) {
           display: none;
         }
       }
 
       #outer-catalogue-button {
-        background-color: $light-blue;
+        background-color: $highlight-color;
         border: none;
         color: $button-text-color;
-        padding: $global-padding-lg;
+        padding: 16px 30px 16px 36px;
         z-index: 0;
-        font-size: $h4-font-size;
+        font-size: $h3-font-size;
         font-family: $font-family-bold-caps;
 
         &:hover {
           background-color: $dark-blue;
+        }
+        
+        &:after {
+        	content: ">";
+        	right: 30px;
+        	bottom: 16px;
+        	color: $button-text-color
         }
       }
     }
