@@ -1,7 +1,7 @@
 .titel {
   font-family: $font-family-bold-caps;
   color: #fff;
-  background-color: #027bcb;
+  background-color: $highlight-color;
   font-size: $h2-font-size;
 }
 
@@ -15,15 +15,20 @@ img {
 
 .video-label {
   display: flex;
-  font-weight: bold;
-  color: $dark-blue;
+  color: $highlight-color;
   padding: $global-padding-sm 0;
   font-family: $font-family-bold-caps;
   font-size: $h3-font-size;
 
   a {
     padding-right: $global-padding-sm;
-    color: $dark-blue;
+    color: $highlight-color;
+  }
+  
+  .separator {
+  	font-family: $font-family-regular-caps;
+  	margin: 0 12px;
+  	border-top: none;
   }
 }
 

@@ -90,14 +90,14 @@
 								<c:set var="isVideo" value="true" />
 							</c:otherwise>
 						</c:choose>
-						<c:if test='${count % 4 == 0 && count != 0}'>
-							<!-- row-fluid -->
+			<c:if test='${count % 4 == 0 && count != 0}'>
+				<!-- row-fluid -->
 				</div>
-				<!-- item -->
+			<!-- item -->
 			</div>
-			<div class="carousel-item">
-				<div class="row-fluid video-box-list">
-					</c:if>
+					<div class="carousel-item">
+		<div class="row-fluid video-box-list">
+	</c:if>
 					<div class="col-md-4 col-12 video-box"
 						onClick="window.location='${vid.url}'">
 						<div class="video-box-image-container">
@@ -118,7 +118,8 @@
 											value="<%=InstitutionLocalServiceUtil.getById((Long) pageContext.getAttribute("viInstitutionId"))%>" />
 											<a	href='/l2go/-/get/${inst.institutionId}/${inst.parentId}/0/0/0/'>${inst.name}</a>
 									</c:if>
-									| ${vid.simpleDate}
+									<span class="separator">|</span>
+									<span>${vid.simpleDate}</span>
 								</div>
 							<div
 								class="video-title dot-ellipsis dot-height-60 dot-resize-update ">${vid.title}</div>
@@ -152,42 +153,40 @@
 			aria-hidden="true"></span> <span class="sr-only">Next</span>
 		</a>
 	</div>
-	<div id="news-carousel" class="carousel slide" data-ride="carousel">
 
-
-		<!-- popular videos -->
-		<h2>
-			<liferay-ui:message key="popular-videos" />
-		</h2>
-		<div id="popular-carousel" class="carousel slide" data-ride="carousel">
-			<!-- Carousel items -->
-			<div class="carousel-inner">
-				<div class="carousel-item active">
-					<div class="row-fluid video-box-list">
-						<c:set var="count" value="0" scope="page" />
-						<c:forEach items="${popular}" var="item">
-							<c:set var="itemVideoId" value="${item.videoId}" />
-							<c:set var="vid"
+	<!-- popular videos -->
+	<h2>
+		<liferay-ui:message key="popular-videos" />
+	</h2>
+	<div id="popular-carousel" class="carousel slide" data-ride="carousel">
+		<!-- Carousel items -->
+		<div class="carousel-inner">
+			<div class="carousel-item active">
+				<div class="row-fluid video-box-list">
+					<c:set var="count" value="0" scope="page" />
+					<c:forEach items="${popular}" var="item">
+						<c:set var="itemVideoId" value="${item.videoId}" />
+						<c:set var="vid"
 								value="<%=VideoLocalServiceUtil.getVideo((Long) pageContext.getAttribute("itemVideoId"))%>" />
-							<c:choose>
-								<c:when test="${vid.lectureseriesId<0}">
-									<c:set var="isVideo" value="true" />
-								</c:when>
-								<c:otherwise>
-									<c:set var="isVideo" value="false" />
-									<c:set var="vidLectureseriesId" value="${vid.lectureseriesId}" />
-									<c:set var="lectureseries"
+						<c:choose>
+							<c:when test="${vid.lectureseriesId<0}">
+								<c:set var="isVideo" value="true" />
+							</c:when>
+							<c:otherwise>
+								<c:set var="isVideo" value="false" />
+								<c:set var="vidLectureseriesId" value="${vid.lectureseriesId}" />
+								<c:set var="lectureseries"
 										value="<%=LectureseriesLocalServiceUtil
-								.getLectureseries((Long) pageContext.getAttribute("vidLectureseriesId"))%>" />
-								</c:otherwise>
-							</c:choose>
+										.getLectureseries((Long) pageContext.getAttribute("vidLectureseriesId"))%>" />
+							</c:otherwise>
+						</c:choose>
 
-							<c:if test="${count % 4 == 0 && count != 0}">
-								<!-- row-fluid -->
-					</div>
-					<!-- item -->
+						<c:if test="${count % 4 == 0 && count != 0}">
+							<!-- row-fluid -->
 				</div>
-				<div class="carousel-item active">
+				<!-- item -->
+				</div>
+				<div class="carousel-item">
 					<div class="row-fluid video-box-list">
 						</c:if>
 						<div class="col-md-4  col-12 video-box"
@@ -210,7 +209,8 @@
 											value="<%=InstitutionLocalServiceUtil.getById((Long) pageContext.getAttribute("viInstitutionId"))%>" />
 											<a	href='/l2go/-/get/${inst.institutionId}/${inst.parentId}/0/0/0/'>${inst.name}</a>
 									</c:if>
-									| ${vid.simpleDate}
+									<span class="separator">|</span>
+									<span>${vid.simpleDate}</span>
 								</div>
 								<div
 									class="video-title dot-ellipsis dot-height-60 dot-resize-update ">${vid.title}</div>
