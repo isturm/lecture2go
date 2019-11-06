@@ -244,7 +244,10 @@
 												}
 								%>
 								<div class="video-label">
-									${date1} ${not empty date1 && not empty lectureseries.name ? '|': ''}
+									${date1}
+									<c:if test="${not empty date1 && not empty lectureseries.name}">
+										<span class="separator">|</span>
+									</c:if>
 									${lectureseries.name}
 								</div>
 								<div class="meta-title">
