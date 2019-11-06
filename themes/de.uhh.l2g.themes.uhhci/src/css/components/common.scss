@@ -13,6 +13,10 @@ img {
   width: 100%;
 }
 
+canvas {
+  max-width: 100%;
+}
+
 .video-label {
   display: flex;
   color: $highlight-color;
@@ -30,6 +34,11 @@ img {
   	margin: 0 12px;
   	border-top: none;
   }
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
 }
 
 .video-title {

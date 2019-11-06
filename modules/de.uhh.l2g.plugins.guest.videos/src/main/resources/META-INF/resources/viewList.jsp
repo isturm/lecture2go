@@ -408,8 +408,8 @@
                                         %>
                                         <div class="col-md-9 metainfo-small">
                                             <div class="row">
-                                                <div class="title-small col-9">${v.title}</div>
-                                                <div class="term-of-creation col-3">${date}</div>
+                                                <div class="title-small col-8">${v.title}</div>
+                                                <div class="term-of-creation col-4">${date}</div>
                                             </div>
                                             <div class="allcreators">
                                                     ${v.linkedCreators}

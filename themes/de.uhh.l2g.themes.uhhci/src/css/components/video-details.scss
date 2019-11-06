@@ -18,7 +18,7 @@
   margin: $global-margin-md 0;
 }
 
-.meta-creators{
+.meta-creators {
   margin: $global-margin-md 0;
 }
 
@@ -35,7 +35,7 @@
   cursor: pointer;
 
   &:hover {
-    opacity:0.8;
+    opacity: 0.8;
   }
 
   &.more:after, &.less:after {
@@ -52,4 +52,97 @@
   &.less:after {
     background-image: url("../images/arrow_up.svg");
   }
+}
+
+.related-lectureseries-name {
+  font-family: $font-family-bold-caps;
+  color: $highlight-color;
+  font-size: $h3-font-size;
+
+  a {
+    color: $highlight-color;
+  }
+}
+
+.ul-related {
+
+  .videotile {
+    display: flex;
+    padding: $global-padding-md 0;
+  }
+
+  .video-label {
+    font-size: $h4-font-size;
+    justify-content: flex-end;
+  }
+
+  .title-small {
+    font-family: $font-family-bold;
+  }
+}
+
+.metainfo, .metainfo-wide {
+
+  .nav-tabs {
+    font-family: $font-family-bold;
+    font-size: $h3-font-size;
+    border-bottom: 1px solid $light-color;
+
+
+    .nav-link {
+      background-color: $light-color;
+      color: $font-color;
+      margin-right: $global-margin-sm;
+      padding: $global-padding-md;
+
+      &:focus {
+        box-shadow: none;
+      }
+
+      &.active {
+        border: 1px solid;
+        border-color: $light-color $light-color white;
+        background-color: white;
+      }
+    }
+  }
+
+  .tab-content {
+    border: 1px solid;
+    border-color: white $light-color $light-color $light-color;
+  }
+
+  #share {
+    padding: 0;
+
+    #embedForm {
+      display: flex;
+
+      @include media-breakpoint-down(md) {
+        flex-direction: column;
+      }
+
+      .form-control:focus {
+        box-shadow: none;
+        border: none;
+      }
+    }
+
+    .tileheading {
+      font-size: $h2-font-size;
+    }
+
+    .smallitalic {
+      font-size: $h3-font-size;
+    }
+
+    .label {
+      font-weight: normal;
+    }
+
+    .lexicon-icon-outline {
+      color: $light-color;
+    }
+  }
+
 }

@@ -1,8 +1,8 @@
 <div id="metadata">
-	<p class="smallitalic"><liferay-ui:message key="embed-conditions"/></p>
+	<p class="smallitalic col-12"><liferay-ui:message key="embed-conditions"/></p>
 	<form name="embedForm" id="embedForm">
 		<!-- embed start -->
-			<div class="sharetile">
+			<div class="sharetile col-md-4 col-12">
 				<p class="tileheading"><liferay-ui:message key="links"/></p>
 				<div id="urls">
 					<ul>
@@ -32,7 +32,7 @@
 		
 		<!-- citation2go allowed -->
 		<c:if test="${video.citation2go==1}">
-				<div class="sharetile">
+				<div class="sharetile col-md-4 col-12">
 					<p class="tileheading"><liferay-ui:message key="citation2go"/></p>
 					<div id="c2g-generate">
 						<ul>
@@ -55,7 +55,7 @@
 		<!-- citation2go allowed end-->		
 		
 		<!-- Facebook Twitter Google+ -->
-		<div class="sharetile">
+		<div class="sharetile  col-md-4 col-12">
 			<p class="tileheading"><liferay-ui:message key="social-media"/></p>
 			<div id="socialshareprivacy"></div>
 		</div>
