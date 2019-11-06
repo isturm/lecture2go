@@ -17,6 +17,7 @@
 @import "components/front-page";
 @import "components/video-catalog";
 @import "components/video-details";
+@import "components/socialshareprivacy";
 
 .btn-group + .info-panel {
 	@include media-breakpoint-up(md) {

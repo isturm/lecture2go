@@ -85,7 +85,7 @@
             'services' : {
                 'facebook' : {
                     'status'            : 'on',
-                    'dummy_img'         : '/lecture2go-portlet/img/dummy_facebook.png',
+                    'dummy_img'         : '/o/de.uhh.l2g.themes.uhhci/images/dummy_facebook.png',
                     'txt_info'          : '2 Klicks f&uuml;r mehr Datenschutz: Erst wenn Sie hier klicken, wird der Button aktiv und Sie k&ouml;nnen Ihre Empfehlung an Facebook senden. Schon beim Aktivieren werden Daten an Dritte &uuml;bertragen &ndash; siehe <em>i</em>.',
                     'txt_fb_off'        : 'nicht mit Facebook verbunden',
                     'txt_fb_on'         : 'mit Facebook verbunden',
@@ -97,7 +97,7 @@
                 }, 
                 'twitter' : {
                     'status'            : 'on', 
-                    'dummy_img'         : '/lecture2go-portlet/img/dummy_twitter.png',
+                    'dummy_img'         : '/o/de.uhh.l2g.themes.uhhci/images/dummy_twitter.png',
                     'txt_info'          : '2 Klicks f&uuml;r mehr Datenschutz: Erst wenn Sie hier klicken, wird der Button aktiv und Sie k&ouml;nnen Ihre Empfehlung an Twitter senden. Schon beim Aktivieren werden Daten an Dritte &uuml;bertragen &ndash; siehe <em>i</em>.',
                     'txt_twitter_off'   : 'nicht mit Twitter verbunden',
                     'txt_twitter_on'    : 'mit Twitter verbunden',
@@ -109,7 +109,7 @@
                 },
                 'gplus' : {
                     'status'            : 'on',
-                    'dummy_img'         : '/lecture2go-portlet/img/dummy_gplus.png',
+                    'dummy_img'         : '/o/de.uhh.l2g.themes.uhhci/images/dummy_gplus.png',
                     'txt_info'          : '2 Klicks f&uuml;r mehr Datenschutz: Erst wenn Sie hier klicken, wird der Button aktiv und Sie k&ouml;nnen Ihre Empfehlung an Google+ senden. Schon beim Aktivieren werden Daten an Dritte &uuml;bertragen &ndash; siehe <em>i</em>.',
                     'txt_gplus_off'     : 'nicht mit Google+ verbunden',
                     'txt_gplus_on'      : 'mit Google+ verbunden',
@@ -125,7 +125,7 @@
             'cookie_path'       : '/',
             'cookie_domain'     : document.location.host,
             'cookie_expires'    : '365',
-            'css_path'          : '/lecture2go-theme/css/socialshareprivacy.css',
+            'css_path'          : '/o/de.uhh.l2g.themes.uhhci/css/main.css',
             'uri'               : getURI
         };
 

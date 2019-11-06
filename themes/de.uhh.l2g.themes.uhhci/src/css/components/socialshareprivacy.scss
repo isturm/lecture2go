@@ -1,0 +1,42 @@
+#socialshareprivacy {
+	.info {
+		display: none;
+	}
+	.switch {
+		display: inline-block;
+		overflow: hidden;
+		float: left;
+		padding: 0;
+		width: 23px;
+		height: 12px;
+		margin: 4px 0 0;
+		text-indent: -9999em;
+		cursor: pointer;
+		background: transparent url("../images/socialshareprivacy_on_off.png") no-repeat 0 0 scroll;
+		
+		&.on {
+			background-position: 0 -12px;
+		}
+	}
+	.dummy_btn {
+		cursor: pointer;
+		margin: 0 0 0 10px;
+		float: left;
+		padding: 0;
+		height: inherit;
+	}
+	.help_info {
+		margin: 0 0 10px !important;
+		padding: 0 !important;
+		height: 21px;
+	}
+	.facebook {
+		width: 178px;
+	}
+	.twitter {
+		width: 163px;
+	}
+	img {
+		width: auto;
+	}
+}
