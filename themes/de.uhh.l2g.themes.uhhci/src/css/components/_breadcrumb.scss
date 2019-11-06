@@ -1,10 +1,48 @@
-.breadcrumb-horizontal {
-	clear: both;
-	font-size: 18px;
-	min-height: 28px;
-	margin: 0 0 20px 0;
-	line-height: 20px; padding-left: 0;
+.breadcrumb, .path-wide, .path {
+	padding: 0;
+	padding-left: 26px;
 	background-image: url("../images/home.png");
 	background-repeat: no-repeat;
-	background-position: left 1px;
+	background-position-y: center;
+	
+	.breadcrumb-item, a:not(.breadcrumb-link), span:not(.uhh-icon-arrow-right):not(.breadcrumb-text-truncate) {
+		font-size: $h3-font-size;
+		padding-right: 0;
+		
+		&:not(:first-child) {
+			padding-left: 41px;
+		}
+		
+		&:first-child {
+			margin-right: 15px;
+		}
+	}
+	
+	.breadcrumb-item + .breadcrumb-item::before, .uhh-icon-arrow-right {
+		display: inline-block;
+		background-image: url("../images/arrow.png");
+		background-repeat: no-repeat;
+		background-position-y: center;
+		width: 29px;
+		margin-right: 15px;
+	}
+	
+	span:not(.uhh-icon-arrow-right):not(.breadcrumb-text-truncate), span.breadcrumb-text-truncate.active {
+		font-family: $font-family-bold;
+	}
+	
+	.breadcrumb-link {
+		color: $font-color;
+	}
+	
+	@include media-breakpoint-down(md) {
+		display: none;
+	}
+}
+
+.path-wide, .path {
+	a:not(.breadcrumb-link), span:not(.uhh-icon-arrow-right) {
+		margin-right: 15px;
+		padding-left: 0 !important;
+	}
 }
