@@ -98,7 +98,7 @@
 					<div class="carousel-item">
 		<div class="row-fluid video-box-list">
 	</c:if>
-					<div class="col-sm-6 col-md-4 col-xs-12 video-box"
+					<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 video-box"
 						onClick="window.location='${vid.url}'">
 						<div class="video-box-image-container">
 							<div class="video-box-image">
@@ -189,7 +189,7 @@
 				<div class="carousel-item">
 					<div class="row-fluid video-box-list">
 						</c:if>
-						<div class="col-sm-6 col-md-4 col-xs-12 video-box"
+						<div class="col-xs-12 col-sm-6 col-md-6 col-lg-4 video-box"
 							onClick="window.location='${vid.url}'">
 							<div class="video-box-image-container">
 								<div class="video-box-image">
