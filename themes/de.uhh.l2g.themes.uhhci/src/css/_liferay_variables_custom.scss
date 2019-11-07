@@ -1,7 +1,15 @@
+@import "ci_variables";
+
 $theme-color-palette: () !default;
 $theme-color-palette: map-merge((
 	lighter: $gray-100,
 	gray-dark: $gray-800,
-	highlight-color: #027BCB,
-	font-color: #4E4E4E
+	primary-color: $primary-color,
+	primary-hover-color: $primary-hover-color,
+	secondary-color: $secondary-color,
+	font-color: $font-color,
+	shadow-color: $shadow-color,
+	border-color: $border-color,
+	dark-color: $dark-color,
+	signal-color: $signal-color
 ), $theme-color-palette);

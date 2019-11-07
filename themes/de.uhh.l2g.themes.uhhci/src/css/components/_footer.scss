@@ -1,5 +1,5 @@
 #footer {
-	margin-top: 1rem;
+	margin-top: $global-margin-lg;
 
 	> .container {
 		padding-bottom: 3rem;
@@ -18,7 +18,7 @@
 				padding-left: 12px;
 				margin-left: 20px;
 				font-family: $font-family-bold;
-				font-size: 14px;
+				font-size: $h5-font-size;
 				line-height: normal;
 				color: $font-color;
 			}

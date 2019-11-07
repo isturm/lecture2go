@@ -1,41 +1,43 @@
-@import 'liferay-font-awesome/scss/font-awesome';
-@import 'liferay-font-awesome/scss/glyphicons';
-@import "components/breadcrumb";
-@import "components/color";
-@import "components/group-item";
-@import "components/info-panel";
-@import "components/header";
-@import "components/navigation";
-@import "components/footer";
-@import "components/sidebar";
-@import "components/splitter";
-@import "components/widget";
-@import "components/fonts";
-@import "portlet/portlet";
-@import "portlet/portlet_decorators";
-@import "components/common";
-@import "components/front-page";
-@import "components/video-catalog";
-@import "components/video-details";
-@import "components/socialshareprivacy";
-
-.btn-group + .info-panel {
-	@include media-breakpoint-up(md) {
-		top: auto;
-	}
+body {
+	font-family: $font-family-default;
+	color: $font-color;
 }
 
 h1, h2, h3, h4, h5 {
     font-family: $font-family-regular-caps;
 }
 
+h1 {
+	font-size: $h1-font-size;
+}
+
 h2 {
 	font-size: $h2-font-size;
 }
 
-body {
-	font-family: $font-family-default;
-	color: $font-color;
+h3 {
+	font-size: $h3-font-size;
+}
+
+h4 {
+	font-size: $h4-font-size;
+}
+
+h5 {
+	font-size: $h5-font-size;
+}
+
+a {
+  color: $font-color;
+}
+
+img {
+  width: 100%;
+}
+
+ul {
+  list-style-type: none;
+  padding: 0;
 }
 
 ul.colored-bullets {
@@ -47,7 +49,7 @@ ul.colored-bullets {
 	
 	li:before {
 		content: ' ';
-		background: #e3001b;
+		background: $signal-color;
 		position: absolute;
 		width: 6px;
 		height: 6px;
@@ -56,6 +58,75 @@ ul.colored-bullets {
 	}
 }
 
+canvas {
+  max-width: 100%;
+}
+
+.btn-group + .info-panel {
+	@include media-breakpoint-up(md) {
+		top: auto;
+	}
+}
+
 .autofit-col-expand {
 	min-width: 0;
+}
+
+.titel {
+  font-family: $font-family-bold-caps;
+  color: $secondary-color;
+  background-color: $primary-color;
+  font-size: $h2-font-size;
+}
+
+.video-label {
+  display: flex;
+  color: $primary-color;
+  padding: $global-padding-sm 0;
+  font-family: $font-family-bold-caps;
+  font-size: $h3-font-size;
+
+  a {
+    padding-right: $global-padding-sm;
+    color: $primary-color;
+  }
+  
+  .separator {
+  	font-family: $font-family-regular-caps;
+  	margin: 0 12px;
+  	border-top: none;
+  }
+}
+
+.video-title {
+  font-size: $h2-font-size;
+  color: $font-color;
+  font-family: $font-family-bold;
+}
+
+.no-gutters {
+  padding: 0 !important;
+  margin: 0 !important;
+}
+
+.panel-toggle {
+  .title-text {
+    margin-left: 30px;
+  }
+}
+
+.toggler-header-collapsed:after, .toggler-header-expanded:after {
+  content: "";
+  position: absolute;
+  width: $icon-size;
+  height: $icon-size;
+  top: 35%;
+}
+
+.toggler-header-collapsed:after {
+  background-image: url("../images/plus-blau.svg");
+}
+
+.toggler-header-expanded:after {
+  background-image: url("../images/minus-weiss.svg");
 }

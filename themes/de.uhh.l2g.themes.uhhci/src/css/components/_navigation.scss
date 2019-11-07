@@ -13,8 +13,8 @@
 	
 		a {
 			font-family: $font-family-bold-caps;
-			font-size: 17px;
-			color: #fff;
+			font-size: $h4-font-size;
+			color: $secondary-color;
 		}
 	}
 	
@@ -29,12 +29,12 @@
 			padding: 0;
 			border: none;
 			border-radius: 0;
-			background-color: $highlight-color;
+			background-color: $primary-color;
 		}
 			
 		a,span {
-			font-size: 17px;
-			color: #fff;
+			font-size: $h4-font-size;
+			color: $secondary-color;
 		}
 		
 		a {
@@ -53,7 +53,7 @@
 			height: 45px;
 			width: 50px;
 			float: left;
-			background-color: $highlight-color;
+			background-color: $primary-color;
 			background-image: url("../images/UHH_web_lupe_31x31.png");
 			background-position: center;
 			background-repeat: no-repeat;
@@ -62,8 +62,8 @@
 	
 	#search.closeSearch span {
 		background-image: url("../images/UHH_Icon-x_31x31.png");
-		border-left: 1px solid #fff;
-		border-right: 1px solid #fff;
+		border-left: 1px solid $secondary-color;
+		border-right: 1px solid $secondary-color;
 	}
 	
 	#menu {
@@ -72,7 +72,7 @@
 			height: 45px;
 			width: 50px;
 			float: left;
-			background-color: $highlight-color;
+			background-color: $primary-color;
 			background-image: url("../images/UHH_web_hamburger-menu_31x31tiny.png");
 			background-position: center;
 			background-repeat: no-repeat;
@@ -81,12 +81,12 @@
 	
 	#menu.closeMenu span {
 		background-image: url("../images/UHH_Icon-x_31x31.png");
-		border-left: 1px solid #fff;
-		box-shadow: 0 1px 0 0 $highlight-color,1px 1px 0 0 $highlight-color;
+		border-left: 1px solid $secondary-color;
+		box-shadow: 0 1px 0 0 $primary-color,1px 1px 0 0 $primary-color;
 	}
 	
 	#navigationCollapse {
-		background-color: $highlight-color;
+		background-color: $primary-color;
 		overflow: hidden;
 		position: fixed;
 		bottom: 0;
@@ -94,7 +94,7 @@
 		max-width: 420px;
 		z-index: 100000;
 		height: calc(100% - 45px);
-		border-top: 1px solid #fff;
+		border-top: 1px solid $secondary-color;
 		
 		right: -420px;
 		transition: opacity 0.25s,right 0.1s;
@@ -106,14 +106,14 @@
 		}
 		
 		.nav-item {
-			border-bottom: 1px solid #fff;
+			border-bottom: 1px solid $secondary-color;
 			
 			a {
 				height: 45px;
 				padding: 10px 10px 10px 7%;
 				font-family: $font-family-semi-light-caps;
-				font-size: 19px;
-				color: #fff;
+				font-size: $h3-font-size;
+				color: $secondary-color;
 				
 				span {
 					font-family: $font-family-semi-light-caps;
@@ -121,10 +121,10 @@
 			}
 			
 			a:hover {
-				background-color: #fff !important;
+				background-color: $secondary-color !important;
 				
 				span {
-					color: $highlight-color !important;
+					color: $primary-color !important;
 				}
 			}
 			
@@ -134,8 +134,8 @@
 				}
 				
 				a:hover {
-					background-color: #fff !important;
-					color: $highlight-color !important;
+					background-color: $secondary-color !important;
+					color: $primary-color !important;
 				}
 			}
 		}
@@ -146,7 +146,7 @@
 		top: 45px;
 		right: 0;
 		bottom: 0;
-		background: $highlight-color;
+		background: $primary-color;
 		z-index: 99999;
 		transition: opacity 0.25s,left 0s;
 		left: 100%;
@@ -159,13 +159,13 @@
 	}
 	
 	#searchCollapse {
-		background-color: $highlight-color;
+		background-color: $primary-color;
 		left: 0;
 		top: 45px;
 		position: fixed;
 		width: 100%;
 		z-index: 100000;
-		border-top: 1px solid #fff;
+		border-top: 1px solid $secondary-color;
 		padding: 20px 20px 24px 20px;
 		transition: opacity 0.25s;
 		opacity: 0;
@@ -178,7 +178,7 @@
 			width: 100%;
 			height: 40px;
 			border: 0;
-			background:#fff;
+			background:$secondary-color;
 			font-family: $font-family-default;
 			padding: 0 30px 0 15px;
 		}
@@ -187,7 +187,7 @@
 			width: 30px;
 			height: 40px;
 			border: 0;
-			background: #fff;
+			background: $secondary-color;
 			position: absolute;
 			right: 20px;
 			top: 20px;
@@ -212,9 +212,9 @@
 		margin-left: 36px;
 		
 		> a {
-			color: #333;
+			color: $dark-color;
 			font-family: $font-family-bold-caps;
-			font-size: 25px;
+			font-size: $h1-font-size;
 			text-transform: uppercase;
 			padding: 0;
 		}
@@ -234,7 +234,7 @@
 		margin-top: 0;
 		margin-left: -50px;
 		padding: 30px 70px 35px 50px;
-		background-color: #fff;
+		background-color: $secondary-color;
 		position: absolute;
 		border: none;
 		border-radius: 0;
@@ -244,21 +244,21 @@
 			clear: left;
 			float: left;
 			width: 100%;
-			border-bottom: 1px solid #bbb;
+			border-bottom: 1px solid $border-color;
 		}
 		
 		a {
-			color: #333;
+			color: $dark-color;
 			font-family: $font-family-bold-caps;
-			font-size: 20px;
+			font-size: $h2-font-size;
 			line-height: 30px;
 			padding: 20px 0;
 			margin: 0 -20px 0 0;
 		}
 		
 		a:hover {
-			color: $highlight-color;
-			background-color: #fff;
+			color: $primary-color;
+			background-color: $secondary-color;
 		}
 		
 		li:not(:last-child) > a {
@@ -269,7 +269,7 @@
 
 #navigationDesktop .nav-item:hover {
 	span {
-		color: $highlight-color;
+		color: $primary-color;
 	}
 
 	.child-menu {
@@ -288,7 +288,7 @@
 		height: 100%;
 		
 		a {
-			font-size: 16px;
+			font-size: $h4-font-size;
 			font-family: $font-family-semi-light-caps; 
 		}
 	}

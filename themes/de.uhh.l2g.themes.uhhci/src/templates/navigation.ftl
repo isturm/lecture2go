@@ -1,5 +1,5 @@
 <#if has_navigation && is_setup_complete>
-	<div id="navigation" class="bg-highlight-color autofit-row">
+	<div id="navigation" class="bg-primary-color autofit-row">
 		<div class="container">
 			<div id="navigationTitle" class="autofit-col">
 				<a href="/">Universität Hamburg</a>
