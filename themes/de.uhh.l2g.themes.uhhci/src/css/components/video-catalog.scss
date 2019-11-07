@@ -17,13 +17,7 @@
   }
 
   .panel-body {
-    padding: $global-padding-md 0;
-
-    ul {
-      color: red;
-      list-style-type: square;
-      padding-left: 2rem;
-    }
+    padding: 15px 18px 3px 27px;
   }
 
   .panel-heading {
@@ -83,10 +77,6 @@
 
     .allcreators {
       font-family: $font-family-default;
-    }
-
-    @include media-breakpoint-down(md) {
-      flex-direction: column;
     }
   }
 

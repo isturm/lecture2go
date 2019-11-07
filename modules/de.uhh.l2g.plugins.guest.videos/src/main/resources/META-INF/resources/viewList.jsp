@@ -105,9 +105,9 @@
             <liferay-ui:panel-container>
                 <!-- parentinstitution filter -->
                 <c:if test="${presentParentInstitutions.size()>0}">
-                    <liferay-ui:panel extended="true" title="institution"
+                    <liferay-ui:panel defaultState="collapsed" extended="true" title="institution"
                                       cssClass='${hasParentInstitutionFiltered ? "filtered" : "notFiltered"}'>
-                        <ul>
+                        <ul class="colored-bullets">
                             <c:forEach items="${presentParentInstitutions}" var="parentInstitution">
                                 <portlet:renderURL var="filterByParentInstitution">
                                     <portlet:param name="mvcRenderCommandName" value="/view/render/list"/>
@@ -132,9 +132,9 @@
                 <!-- institution filter -->
                 <c:if test="${hasParentInstitutionFiltered}">
                     <c:if test="${presentInstitutions.size()>0}">
-                        <liferay-ui:panel extended="true" title="sub-institution"
+                        <liferay-ui:panel defaultState="collapsed" extended="true" title="sub-institution"
                                           cssClass='${hasInstitutionFiltered ? "filtered" : "notFiltered"}'>
-                            <ul>
+                            <ul class="colored-bullets">
                                 <c:forEach items="${presentInstitutions}" var="institution">
                                     <portlet:renderURL var="filterByInstitution">
                                         <portlet:param name="mvcRenderCommandName" value="/view/render/list"/>
@@ -159,9 +159,9 @@
 
                 <!-- terms filter -->
                 <c:if test="${presentTerms.size()>0}">
-                    <liferay-ui:panel extended="true" title="term"
+                    <liferay-ui:panel defaultState="collapsed" extended="true" title="term"
                                       cssClass='${hasTermFiltered ? "filtered" : "notFiltered"}'>
-                        <ul class="terms">
+                        <ul class="terms colored-bullets">
                             <c:forEach items="${presentTerms}" var="term">
                                 <portlet:renderURL var="filterByTerm">
                                     <portlet:param name="mvcRenderCommandName" value="/view/render/list"/>
@@ -189,9 +189,9 @@
 
                 <!-- category filter -->
                 <c:if test="${presentCategories.size()>0}">
-                    <liferay-ui:panel extended="true" title="category"
+                    <liferay-ui:panel defaultState="collapsed" extended="true" title="category"
                                       cssClass='${hasCategoryFiltered ? "filtered" : "notFiltered"}'>
-                        <ul>
+                        <ul class="colored-bullets">
                             <c:forEach items="${presentCategories}" var="category">
                                 <portlet:renderURL var="filterByCategory">
                                     <portlet:param name="mvcRenderCommandName" value="/view/render/list"/>
@@ -395,7 +395,7 @@
 
                                     <li class="videotile small" onClick="window.location='${vURL}'">
                                             <%--                                        <div class="col-md-3 videotile metainfolist small">--%>
-                                        <div class="col-md-3 col-12 video-image-wrapper">
+                                        <div class="col-md-3 video-image-wrapper">
                                             <img class="video-image" src="${v.imageSmall}">
                                         </div>
                                             <%--                                        </div>--%>
