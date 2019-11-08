@@ -19,7 +19,7 @@
     }
 
     #vid-control {
-      color: white;
+      color: $secondary-color;
     }
   }
 
@@ -36,7 +36,7 @@
       align-items: center;
 
       .l2go-title {
-        background-color: white;
+        background-color: $secondary-color;
         opacity: 0.8;
         padding: $global-padding-lg;
         font-size: $h2-font-size;
@@ -51,7 +51,7 @@
       .l2go-subtitle {
         font-size: $h3-font-size;
         font-family: $font-family-bold;
-        color: white;
+        color: $secondary-color;
         z-index: 0;
 
         @include media-breakpoint-down(md) {
@@ -70,23 +70,23 @@
       }
 
       #outer-catalogue-button {
-        background-color: $highlight-color;
+        background-color: $primary-color;
         border: none;
-        color: $button-text-color;
+        color: $secondary-color;
         padding: 16px 30px 16px 36px;
         z-index: 0;
         font-size: $h3-font-size;
         font-family: $font-family-bold-caps;
 
         &:hover {
-          background-color: $dark-blue;
+          background-color: $primary-hover-color;
         }
         
         &:after {
         	content: ">";
         	right: 30px;
         	bottom: 16px;
-        	color: $button-text-color
+        	color: $secondary-color
         }
       }
     }
@@ -106,7 +106,7 @@
 
 
   .video-box {
-    background-color: white;
+    background-color: $secondary-color;
     height: $video-box-height;
 
     .video-label {
@@ -122,8 +122,8 @@
 .carousel-control-next, .carousel-control-prev {
   height: $video-box-height / 4;
   width: $video-box-height /8;
-  margin: 1rem;
-  background: white;
+  margin: $global-margin-lg;
+  background: $secondary-color;
   top: 40%
 }
 

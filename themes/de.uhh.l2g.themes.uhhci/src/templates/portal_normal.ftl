@@ -27,7 +27,7 @@
 			<div class="navbar navbar-expand-lg">
 				<#include "${full_templates_path}/navigation.ftl" />
 			</div>
-			<div class="align-items-baseline autofit-row container navbar-top">
+			<div class="align-items-baseline autofit-row container site-header">
 				<a class="${logo_css_class} align-items-center d-md-inline-flex logo-md" href="${site_default_url}" title="<@liferay.language_format arguments="" key="go-to-x" />">
 					<img alt="${logo_description}" class="mr-2" src="${site_logo}" />
 				</a>
@@ -38,7 +38,7 @@
 					<div class="autofit-col header-site-names">
 						<a href="https://www.rrz.uni-hamburg.de">
 							<b>${site_name}</b>
-							<div class="site-description text-highlight-color">${site_description}</div>
+							<div class="site-description text-primary-color">${site_description}</div>
 						</a>
 					</div>
 				</#if>

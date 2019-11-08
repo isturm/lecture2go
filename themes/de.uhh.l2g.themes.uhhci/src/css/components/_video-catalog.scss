@@ -27,12 +27,12 @@
   }
 
   .toggler-header-expanded, .toggler-header-collapsed:hover {
-    background-color: $light-blue;
-    color: white;
+    background-color: $primary-color;
+    color: $secondary-color;
   }
 
   .toggler-header-collapsed {
-    background-color: $toggle-collapsed-color;
+    background-color: $shadow-color;
     color: $font-color;
   }
 
@@ -40,7 +40,7 @@
     position: absolute;
     display: flex;
     justify-content: flex-end;
-    color: white;
+    color: $secondary-color;
     width: 31px;
     height: 31px;
     background: linear-gradient(to top right, transparent 0%, transparent 50%, black 50%, black 100%);
@@ -57,7 +57,7 @@
     margin-top: -23px;
 
     button {
-      color: $light-blue;
+      color: $primary-color;
       background: transparent;
       border: 0;
     }
@@ -90,7 +90,7 @@
   }
 
   .video-image-big {
-    box-shadow: 4px 4px 0 0px #535252, 8px 8px 2px 0px #bebcbc;
+    box-shadow: 4px 4px 0 0px #535252, 8px 8px 2px 0px $border-color;
   }
 
   .lfr-search-container {

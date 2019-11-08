@@ -1,0 +1,44 @@
+.site-header {
+	padding-bottom: $global-padding-lg;
+	padding-top: $global-padding-lg;
+	position: relative;
+
+	.header-site-names {
+		position: absolute;
+		bottom: 0;
+		right: 0;
+		padding-bottom: $global-padding-lg;
+		padding-top: $global-padding-lg;
+		padding-right: 12px;
+		font-size: $h1-font-size;
+		line-height: 1.1em;
+		@include media-breakpoint-down(md) {
+			line-height: 1.25em;
+			font-size: $h4-font-size;
+		}
+		
+		b {
+			letter-spacing: 1px;
+			font-family: $font-family-bold-caps;
+			color: $dark-color;
+			@include media-breakpoint-down(md) {
+				color: $font-color;
+			}
+		}
+		
+		.site-description {
+		    font-family: $font-family-semi-light-caps;
+			max-width: 300px;
+			@include media-breakpoint-down(md) {
+				display:none;
+			}
+		}
+	}
+	
+	.logo img {
+		height: 88px;
+		@include media-breakpoint-down(md) {
+			height: 44px;
+		}
+	}
+}

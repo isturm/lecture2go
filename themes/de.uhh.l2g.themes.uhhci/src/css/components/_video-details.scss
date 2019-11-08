@@ -56,11 +56,11 @@
 
 .related-lectureseries-name {
   font-family: $font-family-bold-caps;
-  color: $highlight-color;
+  color: $primary-color;
   font-size: $h3-font-size;
 
   a {
-    color: $highlight-color;
+    color: $primary-color;
   }
 }
 
@@ -86,11 +86,11 @@
   .nav-tabs {
     font-family: $font-family-bold;
     font-size: $h3-font-size;
-    border-bottom: 1px solid $light-color;
+    border-bottom: 1px solid $border-color;
 
 
     .nav-link {
-      background-color: $light-color;
+      background-color: $border-color;
       color: $font-color;
       margin-right: $global-margin-sm;
       padding: $global-padding-md;
@@ -101,15 +101,15 @@
 
       &.active {
         border: 1px solid;
-        border-color: $light-color $light-color white;
-        background-color: white;
+        border-color: $border-color $border-color $secondary-color;
+        background-color: $secondary-color;
       }
     }
   }
 
   .tab-content {
     border: 1px solid;
-    border-color: white $light-color $light-color $light-color;
+    border-color: $secondary-color $border-color $border-color $border-color;
   }
 
   #share {
@@ -141,7 +141,7 @@
     }
 
     .lexicon-icon-outline {
-      color: $light-color;
+      color: $border-color;
     }
   }
 
