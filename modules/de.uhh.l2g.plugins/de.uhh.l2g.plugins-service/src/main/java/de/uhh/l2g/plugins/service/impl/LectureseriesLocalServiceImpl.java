@@ -148,7 +148,7 @@ public class LectureseriesLocalServiceImpl extends LectureseriesLocalServiceBase
 	
 	public void updateOpenAccess(Video video, Lectureseries lectureseries) throws SystemException{
 		// video lecture series table by video
-		Video_LectureseriesLocalServiceUtil.updateOpenAccessByVideo(video);
+//		Video_LectureseriesLocalServiceUtil.updateOpenAccessByVideo(video);
 		
 		//lecture series
 		Video latestOpenAccessVideo = VideoLocalServiceUtil.getLatestOpenAccessVideoForLectureseries(lectureseries.getLectureseriesId());

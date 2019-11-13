@@ -105,7 +105,7 @@ import de.uhh.l2g.plugins.util.VideoGenerationDateComparator;
 		"com.liferay.portlet.header-portlet-javascript=/upload-9.27.0/js/jquery.fileupload.js",		
 		"com.liferay.portlet.header-portlet-javascript=/js/jquery.loadTemplate.min.js",
 		"com.liferay.portlet.header-portlet-javascript=/js/jquery.datetimepicker.js",
-		"com.liferay.portlet.header-portlet-javascript=https://cdn.jwplayer.com/libraries/aVr2lJgW.js",
+		"com.liferay.portlet.header-portlet-javascript=/player/jwplayer-8.4.1/jwplayer.js",
 		"com.liferay.portlet.header-portlet-javascript=/js/jwplayer.custom.util.js",		
 		"com.liferay.portlet.header-portlet-javascript=/js/de.uhh.l2g.plugins.creators.js",		
 		"javax.portlet.display-name=Admin Videos",
@@ -750,17 +750,10 @@ public class AdminVideoManagementPortlet extends MVCPortlet {
 						Video_InstitutionLocalServiceUtil.addVideo_Institution(vi);
 					}
 					//update lg_video_lectureseries 
-					Video_Lectureseries vl = Video_LectureseriesLocalServiceUtil.createVideo_Lectureseries(new Long(0));
-					vl.setVideoId(video.getVideoId());
-					vl.setLectureseriesId(lId);
-					vl.setOpenAccess(video.getOpenAccess());
-					Video_LectureseriesLocalServiceUtil.removeByVideoId(video.getVideoId());//delete old entries
-					Video_LectureseriesLocalServiceUtil.addVideo_Lectureseries(vl);//add new
 					LectureseriesLocalServiceUtil.updateLectureseries(newLect);
 					//update lectureseries
 					LectureseriesLocalServiceUtil.updateOpenAccess(video, newLect);
 					LectureseriesLocalServiceUtil.updatePreviewVideoOpenAccess(newLect);
-					
 				}else{
 					//update institution for video only without lecture series
 					List<Video_Institution> vinst = Video_InstitutionLocalServiceUtil.getByVideo(video.getVideoId());

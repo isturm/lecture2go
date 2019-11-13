@@ -313,6 +313,8 @@
 	</div>
 </div>
 
+<script type="text/javascript">jwplayer.key="qKvU61clkb6v98R2Yoc/cL6x7dFfJ3we+r6nxD6iB0Q=";</script>
+
 <script>
 	var nameSpace = "<portlet:namespace></portlet:namespace>";
 	var videoId ="${reqVideo.videoId}";
