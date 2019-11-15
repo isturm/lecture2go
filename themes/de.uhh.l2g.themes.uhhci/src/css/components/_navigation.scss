@@ -7,6 +7,9 @@
 	padding: 0 0px 0 20px;
 	width: 100%;
 	align-items: center;
+	top: 0;
+	position: fixed;
+	z-index: 40;
 	
 	#navigationTitle {
 		align-self: center;
@@ -82,7 +85,6 @@
 	#menu.closeMenu span {
 		background-image: url("../images/UHH_Icon-x_31x31.png");
 		border-left: 1px solid $secondary-color;
-		box-shadow: 0 1px 0 0 $primary-color,1px 1px 0 0 $primary-color;
 	}
 	
 	#navigationCollapse {
@@ -105,12 +107,12 @@
 			opacity: 1;
 		}
 		
-		.nav-item {
+		.nav-item, .navbar-company {
 			border-bottom: 1px solid $secondary-color;
 			
 			a {
 				height: 45px;
-				padding: 10px 10px 10px 7%;
+				padding: 10px 10px 10px 14%;
 				font-family: $font-family-semi-light-caps;
 				font-size: $h3-font-size;
 				color: $secondary-color;
@@ -118,14 +120,33 @@
 				span {
 					font-family: $font-family-semi-light-caps;
 				}
+				
+				.lfr-nav-child-toggle {
+					float: right;
+					background-color: $primary-hover-color-light;
+					height: 45px;
+					width: 50px;
+					position: absolute;
+					top: 0;
+					right: 0;
+					text-align: center;
+					padding-top: 10px;
+					
+					&::after {
+						content: ">";
+						color: $secondary-color;
+					}
+				}
+				
+				.lexicon-icon {
+					display: none;
+				}
 			}
 			
 			a:hover {
 				background-color: $secondary-color !important;
-				
-				span {
-					color: $primary-color !important;
-				}
+				color: $primary-color !important;
+				text-decoration: none;
 			}
 			
 			.child-menu {			
@@ -138,6 +159,28 @@
 					color: $primary-color !important;
 				}
 			}
+			
+			&.open {
+				.lexicon-icon {
+					display: block;
+					margin-left: 16px;
+					margin-top: 6px;	
+				}
+				
+				.lfr-nav-child-toggle::after {
+					display: none;
+				}
+			}
+		}
+		
+		.navbar-company > a {
+			display: block;
+			font-family: $font-family-bold-caps;
+			padding: 10px 10px 10px 7%;
+		}
+		
+		&.collapsing {
+			transition: none;
 		}
 	}
 	
@@ -198,11 +241,25 @@
 			background-size: 10px;
 			background-image: url(../images/pfeil-blaugross.svg);
 		}
+		
+		&.collapsing {
+			transition: none;
+		}
 	}
 }
 
 #navigationDesktop {
+	margin-bottom: $global-margin-md;
 	display: none;
+	z-index: 40;
+	
+	&.sticky {
+		position: fixed;
+		top: 0;
+		background: $secondary-color;
+		left: 0;
+		right: 0;
+	}
 	
 	.lexicon-icon {
 		display: none;
@@ -214,7 +271,7 @@
 		> a {
 			color: $dark-color;
 			font-family: $font-family-bold-caps;
-			font-size: $h1-font-size;
+			font-size: $large-font-size;
 			text-transform: uppercase;
 			padding: 0;
 		}
@@ -285,7 +342,8 @@
 	}
 	
 	#navigation {
-		height: 100%;
+		position: relative;
+		height: 30px;
 		
 		a {
 			font-size: $h4-font-size;

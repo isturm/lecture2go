@@ -1,0 +1,30 @@
+.video-label {
+  display: flex;
+  color: $primary-color;
+  padding: $global-padding-sm 0;
+  font-family: $font-family-bold-caps;
+  font-size: $h3-font-size;
+
+  a {
+    padding-right: $global-padding-sm;
+    color: $primary-color !important;
+  }
+  
+  .separator {
+  	font-family: $font-family-regular-caps;
+  	margin: 0 12px;
+  	border-top: none;
+  }
+  
+  @include media-breakpoint-down(md) {
+  	.term-of-creation {
+  		display: none;
+  	}
+  }
+}
+
+.video-title {
+  font-size: $h2-font-size;
+  color: $font-color;
+  font-family: $font-family-bold;
+}

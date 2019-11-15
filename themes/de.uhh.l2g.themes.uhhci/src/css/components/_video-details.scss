@@ -84,12 +84,16 @@
 .metainfo, .metainfo-wide {
 
   .nav-tabs {
+    @include media-breakpoint-down(md) {
+    	display: none;
+    }
     font-family: $font-family-bold;
     font-size: $h3-font-size;
     border-bottom: 1px solid $border-color;
 
 
     .nav-link {
+      border-radius: 0;
       background-color: $border-color;
       color: $font-color;
       margin-right: $global-margin-sm;
@@ -108,8 +112,29 @@
   }
 
   .tab-content {
-    border: 1px solid;
-    border-color: $secondary-color $border-color $border-color $border-color;
+    @include media-breakpoint-up(lg) {
+      border: 1px solid;
+      border-color: $secondary-color $border-color $border-color $border-color;
+      
+      .toggler-header {
+      	display: none;
+      }
+      
+      .toggler-content {
+      	display: block;
+      	margin-top: 0;
+      }
+      
+      .panel {
+      	border: none;
+      }
+    }
+    
+    .tab-pane {
+    	@include media-breakpoint-down(md) {
+    		display: block;
+    	}
+    }
   }
 
   #share {

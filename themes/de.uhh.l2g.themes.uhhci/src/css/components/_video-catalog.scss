@@ -20,22 +20,6 @@
     padding: 15px 18px 3px 27px;
   }
 
-  .panel-heading {
-    font-size: $h3-font-size;
-    font-family: $font-family-bold-caps;
-    padding: $global-padding-lg;
-  }
-
-  .toggler-header-expanded, .toggler-header-collapsed:hover {
-    background-color: $primary-color;
-    color: $secondary-color;
-  }
-
-  .toggler-header-collapsed {
-    background-color: $shadow-color;
-    color: $font-color;
-  }
-
   .badge {
     position: absolute;
     display: flex;
@@ -48,6 +32,12 @@
     border: 0;
     right: 0;
     margin-left: auto;
+    
+    @include media-breakpoint-down(sm) {
+    	height: 62px;
+    	width: 62px;
+    	font-size: $h1-font-size;
+    }
   }
 
   .videolist {
@@ -60,9 +50,20 @@
       color: $primary-color;
       background: transparent;
       border: 0;
+      
+      .icon-chevron-down::before {
+      	content: "\f078" !important;
+      }
+      
+      @include media-breakpoint-down(sm) {	      
+	      i::before {
+	        font-size: 30px;
+	      }
+	  }
     }
 
     ul {
+      width: 100%;
       padding-inline-start: $global-padding-lg;
       @include media-breakpoint-down(md) {
         padding-inline-start: $global-padding-sm;
@@ -71,12 +72,52 @@
   }
 
   .videotile {
+  	cursor: pointer;
     display: flex;
     flex-direction: row;
-    margin: $global-margin-lg 0;
+    padding: $global-padding-lg 0;
 
     .allcreators {
       font-family: $font-family-default;
+    }
+    
+    &.small {
+    	border-top: 1px solid $border-color;
+    	
+    	.video-image-wrapper {
+    		width: 50%;
+    	}
+    	
+    	.term-of-creation-mobile {
+    		font-family: $font-family-bold;
+    		color: $primary-color;
+    		padding-right: 0;
+    		float: right;
+    	}
+    	
+    	@include media-breakpoint-up(md) {
+    		.term-of-creation-mobile {
+    			display: none;
+    		}	
+    	}
+    	
+    	@include media-breakpoint-down(sm) {
+    		.metainfo-small {
+    		
+    			.title-small {
+    				flex: none;
+    				max-width: none;
+    			}
+    		
+    			.term-of-creation {
+    				display: none;
+    			}
+    		}
+    	}    			
+    }
+    
+    &:hover {
+    	background-color: $border-color;
     }
   }
 
@@ -92,6 +133,10 @@
   .video-image-big {
     box-shadow: 4px 4px 0 0px #535252, 8px 8px 2px 0px $border-color;
   }
+  
+  .video-image-wrapper {
+	padding-left: 0;
+  }
 
   .lfr-search-container {
     overflow: hidden;
@@ -104,10 +149,4 @@
   .lfr-search-container {
     margin: 0;
   }
-}
-
-table, thead, tbody, th, td, tr {
-  display: block;
-  padding: 0 !important;
-  margin: 0 !important;
 }

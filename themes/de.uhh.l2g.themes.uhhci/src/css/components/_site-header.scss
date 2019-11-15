@@ -2,6 +2,7 @@
 	padding-bottom: $global-padding-lg;
 	padding-top: $global-padding-lg;
 	position: relative;
+	margin-top: 45px;
 
 	.header-site-names {
 		position: absolute;
@@ -20,6 +21,7 @@
 		b {
 			letter-spacing: 1px;
 			font-family: $font-family-bold-caps;
+			font-weight: normal;
 			color: $dark-color;
 			@include media-breakpoint-down(md) {
 				color: $font-color;
@@ -37,8 +39,22 @@
 	
 	.logo img {
 		height: 88px;
+		width: auto;
 		@include media-breakpoint-down(md) {
 			height: 44px;
+		}
+	}
+}
+
+@include media-breakpoint-up(lg) {
+	.site-header {
+		padding-top: 0;
+		margin-top: $global-margin-xx-lg;
+		padding-bottom: $global-padding-xx-lg;
+		
+		.header-site-names {
+			padding-bottom: $global-padding-xx-lg;
+			padding-top: $global-padding-xx-lg;
 		}
 	}
 }

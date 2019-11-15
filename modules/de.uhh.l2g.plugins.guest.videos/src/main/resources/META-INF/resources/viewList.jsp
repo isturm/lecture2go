@@ -60,12 +60,13 @@
 <div style="display: none;" id="portletNamespace"><portlet:namespace/></div>
 
 <div class="path-wide">
-    <A HREF=${portalURL}>${company.name}</A><span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-    <A HREF="${backURL0}">${pageName}</A>
-    <span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+	<a href="${portalURL}" class="breadcrumb-item">${company.name}</a>
+	<span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+	<a href="${backURL0}" class="breadcrumb-item">${pageName}</a>
+	<span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
 
     <c:if test="${rInst.name.length()>0}">
-        <A HREF="${backURL0}">${rInst.name}</A>
+        <A HREF="${backURL0}" class="breadcrumb-item">${rInst.name}</A>
     </c:if>
 
     <c:if test="${pInst.name.length()>0}">
@@ -78,7 +79,7 @@
             <portlet:param name="creatorId" value="0"/>
         </portlet:renderURL>
         <span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-        <A HREF="${backURL1}">${pInst.name}</A>
+        <A HREF="${backURL1}" class="breadcrumb-item">${pInst.name}</A>
     </c:if>
 
     <c:if test="${insti.name.length()>0}">
@@ -91,7 +92,7 @@
             <portlet:param name="creatorId" value="0"/>
         </portlet:renderURL>
         <span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-        <A HREF="${backURL2}">${insti.name}</A>
+        <A HREF="${backURL2}" class="breadcrumb-item">${insti.name}</A>
     </c:if>
 </div>
 
@@ -105,7 +106,7 @@
             <liferay-ui:panel-container>
                 <!-- parentinstitution filter -->
                 <c:if test="${presentParentInstitutions.size()>0}">
-                    <liferay-ui:panel defaultState="collapsed" extended="true" title="institution"
+                    <liferay-ui:panel defaultState='${hasParentInstitutionFiltered ? "open" : "collapsed"}' extended="true" title="institution"
                                       cssClass='${hasParentInstitutionFiltered ? "filtered" : "notFiltered"}'>
                         <ul class="colored-bullets">
                             <c:forEach items="${presentParentInstitutions}" var="parentInstitution">
@@ -119,11 +120,15 @@
                                     <portlet:param name="creatorId" value="${creatorId}"/>
                                     <portlet:param name="findVideos" value="${findVideos}"/>
                                 </portlet:renderURL>
-                                <li class="filter-menu"><a href="${filterByParentInstitution}">
-                                    <div class="filter-menu-link">
-                                        <span ${hasParentInstitutionFiltered ? 'class="icon-large icon-remove"' : ''}></span>${parentInstitution.name}
-                                    </div>
-                                </a></li>
+                                <li class="filter-menu">
+                                	<a href="${filterByParentInstitution}" class="row">
+                                    	<div class="filter-menu-link">
+                                    		${parentInstitution.name}
+                                    	</div>
+                                    	<div class="autofit-col-expand"></div>
+                                    	<span ${hasParentInstitutionFiltered ? 'class="icon-large icon-remove"' : ''}></span>
+                                    </a>
+                                </li>
                             </c:forEach>
                         </ul>
                     </liferay-ui:panel>
@@ -132,7 +137,7 @@
                 <!-- institution filter -->
                 <c:if test="${hasParentInstitutionFiltered}">
                     <c:if test="${presentInstitutions.size()>0}">
-                        <liferay-ui:panel defaultState="collapsed" extended="true" title="sub-institution"
+                        <liferay-ui:panel defaultState='${hasInstitutionFiltered ? "open" : "collapsed"}' extended="true" title="sub-institution"
                                           cssClass='${hasInstitutionFiltered ? "filtered" : "notFiltered"}'>
                             <ul class="colored-bullets">
                                 <c:forEach items="${presentInstitutions}" var="institution">
@@ -146,11 +151,15 @@
                                         <portlet:param name="creatorId" value="${creatorId}"/>
                                         <portlet:param name="findVideos" value="${findVideos}"/>
                                     </portlet:renderURL>
-                                    <li class="filter-menu"><a href="${filterByInstitution}">
-                                        <div class="filter-menu-link">
-                                            <span ${hasInstitutionFiltered ? 'class="icon-large icon-remove"' : ''}></span>${institution.name}
-                                        </div>
-                                    </a></li>
+                                    <li class="filter-menu">
+                                    	<a href="${filterByInstitution}" class="row">
+                                        	<div class="filter-menu-link">
+                                            	${institution.name}
+                                        	</div>
+                                        	<div class="autofit-col-expand"></div>
+                                        	<span ${hasInstitutionFiltered ? 'class="icon-large icon-remove"' : ''}></span>
+                                        </a>
+                                    </li>
                                 </c:forEach>
                             </ul>
                         </liferay-ui:panel>
@@ -159,7 +168,7 @@
 
                 <!-- terms filter -->
                 <c:if test="${presentTerms.size()>0}">
-                    <liferay-ui:panel defaultState="collapsed" extended="true" title="term"
+                    <liferay-ui:panel defaultState='${hasTermFiltered ? "open" : "collapsed"}' extended="true" title="term"
                                       cssClass='${hasTermFiltered ? "filtered" : "notFiltered"}'>
                         <ul class="terms colored-bullets">
                             <c:forEach items="${presentTerms}" var="term">
@@ -172,13 +181,22 @@
                                     <portlet:param name="creatorId" value="${creatorId}"/>
                                     <portlet:param name="findVideos" value="${findVideos}"/>
                                 </portlet:renderURL>
-                                <li class="filter-menu"><a href="${filterByTerm}">
-                                    <div class="filter-menu-link">
-                                        <span ${hasTermFiltered ? 'class="icon-large icon-remove"' : ''}></span><c:choose><c:when
-                                            test="${term.termName==''}"><liferay-ui:message
-                                            key="no-term"/></c:when><c:otherwise>${term.termName}</c:otherwise></c:choose>
-                                    </div>
-                                </a></li>
+                                <li class="filter-menu">
+                                	<a href="${filterByTerm}" class="row">
+                                    	<div class="filter-menu-link">
+                                    		${term.termName}
+                                    	</div>
+                                    	<div class="autofit-col-expand"></div>
+                                    	<span ${hasTermFiltered ? 'class="icon-large icon-remove"' : ''}></span>
+                                    </a>
+									<c:choose>
+										<c:when test="${term.termName==''}">
+											<liferay-ui:message key="no-term"/>
+										</c:when>
+										<c:otherwise>
+										</c:otherwise>
+									</c:choose>
+                                </li>
                             </c:forEach>
                         </ul>
                         <c:if test="${hasManyTerms}">
@@ -189,7 +207,7 @@
 
                 <!-- category filter -->
                 <c:if test="${presentCategories.size()>0}">
-                    <liferay-ui:panel defaultState="collapsed" extended="true" title="category"
+                    <liferay-ui:panel defaultState='${hasCategoryFiltered ? "open" : "collapsed"}' extended="true" title="category"
                                       cssClass='${hasCategoryFiltered ? "filtered" : "notFiltered"}'>
                         <ul class="colored-bullets">
                             <c:forEach items="${presentCategories}" var="category">
@@ -203,11 +221,15 @@
                                     <portlet:param name="creatorId" value="${creatorId}"/>
                                     <portlet:param name="findVideos" value="${findVideos}"/>
                                 </portlet:renderURL>
-                                <li class="filter-menu"><a href="${filterByCategory}">
-                                    <div class="filter-menu-link">
-                                        <span ${hasCategoryFiltered ? 'class="icon-large icon-remove"' : ''}></span>${category.name}
-                                    </div>
-                                </a></li>
+                                <li class="filter-menu">
+                                	<a href="${filterByCategory}" class="row">
+                                    	<div class="filter-menu-link">
+                                    		${category.name}
+                                    	</div>
+                                    	<div class="autofit-col-expand"></div>
+                                    	<span ${hasCategoryFiltered ? 'class="icon-large icon-remove"' : ''}></span>
+                                    </a>
+                                </li>
                             </c:forEach>
                         </ul>
                     </liferay-ui:panel>
@@ -279,7 +301,7 @@
                         <c:if test="${!isVideo}"><portlet:param name="objectType" value="l"/></c:if>
                     </portlet:renderURL>
 
-                    <div class="row videotile" onClick="window.location='${view1URL}'">
+                    <div id="vt${oId}" class="row videotile" <c:if test="${videoCount==0}">onClick="window.location='${view1URL}'"</c:if>>
                         <c:choose>
                             <c:when test="${videoCount==0 && isVideo}">
                                 <div class="video-image-wrapper col-md-4">
@@ -349,6 +371,7 @@
                                             <c:set var="iId" value="${li.get(0).institutionId}"/>
                                             <c:set var="inst"
                                                    value="<%=InstitutionLocalServiceUtil.getById((Long)pageContext.getAttribute("iId"))%>"/>
+                                            <span class="separator">|</span>
                                             <c:set var="instLink"><a
                                                     href='/l2go/-/get/${inst.institutionId}/${inst.parentId}/0/0/0/'>${inst.name}</a></c:set>
                                                 ${instLink}
@@ -382,7 +405,7 @@
                         <div class='videolist'>
                             <button id="b${oId}">
 													<span class="lfr-icon-menu-text">
-														<i class="icon-chevron-up"></i>
+														<i class="icon-chevron-right"></i>
 													</span>
                             </button>
                             <ul id="p${oId}">
@@ -395,12 +418,13 @@
 
                                     <li class="videotile small" onClick="window.location='${vURL}'">
                                             <%--                                        <div class="col-md-3 videotile metainfolist small">--%>
+                                        <c:set var="date" value="${v.simpleDate.trim()}"/>
                                         <div class="col-md-3 video-image-wrapper">
                                             <img class="video-image" src="${v.imageSmall}">
+                                            <div class="term-of-creation-mobile">${date}</div>
                                         </div>
                                             <%--                                        </div>--%>
                                         <%try {%>
-                                        <c:set var="date" value="${v.simpleDate.trim()}"/>
                                         <c:set var="dur" value="${v.duration.trim().substring(0, 8)}"/>
                                         <%
                                             } catch (Exception e) {

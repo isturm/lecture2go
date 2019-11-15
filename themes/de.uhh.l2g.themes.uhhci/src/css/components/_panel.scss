@@ -1,0 +1,45 @@
+.panel {
+  margin-top: $global-margin-lg;
+
+  .panel-heading {
+    font-size: $h3-font-size;
+    font-family: $font-family-bold-caps;
+    padding: $global-padding-lg;
+    
+    .panel-toggle {
+	  .title-text {
+	    margin-left: 30px;
+	  }
+	}
+  }
+
+  .toggler-header-expanded, .toggler-header-collapsed:hover {
+    background-color: $primary-color;
+    color: $secondary-color;
+  }
+
+  .toggler-header-collapsed {
+    background-color: $shadow-color;
+    color: $font-color;
+  }
+  
+  .toggler-header-collapsed:after, .toggler-header-expanded:after {
+	 content: "";
+	 position: absolute;
+	 width: $icon-size;
+	 height: $icon-size;
+	 top: 35%;
+  }
+
+  .toggler-header-collapsed:after {
+    background-image: url("../images/plus-blau.svg");
+  }
+
+  .toggler-header-collapsed:hover::after {
+    background-image: url("../images/plus-weiss.svg");
+  }
+
+  .toggler-header-expanded:after {
+    background-image: url("../images/minus-weiss.svg");
+  }
+}

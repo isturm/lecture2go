@@ -99,6 +99,10 @@
   h2 {
     margin: $global-padding-lg;
   }
+  
+  .carousel:not(:last-child) {
+  	border-bottom: 1px solid $border-color;
+  }
 }
 
 .video-box-list {
@@ -108,6 +112,21 @@
   .video-box {
     background-color: $secondary-color;
     height: $video-box-height;
+    
+    .video-box-image img {
+    	@include media-breakpoint-up(sm) {
+			height: 132px;
+		}
+		@include media-breakpoint-up(md) {
+			height: 182px;
+		}
+		@include media-breakpoint-up(lg) {
+			height: 162px;
+		}
+		@include media-breakpoint-up(xl) {
+			height: 216px;
+		}
+    }
 
     .video-label {
       padding: $global-padding-lg 0 0 $global-padding-md;
@@ -124,7 +143,7 @@
   width: $video-box-height /8;
   margin: $global-margin-lg;
   background: $secondary-color;
-  top: 40%
+  top: 30%
 }
 
 .carousel-control-prev-icon, .carousel-control-next-icon {

@@ -1,32 +1,44 @@
-<#if has_navigation && is_setup_complete>
-	<div id="navigation" class="bg-primary-color autofit-row">
-		<div class="container">
-			<div id="navigationTitle" class="autofit-col">
-				<a href="/">Universität Hamburg</a>
-			</div>
-			<div class="autofit-col autofit-col-expand"></div>
-			<div id="language" class="autofit-col text-right">
-				<#assign languagePreferences = freeMarkerPortletPreferences.getPreferences({"portletSetupPortletDecoratorId": "barebone","displayStyle", "ddmTemplate_LANGUAGE-SHORT-TEXT-FTL"}) />
-				<@liferay_portlet["runtime"]
-			        defaultPreferences=languagePreferences
-			        portletProviderAction=portletProviderAction.VIEW
-			        portletProviderClassName="com.liferay.portal.kernel.servlet.taglib.ui.LanguageEntry"
-				/>
-			</div>
-			<div id="search" aria-controls="searchCollapse" aria-expanded="true" aria-label="Toggle search" data-target="#searchCollapse" data-toggle="collapse">
-				<span></span>
-			</div>
-			<div id="menu" aria-controls="navigationCollapse menuCover" aria-expanded="true" aria-label="Toggle navigation" data-target="#navigationCollapse, #menuCover" data-toggle="collapse">
-				<span></span>
-			</div>
-		</div>
-		<div aria-expanded="false" class="collapse" id="searchCollapse">
-			<input name="q" type="text" placeholder="Universität Hamburg durchsuchen" />
-			<input type="submit" value="Suchen" />
-		</div>
-		<div aria-expanded="false" class="navbar-collapse collapse" id="navigationCollapse">
-			<@liferay.navigation_menu default_preferences="${preferences}" />
-		</div>
-		<div id="menuCover" aria-expanded="false" class="collapse" id="menuCover"></div>
-	</div>
-</#if>
+<ul class="${nav_css_class}" aria-label="<@liferay.language key="site-pages" />" role="menubar">
+	<#list nav_items as nav_item>
+		<#assign
+			nav_item_attr_has_popup = ""
+			nav_item_attr_selected = ""
+			nav_item_css_class = ""
+			nav_item_layout = nav_item.getLayout()
+		/>
+
+		<#if nav_item.isSelected()>
+			<#assign
+				nav_item_attr_has_popup = "aria-haspopup='true'"
+				nav_item_attr_selected = "aria-selected='true'"
+				nav_item_css_class = "selected"
+			/>
+		</#if>
+
+		<li ${nav_item_attr_selected} class="${nav_item_css_class}" id="layout_${nav_item.getLayoutId()}" role="presentation">
+			<a aria-labelledby="layout_${nav_item.getLayoutId()}" ${nav_item_attr_has_popup} href="${nav_item.getURL()}" ${nav_item.getTarget()} role="menuitem"><span><@liferay_theme["layout-icon"] layout=nav_item_layout /> ${nav_item.getName()}</span></a>
+
+			<#if nav_item.hasChildren()>
+				<ul class="child-menu" role="menu">
+					<#list nav_item.getChildren() as nav_child>
+						<#assign
+							nav_child_attr_selected = ""
+							nav_child_css_class = ""
+						/>
+
+						<#if nav_item.isSelected()>
+							<#assign
+								nav_child_attr_selected = "aria-selected='true'"
+								nav_child_css_class = "selected"
+							/>
+						</#if>
+
+						<li ${nav_child_attr_selected} class="${nav_child_css_class}" id="layout_${nav_child.getLayoutId()}" role="presentation">
+							<a aria-labelledby="layout_${nav_child.getLayoutId()}" href="${nav_child.getURL()}" ${nav_child.getTarget()} role="menuitem">${nav_child.getName()}</a>
+						</li>
+					</#list>
+				</ul>
+			</#if>
+		</li>
+	</#list>
+</ul>

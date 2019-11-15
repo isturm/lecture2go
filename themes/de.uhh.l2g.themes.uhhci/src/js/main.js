@@ -25,7 +25,7 @@ $("#search").click(function(){
 $("body").click(function(event){
 	if(event.target.id == "menu" || event.target.id == "search")
 		return;
-	if($(event.target).closest('#menu').length > 0 || $(event.target).closest('#search').length > 0)
+	if($(event.target).closest('#menu').length > 0 || $(event.target).closest('#search').length > 0 || $(event.target).closest('#searchCollapse').length > 0)
 		return;
 	$('#search').removeClass('closeSearch');
     $('#menu').removeClass('closeMenu');
@@ -33,3 +33,14 @@ $("body").click(function(event){
     $('#searchCollapse').removeClass('show');
     $('#menuCover').removeClass('show');
 });
+
+window.onscroll = function() {stickDesktopNavbar()};
+var desktopNavbar = document.getElementById("navigationDesktop");
+var stickyDesktopNavbar = desktopNavbar.offsetTop;
+function stickDesktopNavbar() {
+  if (window.pageYOffset >= stickyDesktopNavbar) {
+	  desktopNavbar.classList.add("sticky")
+  } else {
+	  desktopNavbar.classList.remove("sticky");
+  }
+} 

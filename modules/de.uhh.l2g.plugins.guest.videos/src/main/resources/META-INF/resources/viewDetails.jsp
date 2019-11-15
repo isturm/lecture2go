@@ -108,20 +108,19 @@
 								<portlet:param name="categoryId" value="0" />
 								<portlet:param name="creatorId" value="0" />
 							</portlet:renderURL>
-							<A HREF="${portalURL}">${company.name}</A>
+							<A HREF="${portalURL}" class="breadcrumb-item">${company.name}</A>
 							<span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-							<A HREF="${backURL0}">${pageName}</A>
+							<A HREF="${backURL0}" class="breadcrumb-item">${pageName}</A>
 							<span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-							<A HREF="${backURL0}">${rInst.name}</A>
+							<A HREF="${backURL0}" class="breadcrumb-item">${rInst.name}</A>
 							<span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-							<A HREF="${backURL1}">${pInst.name}</A>
+							<A HREF="${backURL1}" class="breadcrumb-item">${pInst.name}</A>
 							<span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-							<A HREF="${backURL2}">${insti.name}</A>
+							<A HREF="${backURL2}" class="breadcrumb-item">${insti.name}</A>
 							<c:if test="${lec.lectureseriesId>0}">
 								<span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-								<SPAN>${lec.name}</SPAN>
+								<SPAN class="breadcrumb-item">${lec.name}</SPAN>
 							</c:if>
-							<br />
 						</c:forEach>
 					</c:when>
 					<c:otherwise>
@@ -158,26 +157,25 @@
 								<portlet:param name="creatorId" value="0" />
 							</portlet:renderURL>
 
-							<A HREF="/">${company.name}</A>
+							<A HREF="/" class="breadcrumb-item">${company.name}</A>
 							<span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-							<A HREF="${backURL0}">${pageName}</A>
+							<A HREF="${backURL0}" class="breadcrumb-item">${pageName}</A>
 							<span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-							<A HREF="${backURL0}">${rInst.name}</A>
+							<A HREF="${backURL0}" class="breadcrumb-item">${rInst.name}</A>
 							<span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
 
 							<c:if test="${pInst.level>0}">
-								<A HREF="${backURL3}">${pInst.name}</A>
+								<A HREF="${backURL3}" class="breadcrumb-item">${pInst.name}</A>
 								<span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
 							</c:if>
-							<A HREF="${backURL4}">${insti.name}</A>
-							<br />
+							<A HREF="${backURL4}" class="breadcrumb-item">${insti.name}</A>
 						</c:forEach>
 					</c:otherwise>
 				</c:choose>
 				</div>
 			</c:if>
 
-			<h1>
+			<h1 class="headline">
 				<liferay-ui:message key="video-catalog" />
 			</h1>
 
@@ -203,7 +201,7 @@
 			%>
 			<c:set var="series" value="${lectureseries.name}${termMetadata}" />
 			<div class="row">
-				<div class="col-md-7 col-12">
+				<div class="${relatedVideos.size()>1 ? 'col-md-7 col-12' : 'col-12'}">
 					<div id="main">
 						<div class="${relatedVideos.size()>1 ? 'player' : 'player-wide'}">
 							<c:set var="lecture2goWebRoot"
@@ -293,102 +291,114 @@
 												data-toggle="tab"><liferay-ui:message key="chapters" /></a></li>
 										</c:if>
 									</ul>
-
-									<div id="my-tab-content" class="tab-content">
-										<c:if test="${video.downloadLink==1}">
-											<div class="tab-pane" id="download">
-												<p>
-													<%@ include file="includeDownload.jsp"%>
-												</p>
+									
+									<liferay-ui:panel-container>
+										<div id="my-tab-content" class="tab-content">
+											<c:if test="${video.downloadLink==1}">
+												<div class="tab-pane" id="download">
+													<liferay-ui:panel defaultState='collapsed' extended="true" title="download">
+														<p>
+															<%@ include file="includeDownload.jsp"%>
+														</p>
+													</liferay-ui:panel>
+												</div>
+											</c:if>
+											<c:if test="${video.openAccess==1}">
+												<div class="tab-pane active" id="share">
+													<liferay-ui:panel defaultState='collapsed' extended="true" title="share">
+														<p>
+															<%@ include file="includeShare.jsp"%>
+														</p>
+													</liferay-ui:panel>
+												</div>
+											</c:if>
+											
+											<div class="tab-pane" id="support">
+												<liferay-ui:panel defaultState='collapsed' extended="true" title="support">
+													<c:set var="facultyId" value="${video.rootInstitutionId}" />
+													<c:set var="institut" value="Fakultätübergreifend" />
+													<c:set var="option1"
+														value="<%=PortalUtil.getOriginalServletRequest(request).getParameter("option1")%>" />
+		
+													<c:if test="${facultyId==3}">
+														<c:set var="institut" value="UHH-Jura" />
+													</c:if>
+													<c:if test="${facultyId==4}">
+														<c:set var="institut" value="UHH-WiSo" />
+													</c:if>
+													<c:if test="${facultyId==5}">
+														<c:set var="institut" value="UHH-Medizin" />
+													</c:if>
+													<c:if test="${facultyId==6}">
+														<c:set var="institut" value="UHH-EW" />
+													</c:if>
+													<c:if test="${facultyId==7}">
+														<c:set var="institut" value="UHH-GWiss" />
+													</c:if>
+													<c:if test="${facultyId==8}">
+														<c:set var="institut" value="UHH-MIN" />
+													</c:if>
+													<c:if test="${facultyId==203}">
+														<c:set var="institut" value="UHH-PB" />
+													</c:if>
+													<c:if test="${facultyId==204}">
+														<c:set var="institut" value="UHH-BWL" />
+													</c:if>
+		
+													<c:set var="url" value="${video.url}" />
+													<c:if test="${video.openAccess==0}">
+														<c:set var="url" value="${video.secureUrl}" />
+													</c:if>
+		
+													<div id="meta-share">
+														<c:if test="${option1!=null}">
+															<script type="text/javascript">
+																$(function() {
+																	// activate contact tab
+																	$("#tabs li a").eq(
+																			-1).click();
+		
+																	// Scrolling must happen in onload, because otherwise the Player is not yet loaded and the position would be wrong
+																	window.onload = function() {
+																		var pos = $(
+																				"#tabs")
+																				.offset().top;
+																		$('html, body')
+																				.animate(
+																						{
+																							scrollTop : pos - 10
+																						},
+																						1000,
+																						"easeInOutCubic");
+																	}
+		
+																});
+															</script>
+														</c:if>
+													</div>
+												</liferay-ui:panel>
 											</div>
-										</c:if>
-										<c:if test="${video.openAccess==1}">
-											<div class="tab-pane active" id="share">
-												<p>
-													<%@ include file="includeShare.jsp"%>
-												</p>
-											</div>
-										</c:if>
-
-										<div class="tab-pane" id="support">
-											<c:set var="facultyId" value="${video.rootInstitutionId}" />
-											<c:set var="institut" value="Fakultätübergreifend" />
-											<c:set var="option1"
-												value="<%=PortalUtil.getOriginalServletRequest(request).getParameter("option1")%>" />
-
-											<c:if test="${facultyId==3}">
-												<c:set var="institut" value="UHH-Jura" />
+											<c:if test="${video.hasChapters || video.hasComments}">
+												<div class="tab-pane" id="chapters">
+													<liferay-ui:panel defaultState='collapsed' extended="true" title="chapters">
+														<ul>
+															<c:forEach items="<%=segments%>" var="segment">
+																<li class="chaptertile" id="${segment.segmentId}"
+																	begin="${segment.start}" end="${segment.end}">
+																	<div class="image">
+																		<a><img src="${segment.image}"></a>
+																	</div>
+																	<div class="title">
+																		<a><b>${segment.start} </b> ${segment.title}</a>
+																	</div>
+																</li>
+															</c:forEach>
+														</ul>
+													</liferay-ui:panel>
+												</div>
 											</c:if>
-											<c:if test="${facultyId==4}">
-												<c:set var="institut" value="UHH-WiSo" />
-											</c:if>
-											<c:if test="${facultyId==5}">
-												<c:set var="institut" value="UHH-Medizin" />
-											</c:if>
-											<c:if test="${facultyId==6}">
-												<c:set var="institut" value="UHH-EW" />
-											</c:if>
-											<c:if test="${facultyId==7}">
-												<c:set var="institut" value="UHH-GWiss" />
-											</c:if>
-											<c:if test="${facultyId==8}">
-												<c:set var="institut" value="UHH-MIN" />
-											</c:if>
-											<c:if test="${facultyId==203}">
-												<c:set var="institut" value="UHH-PB" />
-											</c:if>
-											<c:if test="${facultyId==204}">
-												<c:set var="institut" value="UHH-BWL" />
-											</c:if>
-
-											<c:set var="url" value="${video.url}" />
-											<c:if test="${video.openAccess==0}">
-												<c:set var="url" value="${video.secureUrl}" />
-											</c:if>
-
-											<div id="meta-share">
-												<c:if test="${option1!=null}">
-													<script type="text/javascript">
-														$(function() {
-															// activate contact tab
-															$("#tabs li a").eq(
-																	-1).click();
-
-															// Scrolling must happen in onload, because otherwise the Player is not yet loaded and the position would be wrong
-															window.onload = function() {
-																var pos = $(
-																		"#tabs")
-																		.offset().top;
-																$('html, body')
-																		.animate(
-																				{
-																					scrollTop : pos - 10
-																				},
-																				1000,
-																				"easeInOutCubic");
-															}
-
-														});
-													</script>
-												</c:if>
-											</div>
 										</div>
-										<c:if test="${video.hasChapters || video.hasComments}">
-											<ul class="tab-pane" id="chapters">
-												<c:forEach items="<%=segments%>" var="segment">
-													<li class="chaptertile" id="${segment.segmentId}"
-														begin="${segment.start}" end="${segment.end}">
-														<div class="image">
-															<a><img src="${segment.image}"></a>
-														</div>
-														<div class="title">
-															<a><b>${segment.start} </b> ${segment.title}</a>
-														</div>
-													</li>
-												</c:forEach>
-											</ul>
-										</c:if>
-									</div>
+									</liferay-ui:panel-container>
 								</div>
 							</c:if>
 						</div>

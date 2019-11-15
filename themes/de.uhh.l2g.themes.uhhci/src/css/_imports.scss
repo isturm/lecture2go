@@ -6,12 +6,14 @@
 @import 'liferay-font-awesome/scss/font-awesome';
 @import 'liferay-font-awesome/scss/glyphicons';
 @import "components/breadcrumb";
+@import "components/contact";
 @import "components/color";
 @import "components/group-item";
 @import "components/info-panel";
 @import "components/site-header";
 @import "components/navigation";
 @import "components/footer";
+@import "components/panel";
 @import "components/sidebar";
 @import "components/splitter";
 @import "components/widget";
@@ -19,6 +21,7 @@
 @import "portlet/portlet";
 @import "portlet/portlet_decorators";
 @import "components/front-page";
+@import "components/video";
 @import "components/video-catalog";
 @import "components/video-details";
 @import "components/socialshareprivacy";

@@ -1,11 +1,7 @@
 .breadcrumb, .path-wide, .path {
 	padding: 0;
-	padding-left: 26px;
-	background-image: url("../images/home.png");
-	background-repeat: no-repeat;
-	background-position-y: center;
 	
-	.breadcrumb-item, a:not(.breadcrumb-link), span:not(.uhh-icon-arrow-right):not(.breadcrumb-text-truncate) {
+	.breadcrumb-item {
 		font-size: $h3-font-size;
 		padding-right: 0;
 		
@@ -14,20 +10,15 @@
 		}
 		
 		&:first-child {
+			padding-left: 26px;
+			background-image: url("../images/home.png");
+			background-repeat: no-repeat;
+			background-position-y: center;
 			margin-right: 15px;
 		}
 	}
 	
-	.breadcrumb-item + .breadcrumb-item::before, .uhh-icon-arrow-right {
-		display: inline-block;
-		background-image: url("../images/arrow.png");
-		background-repeat: no-repeat;
-		background-position-y: center;
-		width: 29px;
-		margin-right: 15px;
-	}
-	
-	span:not(.uhh-icon-arrow-right):not(.breadcrumb-text-truncate), span.breadcrumb-text-truncate.active {
+	.breadcrumb-item:last-child {
 		font-family: $font-family-bold;
 	}
 	
@@ -40,9 +31,26 @@
 	}
 }
 
+@mixin breadcrumb-arrow {
+	display: inline-block;
+	background-image: url("../images/arrow.png");
+	background-repeat: no-repeat;
+	background-position-y: center;
+	width: 29px;
+	margin-right: 15px;
+}
+
+.breadcrumb	.breadcrumb-item + .breadcrumb-item::before,  {
+	@include breadcrumb-arrow;
+}
+
 .path-wide, .path {
-	a:not(.breadcrumb-link), span:not(.uhh-icon-arrow-right) {
+	.breadcrumb-item:not(:first-child) {
 		margin-right: 15px;
 		padding-left: 0 !important;
+	}
+	
+	.uhh-icon-arrow-right {
+		@include breadcrumb-arrow;
 	}
 }
