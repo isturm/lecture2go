@@ -1,0 +1,40 @@
+.user-role{
+  tr {
+    display: flex;
+    margin: $global-margin-md 0 !important;
+
+    td:first-child {
+      flex-basis: 90%;
+    }
+
+    td:last-child {
+      flex-basis: 10%;
+      text-align: end;
+    }
+  }
+}
+
+.edit-user {
+  display: flex;
+  flex-direction: column;
+
+  .edit-label {
+    align-self: center;
+    color: $primary-color;
+    flex: 0 0 50%;
+    max-width: 50%;
+  }
+
+  div {
+    display: flex;
+
+    div {
+      width: 100%;
+    }
+  }
+
+  .action-buttons {
+    text-align: center;
+    margin: $global-margin-xx-lg 0;
+  }
+}

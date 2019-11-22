@@ -1,0 +1,38 @@
+.admin-video {
+  display: flex;
+  flex-direction: column;
+
+  .fieldset {
+    .row {
+      margin: 0;
+      flex-direction: column;
+    }
+  }
+}
+
+.adminrow {
+  display: flex;
+  margin: 1rem 0;
+}
+
+.video-edit-wrapper {
+  margin-left: auto;
+  text-align: end;
+
+  a {
+    color: $font-color !important;
+  }
+}
+
+.admin-videolist-creator-title, .admin-videolist-lectureseries-title {
+  font-size: $h3-font-size;
+}
+
+#license-content {
+  a {
+    color: $primary-color;
+    width: $edit-label-basis;
+    display: inline-block;
+    font-weight: 600;
+  }
+}

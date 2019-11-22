@@ -1,0 +1,107 @@
+.viewedit {
+  display: flex;
+  flex-direction: column;
+
+  .row {
+    padding: 0;
+    margin: 0;
+  }
+
+  .control-label {
+    align-self: center;
+    color: $primary-color;
+    width: 50%;
+  }
+
+  .input-text-wrapper {
+    display: flex;
+  }
+
+  .inputs {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+  }
+
+  .action-buttons {
+    text-align: center;
+    margin: $global-margin-xx-lg 0;
+  }
+
+  &.dropdowns {
+    .sub-content {
+      padding-left: $global-padding-lg;
+    }
+  }
+
+  .input-checkbox-wrapper {
+    label {
+      display: flex;
+      flex-direction: row-reverse;
+      color: $primary-color;
+      width: $edit-label-basis;
+
+      input {
+        margin:auto -14px auto auto;
+      }
+    }
+  }
+}
+
+.edit-video-lable {
+  font-size: $title-font-size;
+  font-family: $font-family-regular-caps;
+  color: $font-color;
+}
+
+.edit-dropdown-label {
+  background-color: $border-color;
+  width: 100%;
+  padding: $global-margin-lg;
+
+  div {
+    margin: $global-margin-lg;
+  }
+
+  i {
+    color: $primary-color;
+    padding-right: $global-margin-md;
+  }
+}
+
+
+.upload-form {
+  width: 100%;
+  margin: $global-margin-lg 0;
+  display: flex;
+
+
+  .progress {
+    border-radius: 0;
+    height: 100%;
+
+    #bar {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      background-color: $primary-color;
+      width: 0;
+    }
+
+    #percent {
+      font-size: $h4-font-size;
+      color: $secondary-color;
+      margin-right: $global-margin-sm;
+    }
+  }
+
+}
+
+.btn-upload {
+  display: inline-block;
+
+  input[type="file"] {
+    display: none;
+  }
+}
+

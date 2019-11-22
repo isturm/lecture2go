@@ -2,26 +2,35 @@
 @import "mixins";
 @import "compat/mixins";
 @import "clay/atlas-variables";
-
 @import 'liferay-font-awesome/scss/font-awesome';
 @import 'liferay-font-awesome/scss/glyphicons';
+
+@import "components/admin-tables";
+@import "components/admin-video";
 @import "components/breadcrumb";
+@import "components/buttons";
 @import "components/contact";
 @import "components/color";
+@import "components/creators";
+@import "components/edit-table";
 @import "components/group-item";
 @import "components/info-panel";
-@import "components/site-header";
 @import "components/navigation";
+@import "components/fonts";
 @import "components/footer";
+@import "components/forms";
+@import "components/front-page";
 @import "components/panel";
 @import "components/sidebar";
+@import "components/site-header";
+@import "components/socialshareprivacy";
 @import "components/splitter";
-@import "components/widget";
-@import "components/fonts";
-@import "portlet/portlet";
-@import "portlet/portlet_decorators";
-@import "components/front-page";
+@import "components/user-role";
 @import "components/video";
 @import "components/video-catalog";
 @import "components/video-details";
-@import "components/socialshareprivacy";
+@import "components/widget";
+
+@import "portlet/portlet";
+@import "portlet/portlet_decorators";
+

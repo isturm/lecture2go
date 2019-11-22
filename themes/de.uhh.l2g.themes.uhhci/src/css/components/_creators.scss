@@ -1,0 +1,23 @@
+.creators-view {
+
+  .lfr-search-container-wrapper {
+    .video-creators {
+      display: flex;
+      margin: $global-margin-md 0;
+      color: $primary-color;
+
+      flex-wrap: wrap;
+
+      a {
+        text-decoration: underline;
+        margin-right: $global-margin-sm;
+        color: $primary-color;
+
+        &:hover {
+          color: $primary-hover-color;
+        }
+      }
+    }
+
+  }
+}

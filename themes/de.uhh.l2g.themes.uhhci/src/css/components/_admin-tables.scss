@@ -1,0 +1,125 @@
+.edit-table {
+  tr {
+    display: flex;
+    margin: $global-margin-md 0 !important;
+
+    td:first-child {
+      flex-basis: 90%;
+    }
+
+    td:last-child {
+      flex-basis: 10%;
+      text-align: end;
+    }
+  }
+}
+
+.view.list {
+  display: flex;
+  flex-direction: row-reverse;
+  margin-top: $global-margin-lg;
+
+  .fieldset {
+    .row {
+      margin: 0;
+      flex-direction: column;
+    }
+  }
+
+  .admintile {
+    &.wide {
+      flex-basis: 90%;
+
+      .links {
+        color: $primary-color;
+
+        a {
+          text-decoration: underline;
+          margin-right: $global-margin-sm;
+          color: $primary-color;
+
+          &:hover {
+            color: $primary-hover-color;
+          }
+        }
+      }
+    }
+
+    &.icons {
+      flex-basis: 10%;
+      text-align: end;
+    }
+
+  }
+}
+
+.viewedit {
+  display: flex;
+  flex-direction: column;
+  width: 70%;
+
+  .control-label {
+    align-self: center;
+    color: $primary-color;
+    flex-basis: $edit-label-basis;
+  }
+
+  .input-text-wrapper, .input-select-wrapper {
+    display: flex;
+
+    .form-control {
+      flex-basis: (100%-$edit-label-basis);
+    }
+
+    &.has-error {
+      flex-wrap: wrap;
+    }
+
+    .form-validator-stack {
+      flex-basis: 100%;
+
+      div {
+        margin-left: $edit-label-basis;
+      }
+    }
+
+  }
+
+  .inputs {
+    display: flex;
+    flex-direction: column;
+    width: 70%;
+  }
+
+  .action-buttons {
+    justify-content: center;
+    margin: $global-margin-xx-lg 0;
+  }
+}
+
+.prodCont, .facilCont {
+  margin-left: $edit-label-basis;
+}
+
+.view.table {
+  display: flex;
+  flex-direction: row-reverse;
+
+  tr {
+    display: flex;
+    margin: $global-margin-md 0 !important;
+
+    td:first-child {
+      flex-basis: 90%;
+    }
+
+    td:last-child {
+      flex-basis: 10%;
+      text-align: end;
+
+      .icon-large {
+        margin-right: $global-margin-md;
+      }
+    }
+  }
+}

@@ -1,0 +1,61 @@
+.form-bg-icon {
+  background-repeat: no-repeat;
+  background-position: right 0.5em center;
+  background-size: contain;
+  padding-right: 40px;
+}
+
+select.form-control {
+  @extend .form-bg-icon;
+  background-image: url("../images/arrow_down_white.png") !important;
+  background-color: $primary-color;
+  color: $secondary-color;
+}
+
+.form-control {
+  border-radius: 0;
+  font-family: $font-family-bold-caps;
+  height: auto;
+  background-color: $secondary-color;
+  color: $primary-color;
+  border-color: $primary-color;
+
+  &::placeholder {
+    color: $border-color;
+  }
+
+  &:focus {
+    color: $primary-color;
+  }
+
+  &.search-query {
+    @extend .form-bg-icon;
+    background-image: url("../images/UHH_web_lupe_31x31.png");
+    background-position: right 0 center;
+  }
+
+  > option {
+    background: $secondary-color;
+    color: $primary-color;
+    padding: $global-padding-lg;
+    height: auto;
+  }
+
+  &:focus {
+    box-shadow: none;
+  }
+}
+
+.form-group {
+  margin-bottom: $global-margin-md;
+
+  &.has-success {
+    background-color: $secondary-color;
+    color: $primary-color;
+    border-color: $primary-color;
+
+    &:focus {
+      box-shadow: none;
+    }
+  }
+}

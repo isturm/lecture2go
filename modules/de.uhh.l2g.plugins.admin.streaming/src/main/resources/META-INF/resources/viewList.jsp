@@ -38,9 +38,10 @@
 <c:set var="application" value="<%=application%>"/>
 <c:set var="displayTerms" value="<%=new DisplayTerms(renderRequest)%>"/>
 
-<div class="view list">		
-	<a href="${addURL}" class="add link">
-	    <liferay-ui:message key="add-new-host"/> <span class="icon-large icon-plus-sign"/>
+<div class="view table">		
+<div class="col-12">
+	<a href="${addURL}" class="add-link">
+	   <span class="icon-large icon-plus-sign"></span> <liferay-ui:message key="add-new-host"/> 
 	</a>
 	
 	<liferay-ui:search-container emptyResultsMessage="no-hosts-found" delta="5" iteratorURL="${portletURL}" displayTerms="${displayTerms}">
@@ -75,7 +76,7 @@
 			</portlet:renderURL>
 
 			<liferay-ui:search-container-column-text>
-				${host.streamer} | <liferay-ui:message key="directory"/> ${host.name}
+			<b>	${host.streamer} | <liferay-ui:message key="directory"/> ${host.name}</b>
 				<c:if test="${inst>0}">
 					<p><b>${inst}</b> <liferay-ui:message key="institution-s"/></p>
 				</c:if>
@@ -95,4 +96,5 @@
 		
 		<liferay-ui:search-iterator />
 	</liferay-ui:search-container>
+	</div>
 </div>

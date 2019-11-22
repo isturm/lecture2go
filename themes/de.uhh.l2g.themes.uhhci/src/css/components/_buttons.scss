@@ -1,0 +1,25 @@
+.btn {
+  z-index: 0;
+  font-size: $h3-font-size;
+  font-family: $font-family-regular-caps;
+  border-radius: 0;
+  margin: 0;
+
+  &.btn-primary.btn-default {
+    border-color: $primary-color;
+    background-color: $primary-color;
+    color: $secondary-color;
+
+    &:hover {
+      background-color: $primary-hover-color;
+    }
+  }
+
+  &.btn-cancel.btn-default {
+    border-color: $primary-color;
+    background-color: $secondary-color;
+    color: $primary-color;
+    border-radius: 0;
+  }
+}
+

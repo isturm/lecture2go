@@ -7,19 +7,19 @@
 
   a {
     padding-right: $global-padding-sm;
-    color: $primary-color !important;
+    color: $primary-color;
   }
-  
+
   .separator {
-  	font-family: $font-family-regular-caps;
-  	margin: 0 12px;
-  	border-top: none;
+    font-family: $font-family-regular-caps;
+    margin: 0 12px;
+    border-top: none;
   }
-  
+
   @include media-breakpoint-down(md) {
-  	.term-of-creation {
-  		display: none;
-  	}
+    .term-of-creation {
+      display: none;
+    }
   }
 }
 
