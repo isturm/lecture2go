@@ -41,7 +41,7 @@
 <div class="view table">		
 <div class="col-12">
 	<a href="${addURL}" class="add-link">
-	   <span class="icon-large icon-plus-sign"></span> <liferay-ui:message key="add-new-host"/> 
+	   <span class="icon-large icon-plus"></span> <liferay-ui:message key="add-new-host"/> 
 	</a>
 	
 	<liferay-ui:search-container emptyResultsMessage="no-hosts-found" delta="5" iteratorURL="${portletURL}" displayTerms="${displayTerms}">
