@@ -333,7 +333,7 @@
 
 	.child-menu {
 		opacity: 1;
-		max-height: 500px;
+		max-height: 100vh;
 		padding: 30px 70px 35px 50px;
 		transition: padding 0s, max-height 0.25s ease-in, opacity 0.25s ease-in;
 	}
