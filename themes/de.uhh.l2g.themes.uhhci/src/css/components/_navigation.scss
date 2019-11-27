@@ -282,15 +282,17 @@
 	}
 	
 	.child-menu {
+		overflow: hidden;
 		display: block;
 		opacity: 0;
 		max-height: 0;
-		transition: all 0.15s ease-out;
+		min-height: 0;
+		padding: 0;
+		transition: padding 0s 0.15s, max-height 0.15s ease-out, opacity 0.15s 0.15s ease-out;
 		width: 410px;
 		max-width: 410px;
 		margin-top: 0;
 		margin-left: -50px;
-		padding: 30px 70px 35px 50px;
 		background-color: $secondary-color;
 		position: absolute;
 		border: none;
@@ -332,7 +334,8 @@
 	.child-menu {
 		opacity: 1;
 		max-height: 500px;
-		transition: all 0.25s ease-in;
+		padding: 30px 70px 35px 50px;
+		transition: padding 0s, max-height 0.25s ease-in, opacity 0.25s ease-in;
 	}
 }
 
