@@ -190,8 +190,9 @@
                     <liferay-ui:search-container-column-text>
                         <div class="adminrow wide">
                             <div class="admintile wide">
-                                <b>${lectser.name} <c:if
-                                        test="${fn:length(lTerm)>0}">(${lTerm})</c:if></b><br/>
+                                <div class="admin-title">${lectser.name} <c:if
+                                        test="${fn:length(lTerm)>0}">(${lTerm})</c:if></div>
+                                <div class="admin-subtitle">
                                 <%
                                     List<Long> pIds = new ArrayList<Long>();
                                     String prds = "";
@@ -201,12 +202,13 @@
                                             Long pLid = new Long(pIds.get(i) + "");
                                             Producer p = ProducerLocalServiceUtil.createProducer(0);
                                             p = ProducerLocalServiceUtil.getProdUcer(pLid);
-                                            prds += p.getLastName() + ", " + p.getFirstName() + "<br/>";
+                                            prds += p.getLastName() + ", " + p.getFirstName();
                                         }
                                     } catch (Exception e) {
                                     }
                                 %>
                                 <%=prds %>
+                                </div>
                                 <c:if test="${lectser.numberOfVideos > 0}">
                                     <p>
                                             ${lectser.numberOfVideos}

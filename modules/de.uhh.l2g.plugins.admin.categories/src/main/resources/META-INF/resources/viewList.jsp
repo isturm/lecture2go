@@ -88,9 +88,9 @@
                 </portlet:renderURL>
 
                 <liferay-ui:search-container-column-text>
-                  <b>${category.name}</b>
+                  <div class="admin-title">${category.name}</div>
                     <c:if test="${count>0}">
-                        <p><b>${count}</b> <liferay-ui:message key="video-s"/></p>
+                        <div class="admin-subtitle"><b>${count}</b> <liferay-ui:message key="video-s"/></div>
                     </c:if>
                 </liferay-ui:search-container-column-text>
 

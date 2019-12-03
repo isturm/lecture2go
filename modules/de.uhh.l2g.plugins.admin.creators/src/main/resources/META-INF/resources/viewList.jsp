@@ -109,11 +109,9 @@
                                value="<%=LectureseriesLocalServiceUtil.getLectureseries((Long)pageContext.getAttribute("lecrId"))%>"/>
                         <c:set var="term"
                                value="<%=TermLocalServiceUtil.getById(LectureseriesLocalServiceUtil.getLectureseries((Long)pageContext.getAttribute("lecrId")).getTermId())%>"/>
-                        <b><c:out value="${lectureseries.name} - ${term.prefix} ${term.year}"/></b>
-                        <br/>
+                        <div class="admin-title"><c:out value="${lectureseries.name} - ${term.prefix} ${term.year}"/></div>
                     </c:forEach>
-                    <span>${creator.fullName}</span>
-                    <br/>
+                    <div class="admin-subtitle">${creator.fullName}</div>
                     <c:set var="videoCreators"
                            value="<%=Video_CreatorLocalServiceUtil.getByCreator(creator.getCreatorId())%>"/>
                     <div class="video-creators">

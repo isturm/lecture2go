@@ -123,3 +123,17 @@
     }
   }
 }
+
+.table {    
+    td {
+    	.admin-title {
+    		font-size: $h2-font-size;
+  			color: $font-color;
+  			font-family: $font-family-bold;
+    	}
+    	
+    	.admin-subtitle {
+    		font-size: $h3-font-size;
+    	}
+    }
+}

@@ -276,16 +276,16 @@
                                 </div>
                             </div>
                             <div class="admintile wide video-content-wrapper">
-                                <div class="video-title" onClick="${onClick}">
+                                <div class="admin-title" onClick="${onClick}">
                                         ${vName}
                                 </div>
 
-                                <div class="admin-videolist-creator-title">
+                                <div class="admin-subtitle">
                                         ${creators}
                                 </div>
 
                                 <c:if test="${fn:length(lName)>0}">
-                                    <div class="admin-videolist-lectureseries-title">
+                                    <div class="admin-subtitle">
                                             ${lName} (${lTerm})
                                     </div>
                                 </c:if>

@@ -76,9 +76,9 @@
 			</portlet:renderURL>
 
 			<liferay-ui:search-container-column-text>
-			<b>	${host.streamer} | <liferay-ui:message key="directory"/> ${host.name}</b>
+			<div class="admin-title">	${host.streamer} | <liferay-ui:message key="directory"/> ${host.name}</div>
 				<c:if test="${inst>0}">
-					<p><b>${inst}</b> <liferay-ui:message key="institution-s"/></p>
+					<div class="admin-subtitle"><b>${inst}</b> <liferay-ui:message key="institution-s"/></div>
 				</c:if>
 			</liferay-ui:search-container-column-text>
 				

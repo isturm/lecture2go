@@ -1,6 +1,15 @@
 .viewedit {
   display: flex;
   flex-direction: column;
+  
+  .container-fluid {
+  	padding: 0;
+  	margin: 0;
+  	
+  	.col-md-12 {
+  		padding: 0;
+  	}
+  }
 
   .row {
     padding: 0;
@@ -53,22 +62,6 @@
   font-family: $font-family-regular-caps;
   color: $font-color;
 }
-
-.edit-dropdown-label {
-  background-color: $border-color;
-  width: 100%;
-  padding: $global-margin-lg;
-
-  div {
-    margin: $global-margin-lg;
-  }
-
-  i {
-    color: $primary-color;
-    padding-right: $global-margin-md;
-  }
-}
-
 
 .upload-form {
   width: 100%;

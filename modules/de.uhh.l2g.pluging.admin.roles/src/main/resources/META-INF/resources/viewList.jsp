@@ -47,14 +47,15 @@
                                          modelVar="usr">
             <c:set var="userId" value="<%=usr.getUserId()%>"/>
             <liferay-ui:search-container-column-text>
-                <b>${usr.fullName}</b>
-                <br/>
-                <c:set var="roles" value="<%=usr.getRoles()%>"/>
-                <c:set var="n" value=""/>
-                <c:forEach items="${roles}" var="item">
-                    <c:set var="n" value="<%=TextManager.getRolesDescription(usr)%>"/>
-                </c:forEach>
-                ${n}
+                <div class="admin-title">${usr.fullName}</div>
+                <div class="admin-subtitle">
+	                <c:set var="roles" value="<%=usr.getRoles()%>"/>
+	                <c:set var="n" value=""/>
+	                <c:forEach items="${roles}" var="item">
+	                    <c:set var="n" value="<%=TextManager.getRolesDescription(usr)%>"/>
+	                </c:forEach>
+	                ${n}
+                </div>
             </liferay-ui:search-container-column-text>
 
             <liferay-ui:search-container-column-text>

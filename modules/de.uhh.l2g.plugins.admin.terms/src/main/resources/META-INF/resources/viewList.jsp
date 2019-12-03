@@ -79,12 +79,12 @@
                 </portlet:renderURL>
 
                 <liferay-ui:search-container-column-text>
-                    <b>    ${term.prefix} ${term.year}</b>
+                    <div class="admin-title">    ${term.prefix} ${term.year}</div>
                     <c:if test="${count1>0}">
-                        <br/><b>${count1}</b> <liferay-ui:message key="video-s"/>
+                        <div class="admin-subtitle"><b>${count1}</b> <liferay-ui:message key="video-s"/></div>
                     </c:if>
                     <c:if test="${count2>0}">
-                        <br/><b>${count2}</b> <liferay-ui:message key="lecture-series-s"/>
+                        <div class="admin-subtitle"><b>${count2}</b> <liferay-ui:message key="lecture-series-s"/></div>
                     </c:if>
                 </liferay-ui:search-container-column-text>
 

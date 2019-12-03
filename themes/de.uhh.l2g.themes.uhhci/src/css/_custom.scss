@@ -61,6 +61,22 @@ ul.colored-bullets {
   }
 }
 
+.table {
+  &.table-bordered {
+    border: none;
+
+    tr:first-child {
+      margin-top: 0
+    }
+
+    td {
+      border: none;
+      border-bottom: 1px solid $border-color;
+      background-color: $secondary-color !important;
+    }
+  }
+}
+
 canvas {
   max-width: 100%;
 }

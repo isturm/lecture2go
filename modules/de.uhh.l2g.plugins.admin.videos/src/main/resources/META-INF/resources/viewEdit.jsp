@@ -120,254 +120,191 @@
         </aui:container>
     </div>
     <div class="viewedit dropdowns">
-        <aui:form action="" commandName="model" name="metadata" id="metadata">
-            <aui:container>
-                <aui:row>
-                    <aui:col>
-                        <label class="edit-dropdown-label" id="edit-video-lable-1">
-                            <i id="l1" class="aui icon-chevron-down thumb"></i>
-                            <liferay-ui:message key="metadata"/>
-                        </label>
-                        <div class="sub-content" id="metadata-upload">
-                            <aui:input id="stayhere" name="stayhere" label="" required="true" value="" type="hidden"/>
+    	<liferay-ui:panel-container>
+        	<liferay-ui:panel defaultState="collapsed" extended="true" title="metadata">
+	            <div class="sub-content" id="metadata-upload">
+	                <aui:input id="stayhere" name="stayhere" label="" required="true" value="" type="hidden"/>
+	
+	                <div id="titledefault"><aui:input id="title" name="title" label="title" required="true"
+	                                                  value="${reqVideo.title}"/></div>
+	
+	                <div id="creators-custom">
+	                    <aui:input id="creator" name="creator" label="creators-required"
+	                               helpMessage="creator-explanation"/>
+	                    <div id="creators"></div>
+	                </div>
+	
+	                <aui:select size="1" name="lectureseriesId" label="lecture-series"
+	                            helpMessage="video-with-or-without-lectureseries"
+	                            onChange="toggleLectureseries()">
+	                    <aui:option value="0">-<liferay-ui:message key="without-lecture-series"/>-</aui:option>
+	                    <c:forEach items="${lectureseriesAsTreeList}" var="item">
+	                        <aui:option value='0'
+	                                    disabled="true">&#9472; ${item.key.termName} &#9472;</aui:option>
+	                        <c:forEach items="${item.value}" var="lect">
+	                            <c:set var="selected" value="false"/>
+	                            <c:if test="${lect.lectureseriesId==reqVideo.lectureseriesId}">
+	                                <c:set var="selected" value="true"/>
+	                            </c:if>
+	                            <aui:option value='${lect.lectureseriesId}'
+	                                        selected="${selected}">${lect.name}</aui:option>
+	                        </c:forEach>
+	                    </c:forEach>
+	                </aui:select>
+	
+	                <div id="options">
+	                    <aui:select id="subInstitutionId" size="1" name="subInstitutionId"
+	                                label="sub-institution">
+	                        <aui:option value="" selected="true"><liferay-ui:message
+	                                key="select-sub-institution"/></aui:option>
+	                        <c:forEach items="${reqSubInstitutions}" var="item">
+	                            <aui:option value='${item.institutionId}'>${item.institutionId}</aui:option>
+	                        </c:forEach>
+	                    </aui:select>
+	
+	                    <div class="subInstitutions">
+	                        <c:forEach items="${reqSubInstitutions}" var="item">
+	                            <div id='${item.institutionId}'>
+	                                    ${item.institutionId} &nbsp;&nbsp;&nbsp;
+	                                <a class="icon-large icon-remove" style='cursor:pointer;'
+	                                   onClick='document.getElementById("${item.institutionId}").remove();'></a>
+	                                <aui:input type="hidden" name="institutions" id="institutions"
+	                                           value="${item.institutionId}"/>
+	                            </div>
+	                        </c:forEach>
+	                    </div>
+	
+	                    <aui:select size="1" id="termId" name="termId" label="term" required="true">
+	                        <c:forEach items="${terms}" var="item">
+	                            <aui:option
+	                                    value='${item.termId}'>${item.prefix} &nbsp; ${item.year}</aui:option>
+	                        </c:forEach>
+	                    </aui:select>
+	
+	                    <aui:select size="1" id="categoryId" name="categoryId" label="category" required="true">
+	                        <c:forEach items="${categories}" var="item">
+	                            <aui:option value='${item.categoryId}'>${item.name}</aui:option>
+	                        </c:forEach>
+	                    </aui:select>
+	                </div>
+	
+	                <aui:select size="1" name="language" label="language" required="true">
+	                    <c:forEach items="${languages}" var="item">
+	                        <aui:option value='${item}'>${item}</aui:option>
+	                    </c:forEach>
+	                </aui:select>
+	
+	                <div id="l2gdate"></div>
+	
+	                <aui:input name="tags" label="tags" required="false" value="${reqVideo.tags}"/>
+	
+	                <aui:input name="publisher" label="publisher" required="false"
+	                           value="${reqMetadata.publisher}"/>
+	
+	                <aui:field-wrapper label="description" name="description">
+	                    <liferay-ui:input-editor name="longDesc" toolbarSet="simple" initMethod="initEditor"
+	                                             onChangeMethod="setDescriptionData" cssClass="ta"/>
+	                    <script type="text/javascript">
+	                        function <portlet:namespace />initEditor() {
+	                            return "<%= UnicodeFormatter.toString(reqMetadata.getDescription()) %>";
+	                        }
+	                    </script>
+	                </aui:field-wrapper>
+	            </div>
+	        </liferay-ui:panel>
+	        <liferay-ui:panel defaultState="collapsed" extended="true" title="permissions">
+	        	<div class="sub-content" id="permissions-content">
+	                 <c:if test="${reqVideo.getOpenAccess()==0}">
+	                     <div>
+	                         <aui:input id="password" name="password" label="password" required="false"
+	                                    value="${reqVideo.password}"/>
+	                     </div>
+	                 </c:if>
+	                 <c:if test="${reqVideo.getOpenAccess()==1}">
+	                     <aui:input name="password" id="password" type="hidden"
+	                                value="${reqVideo.password}"/>
+	                 </c:if>
+	                 <div id="c2g">
+	                     <c:if test="${reqVideo.citation2go==0}">
+	                         <aui:input name="citationAllowedCheckbox" type="checkbox"
+	                                    label="citation-allowed" id="citationAllowedCheckbox"></aui:input>
+	                     </c:if>
+	                     <c:if test="${reqVideo.citation2go==1}">
+	                         <aui:input name="citationAllowedCheckbox" type="checkbox"
+	                                    label="citation-allowed" id="citationAllowedCheckbox"
+	                                    checked="true"></aui:input>
+	                     </c:if>
+	                 </div>
+	             </div>
+	         </liferay-ui:panel>
+	         <liferay-ui:panel defaultState="collapsed" extended="true" title="license">
+	             <div class="sub-content" id="license-content">
+	                 <c:forEach items="${reqLicenseList}" var="license">
+	                     <c:choose>
+	                         <c:when test="${license.selectable}">
+	                             <div>
+	                                 <a href="${license.url}" title="${license.fullName}"
+	                                    target="_blank">${license.shortIdentifier} </a>
+	                                 <aui:input name="license" label="" value="${license.licenseId}"
+	                                            checked="${license.licenseId == reqLicense.licenseId ? 'true' : 'false'}"
+	                                            type="radio"/>
+	                             </div>
+	                         </c:when>
+	                         <c:otherwise>
+	                             <!-- previously chosen but not selectable any more -->
+	                             <c:if test="${license.licenseId == reqLicense.licenseId}">
+	                                 <div>
+	                                     <a href="${license.url}" class="disabled"
+	                                        title="${license.fullName}"
+	                                        target="_blank">${license.shortIdentifier} </a>
+	                                     <aui:input name="license" label="" value="${license.licenseId}"
+	                                                checked="true" type="radio" disabled="true"/>
+	
+	                                 </div>
+	                             </c:if>
+	                         </c:otherwise>
+	                     </c:choose>
+	                 </c:forEach>
+	             </div>
+	         </liferay-ui:panel>
+	         <liferay-ui:panel defaultState="collapsed" extended="true" title="share">
+	             <div class="sub-content" id="embed-content">
+	                 <!-- embed start -->
+	                 <aui:input name="embed_code3" label="video-url" helpMessage="about-video-url"
+	                            required="false" id="embed_code3" readonly="true" value="${vurl}"
+	                            onclick="selectEmbed()"/>
+	                 <aui:input name="embed_code" label="embed-iframe" helpMessage="about-iframe-embed"
+	                            required="false" id="embed_code" readonly="true"
+	                            value="${reqVideo.embedIframe}" onclick="selectEmbed()"/>
+	                 <c:if test="${reqVideo.downloadLink==1}">
+	                     <aui:input name="embed_code1" label="embed-html5" helpMessage="about-html5-embed"
+	                                required="false" id="embed_code1" readonly="true"
+	                                value="${reqVideo.embedHtml5}" onclick="selectEmbed()"/>
+	                 </c:if>
+	                 <aui:input name="embed_code4" label="embed-commsy" helpMessage="about-commsy-embed"
+	                            required="false" id="embed_code4" readonly="true"
+	                            value="${reqVideo.embedCommsy}" onclick="selectEmbed()"/>
+	                 <!-- embed end -->
+	             </div>
+	         </liferay-ui:panel>
+	         <liferay-ui:panel defaultState="collapsed" extended="true" title="video-thumbnail">
+	             <div class="sub-content" id="thumbnail-content">
+	                 <!-- thumbnail start -->
+	                 <liferay-ui:message key="video-thumbnail-about"/>
+	                 <div id="player1"></div>
+	                 <!-- thumbnail end -->
+	             </div>
+	         </liferay-ui:panel>
+	     </liferay-ui:panel-container>
 
-                            <div id="titledefault"><aui:input id="title" name="title" label="title" required="true"
-                                                              value="${reqVideo.title}"/></div>
-
-                            <div id="creators-custom">
-                                <aui:input id="creator" name="creator" label="creators-required"
-                                           helpMessage="creator-explanation"/>
-                                <div id="creators"></div>
-                            </div>
-
-                            <aui:select size="1" name="lectureseriesId" label="lecture-series"
-                                        helpMessage="video-with-or-without-lectureseries"
-                                        onChange="toggleLectureseries()">
-                                <aui:option value="0">-<liferay-ui:message key="without-lecture-series"/>-</aui:option>
-                                <c:forEach items="${lectureseriesAsTreeList}" var="item">
-                                    <aui:option value='0'
-                                                disabled="true">&#9472; ${item.key.termName} &#9472;</aui:option>
-                                    <c:forEach items="${item.value}" var="lect">
-                                        <c:set var="selected" value="false"/>
-                                        <c:if test="${lect.lectureseriesId==reqVideo.lectureseriesId}">
-                                            <c:set var="selected" value="true"/>
-                                        </c:if>
-                                        <aui:option value='${lect.lectureseriesId}'
-                                                    selected="${selected}">${lect.name}</aui:option>
-                                    </c:forEach>
-                                </c:forEach>
-                            </aui:select>
-
-                            <div id="options">
-                                <aui:select id="subInstitutionId" size="1" name="subInstitutionId"
-                                            label="sub-institution">
-                                    <aui:option value="" selected="true"><liferay-ui:message
-                                            key="select-sub-institution"/></aui:option>
-                                    <c:forEach items="${reqSubInstitutions}" var="item">
-                                        <aui:option value='${item.institutionId}'>${item.institutionId}</aui:option>
-                                    </c:forEach>
-                                </aui:select>
-
-                                <div class="subInstitutions">
-                                    <c:forEach items="${reqSubInstitutions}" var="item">
-                                        <div id='${item.institutionId}'>
-                                                ${item.institutionId} &nbsp;&nbsp;&nbsp;
-                                            <a class="icon-large icon-remove" style='cursor:pointer;'
-                                               onClick='document.getElementById("${item.institutionId}").remove();'></a>
-                                            <aui:input type="hidden" name="institutions" id="institutions"
-                                                       value="${item.institutionId}"/>
-                                        </div>
-                                    </c:forEach>
-                                </div>
-
-                                <aui:select size="1" id="termId" name="termId" label="term" required="true">
-                                    <c:forEach items="${terms}" var="item">
-                                        <aui:option
-                                                value='${item.termId}'>${item.prefix} &nbsp; ${item.year}</aui:option>
-                                    </c:forEach>
-                                </aui:select>
-
-                                <aui:select size="1" id="categoryId" name="categoryId" label="category" required="true">
-                                    <c:forEach items="${categories}" var="item">
-                                        <aui:option value='${item.categoryId}'>${item.name}</aui:option>
-                                    </c:forEach>
-                                </aui:select>
-                            </div>
-
-                            <aui:select size="1" name="language" label="language" required="true">
-                                <c:forEach items="${languages}" var="item">
-                                    <aui:option value='${item}'>${item}</aui:option>
-                                </c:forEach>
-                            </aui:select>
-
-                            <div id="l2gdate"></div>
-
-                            <aui:input name="tags" label="tags" required="false" value="${reqVideo.tags}"/>
-
-                            <aui:input name="publisher" label="publisher" required="false"
-                                       value="${reqMetadata.publisher}"/>
-
-                            <aui:field-wrapper label="description" name="description">
-                                <liferay-ui:input-editor name="longDesc" toolbarSet="simple" initMethod="initEditor"
-                                                         onChangeMethod="setDescriptionData" cssClass="ta"/>
-                                <script type="text/javascript">
-                                    function <portlet:namespace />initEditor() {
-                                        return "<%= UnicodeFormatter.toString(reqMetadata.getDescription()) %>";
-                                    }
-                                </script>
-                            </aui:field-wrapper>
-                        </div>
-                        <script>
-                            $("#edit-video-lable-1").click(function () {
-                                $("#metadata-upload").slideToggle("slow");
-                                $("#l1", this).toggleClass("icon-chevron-down icon-chevron-right");
-                            });
-                        </script>
-
-                        <div id="permissions">
-                            <label class="edit-dropdown-label" id="edit-video-lable-2">
-                                <i id="l2" class="aui icon-chevron-down thumb"></i>
-                                <liferay-ui:message key="permissions"/>
-                            </label>
-                            <div class="sub-content" id="permissions-content">
-                                <c:if test="${reqVideo.getOpenAccess()==0}">
-                                    <div>
-                                        <aui:input id="password" name="password" label="password" required="false"
-                                                   value="${reqVideo.password}"/>
-                                    </div>
-                                </c:if>
-                                <c:if test="${reqVideo.getOpenAccess()==1}">
-                                    <aui:input name="password" id="password" type="hidden"
-                                               value="${reqVideo.password}"/>
-                                </c:if>
-                                <div id="c2g">
-                                    <c:if test="${reqVideo.citation2go==0}">
-                                        <aui:input name="citationAllowedCheckbox" type="checkbox"
-                                                   label="citation-allowed" id="citationAllowedCheckbox"></aui:input>
-                                    </c:if>
-                                    <c:if test="${reqVideo.citation2go==1}">
-                                        <aui:input name="citationAllowedCheckbox" type="checkbox"
-                                                   label="citation-allowed" id="citationAllowedCheckbox"
-                                                   checked="true"></aui:input>
-                                    </c:if>
-                                </div>
-                            </div>
-                        </div>
-                        <script>
-                            $("#edit-video-lable-2").click(function () {
-                                $("#permissions-content").slideToggle("slow");
-                                $("#l2", this).toggleClass("icon-chevron-down icon-chevron-right");
-                            });
-                        </script>
-
-                        <div id="license">
-                            <label class="edit-dropdown-label" id="edit-video-lable-3">
-                                <i id="l3" class="aui icon-chevron-down thumb"></i>
-                                <liferay-ui:message key="license"/>
-                            </label>
-
-                            <div class="sub-content" id="license-content">
-                                <c:forEach items="${reqLicenseList}" var="license">
-                                    <c:choose>
-                                        <c:when test="${license.selectable}">
-                                            <div>
-                                                <a href="${license.url}" title="${license.fullName}"
-                                                   target="_blank">${license.shortIdentifier} </a>
-                                                <aui:input name="license" label="" value="${license.licenseId}"
-                                                           checked="${license.licenseId == reqLicense.licenseId ? 'true' : 'false'}"
-                                                           type="radio"/>
-                                            </div>
-                                        </c:when>
-                                        <c:otherwise>
-                                            <!-- previously chosen but not selectable any more -->
-                                            <c:if test="${license.licenseId == reqLicense.licenseId}">
-                                                <div>
-                                                    <a href="${license.url}" class="disabled"
-                                                       title="${license.fullName}"
-                                                       target="_blank">${license.shortIdentifier} </a>
-                                                    <aui:input name="license" label="" value="${license.licenseId}"
-                                                               checked="true" type="radio" disabled="true"/>
-
-                                                </div>
-                                            </c:if>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </c:forEach>
-                            </div>
-                        </div>
-
-                        <script>
-                            $("#edit-video-lable-3").click(function () {
-                                $("#license-content").slideToggle("slow");
-                                $("#l3", this).toggleClass("icon-chevron-down icon-chevron-right");
-                            });
-                        </script>
-
-                        <div id="embed">
-                            <label class="edit-dropdown-label" id="edit-video-lable-4">
-                                <i id="l4" class="aui icon-chevron-down"></i>
-                                <liferay-ui:message key="share"/>
-                            </label>
-                            <div class="sub-content" id="embed-content">
-                                <!-- embed start -->
-                                <aui:input name="embed_code3" label="video-url" helpMessage="about-video-url"
-                                           required="false" id="embed_code3" readonly="true" value="${vurl}"
-                                           onclick="selectEmbed()"/>
-                                <aui:input name="embed_code" label="embed-iframe" helpMessage="about-iframe-embed"
-                                           required="false" id="embed_code" readonly="true"
-                                           value="${reqVideo.embedIframe}" onclick="selectEmbed()"/>
-                                <c:if test="${reqVideo.downloadLink==1}">
-                                    <aui:input name="embed_code1" label="embed-html5" helpMessage="about-html5-embed"
-                                               required="false" id="embed_code1" readonly="true"
-                                               value="${reqVideo.embedHtml5}" onclick="selectEmbed()"/>
-                                </c:if>
-                                <aui:input name="embed_code4" label="embed-commsy" helpMessage="about-commsy-embed"
-                                           required="false" id="embed_code4" readonly="true"
-                                           value="${reqVideo.embedCommsy}" onclick="selectEmbed()"/>
-                                <!-- embed end -->
-                            </div>
-                        </div>
-                        <script>
-                            $("#edit-video-lable-4").click(function () {
-                                $("#embed-content").slideToggle("slow");
-                                $("#l4", this).toggleClass("icon-chevron-down icon-chevron-right");
-                            });
-                        </script>
-
-                        <div id="video-thumbnail">
-                            <label class="edit-dropdown-label" id="edit-video-lable-5">
-                                <i id="l5" class="aui icon-chevron-right"></i>
-                                <liferay-ui:message key="video-thumbnail"/>
-                            </label>
-
-                            <div class="sub-content" id="thumbnail-content">
-                                <!-- thumbnail start -->
-                                <liferay-ui:message key="video-thumbnail-about"/>
-                                <div id="player1"></div>
-                                <!-- thumbnail end -->
-                            </div>
-                        </div>
-                        <script>
-                            $(function () {
-                                $("#thumbnail-content").hide();
-                            });
-                            $("#edit-video-lable-5").click(function () {
-                                $("#thumbnail-content").slideToggle("slow");
-                                $("#l5", this).toggleClass("icon-chevron-down icon-chevron-right");
-                            });
-                        </script>
-                    </aui:col>
-                    <span class="col-12  action-buttons">
-                            <aui:button type="submit" value="apply-changes" onclick="updateAll()"
-                                        cssClass="btn-primary"/>
-                            <aui:button type="cancel" value="cancel" href="${backURL}" id="cancel"/>
-                            <aui:input name="videoId" type="hidden" value="${reqVideo.videoId}"/>
-                            <aui:input name="fileName" type="hidden" value="${reqVideo.filename}"/>
-                            <aui:input name="secureFileName" type="hidden" value="${reqVideo.secureFilename}"/>
-                        </span>
-                </aui:row>
-            </aui:container>
-        </aui:form>
+             <span class="col-12  action-buttons">
+                     <aui:button type="submit" value="apply-changes" onclick="updateAll()"
+                                 cssClass="btn-primary"/>
+                     <aui:button type="cancel" value="cancel" href="${backURL}" id="cancel"/>
+                     <aui:input name="videoId" type="hidden" value="${reqVideo.videoId}"/>
+                     <aui:input name="fileName" type="hidden" value="${reqVideo.filename}"/>
+                     <aui:input name="secureFileName" type="hidden" value="${reqVideo.secureFilename}"/>
+                 </span>
     </div>
 </div>
 
