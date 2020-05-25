@@ -1,8 +1,6 @@
 image: java:8-jdk
 
 stages:
-  - build
-  - test
   - deploy
 
 before_script:
@@ -14,22 +12,6 @@ cache:
   paths:
     - .gradle/wrapper
     - .gradle/caches
-
-build:
-  stage: build
-  script:
-    - ./gradlew assemble
-  artifacts:
-    paths:
-      - build/libs/*.jar
-    expire_in: 1 week
-  only:
-    - master
-
-test:
-  stage: test
-  script:
-    - ./gradlew check
 
 deploy:
    stage: deploy
