@@ -27,7 +27,7 @@ deploy:
      - chmod 700 ~/.ssh/*
    script:
     - echo "test-docker-ci-cd" > ~/README.txt 
-    - ping l2gstaging.rrz.uni-hamburg.de
+    - curl l2gstaging.rrz.uni-hamburg.de
 
 after_script:
   - echo "End CI"
