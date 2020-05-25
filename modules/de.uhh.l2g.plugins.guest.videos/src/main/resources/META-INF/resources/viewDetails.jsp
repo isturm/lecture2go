@@ -125,50 +125,52 @@
 					</c:when>
 					<c:otherwise>
 						<c:forEach items="${videoInstitutions}" var="vi">
-							<c:set var="iId" value="${vi.institutionId}" />
-							<c:set var="iPId" value="${vi.institutionParentId}" />
-							<c:set var="insti"
-								value="<%=InstitutionLocalServiceUtil
-												.getById((Long) pageContext.getAttribute("iId"))%>" />
-							<c:set var="pInst"
-								value="<%=InstitutionLocalServiceUtil
-												.getById((Long) pageContext.getAttribute("iPId"))%>" />
-							<c:set var="ipId" value="${pInst.parentId}" />
-							<c:set var="rInst"
-								value="<%=InstitutionLocalServiceUtil
-												.getById((Long) pageContext.getAttribute("ipId"))%>" />
-							<portlet:renderURL var="backURL3">
-								<portlet:param name="mvcRenderCommandName" value="/view/list" />
-								<portlet:param name="parentInstitutionId"
-									value="${pInst.institutionId}" />
-								<portlet:param name="institutionId" value="0" />
-								<portlet:param name="termId" value="0" />
-								<portlet:param name="categoryId" value="0" />
-								<portlet:param name="creatorId" value="0" />
-							</portlet:renderURL>
-							<portlet:renderURL var="backURL4">
-								<portlet:param name="mvcRenderCommandName" value="/view/list" />
-								<portlet:param name="parentInstitutionId"
-									value="${pInst.institutionId}" />
-								<portlet:param name="institutionId"
-									value="${insti.institutionId}" />
-								<portlet:param name="termId" value="0" />
-								<portlet:param name="categoryId" value="0" />
-								<portlet:param name="creatorId" value="0" />
-							</portlet:renderURL>
-
-							<A HREF="/" class="breadcrumb-item">${company.name}</A>
-							<span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-							<A HREF="${backURL0}" class="breadcrumb-item">${pageName}</A>
-							<span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-							<A HREF="${backURL0}" class="breadcrumb-item">${rInst.name}</A>
-							<span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-
-							<c:if test="${pInst.level>0}">
-								<A HREF="${backURL3}" class="breadcrumb-item">${pInst.name}</A>
+							<c:if test="${vi.institutionParentId>0}">
+								<c:set var="iId" value="${vi.institutionId}" />
+								<c:set var="iPId" value="${vi.institutionParentId}" />
+								<c:set var="insti"
+									value="<%=InstitutionLocalServiceUtil
+													.getById((Long) pageContext.getAttribute("iId"))%>" />
+								<c:set var="pInst"
+									value="<%=InstitutionLocalServiceUtil
+													.getById((Long) pageContext.getAttribute("iPId"))%>" />
+								<c:set var="ipId" value="${pInst.parentId}" />
+								<c:set var="rInst"
+									value="<%=InstitutionLocalServiceUtil
+													.getById((Long) pageContext.getAttribute("ipId"))%>" />
+								<portlet:renderURL var="backURL3">
+									<portlet:param name="mvcRenderCommandName" value="/view/list" />
+									<portlet:param name="parentInstitutionId"
+										value="${pInst.institutionId}" />
+									<portlet:param name="institutionId" value="0" />
+									<portlet:param name="termId" value="0" />
+									<portlet:param name="categoryId" value="0" />
+									<portlet:param name="creatorId" value="0" />
+								</portlet:renderURL>
+								<portlet:renderURL var="backURL4">
+									<portlet:param name="mvcRenderCommandName" value="/view/list" />
+									<portlet:param name="parentInstitutionId"
+										value="${pInst.institutionId}" />
+									<portlet:param name="institutionId"
+										value="${insti.institutionId}" />
+									<portlet:param name="termId" value="0" />
+									<portlet:param name="categoryId" value="0" />
+									<portlet:param name="creatorId" value="0" />
+								</portlet:renderURL>
+	
+								<A HREF="/" class="breadcrumb-item">${company.name}</A>
 								<span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+								<A HREF="${backURL0}" class="breadcrumb-item">${pageName}</A>
+								<span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+								<A HREF="${backURL0}" class="breadcrumb-item">${rInst.name}</A>
+								<span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+	
+								<c:if test="${pInst.level>0}">
+									<A HREF="${backURL3}" class="breadcrumb-item">${pInst.name}</A>
+									<span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+								</c:if>
+								<A HREF="${backURL4}" class="breadcrumb-item">${insti.name}</A>
 							</c:if>
-							<A HREF="${backURL4}" class="breadcrumb-item">${insti.name}</A>
 						</c:forEach>
 					</c:otherwise>
 				</c:choose>
