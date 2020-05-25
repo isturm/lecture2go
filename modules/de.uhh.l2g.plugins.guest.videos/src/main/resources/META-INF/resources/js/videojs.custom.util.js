@@ -1,15 +1,3 @@
-// Diese Funktion wird genutzt um die Url Parameter auszulesen
-var getUrlParameter = function(sParam) {
-	var sPageURL = window.location.search.substring(1);
-	var sURLVariables = sPageURL.split('&');
-	for (var i = 0; i < sURLVariables.length; i++) {
-		var sParameterName = sURLVariables[i].split('=');
-		if (sParameterName[0] == sParam) {
-			return sParameterName[1];
-		}
-	}
-};
-
 // Diese Funktion benutzen wir später zum Formatieren von Zeitangaben
 var secondsToTime = function(secs) {
     var sec_num = parseInt(secs, 10);

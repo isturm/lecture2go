@@ -36,7 +36,7 @@
 <c:set var="pageTitle"
 	value="<%=video.getTitle() + " - " + lectureseries.getName() + " - "
 					+ CreatorLocalServiceUtil.getCommaSeparatedCreatorsByVideoIdAndMaxCreators(video.getVideoId(), 200)
-					+ " - Universität Hamburg" + (String) pageContext.getAttribute("tags")%>" />
+					+ " - UniversitÃ¤t Hamburg" + (String) pageContext.getAttribute("tags")%>" />
 <c:set var="portalURL"
 	value="<%=PrefsPropsUtil.getString(company.getCompanyId(), PropsKeys.DEFAULT_LANDING_PAGE_PATH)%>" />
 <c:set var="isCitation2Go" value="false" />
@@ -208,7 +208,7 @@
 						<div class="${relatedVideos.size()>1 ? 'player' : 'player-wide'}">
 							<c:set var="lecture2goWebRoot"
 								value="<%=PropsUtil.get("lecture2go.web.root")%>" />
-							<%@ include file="player/includePlayer.jsp"%>
+							<%@ include file="player/includeNewPlayer.jsp"%>
 							<span id="license-and-views">
 								<div class="license">
 									<c:choose>
@@ -318,7 +318,7 @@
 											<div class="tab-pane" id="support">
 												<liferay-ui:panel defaultState='collapsed' extended="true" title="support">
 													<c:set var="facultyId" value="${video.rootInstitutionId}" />
-													<c:set var="institut" value="Fakultätübergreifend" />
+													<c:set var="institut" value="FakultÃ¤tÃ¼bergreifend" />
 													<c:set var="option1"
 														value="<%=PortalUtil.getOriginalServletRequest(request).getParameter("option1")%>" />
 		
