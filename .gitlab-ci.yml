@@ -1,6 +1,7 @@
 image: java:8-jdk
 
 stages:
+  - build
   - deploy
 
 before_script:
@@ -13,21 +14,32 @@ cache:
     - .gradle/wrapper
     - .gradle/caches
 
+build:
+  stage: build
+  script:
+    - ./gradlew clean assemble
+  artifacts:
+    paths:
+      - build/libs/*.jar
+      - modules/**/build/libs/*.jar
+      - themes/**/dist/*.war
+    expire_in: 1 week
+
 deploy:
    stage: deploy
    image: ubuntu
    before_script:
-     - which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )
-     - mkdir -p ~/.ssh
+     - 'which ssh-agent || ( apt-get update -y && apt-get install openssh-client -y )'
      - eval $(ssh-agent -s)
-     - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
-     - cat ~/.ssh/config
+     - mkdir -p ~/.ssh
+     - chmod 700 ~/.ssh
      - echo "$SSH_PRIVATE_KEY" > ~/.ssh/id_rsa
-     - apt-get -y install rsync
-     - chmod 700 ~/.ssh/*
+     - chmod 600 ~/.ssh/id_rsa
+     - ssh-add ~/.ssh/id_rsa
+     - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
    script:
-    - echo "test-docker-ci-cd" > ~/README.txt 
-    - curl l2gstaging.rrz.uni-hamburg.de
-
-after_script:
-  - echo "End CI"
+     - scp 'build/libs/*.jar' nutzer@l2gstaging.rrz.uni-hamburg.de:/fms/applications/lun1/l2gdeploy-ci-cd
+     - scp 'modules/*/build/libs/*.jar' nutzer@l2gstaging.rrz.uni-hamburg.de:/fms/applications/lun1/l2gdeploy-ci-cd
+     - scp 'themes/*/dist/*.war' nutzer@l2gstaging.rrz.uni-hamburg.de:/fms/applications/lun1/l2gdeploy-ci-cd
+   only:
+     - master
