@@ -1,13 +1,16 @@
-function initVideoPlayer(player, videoUrls, poster) {
-    player.hlsQualitySelector({
-        displayCurrentQuality: true,
-    });
+function initVideoPlayer(player, videoUrls, poster, textTracks) {
     player.fluid(true);
     player.controls(true);
     player.aspectRatio("16:9");
-    
 	player.src(videoUrls);
     player.poster(poster);
+
+    addTextTracks(textTracks, player);
+
+    player.hlsQualitySelector();
+    videojs.registerPlugin('chapterMarkersPlugin', ChapterMarkersPlugin);
+    player.chapterMarkersPlugin();
+
 };
 
 function convertVideoUrls(jsonPlayerUris) {
@@ -18,6 +21,12 @@ function convertVideoUrls(jsonPlayerUris) {
     }
     return videoUrls;
 };
+
+function addTextTracks(jsonPlayerTracks, player) {
+    jsonPlayerTracks.forEach(track =>
+            player.addRemoteTextTrack({src: track.file, kind: track.kind, label: track.label, default: true})
+    );
+}
 
 function getVideoMimeType(videoUrl) {
 	if(videoUrl.includes('.m3u8')) {

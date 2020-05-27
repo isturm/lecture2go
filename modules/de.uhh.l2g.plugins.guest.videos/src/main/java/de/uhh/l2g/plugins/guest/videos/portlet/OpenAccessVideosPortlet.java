@@ -49,6 +49,8 @@ import de.uhh.l2g.plugins.util.AutocompleteManager;
 				"com.liferay.portlet.header-portal-javascript=/o/de.uhh.l2g.plugins-api/player/video-js-7.8.1/videojs-contrib-quality-levels.min.js",
 				"com.liferay.portlet.header-portal-javascript=/o/de.uhh.l2g.plugins-api/player/video-js-7.8.1/videojs-hls-quality-selector.min.js",
 				"com.liferay.portlet.header-portal-javascript=/o/de.uhh.l2g.plugins-api/player/video-js-7.8.1/videojs-offset.min.js",
+				"com.liferay.portlet.header-portal-javascript=/o/de.uhh.l2g.plugins-api/player/chapter-markers.js",
+				"com.liferay.portlet.header-portal-css=/o/de.uhh.l2g.plugins-api/player/chapter-markers.css",
 				"com.liferay.portlet.header-portal-css=/o/de.uhh.l2g.plugins-api/player/video-js-7.8.1/video-js.min.css",
 		},
 		service = Portlet.class

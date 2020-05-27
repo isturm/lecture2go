@@ -16,5 +16,10 @@
 
 <script>
     const player = videojs('l2g-player');
-    initVideoPlayer(player, convertVideoUrls(${reqVideo.jsonPlayerUris}), "${reqVideo.image}");
+    initVideoPlayer(
+        player,
+        convertVideoUrls(${reqVideo.jsonPlayerUris}),
+        "${reqVideo.image}",
+        ${reqVideo.jsonPlayerTracks}
+    );
 </script>

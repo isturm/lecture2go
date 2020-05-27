@@ -525,6 +525,10 @@
 											moreLink : '<div class="desc-toggle more"><liferay-ui:message key="more"/></div></div>',
 											lessLink : '<div class="desc-toggle less"><span><liferay-ui:message key="less"/></span></div>'
 										});
+
+						$('.chaptertile').click(event =>
+								player.currentTime(timeToSeconds($(event.currentTarget).attr('begin')))
+						);
 					});
 </script>
 
