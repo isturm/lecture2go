@@ -208,7 +208,7 @@
 						<div class="${relatedVideos.size()>1 ? 'player' : 'player-wide'}">
 							<c:set var="lecture2goWebRoot"
 								value="<%=PropsUtil.get("lecture2go.web.root")%>" />
-							<%@ include file="player/includeNewPlayer.jsp"%>
+							<%@ include file="player/includeVideoPlayer.jsp"%>
 							<span id="license-and-views">
 								<div class="license">
 									<c:choose>

@@ -105,15 +105,20 @@ import de.uhh.l2g.plugins.util.VideoGenerationDateComparator;
 		"com.liferay.portlet.header-portlet-javascript=/upload-9.27.0/js/jquery.fileupload.js",		
 		"com.liferay.portlet.header-portlet-javascript=/js/jquery.loadTemplate.min.js",
 		"com.liferay.portlet.header-portlet-javascript=/js/jquery.datetimepicker.js",
-		"com.liferay.portlet.header-portlet-javascript=/player/jwplayer-8.4.1/jwplayer.js",
-		"com.liferay.portlet.header-portlet-javascript=/js/jwplayer.custom.util.js",		
+		"com.liferay.portlet.header-portlet-javascript=/player/jwplayer-8.4.1/jwplayer.js",		
 		"com.liferay.portlet.header-portlet-javascript=/js/de.uhh.l2g.plugins.creators.js",		
 		"javax.portlet.display-name=Admin Videos",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/viewList.jsp",
 		"javax.portlet.name=" + AdminVideoManagementPortletKeys.AdminVideoManagement,
 		"javax.portlet.resource-bundle=content.Language",
-		"javax.portlet.security-role-ref=power-user,user" 
+		"javax.portlet.security-role-ref=power-user,user",
+		"com.liferay.portlet.header-portal-javascript=/o/de.uhh.l2g.plugins-api/player/videoPlayer.js",
+		"com.liferay.portlet.header-portal-javascript=/o/de.uhh.l2g.plugins-api/player/video-js-7.8.1/video.min.js",
+		"com.liferay.portlet.header-portal-javascript=/o/de.uhh.l2g.plugins-api/player/video-js-7.8.1/videojs-contrib-quality-levels.min.js",
+		"com.liferay.portlet.header-portal-javascript=/o/de.uhh.l2g.plugins-api/player/video-js-7.8.1/videojs-hls-quality-selector.min.js",
+		"com.liferay.portlet.header-portal-javascript=/o/de.uhh.l2g.plugins-api/player/video-js-7.8.1/videojs-offset.min.js",
+		"com.liferay.portlet.header-portal-css=/o/de.uhh.l2g.plugins-api/player/video-js-7.8.1/video-js.min.css",
 	},
 	service = Portlet.class 
 )

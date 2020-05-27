@@ -291,7 +291,7 @@
 	             <div class="sub-content" id="thumbnail-content">
 	                 <!-- thumbnail start -->
 	                 <liferay-ui:message key="video-thumbnail-about"/>
-	                 <div id="player1"></div>
+	                 <%@include file="player/includeThumbnailPlayer.jsp" %>
 	                 <!-- thumbnail end -->
 	             </div>
 	         </liferay-ui:panel>
@@ -307,8 +307,6 @@
                  </span>
     </div>
 </div>
-
-<script type="text/javascript">jwplayer.key = "qKvU61clkb6v98R2Yoc/cL6x7dFfJ3we+r6nxD6iB0Q=";</script>
 
 <script>
     var nameSpace = "<portlet:namespace></portlet:namespace>";
@@ -915,39 +913,6 @@
 
         }
     );
-
-    function loadPlayer(vidJ) {
-        jwplayer('player1').setup({
-            width: "100%",
-            aspectratio: "16:9",
-            playbackRateControls: [0.75, 1, 1.25, 1.5],
-            image: vidJ.thumbnail,
-            sources: vidJ.playerUris,
-            hlshtml: true,
-            androidhls: true
-        });
-    }
-
-    function initializePlayer() {
-        AUI().use('aui-io-request', function (A) {
-            A.io.request("${getJSONVideoURL}", {
-                method: 'post',
-                dataType: 'json',
-                sync: true,
-                data: {
-                    "<portlet:namespace/>videoId": "${reqVideo.videoId}"
-                },
-                on: {
-                    success: function () {
-                        //json object
-                        var data = this.get('responseData');
-                        loadPlayer(data);
-                    }
-                }
-            });
-        });
-    }
-
 </script>
 
 <!-- Template -->
