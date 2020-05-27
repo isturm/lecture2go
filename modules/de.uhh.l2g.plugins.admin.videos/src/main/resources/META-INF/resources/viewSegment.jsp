@@ -11,7 +11,7 @@
 <div class="noresponsive">
 	<aui:fieldset column="true" label="${reqVideo.title}">
 		<div class="player-segment">
-			<%@ include file="/player/includePlayer.jsp" %>
+			<%@ include file="/player/includeSegmentPlayer.jsp" %>
 		</div>
 				
 		<div id="set-segments">
