@@ -794,21 +794,15 @@
 
                 //htaccess update function for physical file protectiom
                 updateHtaccess();
-                var st = false;
 
-                //
-                //jwplayer().remove();
                 //initialize and show player
                 setTimeout(
                     function () {
                         initializePlayer();
-                        jwplayer().seek(0);
-                        jwplayer().on('play', function () {
-                            if (st == false) {
-                                jwplayer().pause();
-                                st = true;
-                            }
-                        });
+                        player.currentTime(0);
+                        if(!player.paused()) {
+                        	player.pause();
+                        }
                     }, 2000
                 );
 
