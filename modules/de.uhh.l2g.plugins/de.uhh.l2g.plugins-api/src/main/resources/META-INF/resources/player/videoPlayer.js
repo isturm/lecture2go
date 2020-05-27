@@ -16,6 +16,7 @@ function convertVideoUrls(jsonPlayerUris) {
     	var videoUrl = jsonPlayerUris[i];
     	videoUrls.push({type: getVideoMimeType(videoUrl.file), src: videoUrl.file});
     }
+    return videoUrls;
 };
 
 function getVideoMimeType(videoUrl) {
