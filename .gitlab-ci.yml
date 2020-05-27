@@ -20,7 +20,6 @@ build:
     - ./gradlew clean assemble
   artifacts:
     paths:
-      - build/libs/*.jar
       - modules/**/build/libs/*.jar
       - themes/**/dist/*.war
     expire_in: 1 week
@@ -38,7 +37,6 @@ deploy:
      - ssh-add ~/.ssh/id_rsa
      - '[[ -f /.dockerenv ]] && echo -e "Host *\n\tStrictHostKeyChecking no\n\n" > ~/.ssh/config'
    script:
-     - scp 'build/libs/*.jar' nutzer@l2gstaging.rrz.uni-hamburg.de:/fms/applications/lun1/l2gdeploy-ci-cd
      - scp 'modules/*/build/libs/*.jar' nutzer@l2gstaging.rrz.uni-hamburg.de:/fms/applications/lun1/l2gdeploy-ci-cd
      - scp 'themes/*/dist/*.war' nutzer@l2gstaging.rrz.uni-hamburg.de:/fms/applications/lun1/l2gdeploy-ci-cd
    only:
