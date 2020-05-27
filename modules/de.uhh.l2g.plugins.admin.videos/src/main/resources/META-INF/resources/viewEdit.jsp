@@ -884,7 +884,7 @@
             dataType: "json",
             data: {
                 "<portlet:namespace/>videoId": videoId,
-                "<portlet:namespace/>inputTime": Math.floor(jwplayer().getPosition())
+                "<portlet:namespace/>inputTime": Math.floor(player.currentTime())
             }
         });
     }
