@@ -177,7 +177,7 @@
 				</div>
 			</c:if>
 
-			<h1 class="headline">
+			<h1 class="headline" id="headline">
 				<liferay-ui:message key="video-catalog" />
 			</h1>
 
@@ -526,9 +526,10 @@
 											lessLink : '<div class="desc-toggle less"><span><liferay-ui:message key="less"/></span></div>'
 										});
 
-						$('.chaptertile').click(event =>
-								player.currentTime(timeToSeconds($(event.currentTarget).attr('begin')))
-						);
+						$('li.chaptertile').click(event => {
+							player.currentTime(timeToSeconds($(event.currentTarget).attr('begin')))
+							document.getElementById('headline').scrollIntoView();
+						});
 					});
 </script>
 
