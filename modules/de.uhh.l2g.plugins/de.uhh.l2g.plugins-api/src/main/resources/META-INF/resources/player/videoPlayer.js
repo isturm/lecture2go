@@ -31,8 +31,9 @@ function addTextTracks(jsonPlayerTracks, player) {
 function getVideoMimeType(videoUrl) {
 	if(videoUrl.includes('.m3u8')) {
 		return 'application/x-mpegURL';
-	}
-	else {
+	} else if (videoUrl.includes('.mp4')) {
+		return 'video/mp4';
+	} else {
 		return '';
 	}
 };
