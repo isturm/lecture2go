@@ -10,7 +10,7 @@ function initVideoPlayer(player, videoUrls, poster, textTracks) {
     player.hlsQualitySelector();
     videojs.registerPlugin('chapterMarkersPlugin', ChapterMarkersPlugin);
     player.chapterMarkersPlugin();
-
+    player.chromecast({preloadWebComponents: true});
 };
 
 function convertVideoUrls(jsonPlayerUris) {
