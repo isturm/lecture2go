@@ -57,7 +57,7 @@ function setCitationFrameWindow(player, timeStart, timeEnd) {
     }
 };
 
-function enableCitation(player, timeStart, timeEnd, videoUrl, videoId, host, citation, citationiframe) {
+function enableSegmentation(player, timeStart, timeEnd, videoUrl, videoId, host, citation, citationiframe) {
 	let citationStartTime;
     let citationEndTime;
 	timeStart.click(function() {
@@ -85,7 +85,7 @@ function getUrlParameter(sParam) {
 };
 
 function generateClipLink(firstFrame, lastFrame, videoUrl, videoId, host, citation, citationiframe) {
-   if (firstFrame != null && lastFrame != null) {
+   if (firstFrame != null && lastFrame != null && citation != null && citationiframe != null) {
 	    firstFrame = Math.round(firstFrame);
 	    lastFrame = Math.round(lastFrame);
         citation.val(videoUrl+"/"+firstFrame+"/"+lastFrame);
