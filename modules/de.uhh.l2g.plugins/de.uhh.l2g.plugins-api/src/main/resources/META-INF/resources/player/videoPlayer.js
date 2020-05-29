@@ -48,26 +48,30 @@ function setCitationFrameWindow(player, timeStart, timeEnd) {
 }
 
 function enableSegmentation(player, timeStart, timeEnd, videoUrl, videoId, host, citation, citationiframe) {
-	let citationStartTime;
-    let citationEndTime;
 	timeStart.click(function() {
-        citationStartTime = player.currentTime();
-	    if (citationStartTime > citationEndTime) {
-	        citationEndTime = citationStartTime;
-	        timeEnd.val(secondsToTime(citationStartTime));
-        }
-	    timeStart.val(secondsToTime(citationStartTime));
-	    generateClipLink(citationStartTime, citationEndTime, videoUrl, videoId, host, citation, citationiframe);
+		let segmentStartTime = player.currentTime();
+	    timeStart.val(secondsToTime(segmentStartTime));
+	    if(timeEnd.val() != "" && !isValidClipTime(timeStart, timeEnd)) {
+	    	timeEnd.val(timeStart.val());
+	    }
+	    generateClipLink(segmentStartTime, timeToSeconds(timeEnd.val()), videoUrl, videoId, host, citation, citationiframe);
 	});
 	timeEnd.click(function() {
-        citationEndTime = player.currentTime();
-	    if (citationEndTime < citationStartTime) {
-	        citationStartTime = citationEndTime;
-	        timeStart.val(secondsToTime(citationEndTime));
-        }
-	    timeEnd.val(secondsToTime(citationEndTime));
-	    generateClipLink(citationStartTime, citationEndTime, videoUrl, videoId, host, citation, citationiframe);
+		let segmentEndTime = player.currentTime();
+		timeEnd.val(secondsToTime(segmentEndTime));
+	    if(timeStart.val() != "" && !isValidClipTime(timeStart, timeEnd)) {
+	    	timeStart.val(timeEnd.val());
+	    }
+	    generateClipLink(timeToSeconds(timeStart.val()), segmentEndTime, videoUrl, videoId, host, citation, citationiframe);
 	});
+}
+
+function isValidClipTime(timeStart, timeEnd) {
+	if(timeStart.val() == "" || timeEnd.val() == "") {
+		return false;
+	} else {
+		return timeToSeconds(timeStart.val()) < timeToSeconds(timeEnd.val());
+	}
 }
 
 // Diese Funktion wird genutzt, um die Url-Parameter auszulesen
@@ -105,6 +109,10 @@ function secondsToTime(secs) {
 };
 
 function timeToSeconds(timeStr) {
+	if(timeStr == "") {
+		return null;
+	}
+	
 	var seconds = 0;
 	var hh = timeStr.slice(0,2);
 	var mm = timeStr.slice(3,5);

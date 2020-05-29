@@ -30,7 +30,7 @@
 					
 				<div id="segment-input-add">
 					<aui:button-row>
-						<aui:button type="button" value="add" onClick="addSegment()" />
+						<aui:button type="button" value="add" onClick="addSegment()"/>
 					</aui:button-row>
 				</div>
 							
