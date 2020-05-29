@@ -8,8 +8,7 @@ class ChapterMarkersPlugin extends Plugin {
         const cues = [];
 
         player.on('loadedmetadata', function() {
-            Array.prototype
-                .filter.call(player.textTracks(), track => track.kind === 'chapters')
+            Array.from(player.textTracks()).filter(track => track.kind === 'chapters')
                 .forEach(chapterTrack =>
                     Array.prototype.forEach.call(chapterTrack.cues, cue => cues.push(cue))
                 );
@@ -18,19 +17,40 @@ class ChapterMarkersPlugin extends Plugin {
         });
 
         function addMarkers(cues, videoDuration) {
-            const progressBar = document.getElementsByClassName('vjs-progress-holder')[0];
+            const progressBar = document.querySelector('.vjs-progress-holder');
+            const progressBarWrapper = document.querySelector('.vjs-progress-control.vjs-control');
             cues.forEach(cue => {
                 const markerDiv = document.createElement('div');
-                markerDiv.classList.add('vjs-marker', 'bg-primary-color');
-                markerDiv.id = 'cuepoint' + cue.startTime;
-                markerDiv.style.left = (cue.startTime / videoDuration) * 100 + '%';
+                markerDiv.className = 'vjs-marker';
+                const markerPercentage = (cue.startTime / videoDuration) * 100;
+                markerDiv.style.left = markerPercentage + '%';
                 markerDiv.addEventListener('click', () => player.currentTime(Math.floor(cue.startTime)))
                 progressBar.appendChild(markerDiv);
+
+                const markerHitbox = document.createElement('div');
+                markerHitbox.className = 'vjs-marker-hitbox';
+                const marginOffset = 10 - markerPercentage * (20/100);
+                markerHitbox.style.left = `calc(${markerPercentage}% + ${marginOffset}px)`;
+                progressBarWrapper.appendChild(markerHitbox);
+
                 const tooltip = document.createElement('span');
                 tooltip.className = 'tooltip';
                 tooltip.innerHTML = cue.text;
-                markerDiv.append(tooltip);
+                markerHitbox.append(tooltip);
+
+                addTimeTooltipEventListeners();
             })
+        }
+
+        function addTimeTooltipEventListeners() {
+            Array.from(document.querySelectorAll('.vjs-marker-hitbox')).forEach(element => {
+                element.addEventListener("mouseover", () => {
+                    document.querySelector(".vjs-mouse-display .vjs-time-tooltip").style.display = 'none';
+                })
+                element.addEventListener("mouseout", () => {
+                    document.querySelector(".vjs-mouse-display .vjs-time-tooltip").style.display = 'block';
+                })
+            });
         }
     }
 }
