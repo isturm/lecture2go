@@ -4,9 +4,7 @@ function initVideoPlayer(player, videoUrls, poster, textTracks) {
     player.aspectRatio("16:9");
 	player.src(videoUrls);
     player.poster(poster);
-
     addTextTracks(textTracks, player);
-
     player.hlsQualitySelector();
     videojs.registerPlugin('chapterMarkersPlugin', ChapterMarkersPlugin);
     player.chapterMarkersPlugin();
@@ -40,37 +38,41 @@ function getVideoMimeType(videoUrl) {
 
 // Start- und Endzeit der Zitatfunktion ermitteln (Durch die URL Parameter)
 function setCitationFrameWindow(player, timeStart, timeEnd) {
-	let frameStart = getUrlParameter('start');
-    let frameEnd = getUrlParameter('end');
-    const fs = timeStart;
-    const fe = timeEnd;
-
-    if(fs >= 0 && fe > fs){
-        frameStart = timeStart;
-        frameEnd = timeEnd;
-
+    if(timeStart >= 0 && timeEnd > timeStart){
         player.offset({
-            start: frameStart,
-            end: frameEnd,
+            start: timeStart,
+            end: timeEnd,
             restart_beginning: true
         });
     }
-};
+}
 
 function enableSegmentation(player, timeStart, timeEnd, videoUrl, videoId, host, citation, citationiframe) {
-	let citationStartTime;
-    let citationEndTime;
 	timeStart.click(function() {
-	    citationStartTime = player.currentTime();
-	    timeStart.val(secondsToTime(citationStartTime));
-	    generateClipLink(citationStartTime, citationEndTime, videoUrl, videoId, host, citation, citationiframe);
+		let segmentStartTime = player.currentTime();
+	    timeStart.val(secondsToTime(segmentStartTime));
+	    if(timeEnd.val() != "" && !isValidClipTime(timeStart, timeEnd)) {
+	    	timeEnd.val(timeStart.val());
+	    }
+	    generateClipLink(segmentStartTime, timeToSeconds(timeEnd.val()), videoUrl, videoId, host, citation, citationiframe);
 	});
 	timeEnd.click(function() {
-	    citationEndTime = player.currentTime();
-	    timeEnd.val(secondsToTime(citationEndTime));
-	    generateClipLink(citationStartTime, citationEndTime, videoUrl, videoId, host, citation, citationiframe);
+		let segmentEndTime = player.currentTime();
+		timeEnd.val(secondsToTime(segmentEndTime));
+	    if(timeStart.val() != "" && !isValidClipTime(timeStart, timeEnd)) {
+	    	timeStart.val(timeEnd.val());
+	    }
+	    generateClipLink(timeToSeconds(timeStart.val()), segmentEndTime, videoUrl, videoId, host, citation, citationiframe);
 	});
-};
+}
+
+function isValidClipTime(timeStart, timeEnd) {
+	if(timeStart.val() == "" || timeEnd.val() == "") {
+		return false;
+	} else {
+		return timeToSeconds(timeStart.val()) < timeToSeconds(timeEnd.val());
+	}
+}
 
 // Diese Funktion wird genutzt, um die Url-Parameter auszulesen
 function getUrlParameter(sParam) {
@@ -107,6 +109,10 @@ function secondsToTime(secs) {
 };
 
 function timeToSeconds(timeStr) {
+	if(timeStr == "") {
+		return null;
+	}
+	
 	var seconds = 0;
 	var hh = timeStr.slice(0,2);
 	var mm = timeStr.slice(3,5);

@@ -24,9 +24,18 @@
     );
     
     $(document).ready(function(){
-        enableSegmentation(player, $("#<portlet:namespace></portlet:namespace>timeStart"),  $("#<portlet:namespace></portlet:namespace>timeEnd"));
+    	let timeStart = $("#<portlet:namespace></portlet:namespace>timeStart");
+    	let timeEnd = $("#<portlet:namespace></portlet:namespace>timeEnd");
     	
-    	// Sollte der Nutzer auf die Kapitel klicken,
+        enableSegmentation(player, timeStart,  timeEnd, $('#addSegmentButton'));
+    	
+        // Ausgewählte Zeiten validieren
+        $('#segment-input-add').find("button").prop('disabled', true);
+        $('div.segment-time').click(function() {
+        	$('#segment-input-add').find("button").prop('disabled', !isValidClipTime(timeStart, timeEnd));
+        });
+        
+        // Sollte der Nutzer auf die Kapitel klicken,
         // wird zur entsprechenden Stelle gesprungen
         $('#segments').on('click', 'div.chaptertile', function(event) {
         	player.currentTime(timeToSeconds($(event.currentTarget).attr('begin')))

@@ -529,6 +529,9 @@
 						$('li.chaptertile').click(event => {
 							player.currentTime(timeToSeconds($(event.currentTarget).attr('begin')))
 							document.getElementById('headline').scrollIntoView();
+							if(player.paused()) {
+								player.play();
+							}
 						});
 					});
 </script>
