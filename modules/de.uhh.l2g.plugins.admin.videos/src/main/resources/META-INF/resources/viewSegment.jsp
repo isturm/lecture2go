@@ -9,7 +9,7 @@
 <c:set var="backURL" value="<%=request.getAttribute("backURL").toString()%>"/>
 
 <div class="noresponsive">
-	<aui:fieldset column="true" label="${reqVideo.title}">
+	<aui:fieldset column="true" label="${reqVideo.title}" id="videoTitle">
 		<div class="player-segment">
 			<%@ include file="/player/includeSegmentPlayer.jsp" %>
 		</div>
@@ -115,7 +115,8 @@
 
 	function drawAnSegment(segment) {
 	   	// segment is a chapter
-	   	var newRow = '<div class="chaptertile" id="' + segment.segmentId + '">'+
+	   	var newRow = '<div class="chaptertile" id="' + segment.segmentId + 
+	   	'" begin="' + segment.start + '" end="' + segment.end + '">'+
 		'<a><img width="130px" height="63px" class="imgsmall" src="'+segment.image+'"/></a>'+
 		'<span class="time">'+segment.start +' - '+segment.end+'</span>'+
 		'<a><span class="segment-title">'+segment.title+'</span></a>'+
