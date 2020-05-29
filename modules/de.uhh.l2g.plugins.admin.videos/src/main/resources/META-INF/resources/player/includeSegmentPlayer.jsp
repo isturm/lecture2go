@@ -22,4 +22,22 @@
         "${reqVideo.image}",
         ${reqVideo.jsonPlayerTracks}
     );
+    
+    $(document).ready(function(){
+        enableSegmentation(player, $("#<portlet:namespace></portlet:namespace>timeStart"),  $("#<portlet:namespace></portlet:namespace>timeEnd"));
+    	
+    	// Sollte der Nutzer auf die Kapitel klicken,
+        // wird zur entsprechenden Stelle gesprungen
+        $('#segments').on('click', 'div.chaptertile', function(event) {
+        	player.currentTime(timeToSeconds($(event.currentTarget).attr('begin')))
+        	document.getElementById('videoTitle').scrollIntoView();
+			if(player.paused()) {
+				player.play();
+			}
+        });
+    	
+        $('#segments').find("input[alt='delete']").on("click", function(event) {
+        	event.stopPropagation();
+        });
+    });
 </script>

@@ -24,6 +24,6 @@
     }
     
     $(document).ready(function(){
-      enableCitation(player, $("#<portlet:namespace></portlet:namespace>timeStart"),  $("#<portlet:namespace></portlet:namespace>timeEnd"), "${video.url}", "${video.videoId}", "${lecture2goWebRoot}", $("#<portlet:namespace></portlet:namespace>citation"), $("#<portlet:namespace></portlet:namespace>citationiframe"));
+      enableSegmentation(player, $("#<portlet:namespace></portlet:namespace>timeStart"),  $("#<portlet:namespace></portlet:namespace>timeEnd"), "${video.url}", "${video.videoId}", "${lecture2goWebRoot}", $("#<portlet:namespace></portlet:namespace>citation"), $("#<portlet:namespace></portlet:namespace>citationiframe"));
     });
 </script>
