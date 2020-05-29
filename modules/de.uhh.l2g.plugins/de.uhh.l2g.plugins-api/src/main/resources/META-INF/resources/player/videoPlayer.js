@@ -4,9 +4,7 @@ function initVideoPlayer(player, videoUrls, poster, textTracks) {
     player.aspectRatio("16:9");
 	player.src(videoUrls);
     player.poster(poster);
-
     addTextTracks(textTracks, player);
-
     player.hlsQualitySelector();
     videojs.registerPlugin('chapterMarkersPlugin', ChapterMarkersPlugin);
     player.chapterMarkersPlugin();
@@ -40,37 +38,37 @@ function getVideoMimeType(videoUrl) {
 
 // Start- und Endzeit der Zitatfunktion ermitteln (Durch die URL Parameter)
 function setCitationFrameWindow(player, timeStart, timeEnd) {
-	let frameStart = getUrlParameter('start');
-    let frameEnd = getUrlParameter('end');
-    const fs = timeStart;
-    const fe = timeEnd;
-
-    if(fs >= 0 && fe > fs){
-        frameStart = timeStart;
-        frameEnd = timeEnd;
-
+    if(timeStart >= 0 && timeEnd > timeStart){
         player.offset({
-            start: frameStart,
-            end: frameEnd,
+            start: timeStart,
+            end: timeEnd,
             restart_beginning: true
         });
     }
-};
+}
 
 function enableCitation(player, timeStart, timeEnd, videoUrl, videoId, host, citation, citationiframe) {
 	let citationStartTime;
     let citationEndTime;
 	timeStart.click(function() {
-	    citationStartTime = player.currentTime();
+        citationStartTime = player.currentTime();
+	    if (citationStartTime > citationEndTime) {
+	        citationEndTime = citationStartTime;
+	        timeEnd.val(secondsToTime(citationStartTime));
+        }
 	    timeStart.val(secondsToTime(citationStartTime));
 	    generateClipLink(citationStartTime, citationEndTime, videoUrl, videoId, host, citation, citationiframe);
 	});
 	timeEnd.click(function() {
-	    citationEndTime = player.currentTime();
+        citationEndTime = player.currentTime();
+	    if (citationEndTime < citationStartTime) {
+	        citationStartTime = citationEndTime;
+	        timeStart.val(secondsToTime(citationEndTime));
+        }
 	    timeEnd.val(secondsToTime(citationEndTime));
 	    generateClipLink(citationStartTime, citationEndTime, videoUrl, videoId, host, citation, citationiframe);
 	});
-};
+}
 
 // Diese Funktion wird genutzt, um die Url-Parameter auszulesen
 function getUrlParameter(sParam) {
