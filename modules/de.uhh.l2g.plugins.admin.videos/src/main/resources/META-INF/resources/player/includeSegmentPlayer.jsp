@@ -3,7 +3,7 @@
         class="video-js"
         data-setup='{
             "playbackRates": [0.75, 1, 1.25, 1.5],
-            "controlBar": {"pictureInPictureToggle": false },
+            "controlBar": {"pictureInPictureToggle": false, "chaptersButton": false },
             "preload": "auto"
         }'
 >
@@ -29,7 +29,7 @@
     	
         enableSegmentation(player, timeStart,  timeEnd, $('#addSegmentButton'));
     	
-        // Ausgew‰hlte Zeiten validieren
+        // Ausgew√§hlte Zeiten validieren
         $('#segment-input-add').find("button").prop('disabled', true);
         $('div.segment-time').click(function() {
         	$('#segment-input-add').find("button").prop('disabled', !isValidClipTime(timeStart, timeEnd));

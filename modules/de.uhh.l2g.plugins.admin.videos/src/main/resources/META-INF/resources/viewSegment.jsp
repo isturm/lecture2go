@@ -8,44 +8,43 @@
 
 <c:set var="backURL" value="<%=request.getAttribute("backURL").toString()%>"/>
 
-<div class="noresponsive">
-	<aui:fieldset column="true" label="${reqVideo.title}" id="videoTitle">
-		<div class="player-segment">
-			<%@ include file="/player/includeSegmentPlayer.jsp" %>
-		</div>
-				
-		<div id="set-segments">
-			<aui:form  name="fm">
-				<aui:input name="chortTitle" label="title" required="true" id="chortTitle"/>
-							
-				<div class="segment-time">
-					<aui:input name="timeStart" label="start" required="true" id="timeStart" />
-				</div>
-						
-				<div class="segment-time">
-					<aui:input name="timeEnd" label="end" required="true" id="timeEnd" />
-				</div>
-							
-				<aui:input name="videoId" type="hidden" value="${reqVideo.videoId}"/>
-					
-				<div id="segment-input-add">
-					<aui:button-row>
-						<aui:button type="button" value="add" onClick="addSegment()"/>
-					</aui:button-row>
-				</div>
-							
-				<div id="segment-input-cancel">
-					<aui:button-row>
-						<aui:button type="cancel" value="cancel" href="${backURL}"/>
-					</aui:button-row>				
-				</div>
-			</aui:form>	
-		</div>
-	</aui:fieldset>
-	
-	<div id="segments-wide">
-		<div id="segments"></div>
+<h1 id="videoTitle">${reqVideo.title}</h1>
+<div class="admin-video-segmentation">
+	<div class="player-segment">
+		<%@ include file="/player/includeSegmentPlayer.jsp" %>
 	</div>
+
+	<div id="set-segments">
+		<aui:form  name="fm">
+			<aui:input name="chortTitle" label="title" required="true" id="chortTitle"/>
+
+			<div class="segment-time">
+				<aui:input name="timeStart" label="start" required="true" id="timeStart" />
+			</div>
+
+			<div class="segment-time">
+				<aui:input name="timeEnd" label="end" required="true" id="timeEnd" />
+			</div>
+
+			<aui:input name="videoId" type="hidden" value="${reqVideo.videoId}"/>
+
+			<div id="segment-input-add">
+				<aui:button-row>
+					<aui:button type="cancel" value="add" onClick="addSegment()"/>
+				</aui:button-row>
+			</div>
+
+			<div id="segment-input-cancel">
+				<aui:button-row>
+					<aui:button value="cancel" href="${backURL}"/>
+				</aui:button-row>
+			</div>
+		</aui:form>
+	</div>
+</div>
+
+<div id="segments-wide">
+	<div id="segments"></div>
 </div>
 
 <script type="text/javascript">
@@ -100,7 +99,7 @@
 	                 success: function() {
 	                	 //json object
 	                	 var json =  this.get('responseData');
-	                     drawAnSegment(json);
+	                     drawASegment(json);
 	                 }
 	            }
 	         });
@@ -109,17 +108,17 @@
 	
 	function drawAllSegments(data) {
 		for (var i = 0; i < data.length; i++) {
-			drawAnSegment(data[i]);
+			drawASegment(data[i]);
 	    }
 	}
 
-	function drawAnSegment(segment) {
+	function drawASegment(segment) {
 	   	// segment is a chapter
 	   	var newRow = '<div class="chaptertile" id="' + segment.segmentId + 
 	   	'" begin="' + segment.start + '" end="' + segment.end + '">'+
-		'<a><img width="130px" height="63px" class="imgsmall" src="'+segment.image+'"/></a>'+
-		'<span class="time">'+segment.start +' - '+segment.end+'</span>'+
-		'<a><span class="segment-title">'+segment.title+'</span></a>'+
+		'<img width="130px" height="63px" class="imgsmall" src="'+segment.image+'"/>'+
+		'<strong class="time">'+segment.start+'</strong>'+
+		'<span class="segment-title">'+segment.title+'</span>'+
 		'<span class="icon-large icon-remove" alt="delete" onclick="deleteSegment('+segment.segmentId+')" ></span></div>';
 		
 		if(segment.previousSegmentId == -1){
