@@ -29,6 +29,9 @@
   font-family: $font-family-bold;
 }
 
+.vjs-menu li {
+  text-transform: none !important;
+}
 
 .chaptertile {
   cursor: pointer;

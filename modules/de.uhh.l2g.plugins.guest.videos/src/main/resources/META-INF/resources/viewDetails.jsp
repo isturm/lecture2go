@@ -391,7 +391,10 @@
 																		<a><img src="${segment.image}"></a>
 																	</div>
 																	<div class="title">
-																		<a><b>${segment.start} </b> ${segment.title}</a>
+																		<b>${segment.start} </b>
+																	</div>
+																	<div class="segment-title">
+																		${segment.title}
 																	</div>
 																</li>
 															</c:forEach>
