@@ -7,7 +7,6 @@ function initVideoPlayer(player, videoUrls, poster, textTracks) {
     addTextTracks(textTracks, player);
     player.hlsQualitySelector();
     videojs.registerPlugin('chapterMarkersPlugin', ChapterMarkersPlugin);
-    player.chapterMarkersPlugin();
     player.chromecast({preloadWebComponents: true});
 };
 

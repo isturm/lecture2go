@@ -22,6 +22,10 @@
     if(citationAllowed === 1) {
     	setCitationFrameWindow(player, ${timeStart}, ${timeEnd});
     }
+
+    if (0 === ${timeStart} && ${timeEnd} === 0) {
+        player.chapterMarkersPlugin();
+    }
     
     $(document).ready(function(){
       enableSegmentation(player, $("#<portlet:namespace></portlet:namespace>timeStart"),  $("#<portlet:namespace></portlet:namespace>timeEnd"), "${video.url}", "${video.videoId}", "${lecture2goWebRoot}", $("#<portlet:namespace></portlet:namespace>citation"), $("#<portlet:namespace></portlet:namespace>citationiframe"));
