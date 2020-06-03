@@ -181,9 +181,9 @@ public class FFmpegManager {
 			else
 				command = PropsUtil.get("lecture2go.ffmpeg.bin") + " -ss " + sec + " -i " + PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/" + video.getSecureFilename() + " -f image2 -vframes 1 -filter:v scale='130:-1' " + thumbnailLocation + "/" + video.getVideoId()+ "_" + sec + ".jpg";
 			try {
-				runCmd.exec(command);
+				runCmd.exec(command).waitFor();
 				ret = true;
-			} catch (IOException e) {
+			} catch (IOException | InterruptedException e) {
 				ret = false;
 			}			
 		}
