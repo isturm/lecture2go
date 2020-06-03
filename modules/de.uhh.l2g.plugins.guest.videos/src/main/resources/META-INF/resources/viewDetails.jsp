@@ -387,14 +387,16 @@
 															<c:forEach items="<%=segments%>" var="segment">
 																<li class="chaptertile" id="${segment.segmentId}"
 																	begin="${segment.start}" end="${segment.end}">
-																	<div class="image">
-																		<a><img src="${segment.image}"></a>
-																	</div>
-																	<div class="title">
-																		<b>${segment.start} </b>
-																	</div>
-																	<div class="segment-title">
-																		${segment.title}
+																	<div class="chaptertile-inner">
+																		<div class="image">
+																			<a><img src="${segment.image}"></a>
+																		</div>
+																		<div class="title">
+																			<b>${segment.start} </b>
+																		</div>
+																		<div class="segment-title">
+																				${segment.title}
+																		</div>
 																	</div>
 																</li>
 															</c:forEach>

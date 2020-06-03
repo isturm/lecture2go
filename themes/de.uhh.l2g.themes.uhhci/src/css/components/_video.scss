@@ -35,4 +35,10 @@
 
 .chaptertile {
   cursor: pointer;
+
+  .chaptertile-inner {
+    display: grid;
+    grid-template-columns: 1fr 1fr 10fr;
+    grid-gap: 1em;
+  }
 }

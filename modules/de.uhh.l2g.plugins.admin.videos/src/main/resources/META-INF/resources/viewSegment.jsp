@@ -114,14 +114,30 @@
 
 	function drawASegment(segment) {
 	   	// segment is a chapter
-	   	var newRow = '<div class="chaptertile" id="' + segment.segmentId + 
-	   	'" begin="' + segment.start + '" end="' + segment.end + '">'+
-		'<img width="130px" height="63px" class="imgsmall" src="'+segment.image+'"/>'+
-		'<strong class="time">'+segment.start+'</strong>'+
-		'<span class="segment-title">'+segment.title+'</span>'+
-		'<span class="icon-large icon-remove" alt="delete" onclick="deleteSegment('+segment.segmentId+')" ></span></div>';
+		const newRow =
+				'<div ' +
+					'class="chaptertile" ' +
+					'id="' + segment.segmentId + '" ' +
+					'begin="' + segment.start + '" ' +
+					'end="' + segment.end + '"' +
+				'>' +
+					'<div class="chaptertile-clickable" begin="' + segment.start + '">' +
+						'<img ' +
+							'width="130px" ' +
+							'height="63px" ' +
+							'class="imgsmall" ' +
+							'alt="' + segment.title + '" ' +
+							'src="' + segment.image +'" ' +
+						'/>' +
+						'<strong class="time">' + segment.start + '</strong>' +
+						'<span class="segment-title">' + segment.title + '</span>' +
+					'</div>' +
+					'<div class="delete-segment" onclick="deleteSegment(' + segment.segmentId + ')" alt="delete">' +
+						'<span class="icon-large icon-remove" />' +
+					'</div>' +
+				'</div>';
 		
-		if(segment.previousSegmentId == -1){
+		if(segment.previousSegmentId === -1){
 			$("#segments").append(newRow);
 		}else{
 			$(newRow).insertAfter("#"+ segment.previousSegmentId);

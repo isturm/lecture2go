@@ -37,15 +37,16 @@
         
         // Sollte der Nutzer auf die Kapitel klicken,
         // wird zur entsprechenden Stelle gesprungen
-        $('#segments').on('click', 'div.chaptertile', function(event) {
+        const segments = $('#segments');
+        segments.on('click', 'div.chaptertile-clickable', function(event) {
         	player.currentTime(timeToSeconds($(event.currentTarget).attr('begin')))
         	document.getElementById('videoTitle').scrollIntoView();
 			if(player.paused()) {
 				player.play();
 			}
         });
-    	
-        $('#segments').find("input[alt='delete']").on("click", function(event) {
+
+        segments.find("input[alt='delete']").on("click", function(event) {
         	event.stopPropagation();
         });
     });
