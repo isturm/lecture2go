@@ -1663,7 +1663,7 @@ public class AdminVideoManagementPortlet extends MVCPortlet {
 		String text="WEBVTT \n\n";
 		while(sLi.hasNext()){
 			Segment seg = sLi.next();
-			text +=seg.getStart()+" --> "+seg.getEnd()+" \n";
+			text +=seg.getStart()+".000 --> "+seg.getEnd()+".000 \n";
 			if(seg.getChapter()==1){
 				text +=seg.getTitle()+" \n\n";
 			}else{
