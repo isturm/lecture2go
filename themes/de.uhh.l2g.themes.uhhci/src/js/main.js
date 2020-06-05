@@ -34,13 +34,16 @@ $("body").click(function(event){
     $('#menuCover').removeClass('show');
 });
 
-window.onscroll = function() {stickDesktopNavbar()};
 var desktopNavbar = document.getElementById("navigationDesktop");
-var stickyDesktopNavbar = desktopNavbar.offsetTop;
-function stickDesktopNavbar() {
-  if (window.pageYOffset >= stickyDesktopNavbar) {
-	  desktopNavbar.classList.add("sticky")
-  } else {
-	  desktopNavbar.classList.remove("sticky");
-  }
-} 
+if (desktopNavbar) {
+    window.onscroll = function() {stickDesktopNavbar()};
+    var stickyDesktopNavbar = desktopNavbar.offsetTop;
+    function stickDesktopNavbar() {
+        if (window.pageYOffset >= stickyDesktopNavbar) {
+            desktopNavbar.classList.add("sticky")
+        } else {
+            desktopNavbar.classList.remove("sticky");
+        }
+    }
+}
+
