@@ -46,6 +46,7 @@
 			this.addClass('source-link-button');
 		},
 		handleClick: function() {
+			player.pause();
 			window.open('<%= request.getAttribute("sourceUrl") %>', '_blank');
 		}
 	});
