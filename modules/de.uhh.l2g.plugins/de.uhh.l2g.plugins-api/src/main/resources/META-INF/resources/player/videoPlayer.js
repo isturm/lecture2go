@@ -90,7 +90,7 @@ function generateClipLink(firstFrame, lastFrame, videoUrl, videoId, host, citati
 	    firstFrame = Math.round(firstFrame);
 	    lastFrame = Math.round(lastFrame);
         citation.val(videoUrl+"/"+firstFrame+"/"+lastFrame);
-        const iframe="<iframe src='"+host+"/TODO/?v="+videoId+"/"+firstFrame+"/"+lastFrame+"' frameborder='0' width='647' height='373' allowfullscreen></iframe>";
+        const iframe="<iframe src='"+host+"/iframe?v="+videoId+"/"+firstFrame+"/"+lastFrame+"' frameborder='0' width='647' height='373' allowfullscreen></iframe>";
         citationiframe.val(iframe);
     }
 };

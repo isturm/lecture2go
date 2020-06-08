@@ -322,7 +322,7 @@ public class VideoImpl extends VideoBaseImpl {
 			String vId = "0";
 			if(this.getOpenAccess()==1)vId = getVideoId()+"";
 			else vId = getSPreffix();
-			embedIframe = "<iframe src='"+WEBHOME+"/iframe/-/embed/"+vId+"' frameborder='0' width='"+EMBED_WIDTH+"' height='"+EMBED_HEIGHT+"' allowfullscreen></iframe>";
+			embedIframe = "<iframe src='"+WEBHOME+"/iframe?obj="+vId+"' frameborder='0' width='"+EMBED_WIDTH+"' height='"+EMBED_HEIGHT+"' allowfullscreen></iframe>";
 		}
 		return embedIframe; 
 	}

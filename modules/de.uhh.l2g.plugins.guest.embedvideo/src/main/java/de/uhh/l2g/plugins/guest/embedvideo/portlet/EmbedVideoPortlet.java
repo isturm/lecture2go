@@ -1,9 +1,17 @@
 package de.uhh.l2g.plugins.guest.embedvideo.portlet;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.util.PortalUtil;
 import de.uhh.l2g.plugins.guest.embedvideo.constants.EmbedVideoPortletKeys;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
 import javax.portlet.*;
+import javax.servlet.http.HttpServletRequest;
+
+import de.uhh.l2g.plugins.model.Video;
+import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import org.osgi.service.component.annotations.Component;
+
+import java.io.IOException;
 
 /**
  * @author fho
@@ -35,5 +43,42 @@ import org.osgi.service.component.annotations.Component;
 		service = Portlet.class
 )
 public class EmbedVideoPortlet extends MVCPortlet {
+	@Override
+	public void render(RenderRequest renderRequest, RenderResponse renderResponse) throws IOException, PortletException {
+		HttpServletRequest httpReq = PortalUtil.getOriginalServletRequest(PortalUtil.getHttpServletRequest(renderRequest));
 
+		String videoIdParam = httpReq.getParameter("obj");
+		if (videoIdParam == null) {
+			// old API
+			videoIdParam = httpReq.getParameter("v");
+		}
+
+		String[] splitParam = videoIdParam.split("/");
+		int startTime = 0;
+		int endTime = 0;
+		String urlSuffix = "";
+		if (splitParam.length > 1) {
+			videoIdParam = splitParam[0];
+			startTime = Integer.parseInt(splitParam[1]);
+			endTime = Integer.parseInt(splitParam[2]);
+			urlSuffix = "/" + startTime + "/" + endTime;
+		}
+
+		try {
+			long videoId = Long.parseLong(videoIdParam);
+			Video video = VideoLocalServiceUtil.getVideo(videoId);
+
+			renderRequest.setAttribute("citationAllowed", video.getCitation2go());
+			renderRequest.setAttribute("image", video.getImage());
+			renderRequest.setAttribute("uris", video.getJsonPlayerUris());
+			renderRequest.setAttribute("tracks", video.getJsonPlayerTracks());
+			renderRequest.setAttribute("startTime", startTime);
+			renderRequest.setAttribute("endTime", endTime);
+			renderRequest.setAttribute("sourceUrl", video.getCurrentURL() + urlSuffix);
+		} catch (PortalException e) {
+			e.printStackTrace();
+		}
+
+		super.render(renderRequest, renderResponse);
+	}
 }
