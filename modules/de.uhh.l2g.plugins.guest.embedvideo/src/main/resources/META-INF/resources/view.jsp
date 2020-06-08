@@ -38,4 +38,18 @@
 	if (startTime === 0 && endTime === 0) {
 		player.chapterMarkersPlugin();
 	}
+
+	const button = videojs.getComponent('Button');
+	const sourceLinkButton = videojs.extend(button, {
+		constructor: function() {
+			button.apply(this, arguments);
+			this.addClass('source-link-button');
+		},
+		handleClick: function() {
+			window.open('<%= request.getAttribute("sourceUrl") %>', '_blank');
+		}
+	});
+
+	videojs.registerComponent('SourceLinkButton', sourceLinkButton);
+	player.getChild('controlBar').addChild('sourceLinkButton', {});
 </script>

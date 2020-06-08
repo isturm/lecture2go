@@ -44,6 +44,7 @@ public class EmbedVideoRenderCommand implements MVCRenderCommand {
 			renderRequest.setAttribute("tracks", video.getJsonPlayerTracks());
 			renderRequest.setAttribute("startTime", startTimeInt);
 			renderRequest.setAttribute("endTime", endTimeInt);
+			renderRequest.setAttribute("sourceUrl", video.getCurrentURL());
 		} catch (PortalException e) {
 			e.printStackTrace();
 		}
