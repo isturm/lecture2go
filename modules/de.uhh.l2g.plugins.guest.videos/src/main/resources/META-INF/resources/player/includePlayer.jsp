@@ -48,7 +48,7 @@
         
         pla.on('ready', function(){
 
-         	// Inputfelder für Start und Ende der Zitate / Kapitel speichern 
+         	// Inputfelder fï¿½r Start und Ende der Zitate / Kapitel speichern 
             var $inputTimeStart = $("#<portlet:namespace></portlet:namespace>timeStart").val("");
             var $inputTimeEnd = $("#<portlet:namespace></portlet:namespace>timeEnd").val("");
             var $citation = $("#<portlet:namespace></portlet:namespace>citation").val("");
@@ -57,10 +57,10 @@
             var $chapters = $('#chapters');
             var $chapterDivs = $chapters.find("div.chaptertile");
             
-            // Chapter ids und Zeiten in Object für spätere Abfragen speichern
+            // Chapter ids und Zeiten in Object fï¿½r spï¿½tere Abfragen speichern
             var chapters = [];
             for (var i = 0; i < $chapterDivs.length; i++) {
-            	// Array chapters enthält Triple aus id, Anfangs- und Endzeit der Kapitel
+            	// Array chapters enthï¿½lt Triple aus id, Anfangs- und Endzeit der Kapitel
             	var chapter = {
             			id : $chapterDivs.eq(i).attr("id"),
             			begin : timeToSeconds($chapterDivs.eq(i).attr("begin")),
@@ -71,13 +71,13 @@
 
             if (frameStart && frameEnd) {
                 // Sollten sich die Start- und Endzeit in den URL Parametern befinden
-                // wird in diesen Abschnitt dafür gesorgt das man auch nur das Entsprechende
+                // wird in diesen Abschnitt dafï¿½r gesorgt das man auch nur das Entsprechende
                 // Videomaterial zu sehen bekommt
 
 
-                // iOS und Android unterstützen seek nur wenn der Nutzer
+                // iOS und Android unterstï¿½tzen seek nur wenn der Nutzer
                 // selbst manuell das vide gestartet hat. Wir werden den start des Zitates
-                // später anders lösen
+                // spï¿½ter anders lï¿½sen
                 if (!isTouchDevice) {
                 	jwplayer().on('firstFrame', function() { 
                 		jwplayer().play();
@@ -87,15 +87,15 @@
             }
 
                 
-            // Event listener alle 100 ms während playback
+            // Event listener alle 100 ms wï¿½hrend playback
             jwplayer().onTime( function(event){
 
-                // Sicher stellen, dass der gewählte Zeitraum eingehalten wird
+                // Sicher stellen, dass der gewï¿½hlte Zeitraum eingehalten wird
 
                 var pos =  Math.floor(event.position);
 
                 if (pos < frameStart && isTouchDevice) {
-                    // Nur unter iOS und Android nötig,
+                    // Nur unter iOS und Android nï¿½tig,
                     jwplayer().seek(frameStart);
                 } else if (pos > frameEnd) {
                     jwplayer().seek(frameStart);
@@ -122,7 +122,7 @@
                 }
             });
 
-            // Diese Stelle ist wiederum nur auf PC nötig.
+            // Diese Stelle ist wiederum nur auf PC nï¿½tig.
             // Hiermit wird verhindert, dass der Nutzer per Tastatur
             // aus den Zitatsbereich herausspult
             if (!isTouchDevice) {
@@ -153,7 +153,7 @@
             	event.stopPropagation();
             });
 
-            // Im nachfolgenden Abschnitt wird den Nutzer ermöglicht
+            // Im nachfolgenden Abschnitt wird den Nutzer ermï¿½glicht
             // eigene Zitate zu erstellen und zu teilen
             var player = jwplayer();
 
@@ -207,7 +207,7 @@
             	var vid = "${video.videoId}"; 
             	var host ="${lecture2goWebRoot}";
             	
-            	var iframe="<iframe src='"+host+"/TODO/?v="+vid+"/"+firstFrame+"/"+lastFrame+"' frameborder='0' width='647' height='373' allowfullscreen></iframe>";
+            	var iframe="<iframe src='"+host+"/iframe?obj="+vid+"/"+firstFrame+"/"+lastFrame+"' frameborder='0' width='647' height='373' allowfullscreen></iframe>";
             	$citationiframe.val(iframe);
             }
             
