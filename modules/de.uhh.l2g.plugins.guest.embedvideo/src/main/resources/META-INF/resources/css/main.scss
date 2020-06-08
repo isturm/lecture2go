@@ -2,3 +2,11 @@
   margin: 0 !important;
   padding: 0;
 }
+
+.source-link-button {
+  width: 8em !important;
+
+  &::before {
+    content: "Lecture2Go";
+  }
+}
