@@ -1,4 +1,4 @@
-function initVideoPlayer(player, videoUrls, poster, textTracks) {
+function initVideoPlayer(player, videoUrls, poster, textTracks, is360Video = false) {
     player.fluid(true);
     player.controls(true);
     player.aspectRatio("16:9");
@@ -8,6 +8,10 @@ function initVideoPlayer(player, videoUrls, poster, textTracks) {
     player.hlsQualitySelector();
     videojs.registerPlugin('chapterMarkersPlugin', ChapterMarkersPlugin);
     player.chromecast({preloadWebComponents: true});
+
+    if (is360Video) {
+		player.vr({projection: '360'});
+	}
 };
 
 function convertVideoUrls(jsonPlayerUris) {
