@@ -8,6 +8,8 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 import javax.servlet.http.Cookie;
 
+import de.uhh.l2g.plugins.model.*;
+import de.uhh.l2g.plugins.service.*;
 import org.osgi.service.component.annotations.Component;
 
 import com.liferay.portal.kernel.exception.PortalException;
@@ -18,20 +20,6 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import de.uhh.l2g.plugins.exception.NoSuchLicenseException;
 import de.uhh.l2g.plugins.exception.NoSuchVideoException;
 import de.uhh.l2g.plugins.guest.videos.constants.OpenAccessVideosPortletKeys;
-import de.uhh.l2g.plugins.model.Lectureseries;
-import de.uhh.l2g.plugins.model.License;
-import de.uhh.l2g.plugins.model.Metadata;
-import de.uhh.l2g.plugins.model.Segment;
-import de.uhh.l2g.plugins.model.Video;
-import de.uhh.l2g.plugins.model.Video_Institution;
-import de.uhh.l2g.plugins.model.Video_Lectureseries;
-import de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil;
-import de.uhh.l2g.plugins.service.LicenseLocalServiceUtil;
-import de.uhh.l2g.plugins.service.MetadataLocalServiceUtil;
-import de.uhh.l2g.plugins.service.SegmentLocalServiceUtil;
-import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
-import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
-import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.util.ProzessManager;
 
 @Component(
@@ -51,15 +39,19 @@ public class ViewRenderDetails implements MVCRenderCommand{
 		boolean objectExists = true;
 		
 		Long objectId = new Long(0);
+		boolean is360Video = false;
+
 		boolean secLink = false;
 	   	String oid = ParamUtil.getString(renderRequest, "objectId");
-		
+
 	    try{
 	    	objectId = new Long(oid);
+				is360Video = Video_CategoryLocalServiceUtil.getByVideo(objectId).get(0).getCategoryId() == 9;
 	    }catch(NumberFormatException e){
 		    if(objectType.equals("v")){ //for video objects
 	    		try {
-					objectId = VideoLocalServiceUtil.getBySecureUrl(oid).getVideoId();		
+					objectId = VideoLocalServiceUtil.getBySecureUrl(oid).getVideoId();
+					is360Video = Video_CategoryLocalServiceUtil.getByVideo(objectId).get(0).getCategoryId() == 9;
 					secLink = true;
 				} catch (NoSuchVideoException e1) {
 				} catch (SystemException e1) {}
@@ -213,6 +205,7 @@ public class ViewRenderDetails implements MVCRenderCommand{
 		    renderRequest.setAttribute("timeEnd",timeEnd);
 		    renderRequest.setAttribute("objectType",objectType);
 		    renderRequest.setAttribute("objectId",oid);
+		    renderRequest.setAttribute("is360Video",is360Video);
 	    }
 	    
 		return "/viewDetails.jsp"; 

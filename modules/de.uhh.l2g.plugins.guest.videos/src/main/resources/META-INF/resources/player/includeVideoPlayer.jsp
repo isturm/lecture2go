@@ -6,6 +6,7 @@
             "controlBar": {"pictureInPictureToggle": false, "chaptersButton": false },
             "preload": "auto"
         }'
+        crossorigin
 >
     <p class="vjs-no-js">
         To view this video please enable JavaScript, and consider upgrading to a
@@ -16,7 +17,7 @@
 
 <script>
     const player = videojs('l2g-player');
-    initVideoPlayer(player, convertVideoUrls(${video.jsonPlayerUris}), "${video.image}", ${video.jsonPlayerTracks});
+    initVideoPlayer(player, convertVideoUrls(${video.jsonPlayerUris}), "${video.image}", ${video.jsonPlayerTracks}, ${is360Video});
     
     const citationAllowed = ${video.citation2go};
     if(citationAllowed === 1) {
