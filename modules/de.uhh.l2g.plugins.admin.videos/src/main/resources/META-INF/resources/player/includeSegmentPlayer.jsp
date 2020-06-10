@@ -16,11 +16,14 @@
 
 <script>
     const player = videojs('l2g-player');
+    const is360Video = <%= request.getAttribute("is360Video") %> ? true : false;
+
     initVideoPlayer(
         player,
         convertVideoUrls(${reqVideo.jsonPlayerUris}),
         "${reqVideo.image}",
-        ${reqVideo.jsonPlayerTracks}
+        ${reqVideo.jsonPlayerTracks},
+        is360Video
     );
     
     $(document).ready(function(){

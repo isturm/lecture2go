@@ -16,6 +16,7 @@
 
 <script>
     const player = videojs('l2g-player');
+    const is360Video = <%= request.getAttribute("is360Video") %> ? true : false;
 
     function initializePlayer() {
         AUI().use('aui-io-request', function (A) {
@@ -35,7 +36,7 @@
                         	var videoUrl = data.playerUris[i];
                         	videoUrls.push({type: getVideoMimeType(videoUrl.file), src: videoUrl.file});
                         }
-                        initVideoPlayer(player, videoUrls, data.thumbnail);
+                        initVideoPlayer(player, videoUrls, data.thumbnail, null, is360Video);
                     }
                 }
             });

@@ -120,6 +120,7 @@ import de.uhh.l2g.plugins.util.VideoGenerationDateComparator;
 		"com.liferay.portlet.header-portal-javascript=/o/de.uhh.l2g.plugins-api/player/video-js-plugins/offset/videojs-offset.min.js",
 		"com.liferay.portlet.header-portal-javascript=/o/de.uhh.l2g.plugins-api/player/video-js-plugins/chromecast/dist/silvermine-videojs-chromecast.min.js",
 		"com.liferay.portlet.header-portal-javascript=/o/de.uhh.l2g.plugins-api/player/video-js-plugins/chromecast/chromecast-framework.js",
+		"com.liferay.portlet.header-portal-javascript=/o/de.uhh.l2g.plugins-api/player/video-js-plugins/vr/videojs-vr.min.js",
 		"com.liferay.portlet.header-portal-javascript=/o/de.uhh.l2g.plugins-api/player/video-js-plugins/chapter-markers/chapter-markers.js",
 		"com.liferay.portlet.header-portal-css=/o/de.uhh.l2g.plugins-api/player/video-js-plugins/chapter-markers/chapter-markers.css",
 		"com.liferay.portlet.header-portal-css=/o/de.uhh.l2g.plugins-api/player/video-js-7.8.1/video-js.min.css",
@@ -189,6 +190,10 @@ public class AdminVideoManagementPortlet extends MVCPortlet {
 		if(lectureseriesId>0)portletURL.setParameter("lectureseriesId", lectureseriesId.toString());
 		//detail all possible view variables
 		Long videoId = ParamUtil.getLong(renderRequest, "videoId", 0);
+		boolean is360Video = false;
+		if (videoId > 0) {
+			is360Video = Video_CategoryLocalServiceUtil.getByVideo(videoId).get(0).getCategoryId() == 9;
+		}
 		Video reqVideo = VideoLocalServiceUtil.createVideo(0);
 		try {reqVideo = VideoLocalServiceUtil.getVideo(videoId);} catch (PortalException e1) {}
 		List<Lectureseries> reqLectureseriesList = new ArrayList<Lectureseries>();
@@ -375,6 +380,7 @@ public class AdminVideoManagementPortlet extends MVCPortlet {
 		renderRequest.setAttribute("assignedCreators", assignedCreators);
 		renderRequest.setAttribute("displayTerms", displayTerms);
 		renderRequest.setAttribute("videoSearchContainer", videoSearchContainer);
+		renderRequest.setAttribute("is360Video", is360Video);
 		//
 		renderResponse.setProperty("jspPage", mvcPath);
 		super.render(renderRequest, renderResponse);
