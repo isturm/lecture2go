@@ -9,6 +9,7 @@ import javax.servlet.http.HttpServletRequest;
 
 import de.uhh.l2g.plugins.model.Video;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
+import de.uhh.l2g.plugins.service.Video_CategoryLocalServiceUtil;
 import org.osgi.service.component.annotations.Component;
 
 import java.io.IOException;
@@ -36,6 +37,7 @@ import java.io.IOException;
 				"com.liferay.portlet.header-portal-javascript=/o/de.uhh.l2g.plugins-api/player/video-js-plugins/offset/videojs-offset.min.js",
 				"com.liferay.portlet.header-portal-javascript=/o/de.uhh.l2g.plugins-api/player/video-js-plugins/chromecast/dist/silvermine-videojs-chromecast.min.js",
 				"com.liferay.portlet.header-portal-javascript=/o/de.uhh.l2g.plugins-api/player/video-js-plugins/chromecast/chromecast-framework.js",
+				"com.liferay.portlet.header-portal-javascript=/o/de.uhh.l2g.plugins-api/player/video-js-plugins/vr/videojs-vr.min.js",
 				"com.liferay.portlet.header-portal-javascript=/o/de.uhh.l2g.plugins-api/player/video-js-plugins/chapter-markers/chapter-markers.js",
 				"com.liferay.portlet.header-portal-css=/o/de.uhh.l2g.plugins-api/player/video-js-plugins/chapter-markers/chapter-markers.css",
 				"com.liferay.portlet.header-portal-css=/o/de.uhh.l2g.plugins-api/player/video-js-7.8.1/video-js.min.css",
@@ -67,6 +69,7 @@ public class EmbedVideoPortlet extends MVCPortlet {
 		try {
 			long videoId = Long.parseLong(videoIdParam);
 			Video video = VideoLocalServiceUtil.getVideo(videoId);
+			boolean is360Video = Video_CategoryLocalServiceUtil.getByVideo(videoId).get(0).getCategoryId() == 9;
 
 			renderRequest.setAttribute("citationAllowed", video.getCitation2go());
 			renderRequest.setAttribute("image", video.getImage());
@@ -75,6 +78,7 @@ public class EmbedVideoPortlet extends MVCPortlet {
 			renderRequest.setAttribute("startTime", startTime);
 			renderRequest.setAttribute("endTime", endTime);
 			renderRequest.setAttribute("sourceUrl", video.getCurrentURL() + urlSuffix);
+			renderRequest.setAttribute("is360Video", is360Video);
 		} catch (PortalException e) {
 			e.printStackTrace();
 		}

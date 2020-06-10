@@ -27,9 +27,10 @@
 	const startTime = 0 + <%= request.getAttribute("startTime") %>;
 	const endTime = 0 + <%= request.getAttribute("endTime") %>;
 	const image = "<%= request.getAttribute("image") %>";
+	const is360Video = <%= request.getAttribute("is360Video") %> ? true : false;
 
 	const player = videojs('embed-player');
-			initVideoPlayer(player, convertVideoUrls(uris), image, tracks);
+			initVideoPlayer(player, convertVideoUrls(uris), image, tracks, is360Video);
 
 	if (citationAllowed === 1) {
 		setCitationFrameWindow(player, startTime, endTime);

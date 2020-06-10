@@ -1,10 +1,12 @@
-function initVideoPlayer(player, videoUrls, poster, textTracks, is360Video = false) {
+function initVideoPlayer(player, videoUrls, poster, textTracks = null, is360Video = false) {
     player.fluid(true);
     player.controls(true);
     player.aspectRatio("16:9");
 	player.src(videoUrls);
     player.poster(poster);
-    addTextTracks(textTracks, player);
+    if (textTracks != null) {
+		addTextTracks(textTracks, player);
+	}
     player.hlsQualitySelector();
     videojs.registerPlugin('chapterMarkersPlugin', ChapterMarkersPlugin);
     player.chromecast({preloadWebComponents: true});
