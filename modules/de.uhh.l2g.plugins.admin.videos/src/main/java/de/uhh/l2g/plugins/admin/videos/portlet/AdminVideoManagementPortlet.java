@@ -191,8 +191,12 @@ public class AdminVideoManagementPortlet extends MVCPortlet {
 		//detail all possible view variables
 		Long videoId = ParamUtil.getLong(renderRequest, "videoId", 0);
 		boolean is360Video = false;
+
 		if (videoId > 0) {
-			is360Video = Video_CategoryLocalServiceUtil.getByVideo(videoId).get(0).getCategoryId() == 9;
+			List<Video_Category> categories = Video_CategoryLocalServiceUtil.getByVideo(videoId);
+			if (categories.size() > 0) {
+				is360Video = categories.get(0).getCategoryId() == 9;
+			}
 		}
 		Video reqVideo = VideoLocalServiceUtil.createVideo(0);
 		try {reqVideo = VideoLocalServiceUtil.getVideo(videoId);} catch (PortalException e1) {}
