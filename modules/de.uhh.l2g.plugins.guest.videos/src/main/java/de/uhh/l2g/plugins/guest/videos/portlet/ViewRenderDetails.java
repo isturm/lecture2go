@@ -46,12 +46,18 @@ public class ViewRenderDetails implements MVCRenderCommand{
 
 	    try{
 	    	objectId = new Long(oid);
-				is360Video = Video_CategoryLocalServiceUtil.getByVideo(objectId).get(0).getCategoryId() == 9;
+				List<Video_Category> categories = Video_CategoryLocalServiceUtil.getByVideo(objectId);
+				if (categories.size() > 0) {
+					is360Video = categories.get(0).getCategoryId() == 9;
+				}
 	    }catch(NumberFormatException e){
 		    if(objectType.equals("v")){ //for video objects
 	    		try {
 					objectId = VideoLocalServiceUtil.getBySecureUrl(oid).getVideoId();
-					is360Video = Video_CategoryLocalServiceUtil.getByVideo(objectId).get(0).getCategoryId() == 9;
+					List<Video_Category> categories = Video_CategoryLocalServiceUtil.getByVideo(objectId);
+					if (categories.size() > 0) {
+						is360Video = categories.get(0).getCategoryId() == 9;
+					}
 					secLink = true;
 				} catch (NoSuchVideoException e1) {
 				} catch (SystemException e1) {}
