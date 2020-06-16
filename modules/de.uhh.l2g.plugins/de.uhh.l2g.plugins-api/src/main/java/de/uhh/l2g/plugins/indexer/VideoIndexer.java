@@ -48,9 +48,6 @@ public class VideoIndexer extends BaseIndexer<Video> {
 				"citation2Go",
 				"termId",
 				"licenseId",
-				"userId",
-				"userUuid",
-				"userName",
 				"createDate",
 				"modifiedDate"
 		);
@@ -84,8 +81,6 @@ public class VideoIndexer extends BaseIndexer<Video> {
 		document.addKeyword("citation2Go", video.getCitation2go());
 		document.addKeyword("termId", video.getTermId());
 		document.addKeyword("licenseId", video.getLicenseId());
-		document.addKeyword("userId", video.getUserId());
-		document.addKeyword("userUuid", video.getUserUuid());
 		document.addDate("createDate", video.getCreateDate());
 		document.addDate("modifiedDate", video.getModifiedDate());
 
