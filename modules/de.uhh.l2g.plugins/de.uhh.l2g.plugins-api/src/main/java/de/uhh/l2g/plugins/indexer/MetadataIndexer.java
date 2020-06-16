@@ -7,8 +7,8 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.*;
 import com.liferay.portal.kernel.util.GetterUtil;
-import de.uhh.l2g.plugins.model.Category;
-import de.uhh.l2g.plugins.service.CategoryLocalService;
+import de.uhh.l2g.plugins.model.Metadata;
+import de.uhh.l2g.plugins.service.MetadataLocalService;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 import javax.portlet.PortletRequest;
@@ -16,44 +16,48 @@ import javax.portlet.PortletResponse;
 import java.util.Locale;
 
 @Component(immediate = true, service = Indexer.class)
-public class CategoryIndexer extends BaseIndexer<Category> {
+public class MetadataIndexer extends BaseIndexer<Metadata> {
 	private static final Log log = LogFactoryUtil.getLog(CategoryIndexer.class);
 
 	@Reference
-	CategoryLocalService categoryLocalService;
+	MetadataLocalService metadataLocalService;
 
 	@Reference
 	protected IndexWriterHelper indexWriterHelper;
 
-	public CategoryIndexer() {
+	public MetadataIndexer() {
 		setDefaultSelectedFieldNames(
 				Field.COMPANY_ID,
-				"categoryId",
-				"parentId",
-				"languageId",
-				"name",
-				"translation",
+				"metadataId",
+				"type",
+				"language",
+				"title",
+				"subject",
+				"description",
+				"publisher",
 				"createDate",
 				"modifiedDate"
 		);
 	}
 
 	@Override
-	protected void doDelete(Category category) throws Exception {
-		deleteDocument(category.getCompanyId(), category.getCategoryId());
+	protected void doDelete(Metadata metadata) throws Exception {
+		deleteDocument(metadata.getCompanyId(), metadata.getMetadataId());
 	}
 
 	@Override
-	protected Document doGetDocument(Category category) throws Exception {
-		Document document = getBaseModelDocument(Category.class.getName(), category);
-		document.addKeyword(Field.COMPANY_ID, category.getCompanyId());
-		document.addKeyword("categoryId", category.getCategoryId());
-		document.addKeyword("parentId", category.getParentId());
-		document.addKeyword("languageId", category.getLanguageId());
-		document.addKeyword("name", category.getName());
-		document.addKeyword("translation", category.getTranslation());
-		document.addDate("createDate", category.getCreateDate());
-		document.addDate("modifiedDate", category.getModifiedDate());
+	protected Document doGetDocument(Metadata metadata) throws Exception {
+		Document document = getBaseModelDocument(Metadata.class.getName(), metadata);
+		document.addKeyword(Field.COMPANY_ID, metadata.getCompanyId());
+		document.addKeyword("metadataId", metadata.getMetadataId());
+		document.addKeyword("type", metadata.getType());
+		document.addKeyword("language", metadata.getLanguage());
+		document.addText("title", metadata.getTitle());
+		document.addText("subject", metadata.getSubject());
+		document.addText("description", metadata.getDescription());
+		document.addKeyword("publisher", metadata.getPublisher());
+		document.addDate("createDate", metadata.getCreateDate());
+		document.addDate("modifiedDate", metadata.getModifiedDate());
 
 		return document;
 	}
@@ -67,22 +71,22 @@ public class CategoryIndexer extends BaseIndexer<Category> {
 
 	@Override
 	protected void doReindex(String className, long classPK) throws Exception {
-		Category category = categoryLocalService.getCategory(classPK);
-		doReindex(category);
+		Metadata metadata = metadataLocalService.getMetadata(classPK);
+		doReindex(metadata);
 	}
 
 	@Override
 	protected void doReindex(String[] ids) throws Exception {
 		long companyId = GetterUtil.getLong(ids[0]);
-		reindexCategories(companyId);
+		reindexMetadata(companyId);
 	}
 
 	@Override
-	protected void doReindex(Category category) throws Exception {
-		Document document = getDocument(category);
+	protected void doReindex(Metadata metadata) throws Exception {
+		Document document = getDocument(metadata);
 		indexWriterHelper.updateDocument(
 				getSearchEngineId(),
-				category.getCompanyId(),
+				metadata.getCompanyId(),
 				document,
 				isCommitImmediately()
 		);
@@ -90,18 +94,18 @@ public class CategoryIndexer extends BaseIndexer<Category> {
 
 	@Override
 	public String getClassName() {
-		return Category.class.getName();
+		return Metadata.class.getName();
 	}
 
-	protected void reindexCategories(long companyId) throws PortalException {
-		log.info("Attempting to reindex all categories for companyId: " + companyId);
+	protected void reindexMetadata(long companyId) throws PortalException {
+		log.info("Attempting to reindex all metadata for companyId: " + companyId);
 		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-				categoryLocalService.getIndexableActionableDynamicQuery();
+				metadataLocalService.getIndexableActionableDynamicQuery();
 		indexableActionableDynamicQuery.setCompanyId(companyId);
 		indexableActionableDynamicQuery.setPerformActionMethod(
-				(ActionableDynamicQuery.PerformActionMethod<Category>) category -> {
+				(ActionableDynamicQuery.PerformActionMethod<Metadata>) metadata -> {
 					try {
-						Document document = getDocument(category);
+						Document document = getDocument(metadata);
 						indexableActionableDynamicQuery.addDocuments(document);
 					}
 					catch (PortalException pe) {
@@ -110,6 +114,6 @@ public class CategoryIndexer extends BaseIndexer<Category> {
 				});
 		indexableActionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 		indexableActionableDynamicQuery.performActions();
-		log.info("Successfully reindexed all categories for companyId: " + companyId);
+		log.info("Successfully reindexed all metadata for companyId: " + companyId);
 	}
 }

@@ -46,10 +46,6 @@ public class LectureSeriesIndexer extends BaseIndexer<Lectureseries> {
 				"videoSort",
 				"USID",
 				"previewVideoId",
-				"groupId",
-				"userId",
-				"userUuid",
-				"userName",
 				"createDate",
 				"modifiedDate"
 		);
@@ -80,10 +76,6 @@ public class LectureSeriesIndexer extends BaseIndexer<Lectureseries> {
 		document.addKeyword("videoSort", lectureseries.getVideoSort());
 		document.addKeyword("USID", lectureseries.getUSID());
 		document.addKeyword("previewVideoId", lectureseries.getPreviewVideoId());
-		document.addKeyword("groupId", lectureseries.getGroupId());
-		document.addKeyword("userId", lectureseries.getUserId());
-		document.addKeyword("userUuid", lectureseries.getUserUuid());
-		document.addKeyword("userName", lectureseries.getUserName());
 		document.addDate("createDate", lectureseries.getCreateDate());
 		document.addDate("modifiedDate", lectureseries.getModifiedDate());
 
