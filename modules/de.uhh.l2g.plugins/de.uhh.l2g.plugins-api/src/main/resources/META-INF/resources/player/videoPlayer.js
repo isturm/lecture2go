@@ -14,7 +14,7 @@ function initVideoPlayer(player, videoUrls, poster, textTracks = null, is360Vide
     if (is360Video) {
 		player.vr({projection: '360'});
 		for (let cardboardButton of document.querySelectorAll('.vjs-button-vr')) {
-			cardboardButton.style.display = 'none';
+			cardboardButton.classList.add('vjs-hidden');
 		}
 	}
 };
