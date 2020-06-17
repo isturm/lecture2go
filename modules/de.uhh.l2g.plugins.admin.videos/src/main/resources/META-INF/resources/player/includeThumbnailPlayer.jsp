@@ -3,9 +3,11 @@
         class="video-js"
         data-setup='{
             "playbackRates": [0.75, 1, 1.25, 1.5],
-            "controlBar": {"pictureInPictureToggle": false },
+            "controlBar": {"pictureInPictureToggle": false, "chaptersButton": false },
             "preload": "auto"
         }'
+        crossorigin
+        <c:if test="${is360Video == true}">playsinline</c:if>
 >
     <p class="vjs-no-js">
         To view this video please enable JavaScript, and consider upgrading to a

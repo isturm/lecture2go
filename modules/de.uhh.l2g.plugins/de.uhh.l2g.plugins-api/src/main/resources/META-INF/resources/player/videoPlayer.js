@@ -11,11 +11,6 @@ function initVideoPlayer(player, videoUrls, poster, textTracks = null, is360Vide
     videojs.registerPlugin('chapterMarkersPlugin', ChapterMarkersPlugin);
     player.chromecast({preloadWebComponents: true});
 
-
-	for (let pipButton of document.querySelectorAll('.vjs-picture-in-picture-control')) {
-		pipButton.style.display = 'none';
-	}
-
     if (is360Video) {
 		player.vr({projection: '360'});
 		for (let cardboardButton of document.querySelectorAll('.vjs-button-vr')) {
