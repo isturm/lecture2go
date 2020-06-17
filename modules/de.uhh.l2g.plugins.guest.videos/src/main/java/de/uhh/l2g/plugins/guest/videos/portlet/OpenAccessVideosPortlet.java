@@ -1,5 +1,13 @@
 package de.uhh.l2g.plugins.guest.videos.portlet;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
+import com.liferay.portal.kernel.search.ParseException;
+import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.Validator;
+
 import java.io.IOException;
 import java.io.PrintWriter;
 
@@ -9,15 +17,6 @@ import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
 import org.osgi.service.component.annotations.Component;
-
-import com.liferay.portal.kernel.json.JSONArray;
-import com.liferay.portal.kernel.json.JSONFactoryUtil;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCPortlet;
-import com.liferay.portal.kernel.util.Constants;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.Validator;
 
 import de.uhh.l2g.plugins.guest.videos.constants.OpenAccessVideosPortletKeys;
 import de.uhh.l2g.plugins.util.AutocompleteManager;
@@ -64,12 +63,6 @@ public class OpenAccessVideosPortlet extends MVCPortlet {
 
 	@Override
 	public void serveResource( ResourceRequest resourceRequest, ResourceResponse resourceResponse ) throws IOException, PortletException {
-		String resourceID = resourceRequest.getResourceID();
-		String cmd = ParamUtil.getString(resourceRequest, Constants.CMD);
-		if (cmd.equals("get_search_words")) {
-			getSearchWords(resourceRequest, resourceResponse);
-		}
-
 		//--- Autocomplete start
 		//getting task name to do
 		String task = ParamUtil.getString(resourceRequest, "task");
@@ -80,21 +73,20 @@ public class OpenAccessVideosPortlet extends MVCPortlet {
 			case"findVideos":
 				// get writer for write data
 				PrintWriter out = resourceResponse.getWriter();
-				JSONArray searchWordsJsonArray = JSONFactoryUtil.createJSONArray();
-				searchWordsJsonArray = AutocompleteManager.SEARCH_WORDS_JSONArray;
-				_log.info("Search words array size" + searchWordsJsonArray.length());
-				out.println(searchWordsJsonArray.toString());
-				_log.info("End serveResource method");
+				
+				try {
+					String searchText = ParamUtil.getString(resourceRequest, "searchText");
+					int resultLimit = ParamUtil.getInteger(resourceRequest, "resultLimit");
+				String elasticsearchResults = AutocompleteManager
+						.getAutocompleteResultArrayBySearchWord(searchText, resultLimit).toString();
+					out.println(elasticsearchResults);
+				}
+				catch(SearchException|ParseException e) {
+					_log.error(e);
+				}
 				break;
 		}
 		//--- Autocomplete end
-	}
-
-	public static JSONArray wordsJSONArray = JSONFactoryUtil.createJSONArray();
-
-	private void getSearchWords(ResourceRequest resourceRequest, ResourceResponse resourceResponse) throws IOException, PortletException {
-		PrintWriter out = resourceResponse.getWriter();
-		out.println(wordsJSONArray);
 	}
 
 }
