@@ -12,6 +12,8 @@
             "controlBar": {"pictureInPictureToggle": false, "chaptersButton": false },
             "preload": "auto"
         }'
+		crossorigin
+		<c:if test="${is360Video == true}">playsinline</c:if>
 >
 	<p class="vjs-no-js">
 		To view this video please enable JavaScript, and consider upgrading to a
