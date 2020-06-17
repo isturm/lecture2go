@@ -13,7 +13,6 @@ function initVideoPlayer(player, videoUrls, poster, textTracks = null, is360Vide
 
     if (is360Video) {
 		player.vr({projection: '360'});
-		player.setPlaysinline(true);
 	}
 };
 
