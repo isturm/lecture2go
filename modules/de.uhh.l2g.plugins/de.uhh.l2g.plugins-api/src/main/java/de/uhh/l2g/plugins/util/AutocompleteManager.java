@@ -1,12 +1,22 @@
 package de.uhh.l2g.plugins.util;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.search.BooleanQuery;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.Hits;
+import com.liferay.portal.kernel.search.IndexSearcherHelperUtil;
+import com.liferay.portal.kernel.search.ParseException;
+import com.liferay.portal.kernel.search.SearchContext;
+import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.search.generic.BooleanQueryImpl;
+import com.liferay.portal.kernel.util.PortalUtil;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import de.uhh.l2g.plugins.model.Video;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
@@ -30,6 +40,41 @@ public class AutocompleteManager {
 		return resultList;
 	}
 	
+	public static synchronized JSONArray getAutocompleteResultArrayBySearchWord(String searchText, int resultLimit) throws SearchException, ParseException {
+		return createWordArray(getAutocompleteResultsBySearchWord(searchText, resultLimit));
+	}
+	
+	public static synchronized List<String> getAutocompleteResultsBySearchWord(String searchText, int resultLimit) throws SearchException, ParseException {
+		SearchContext searchContext = new SearchContext();
+		searchContext.setCompanyId(PortalUtil.getDefaultCompanyId());
+		searchContext.setEnd(resultLimit);
+		
+		String[] searchFields = {"videoTitle","creators","tags","lectureSeriesName"};
+		BooleanQuery booleanQuery = new BooleanQueryImpl();
+		for(String searchField : searchFields) {
+			booleanQuery.addTerm(searchField, searchText);
+		}
+		
+		Hits hits = IndexSearcherHelperUtil.search(searchContext, booleanQuery);
+		
+		List<String> resultList = new ArrayList<String>();
+		for(Document doc:hits.getDocs()) {
+			for(String searchField : searchFields) {
+				Field field = doc.getField(searchField);
+				if(field != null) {
+					String value = field.getValue();
+					if(value != null && !value.isEmpty()) {
+						for(String valuePart:value.split(",")) {
+							if (!isDuplicate(resultList, valuePart.trim())) {
+								resultList.add(valuePart.trim());
+							}
+						}
+					}
+				}
+			}
+		}
+		return resultList;
+	}
 	
 	public static synchronized List<String> getAutocompleteResults() throws SystemException {
 		List<String> resultList = new ArrayList<String>();
@@ -59,21 +104,21 @@ public class AutocompleteManager {
 	}
 	
 	public static JSONArray SEARCH_WORDS_JSONArray = JSONFactoryUtil.createJSONArray();
-	public static JSONArray SEARCH_WORDS_Array = JSONFactoryUtil.createJSONArray();
 	
 	public static synchronized boolean generateAutocompleteResults() throws SystemException  {
-		SEARCH_WORDS_JSONArray = JSONFactoryUtil.createJSONArray();
-		List<String> arrStr = new ArrayList<String>();
-		JSONObject strJSON = null;
-		arrStr = getAutocompleteResults();
-		for (String str : arrStr) {
-			strJSON = JSONFactoryUtil.createJSONObject();
-			strJSON.put("word", str);
-			SEARCH_WORDS_JSONArray.put(strJSON);
-			SEARCH_WORDS_Array.put(str);
-			//System.out.println(str); 
-		}
+		List<String> arrStr = getAutocompleteResults();
+		SEARCH_WORDS_JSONArray = createWordArray(arrStr);
 		return true;
+	}
+	
+	private static JSONArray createWordArray(List<String> wordList) {
+		JSONArray jsonArray = JSONFactoryUtil.createJSONArray();
+		for (String word : wordList) {
+			JSONObject wordJSON = JSONFactoryUtil.createJSONObject();
+			wordJSON.put("word", word);
+			jsonArray.put(wordJSON);
+		}
+		return jsonArray;
 	}
 	
 	private static boolean isDuplicate(List<String> resultList, String word){

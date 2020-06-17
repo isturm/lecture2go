@@ -10,38 +10,43 @@ $( function() {
 	    var findVideosURL = A.one('#findVideosURL').get('text');
 	    //findVideos name
 	    //call serverResource method with ajax which give in response.
-	    A.io.request(findVideosURL, {
-	        dataType: 'json',
-	        method: 'POST',
-	        sync: true,
-	        on: {
-	            success: function() {
-	                console.log("Enter in success");
-	                //create autocomplete obejct for findVideos input box
-	                autoCompleteList = new A.AutoCompleteList({
-	                    activateFirstItem: 'true',
-	                    inputNode: '#'+nameSpace + 'findVideos',
-	                    resultTextLocator: 'word',
-	                    render: 'true',
-	                    resultHighlighter: 'phraseMatch',
-	                    resultFilters: ['phraseMatch'],
-	                    source: this.get('responseData'),
-	                    typeAhead: true,
-	                    maxResults: 20,
-	                    minQueryLength: 3,
-	                });
-	                //submit selected search word
-	                autoCompleteList.on(
-	                		'select',
-	                		function(event) {
-	                			var searchWord=event.result.text;
-	                			$('#'+nameSpace + 'findVideos').val(searchWord);
-	                			$('#'+nameSpace + 'submitForm').submit();
-	                		}
-	                );
-	            }
-	        }
-	    });
+        //create autocomplete object for findVideos input box
+    	var inputField = '#'+nameSpace + 'findVideos';
+        autoCompleteList = new A.AutoCompleteList({
+            activateFirstItem: 'true',
+            inputNode: inputField,
+            resultTextLocator: 'word',
+            render: 'true',
+            resultHighlighter: 'phraseMatch',
+            resultFilters: ['phraseMatch'],
+            source: function(query, callback) {
+            	var searchURL = Liferay.PortletURL.createURL(findVideosURL);
+            	searchURL.setParameter("searchText", A.one(inputField).get('value'));
+            	searchURL.setParameter("resultLimit", 10);
+            	A.io.request(searchURL.toString(), {
+            		dataType: 'json',
+        	        method: 'POST',
+        	        sync: true,
+        	        on: {
+	                    success:function(){
+	                       callback(this.get('responseData'));
+	                    }
+	                }
+            	});
+            },
+            typeAhead: true,
+            maxResults: 10,
+            minQueryLength: 3,
+        });
+        //submit selected search word
+        autoCompleteList.on(
+        		'select',
+        		function(event) {
+        			var searchWord=event.result.text;
+        			$('#'+nameSpace + 'findVideos').val(searchWord);
+        			$('#'+nameSpace + 'submitForm').submit();
+        		}
+        );
 	});	
 	//---prepare auto complete results end
 	
