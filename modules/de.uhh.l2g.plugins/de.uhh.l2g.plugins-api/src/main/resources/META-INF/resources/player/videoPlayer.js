@@ -18,8 +18,8 @@ function initVideoPlayer(player, videoUrls, poster, textTracks = null, is360Vide
 
     if (is360Video) {
 		player.vr({projection: '360'});
-		for (let pipButton of document.querySelectorAll('.vjs-button-vr')) {
-			pipButton.style.display = 'none';
+		for (let cardboardButton of document.querySelectorAll('.vjs-button-vr')) {
+			cardboardButton.style.display = 'none';
 		}
 	}
 };
