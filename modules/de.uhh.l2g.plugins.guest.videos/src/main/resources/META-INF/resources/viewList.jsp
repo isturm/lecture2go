@@ -98,8 +98,6 @@
 
 <h1><liferay-ui:message key="video-catalog"/></h1>
 
-<%@ include file="includeSearch.jsp" %>
-
 <div class="catalogue-container row">
     <c:if test="${!resultSetEmpty}">
         <div class="col-md-4 col-12">

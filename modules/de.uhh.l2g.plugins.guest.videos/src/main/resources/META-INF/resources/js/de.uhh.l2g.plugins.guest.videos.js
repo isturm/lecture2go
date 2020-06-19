@@ -1,55 +1,5 @@
 
-$( function() {
-	//---prepare auto complete results start
-	//set here your portlet name space.
-	var autoCompleteList;
-	//auto complete list for findVideos
-	AUI().use('autocomplete-list', 'aui-base', 'aui-io-request', 'autocomplete-filters', 'autocomplete-highlighters', function(A) {
-	    //URL for call serverResource method
-		var nameSpace = A.one('#portletNamespace').get('text'); 
-	    var findVideosURL = A.one('#findVideosURL').get('text');
-	    //findVideos name
-	    //call serverResource method with ajax which give in response.
-        //create autocomplete object for findVideos input box
-    	var inputField = '#'+nameSpace + 'findVideos';
-        autoCompleteList = new A.AutoCompleteList({
-            activateFirstItem: 'true',
-            inputNode: inputField,
-            resultTextLocator: 'word',
-            render: 'true',
-            resultHighlighter: 'phraseMatch',
-            resultFilters: ['phraseMatch'],
-            source: function(query, callback) {
-            	var searchURL = Liferay.PortletURL.createURL(findVideosURL);
-            	searchURL.setParameter("searchText", A.one(inputField).get('value'));
-            	searchURL.setParameter("resultLimit", 10);
-            	A.io.request(searchURL.toString(), {
-            		dataType: 'json',
-        	        method: 'POST',
-        	        sync: true,
-        	        on: {
-	                    success:function(){
-	                       callback(this.get('responseData'));
-	                    }
-	                }
-            	});
-            },
-            typeAhead: true,
-            maxResults: 10,
-            minQueryLength: 3,
-        });
-        //submit selected search word
-        autoCompleteList.on(
-        		'select',
-        		function(event) {
-        			var searchWord=event.result.text;
-        			$('#'+nameSpace + 'findVideos').val(searchWord);
-        			$('#'+nameSpace + 'submitForm').submit();
-        		}
-        );
-	});	
-	//---prepare auto complete results end
-	
+$( function() {	
 	//hide all video sublists on load
 	$('ul[id^="p"]').hide();
 

@@ -13,16 +13,19 @@
 			        portletProviderClassName="com.liferay.portal.kernel.servlet.taglib.ui.LanguageEntry"
 				/>
 			</div>
-			<div id="search" aria-controls="searchCollapse" aria-expanded="true" aria-label="Toggle search" data-target="#searchCollapse" data-toggle="collapse">
+			<div id="search" aria-controls="mobileSearchCollapse" aria-expanded="true" aria-label="Toggle search" data-target="#mobileSearchCollapse" data-toggle="collapse">
 				<span></span>
 			</div>
 			<div id="menu" aria-controls="navigationCollapse menuCover" aria-expanded="true" aria-label="Toggle navigation" data-target="#navigationCollapse, #menuCover" data-toggle="collapse">
 				<span></span>
 			</div>
 		</div>
-		<div aria-expanded="false" class="collapse" id="searchCollapse">
-			<input name="q" type="text" placeholder="Universität Hamburg durchsuchen" />
-			<input type="submit" value="Suchen" />
+		<div aria-expanded="false" class="autocompleteSearch collapse searchCollapse" id="mobileSearchCollapse">
+			<@liferay_portlet["runtime"]
+		        portletProviderAction=portletProviderAction.VIEW
+		        portletName="AutocompleteSearch"
+		        instanceId="GlobalMobileSearch"
+			/>
 		</div>
 		<div aria-expanded="false" class="navbar-collapse collapse" id="navigationCollapse">
 			<div class="navbar-company">

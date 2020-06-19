@@ -26,6 +26,7 @@ select.form-control {
 
   &:focus {
     color: $primary-color;
+    background-color: $secondary-color;
   }
 
   &.search-query {
