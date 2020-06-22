@@ -50,15 +50,6 @@
 	PortalUtil.setPageTitle((String) pageContext.getAttribute("pageTitle"), request);
 %>
 
-<portlet:resourceURL var="findVideos">
-	<portlet:param name="task" value="findVideos" />
-</portlet:resourceURL>
-
-<div style="display: none;" id="findVideosURL">${findVideos}</div>
-<div style="display: none;" id="portletNamespace">
-	<portlet:namespace />
-</div>
-
 <c:if test="${video.videoId>0}">
 	<c:choose>
 		<c:when test="${video.accessPermitted==1}">
@@ -180,8 +171,6 @@
 			<h1 class="headline" id="headline">
 				<liferay-ui:message key="video-catalog" />
 			</h1>
-
-			<%@ include file="includeSearch.jsp"%>
 
 			<c:set var="lTermId" value="${lectureseries.termId}" />
 			<%
