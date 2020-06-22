@@ -12,7 +12,7 @@ AUI().ready(
 $("#menu").click(function(){
     $('#menu').toggleClass('closeMenu');
     $('#search').removeClass('closeSearch');
-    $('#searchCollapse').removeClass('show');
+    $('.searchCollapse').removeClass('show');
 });
 
 $("#search").click(function(){
@@ -22,15 +22,20 @@ $("#search").click(function(){
     $('#menuCover').removeClass('show');
 });
 
+$("#desktopSearch").click(function(){
+    $('#desktopSearch').toggleClass('closeSearch');
+});
+
 $("body").click(function(event){
-	if(event.target.id == "menu" || event.target.id == "search")
+	if(event.target.id == "menu" || event.target.id == "search" || event.target.id == "desktopSearch")
 		return;
-	if($(event.target).closest('#menu').length > 0 || $(event.target).closest('#search').length > 0 || $(event.target).closest('#searchCollapse').length > 0)
+	if($(event.target).closest('#menu').length > 0 || $(event.target).closest('#search').length > 0 || $(event.target).closest('#desktopSearch').length > 0 || $(event.target).closest('.searchCollapse').length > 0)
 		return;
 	$('#search').removeClass('closeSearch');
+	$('#desktopSearch').removeClass('closeSearch');
     $('#menu').removeClass('closeMenu');
     $('#navigationCollapse').removeClass('show');
-    $('#searchCollapse').removeClass('show');
+    $('.searchCollapse').removeClass('show');
     $('#menuCover').removeClass('show');
 });
 
@@ -40,9 +45,11 @@ if (desktopNavbar) {
     var stickyDesktopNavbar = desktopNavbar.offsetTop;
     function stickDesktopNavbar() {
         if (window.pageYOffset >= stickyDesktopNavbar) {
-            desktopNavbar.classList.add("sticky")
+            desktopNavbar.classList.add("sticky");
+            document.getElementById("desktopSearchCollapse").classList.add("sticky");
         } else {
             desktopNavbar.classList.remove("sticky");
+            document.getElementById("desktopSearchCollapse").classList.remove("sticky");
         }
     }
 }

@@ -4,15 +4,6 @@
 	value="<%=LectureseriesLocalServiceUtil.getLatest(12, groupId, companyId)%>" />
 <c:set var="popular" value="<%=VideoLocalServiceUtil.getPopular(12)%>" />
 
-<portlet:resourceURL var="findVideosURL">
-	<portlet:param name="task" value="findVideos" />
-</portlet:resourceURL>
-
-<div style="display: none;" id="findVideosURL">${findVideosURL}</div>
-<div style="display: none;" id="portletNamespace">
-	<portlet:namespace />
-</div>
-
 <div class="front-page-teaser">
 	<div class="bg-video-container">
 		<video id="bg-vid" autoplay loop
@@ -44,8 +35,10 @@
 					<liferay-ui:message key="l2go-description" />
 				</p>
 			</div>
-
-			<%@ include file="includeSearch.jsp"%>
+			
+			<div class="autocompleteSearch">
+				<liferay-portlet:runtime portletName="AutocompleteSearch" instanceId="FrontpageSearch"/>
+			</div>
 
 			<br />
 			<button id="outer-catalogue-button" class="catalogue-button"

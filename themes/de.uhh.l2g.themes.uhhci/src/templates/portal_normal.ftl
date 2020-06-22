@@ -45,7 +45,18 @@
 			</div>
 			<div id="navigationDesktop" class="container">
 				<@liferay.navigation_menu default_preferences="${preferences}" />
+				<div id="desktopSearch" aria-controls="desktopSearchCollapse" aria-expanded="true" aria-label="Toggle search" data-target="#desktopSearchCollapse" data-toggle="collapse">
+					<span></span>
+				</div>
 			</div>
+			<div aria-expanded="false" class="autocompleteSearch collapse searchCollapse container" id="desktopSearchCollapse">
+				<@liferay_portlet["runtime"]
+			        portletProviderAction=portletProviderAction.VIEW
+			        portletName="AutocompleteSearch"
+			        instanceId="GlobalDesktopSearch"
+				/>
+			</div>
+			<div class="sticky-margin"/>
 		</header>
 	</#if>
 
