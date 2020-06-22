@@ -288,7 +288,12 @@ public class CreatorLocalServiceImpl extends CreatorLocalServiceBaseImpl {
 	public List<Creator> getByFullName(String fullName) throws SystemException{
 		return creatorPersistence.findByFullName(fullName);
 	}
-	
+
+	@Override
+	public Creator getById(Long creatorId) throws NoSuchModelException, SystemException {
+		return creatorPersistence.findByPrimaryKey(creatorId);
+	}
+
 	public List<Creator> getCreatorsFromLectureseriesIdsAndVideoIds(ArrayList<Long> lectureseriesIds, ArrayList<Long> videoIds) {
 		return creatorFinder.findCreatorsByLectureseriesIdsAndVideoIds(lectureseriesIds, videoIds);
 	}

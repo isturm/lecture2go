@@ -18,6 +18,39 @@
 
   .panel-body {
     padding: 15px 18px 3px 27px;
+
+    ul.creators {
+      display: none;
+    }
+
+    a.load-more-link:hover {
+      cursor: pointer;
+      color: #004ad7;
+      text-decoration: underline;
+    }
+
+    .firstCharacterSelector {
+      display: flex;
+      flex-wrap: wrap;
+      margin: 0 -16px 10px -25px;
+
+      span {
+        color: $light-color;
+      }
+
+      a, span {
+        display: block;
+        padding: 0 0.3em;
+        font-weight: bold;
+
+        &.selected {
+          color: $secondary-color;
+          background: $font-color;
+          padding: 0 0.6em;
+          margin: 0 0.3em;
+        }
+      }
+    }
   }
 
   .badge {
