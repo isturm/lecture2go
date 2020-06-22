@@ -198,6 +198,10 @@ public interface CreatorLocalService
 	public List<Creator> getByFullName(String fullName) throws SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Creator getById(Long creatorId)
+			throws NoSuchModelException, SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Creator> getByJobTitleFirstNameMiddleNameLastNameFullName(
 			String jobTitle, String firstName, String middleName,
 			String lastName, String fullName, boolean isAndOperator)

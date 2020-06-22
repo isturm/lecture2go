@@ -32,6 +32,9 @@ public class CreatorImpl extends CreatorBaseImpl {
 	 *
 	 * Never reference this class directly. All methods that expect a creator model instance should use the {@link de.uhh.l2g.plugins.model.Creator} interface instead.
 	 */
+	public String getCreatorName() {
+		return this.getFullName();
+	}
 	public CreatorImpl() {
 	}
 }

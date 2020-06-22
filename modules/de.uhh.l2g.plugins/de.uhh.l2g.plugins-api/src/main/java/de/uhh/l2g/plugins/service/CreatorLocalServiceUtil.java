@@ -241,6 +241,13 @@ public class CreatorLocalServiceUtil {
 			jobTitle, firstName, middleName, lastName, fullName, isAndOperator);
 	}
 
+	public static de.uhh.l2g.plugins.model.Creator getById(Long creatorId)
+			throws com.liferay.portal.kernel.exception.NoSuchModelException,
+			com.liferay.portal.kernel.exception.SystemException {
+
+		return getService().getById(creatorId);
+	}
+
 	public static java.util.List<de.uhh.l2g.plugins.model.Creator>
 			getByJobTitleFirstNameMiddleNameLastNameFullNameAndCompanyId(
 				String jobTitle, String firstName, String middleName,

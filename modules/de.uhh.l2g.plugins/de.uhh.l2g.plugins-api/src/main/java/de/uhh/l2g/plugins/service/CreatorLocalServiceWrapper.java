@@ -14,8 +14,11 @@
 
 package de.uhh.l2g.plugins.service;
 
+import com.liferay.portal.kernel.exception.NoSuchModelException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
+import de.uhh.l2g.plugins.model.Creator;
 import org.osgi.annotation.versioning.ProviderType;
 
 /**
@@ -233,6 +236,11 @@ public class CreatorLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.SystemException {
 
 		return _creatorLocalService.getByFullName(fullName);
+	}
+
+	@Override
+	public Creator getById(Long creatorId) throws NoSuchModelException, SystemException {
+		return _creatorLocalService.getById(creatorId);
 	}
 
 	@Override
