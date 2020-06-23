@@ -7,7 +7,6 @@
 <jsp:useBean id="creatorId" type="java.lang.Long" scope="request"/>
 <jsp:useBean id="findVideos" type="java.lang.String" scope="request"/>
 <jsp:useBean id="maxTerms" type="java.lang.Integer" scope="request"/>
-<jsp:useBean id="maxCreators" type="java.lang.Integer" scope="request"/>
 <jsp:useBean id="hasInstitutionFiltered" type="java.lang.Boolean" scope="request"/>
 <jsp:useBean id="hasParentInstitutionFiltered" type="java.lang.Boolean" scope="request"/>
 <jsp:useBean id="hasTermFiltered" type="java.lang.Boolean" scope="request"/>
@@ -21,8 +20,6 @@
 <jsp:useBean id="presentParentInstitutions" type="java.util.List<Institution>" scope="request"/>
 <jsp:useBean id="presentInstitutions" type="java.util.List<Institution>" scope="request"/>
 <jsp:useBean id="presentTerms" type="java.util.List<Term>" scope="request"/>
-<jsp:useBean id="presentCreators" type="java.util.List<Creator>" scope="request"/>
-<jsp:useBean id="selectedCreatorsChar" type="java.lang.Character" scope="request"/>
 <jsp:useBean id="creatorsSplitAlphabetically" type="java.util.Map<java.lang.Character, java.util.List<Creator>>" scope="request"/>
 <jsp:useBean id="presentCategories" type="java.util.List<Category>" scope="request"/>
 
@@ -46,7 +43,6 @@
     pageContext.setAttribute("hasCreatorFiltered", hasCreatorFiltered);
     pageContext.setAttribute("hasCategoryFiltered", hasCategoryFiltered);
     pageContext.setAttribute("hasManyTerms", presentTerms.size() > maxTerms);
-    pageContext.setAttribute("hasManyCreators", presentCreators.size() > maxCreators);
 %>
 
 <portlet:renderURL var="backURL0">
@@ -56,7 +52,6 @@
     <portlet:param name="termId" value="0"/>
     <portlet:param name="categoryId" value="0"/>
     <portlet:param name="creatorId" value="0"/>
-    <portlet:param name="selectedCreatorsChar" value='*'/>
 </portlet:renderURL>
 
 <portlet:resourceURL var="findVideosURL">
@@ -84,7 +79,6 @@
             <portlet:param name="termId" value="0"/>
             <portlet:param name="categoryId" value="0"/>
             <portlet:param name="creatorId" value="0"/>
-            <portlet:param name="selectedCreatorsChar" value='${selectedCreatorsChar}'/>
         </portlet:renderURL>
         <span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
         <A HREF="${backURL1}" class="breadcrumb-item">${pInst.name}</A>
@@ -98,7 +92,6 @@
             <portlet:param name="termId" value="0"/>
             <portlet:param name="categoryId" value="0"/>
             <portlet:param name="creatorId" value="0"/>
-            <portlet:param name="selectedCreatorsChar" value='${selectedCreatorsChar}'/>
         </portlet:renderURL>
         <span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
         <A HREF="${backURL2}" class="breadcrumb-item">${insti.name}</A>
@@ -125,7 +118,6 @@
                                     <portlet:param name="termId" value="${termId}"/>
                                     <portlet:param name="categoryId" value="${categoryId}"/>
                                     <portlet:param name="creatorId" value="${creatorId}"/>
-                                    <portlet:param name="selectedCreatorsChar" value='${selectedCreatorsChar}'/>
                                     <portlet:param name="findVideos" value="${findVideos}"/>
                                 </portlet:renderURL>
                                 <li class="filter-menu">
@@ -157,7 +149,6 @@
                                         <portlet:param name="termId" value="${termId}"/>
                                         <portlet:param name="categoryId" value="${categoryId}"/>
                                         <portlet:param name="creatorId" value="${creatorId}"/>
-                                        <portlet:param name="selectedCreatorsChar" value='${selectedCreatorsChar}'/>
                                         <portlet:param name="findVideos" value="${findVideos}"/>
                                     </portlet:renderURL>
                                     <li class="filter-menu">
@@ -188,7 +179,6 @@
                                     <portlet:param name="termId" value='${hasTermFiltered ? "0" : term.termId}'/>
                                     <portlet:param name="categoryId" value="${categoryId}"/>
                                     <portlet:param name="creatorId" value="${creatorId}"/>
-                                    <portlet:param name="selectedCreatorsChar" value='${selectedCreatorsChar}'/>
                                     <portlet:param name="findVideos" value="${findVideos}"/>
                                 </portlet:renderURL>
                                 <li class="filter-menu">
@@ -229,7 +219,6 @@
                                     <portlet:param name="categoryId"
                                                    value='${hasCategoryFiltered ? "0" : category.categoryId}'/>
                                     <portlet:param name="creatorId" value="${creatorId}"/>
-                                    <portlet:param name="selectedCreatorsChar" value='${selectedCreatorsChar}'/>
                                     <portlet:param name="findVideos" value="${findVideos}"/>
                                 </portlet:renderURL>
                                 <li class="filter-menu">
@@ -247,28 +236,10 @@
                 </c:if>
 
                 <!-- creator filter -->
-                <c:if test="${presentCreators.size()>0}">
-                    <liferay-ui:panel defaultState='${hasCreatorFiltered || (selectedCreatorsChar != \'*\') ? "open" : "collapsed"}' extended="true" title="creator"
-                                      cssClass='${hasCreatorFiltered || (selectedCreatorsChar != \'*\') ? "filtered" : "notFiltered"}'>
-                        <div class="firstCharacterSelector">
-                            <c:forEach items="${creatorsSplitAlphabetically.keySet()}" var="character">
-                                <portlet:renderURL var="filterByCreatorCharacter">
-                                    <portlet:param name="mvcRenderCommandName" value="/view/render/list"/>
-                                    <portlet:param name="institutionId" value="${institutionId}"/>
-                                    <portlet:param name="parentInstitutionId" value="${parentInstitutionId}"/>
-                                    <portlet:param name="termId" value='${termId}'/>
-                                    <portlet:param name="categoryId" value="${categoryId}"/>
-                                    <portlet:param name="creatorId" value='${creatorId}'/>
-                                    <portlet:param name="selectedCreatorsChar" value='${character}'/>
-                                    <portlet:param name="findVideos" value="${findVideos}"/>
-                                </portlet:renderURL>
-                                <c:if test="${creatorsSplitAlphabetically.get(character).size() == 0}">
-                                    <span>${character}</span>
-                                </c:if>
-                                <c:if test="${creatorsSplitAlphabetically.get(character).size() > 0}">
-                                    <a href="${filterByCreatorCharacter}" <c:if test="${selectedCreatorsChar == character}">class="selected"</c:if>>${character}</a>
-                                </c:if>
-                            </c:forEach>
+                <liferay-ui:panel defaultState='${hasCreatorFiltered ? "open" : "collapsed"}' extended="true" title="creator"
+                                  cssClass='${hasCreatorFiltered ? "filtered" : "notFiltered"}'>
+                    <div class="firstCharacterSelector">
+                        <c:forEach items="${creatorsSplitAlphabetically.keySet()}" var="character">
                             <portlet:renderURL var="filterByCreatorCharacter">
                                 <portlet:param name="mvcRenderCommandName" value="/view/render/list"/>
                                 <portlet:param name="institutionId" value="${institutionId}"/>
@@ -276,61 +247,85 @@
                                 <portlet:param name="termId" value='${termId}'/>
                                 <portlet:param name="categoryId" value="${categoryId}"/>
                                 <portlet:param name="creatorId" value='${creatorId}'/>
-                                <portlet:param name="selectedCreatorsChar" value='*'/>
                                 <portlet:param name="findVideos" value="${findVideos}"/>
                             </portlet:renderURL>
-                            <a href="${filterByCreatorCharacter}" <c:if test="${selectedCreatorsChar == '*'}">class="selected"</c:if>>Alle</a>
-                        </div>
+                            <c:if test="${creatorsSplitAlphabetically.get(character).size() == 0}">
+                                <span>${character}</span>
+                            </c:if>
+                            <c:if test="${creatorsSplitAlphabetically.get(character).size() > 0}">
+                                <a class="selectCreatorCharacter" data-character="${character}">
+                                        ${character}
+                                </a>
+                            </c:if>
+                        </c:forEach>
+                        <portlet:renderURL var="filterByCreatorCharacter">
+                            <portlet:param name="mvcRenderCommandName" value="/view/render/list"/>
+                            <portlet:param name="institutionId" value="${institutionId}"/>
+                            <portlet:param name="parentInstitutionId" value="${parentInstitutionId}"/>
+                            <portlet:param name="termId" value='${termId}'/>
+                            <portlet:param name="categoryId" value="${categoryId}"/>
+                            <portlet:param name="creatorId" value='${creatorId}'/>
+                            <portlet:param name="findVideos" value="${findVideos}"/>
+                        </portlet:renderURL>
+                        <a data-character="*" class="selectCreatorCharacter selected">
+                            Alle
+                        </a>
+                    </div>
 
-                        <ul class="creators colored-bullets">
-                            <c:forEach items="${presentCreators}" var="creator">
-                                <portlet:renderURL var="filterByCreator">
-                                    <portlet:param name="mvcRenderCommandName" value="/view/render/list"/>
-                                    <portlet:param name="institutionId" value="${institutionId}"/>
-                                    <portlet:param name="parentInstitutionId" value="${parentInstitutionId}"/>
-                                    <portlet:param name="termId" value='${termId}'/>
-                                    <portlet:param name="categoryId" value="${categoryId}"/>
-                                    <portlet:param name="creatorId" value='${hasCreatorFiltered ? "0" : creator.creatorId}'/>
-                                    <portlet:param name="selectedCreatorsChar" value='${selectedCreatorsChar}'/>
-                                    <portlet:param name="findVideos" value="${findVideos}"/>
-                                </portlet:renderURL>
-                                <li class="videoIds">
-                                    <a href="${filterByCreator}" class="row">
-                                        <div class="filter-menu-link">
-                                                ${creator.lastName},
-                                            <c:choose>
-                                                <c:when test="${creator.middleName != '' && creator.jobTitle != ''}">
-                                                    ${creator.firstName} ${creator.middleName}, ${creator.jobTitle}
-                                                </c:when>
-                                                <c:when test="${creator.middleName == '' && creator.jobTitle != ''}">
-                                                    ${creator.firstName}, ${creator.jobTitle}
-                                                </c:when>
-                                                <c:when test="${creator.middleName != '' && creator.jobTitle == ''}">
-                                                    ${creator.firstName} ${creator.middleName}
-                                                </c:when>
-                                                <c:when test="${creator.middleName == '' && creator.jobTitle == ''}">
-                                                    ${creator.firstName}
-                                                </c:when>
-                                            </c:choose>
-                                        </div>
-                                        <div class="autofit-col-expand"></div>
-                                        <span ${hasCreatorFiltered ? 'class="icon-large icon-remove"' : ''}></span>
-                                    </a>
-                                    <c:choose>
-                                        <c:when test="${creator.creatorName==''}">
-                                            <liferay-ui:message key="no-creator"/>
-                                        </c:when>
-                                        <c:otherwise>
-                                        </c:otherwise>
-                                    </c:choose>
-                                </li>
-                            </c:forEach>
-                        </ul>
-                        <c:if test="${hasManyCreators}">
-                            <a id="loadMoreCreators" class="load-more-link"><liferay-ui:message key="more"/></a>
-                        </c:if>
-                    </liferay-ui:panel>
-                </c:if>
+                    <c:forEach items="${creatorsSplitAlphabetically.keySet()}" var="creatorKey">
+                        <div class="creators creators-${creatorKey}" data-character="${creatorKey}">
+                            <ul class="colored-bullets">
+                                <c:forEach items="${creatorsSplitAlphabetically.get(creatorKey)}" var="creator">
+                                    <portlet:renderURL var="filterByCreator">
+                                        <portlet:param name="mvcRenderCommandName" value="/view/render/list"/>
+                                        <portlet:param name="institutionId" value="${institutionId}"/>
+                                        <portlet:param name="parentInstitutionId" value="${parentInstitutionId}"/>
+                                        <portlet:param name="termId" value='${termId}'/>
+                                        <portlet:param name="categoryId" value="${categoryId}"/>
+                                        <portlet:param name="creatorId" value='${hasCreatorFiltered ? "0" : creator.creatorId}'/>
+                                        <portlet:param name="findVideos" value="${findVideos}"/>
+                                    </portlet:renderURL>
+                                    <li class="videoIds">
+                                        <a href="${filterByCreator}" class="row">
+                                            <div class="filter-menu-link">
+                                                    ${creator.lastName},
+                                                <c:choose>
+                                                    <c:when test="${creator.middleName != '' && creator.jobTitle != ''}">
+                                                        ${creator.firstName} ${creator.middleName}, ${creator.jobTitle}
+                                                    </c:when>
+                                                    <c:when test="${creator.middleName == '' && creator.jobTitle != ''}">
+                                                        ${creator.firstName}, ${creator.jobTitle}
+                                                    </c:when>
+                                                    <c:when test="${creator.middleName != '' && creator.jobTitle == ''}">
+                                                        ${creator.firstName} ${creator.middleName}
+                                                    </c:when>
+                                                    <c:when test="${creator.middleName == '' && creator.jobTitle == ''}">
+                                                        ${creator.firstName}
+                                                    </c:when>
+                                                </c:choose>
+                                            </div>
+                                            <div class="autofit-col-expand"></div>
+                                            <span ${hasCreatorFiltered ? 'class="icon-large icon-remove"' : ''}></span>
+                                        </a>
+                                        <c:choose>
+                                            <c:when test="${creator.creatorName==''}">
+                                                <liferay-ui:message key="no-creator"/>
+                                            </c:when>
+                                            <c:otherwise>
+                                            </c:otherwise>
+                                        </c:choose>
+                                    </li>
+                                </c:forEach>
+                            </ul>
+                            <a class="loadMoreCreators load-more-link" data-character="${creatorKey}">
+                                <liferay-ui:message key="more"/>
+                            </a>
+                        </div>
+                    </c:forEach>
+                    <a class="loadMoreCreators load-more-link all-characters" data-character="*">
+                        <liferay-ui:message key="more"/>
+                    </a>
+                </liferay-ui:panel>
             </liferay-ui:panel-container>
             <!-- span3 -->
         </div>
