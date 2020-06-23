@@ -5,16 +5,29 @@ import com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.search.*;
+import com.liferay.portal.kernel.search.BaseIndexer;
+import com.liferay.portal.kernel.search.Document;
+import com.liferay.portal.kernel.search.Field;
+import com.liferay.portal.kernel.search.IndexWriterHelper;
+import com.liferay.portal.kernel.search.Indexer;
+import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.GetterUtil;
-import de.uhh.l2g.plugins.model.Video;
-import de.uhh.l2g.plugins.service.VideoLocalService;
-import org.osgi.service.component.annotations.Component;
-import org.osgi.service.component.annotations.Reference;
+
+import java.util.Locale;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
-import java.util.Locale;
+
+import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
+
+import de.uhh.l2g.plugins.exception.NoSuchTagcloudException;
+import de.uhh.l2g.plugins.model.Tagcloud;
+import de.uhh.l2g.plugins.model.Video;
+import de.uhh.l2g.plugins.model.impl.VideoImpl;
+import de.uhh.l2g.plugins.service.TagcloudLocalServiceUtil;
+import de.uhh.l2g.plugins.service.VideoLocalService;
+import de.uhh.l2g.plugins.service.impl.TagcloudLocalServiceImpl;
 
 @Component(immediate = true, service = Indexer.class)
 public class VideoIndexer extends BaseIndexer<Video> {
@@ -27,30 +40,10 @@ public class VideoIndexer extends BaseIndexer<Video> {
 	protected IndexWriterHelper indexWriterHelper;
 
 	public VideoIndexer() {
-		setDefaultSelectedFieldNames(
-				Field.COMPANY_ID,
-				"videoId",
-				"videoTitle",
-				"tags",
-				"lectureSeriesId",
-				"producerId",
-				"containerFormat",
-				"resolution",
-				"duration",
-				"hostId",
-				"generationDate",
-				"openAccess",
-				"metaDataId",
-				"hits",
-				"uploadDate",
-				"permittedToSegment",
-				"rootInstitutionId",
-				"citation2Go",
-				"termId",
-				"licenseId",
-				"createDate",
-				"modifiedDate"
-		);
+		setDefaultSelectedFieldNames(Field.COMPANY_ID, "videoId", "videoTitle", "tags", "lectureSeriesId", "producerId",
+				"containerFormat", "resolution", "duration", "hostId", "generationDate", "openAccess", "metaDataId",
+				"hits", "uploadDate", "permittedToSegment", "rootInstitutionId", "citation2Go", "termId", "licenseId",
+				"createDate", "modifiedDate");
 	}
 
 	@Override
@@ -63,10 +56,11 @@ public class VideoIndexer extends BaseIndexer<Video> {
 		Document document = getBaseModelDocument(Video.class.getName(), video);
 		document.addKeyword(Field.COMPANY_ID, video.getCompanyId());
 		document.addKeyword("videoId", video.getVideoId());
-		document.addText("videoTitle", video.getTitle());
-		document.addKeyword("tags", video.getTags());
-		document.addKeyword("creators", video.getCreators());
-		document.addKeyword("lectureSeriesName", video.getLectureseriesName());
+		try {
+			document.addText("tagCloud", getTagCloudStrings(video.getVideoId()));
+		} catch (NoSuchTagcloudException e) {
+			log.warn(String.format("No tag cloud for video with id %d found to create index!", video.getVideoId()), e);
+		}
 		document.addKeyword("lectureSeriesId", video.getLectureseriesId());
 		document.addKeyword("producerId", video.getProducerId());
 		document.addKeyword("containerFormat", video.getContainerFormat());
@@ -90,7 +84,8 @@ public class VideoIndexer extends BaseIndexer<Video> {
 	}
 
 	@Override
-	protected Summary doGetSummary(Document document, Locale locale, String snippet, PortletRequest portletRequest, PortletResponse portletResponse) throws Exception {
+	protected Summary doGetSummary(Document document, Locale locale, String snippet, PortletRequest portletRequest,
+			PortletResponse portletResponse) throws Exception {
 		Summary summary = createSummary(document);
 		summary.setMaxContentLength(200);
 		return summary;
@@ -111,12 +106,7 @@ public class VideoIndexer extends BaseIndexer<Video> {
 	@Override
 	protected void doReindex(Video video) throws Exception {
 		Document document = getDocument(video);
-		indexWriterHelper.updateDocument(
-				getSearchEngineId(),
-				video.getCompanyId(),
-				document,
-				isCommitImmediately()
-		);
+		indexWriterHelper.updateDocument(getSearchEngineId(), video.getCompanyId(), document, isCommitImmediately());
 	}
 
 	@Override
@@ -126,21 +116,27 @@ public class VideoIndexer extends BaseIndexer<Video> {
 
 	protected void reindexVideos(long companyId) throws PortalException {
 		log.info("Attempting to reindex all videos for companyId: " + companyId);
-		final IndexableActionableDynamicQuery indexableActionableDynamicQuery =
-				videoLocalService.getIndexableActionableDynamicQuery();
+
+		final IndexableActionableDynamicQuery indexableActionableDynamicQuery = videoLocalService
+				.getIndexableActionableDynamicQuery();
 		indexableActionableDynamicQuery.setCompanyId(companyId);
-		indexableActionableDynamicQuery.setPerformActionMethod(
-				(ActionableDynamicQuery.PerformActionMethod<Video>) video -> {
+		indexableActionableDynamicQuery
+				.setPerformActionMethod((ActionableDynamicQuery.PerformActionMethod<Video>) video -> {
 					try {
 						Document document = getDocument(video);
 						indexableActionableDynamicQuery.addDocuments(document);
-					}
-					catch (PortalException pe) {
+					} catch (PortalException pe) {
 						pe.printStackTrace();
 					}
 				});
 		indexableActionableDynamicQuery.setSearchEngineId(getSearchEngineId());
 		indexableActionableDynamicQuery.performActions();
 		log.info("Successfully reindexed all videos for companyId: " + companyId);
+	}
+
+	private String[] getTagCloudStrings(long videoId) throws NoSuchTagcloudException {
+		Tagcloud tagcloud = TagcloudLocalServiceUtil.getByObjectIdAndObjectClassType(videoId,
+				VideoImpl.class.getName());
+		return tagcloud.getTags().split(TagcloudLocalServiceImpl.TAG_SEPARATOR);
 	}
 }

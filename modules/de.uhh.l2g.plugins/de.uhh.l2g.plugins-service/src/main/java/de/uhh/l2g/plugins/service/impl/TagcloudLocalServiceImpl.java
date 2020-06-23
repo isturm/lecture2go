@@ -1,11 +1,11 @@
 	package de.uhh.l2g.plugins.service.impl;
 
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
-
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
 
 import de.uhh.l2g.plugins.exception.NoSuchTagcloudException;
 import de.uhh.l2g.plugins.model.Category;
@@ -48,6 +48,8 @@ import de.uhh.l2g.plugins.service.base.TagcloudLocalServiceBaseImpl;
  * @see de.uhh.l2g.plugins.service.TagcloudLocalServiceUtil
  */
 public class TagcloudLocalServiceImpl extends TagcloudLocalServiceBaseImpl {
+	public static final String TAG_SEPARATOR = " ### ";
+
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
@@ -65,7 +67,7 @@ public class TagcloudLocalServiceImpl extends TagcloudLocalServiceBaseImpl {
 	public void add(ArrayList<String> tagCloudArrayString, String className, Long objectId) throws SystemException{
 		String tagCloudString = "";
 		for(int i=0;i<tagCloudArrayString.size();i++){
-			tagCloudString += tagCloudArrayString.get(i) +" ### ";
+			tagCloudString += tagCloudArrayString.get(i) + TAG_SEPARATOR;
 		}
 		
 		Tagcloud tagcloud = new TagcloudImpl();
@@ -86,7 +88,8 @@ public class TagcloudLocalServiceImpl extends TagcloudLocalServiceBaseImpl {
 	
 	public void updateByObjectIdAndObjectClassType(ArrayList<String> tagCloudArrayString, String className, long objectId) throws SystemException{
 		String tagCloudString = "";
-		for(int i=0;i<tagCloudArrayString.size();i++) tagCloudString += tagCloudArrayString.get(i) +" ### ";
+		for (int i = 0; i < tagCloudArrayString.size(); i++)
+			tagCloudString += tagCloudArrayString.get(i) + TAG_SEPARATOR;
 		
 		Tagcloud tagcloud = new TagcloudImpl();
 		try{
