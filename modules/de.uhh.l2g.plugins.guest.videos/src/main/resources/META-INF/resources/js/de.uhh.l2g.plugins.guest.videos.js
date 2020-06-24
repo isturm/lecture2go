@@ -33,21 +33,66 @@ $( function() {
 	    $('#loadMoreTerms').hide();
 	});
 
-	// only show the last creators
-	var maxCreators = 4;
-	$("ul.creators > li").slice(maxCreators).hide();
-	$("ul.creators").show();
+	// only show 4 creators at first
+	const maxCreators = 4;
+	const loadMoreLink = $('.loadMoreCreators');
+	toggleCreatorsForCharacter('*');
 
-	// show the remaining creators in batches of 25
-	$('#loadMoreCreators').click(function () {
-		const hiddenCreators = $('ul.creators > li:hidden');
-		if (hiddenCreators.length <= 25) {
-			hiddenCreators.show();
-			$('#loadMoreCreators').hide();
+	function toggleCreatorsForCharacter(character) {
+		let hiddenCreators;
+
+		if (character === '*') {
+			$('div.creators').show();
+			$('div.creators > ul > li').slice(maxCreators).hide();
+			hiddenCreators = $('div.creators > ul > li:hidden');
 		} else {
-			for (let i=0; i<25; i++) {
-				hiddenCreators.eq(i).show();
+			$('div.creators').hide();
+			$('div.creators[data-character="' + character + '"]').show();
+			const creators = $('div.creators[data-character="' + character + '"] > ul > li');
+			creators.slice(0, maxCreators).show();
+			creators.slice(maxCreators).hide();
+			hiddenCreators = $('div.creators[data-character="' + character + '"] > ul > li:hidden');
+		}
+
+		loadMoreLink.hide();
+		if (hiddenCreators.length > maxCreators) {
+			$('.loadMoreCreators[data-character="' + character + '"]').show();
+		}
+	}
+
+	// show the remaining creators in batches of 50
+	function expandCreators(character) {
+		if (character === '*') {
+			const hiddenCreators = $('div.creators > ul > li:hidden');
+			if (hiddenCreators.length <= 50) {
+				hiddenCreators.show();
+				loadMoreLink.hide();
+			} else {
+				for (let i=0; i<50; i++) {
+					hiddenCreators.eq(i).show();
+				}
+			}
+		} else {
+			const hiddenCreators = $('div.creators[data-character="' + character + '"] > ul > li:hidden');
+			if (hiddenCreators.length <= 50) {
+				hiddenCreators.show();
+				$('.loadMoreCreators[data-character="' + character + '"]').hide();
+			} else {
+				for (let i=0; i<50; i++) {
+					hiddenCreators.eq(i).show();
+				}
 			}
 		}
+	}
+
+	loadMoreLink.click(function (event) {
+		expandCreators(event.target.dataset.character);
+	});
+
+	$('.selectCreatorCharacter').click(function(event) {
+		const target = event.target;
+		$('a.selectCreatorCharacter.selected').removeClass('selected');
+		target.classList.add('selected');
+		toggleCreatorsForCharacter(target.dataset.character);
 	});
 });

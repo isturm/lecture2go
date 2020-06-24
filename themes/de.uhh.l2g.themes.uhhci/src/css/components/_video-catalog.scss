@@ -19,14 +19,20 @@
   .panel-body {
     padding: 15px 18px 3px 27px;
 
-    ul.creators {
+    div.creators {
       display: none;
     }
 
-    a.load-more-link:hover {
-      cursor: pointer;
-      color: #004ad7;
-      text-decoration: underline;
+    a.load-more-link, a.selectCreatorCharacter {
+      &:hover {
+        cursor: pointer;
+        color: #004ad7;
+        text-decoration: underline;
+      }
+
+      &.all-characters {
+        display: none;
+      }
     }
 
     .firstCharacterSelector {
@@ -40,14 +46,12 @@
 
       a, span {
         display: block;
-        padding: 0 0.3em;
+        padding: 0 0.5em;
         font-weight: bold;
 
         &.selected {
           color: $secondary-color;
           background: $font-color;
-          padding: 0 0.6em;
-          margin: 0 0.3em;
         }
       }
     }
