@@ -19,7 +19,7 @@ import javax.portlet.ResourceResponse;
 import org.osgi.service.component.annotations.Component;
 
 import de.uhh.l2g.plugins.guest.search.constants.AutocompleteSearchPortletKeys;
-import de.uhh.l2g.plugins.util.AutocompleteManager;
+import de.uhh.l2g.plugins.util.SearchManager;
 
 /**
  * @author isturm
@@ -57,7 +57,7 @@ public class AutocompleteSearchPortlet extends MVCPortlet {
 				try {
 					String searchText = ParamUtil.getString(resourceRequest, "searchText");
 					int resultLimit = ParamUtil.getInteger(resourceRequest, "resultLimit");
-				String elasticsearchResults = AutocompleteManager
+				String elasticsearchResults = SearchManager
 						.getAutocompleteResultArrayBySearchWord(searchText, resultLimit).toString();
 					out.println(elasticsearchResults);
 				}

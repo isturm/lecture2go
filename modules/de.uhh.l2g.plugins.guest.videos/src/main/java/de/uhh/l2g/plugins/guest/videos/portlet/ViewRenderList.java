@@ -3,6 +3,8 @@ package de.uhh.l2g.plugins.guest.videos.portlet;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.search.ParseException;
+import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
@@ -22,13 +24,13 @@ import de.uhh.l2g.plugins.guest.videos.constants.OpenAccessVideosPortletKeys;
 import de.uhh.l2g.plugins.model.Category;
 import de.uhh.l2g.plugins.model.Creator;
 import de.uhh.l2g.plugins.model.Institution;
-import de.uhh.l2g.plugins.model.Lectureseries;
 import de.uhh.l2g.plugins.model.Term;
+import de.uhh.l2g.plugins.model.VideoListSearchResult;
 import de.uhh.l2g.plugins.service.CategoryLocalServiceUtil;
 import de.uhh.l2g.plugins.service.CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
-import de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.TermLocalServiceUtil;
+import de.uhh.l2g.plugins.util.SearchManager;
 
 @Component(immediate = true, property = { "javax.portlet.name=" + OpenAccessVideosPortletKeys.OPEN_ACCESS_VIDEOS,
 		"mvc.command.name=/view/render/list", "mvc.command.name=/" }, service = MVCRenderCommand.class)
@@ -61,17 +63,24 @@ public class ViewRenderList implements MVCRenderCommand {
 			institutionId = new Long(0);
 		}
 		// get filtered lectureseries and single videos
-		List<Lectureseries> reqLectureseries = LectureseriesLocalServiceUtil
-				.getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(institutionId,
-						parentInstitutionId, termId, categoryId, creatorId, findVideos, groupId, companyId);
+		// List<Lectureseries> reqLectureseries = LectureseriesLocalServiceUtil
+		// .getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(institutionId,
+		// parentInstitutionId, termId, categoryId, creatorId, findVideos, groupId,
+		// companyId);
+		List<VideoListSearchResult> videoList = new ArrayList<VideoListSearchResult>();
+		try {
+			videoList = SearchManager.searchVideoList(findVideos, null, 20);
+		} catch (SearchException | ParseException e) {
+			// TODO handle exception
+		}
 		// differentiate returned lectureseries in real lectureseries and fake video
 		// lectureseries (openAccessVideoId is negative on videos)
 		ArrayList<Long> lectureseriesIds = new ArrayList<Long>();
 		ArrayList<Long> videoIds = new ArrayList<Long>();
 		long id;
-		for (Lectureseries lecture : reqLectureseries) {
-			id = lecture.getLectureseriesId();
-			if (lecture.getLatestOpenAccessVideoId() < 0) {
+		for (VideoListSearchResult searchResult : videoList) {
+			id = searchResult.getLectureseriesId();
+			if (searchResult.getLatestOpenAccessVideoId() < 0) {
 				videoIds.add(id);
 			} else {
 				lectureseriesIds.add(id);
@@ -117,7 +126,7 @@ public class ViewRenderList implements MVCRenderCommand {
 		List<Creator> presentCreators = filterCreators(hasCreatorFiltered, creatorId, lectureseriesIds, videoIds);
 		Map<Character, List<Creator>> creatorsSplitAlphabetically = splitCreatorsAlphabetically(presentCreators);
 		Character selectedCreatorsChar = ParamUtil.getString(renderRequest, "selectedCreatorsChar", "*").charAt(0);
-		if (hasCreatorFiltered && selectedCreatorsChar != '*') {
+		if (selectedCreatorsChar != '*') {
 			presentCreators = creatorsSplitAlphabetically.get(selectedCreatorsChar);
 		} else {
 			presentCreators = flattenCreatorsAlphabetically(creatorsSplitAlphabetically);
@@ -187,7 +196,7 @@ public class ViewRenderList implements MVCRenderCommand {
 		renderRequest.setAttribute("hasCreatorFiltered", hasCreatorFiltered);
 		renderRequest.setAttribute("hasCategoryFiltered", hasCategoryFiltered);
 		renderRequest.setAttribute("isSearched", isSearched);
-		renderRequest.setAttribute("reqLectureseries", reqLectureseries);
+		renderRequest.setAttribute("videoList", videoList);
 		renderRequest.setAttribute("lectureseriesIds", lectureseriesIds);
 		renderRequest.setAttribute("videoIds", videoIds);
 		renderRequest.setAttribute("presentParentInstitutions", presentParentInstitutions);

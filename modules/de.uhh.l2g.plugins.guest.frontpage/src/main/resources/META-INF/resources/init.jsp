@@ -45,7 +45,7 @@
 <%@page import="de.uhh.l2g.plugins.service.CreatorLocalServiceUtil" %>
 <%@page import="de.uhh.l2g.plugins.util.Lecture2GoRoleChecker"%>
 
-<%@page import="de.uhh.l2g.plugins.util.AutocompleteManager"%>
+<%@page import="de.uhh.l2g.plugins.util.SearchManager"%>
 
 <liferay-theme:defineObjects />
 

@@ -13,6 +13,7 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.GetterUtil;
 
+import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
@@ -24,9 +25,15 @@ import org.osgi.service.component.annotations.Reference;
 import de.uhh.l2g.plugins.exception.NoSuchTagcloudException;
 import de.uhh.l2g.plugins.model.Tagcloud;
 import de.uhh.l2g.plugins.model.Video;
+import de.uhh.l2g.plugins.model.Video_Category;
+import de.uhh.l2g.plugins.model.Video_Creator;
+import de.uhh.l2g.plugins.model.Video_Institution;
 import de.uhh.l2g.plugins.model.impl.VideoImpl;
 import de.uhh.l2g.plugins.service.TagcloudLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalService;
+import de.uhh.l2g.plugins.service.Video_CategoryLocalServiceUtil;
+import de.uhh.l2g.plugins.service.Video_CreatorLocalServiceUtil;
+import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.impl.TagcloudLocalServiceImpl;
 
 @Component(immediate = true, service = Indexer.class)
@@ -40,10 +47,10 @@ public class VideoIndexer extends BaseIndexer<Video> {
 	protected IndexWriterHelper indexWriterHelper;
 
 	public VideoIndexer() {
-		setDefaultSelectedFieldNames(Field.COMPANY_ID, "videoId", "videoTitle", "tags", "lectureSeriesId", "producerId",
+		setDefaultSelectedFieldNames(Field.COMPANY_ID, "videoId", "tagCloud", "lectureSeriesId", "producerId",
 				"containerFormat", "resolution", "duration", "hostId", "generationDate", "openAccess", "metaDataId",
 				"hits", "uploadDate", "permittedToSegment", "rootInstitutionId", "citation2Go", "termId", "licenseId",
-				"createDate", "modifiedDate");
+				"createDate", "modifiedDate", "categoryId", "institutionId", "institutionParentId");
 	}
 
 	@Override
@@ -61,6 +68,7 @@ public class VideoIndexer extends BaseIndexer<Video> {
 		} catch (NoSuchTagcloudException e) {
 			log.warn(String.format("No tag cloud for video with id %d found to create index!", video.getVideoId()), e);
 		}
+		document.addKeyword("name", video.getTitle());
 		document.addKeyword("lectureSeriesId", video.getLectureseriesId());
 		document.addKeyword("producerId", video.getProducerId());
 		document.addKeyword("containerFormat", video.getContainerFormat());
@@ -75,10 +83,15 @@ public class VideoIndexer extends BaseIndexer<Video> {
 		document.addKeyword("permittedToSegment", video.getPermittedToSegment());
 		document.addKeyword("rootInstitution", video.getRootInstitutionId());
 		document.addKeyword("citation2Go", video.getCitation2go());
-		document.addKeyword("termId", video.getTermId());
 		document.addKeyword("licenseId", video.getLicenseId());
 		document.addDate("createDate", video.getCreateDate());
 		document.addDate("modifiedDate", video.getModifiedDate());
+
+		// ids for filtering
+		document.addKeyword("termId", video.getTermId());
+		setCategoryIds(document, video.getVideoId());
+		setInstitutionIds(document, video.getVideoId());
+		setCreatorIds(document, video.getVideoId());
 
 		return document;
 	}
@@ -138,5 +151,39 @@ public class VideoIndexer extends BaseIndexer<Video> {
 		Tagcloud tagcloud = TagcloudLocalServiceUtil.getByObjectIdAndObjectClassType(videoId,
 				VideoImpl.class.getName());
 		return tagcloud.getTags().split(TagcloudLocalServiceImpl.TAG_SEPARATOR);
+	}
+
+	private void setCategoryIds(Document document, long videoId) {
+		List<Video_Category> videoCategories = Video_CategoryLocalServiceUtil.getByVideo(videoId);
+		long[] categoryIds = new long[videoCategories.size()];
+		for (int i = 0; i < videoCategories.size(); i++) {
+			categoryIds[i] = videoCategories.get(i).getCategoryId();
+		}
+
+		document.addKeyword("categoryId", categoryIds);
+	}
+
+	private void setInstitutionIds(Document document, long videoId) {
+		List<Video_Institution> videoInstitutions = Video_InstitutionLocalServiceUtil.getByVideo(videoId);
+		long[] institutionIds = new long[videoInstitutions.size()];
+		long[] parentInstitutionIds = new long[videoInstitutions.size()];
+
+		for (int i = 0; i < videoInstitutions.size(); i++) {
+			institutionIds[i] = videoInstitutions.get(i).getInstitutionId();
+			parentInstitutionIds[i] = videoInstitutions.get(i).getInstitutionParentId();
+		}
+
+		document.addKeyword("institutionId", institutionIds);
+		document.addKeyword("institutionParentId", parentInstitutionIds);
+	}
+
+	private void setCreatorIds(Document document, long videoId) {
+		List<Video_Creator> videoCreators = Video_CreatorLocalServiceUtil.getByVideo(videoId);
+		long[] creatorIds = new long[videoCreators.size()];
+		for (int i = 0; i < videoCreators.size(); i++) {
+			creatorIds[i] = videoCreators.get(i).getCreatorId();
+		}
+
+		document.addKeyword("creatorId", creatorIds);
 	}
 }
