@@ -188,8 +188,6 @@ public class ViewRenderList implements MVCRenderCommand {
 		renderRequest.setAttribute("creatorId", creatorId);
 		renderRequest.setAttribute("findVideos", findVideos);
 		renderRequest.setAttribute("maxTerms", maxTerms);
-		renderRequest.setAttribute("maxCreators", maxCreators);
-		renderRequest.setAttribute("selectedCreatorsChar", selectedCreatorsChar);
 		renderRequest.setAttribute("hasInstitutionFiltered", hasInstitutionFiltered);
 		renderRequest.setAttribute("hasParentInstitutionFiltered", hasParentInstitutionFiltered);
 		renderRequest.setAttribute("hasTermFiltered", hasTermFiltered);
@@ -202,7 +200,6 @@ public class ViewRenderList implements MVCRenderCommand {
 		renderRequest.setAttribute("presentParentInstitutions", presentParentInstitutions);
 		renderRequest.setAttribute("presentInstitutions", presentInstitutions);
 		renderRequest.setAttribute("presentTerms", presentTerms);
-		renderRequest.setAttribute("presentCreators", presentCreators);
 		renderRequest.setAttribute("creatorsSplitAlphabetically", creatorsSplitAlphabetically);
 		renderRequest.setAttribute("presentCategories", presentCategories);
 		renderRequest.setAttribute("portletURL", portletURL);
