@@ -28,7 +28,6 @@ import java.util.Date;
 	immediate = true,
 	property = {
 		"com.liferay.portlet.display-category=lecture2go.plugins",
-		"com.liferay.portlet.header-portlet-css=/css/main.css",
 		"com.liferay.portlet.instanceable=false",
 		"javax.portlet.display-name=Admin MediaTypes",
 		"javax.portlet.init-param.template-path=/",
