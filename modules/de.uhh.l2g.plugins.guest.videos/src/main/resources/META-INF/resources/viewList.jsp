@@ -13,7 +13,7 @@
 <jsp:useBean id="hasCreatorFiltered" type="java.lang.Boolean" scope="request"/>
 <jsp:useBean id="hasCategoryFiltered" type="java.lang.Boolean" scope="request"/>
 <jsp:useBean id="isSearched" type="java.lang.Boolean" scope="request"/>
-<jsp:useBean id="reqLectureseries" type="java.util.List<Lectureseries>" scope="request"/>
+<jsp:useBean id="videoList" type="java.util.List<VideoListSearchResult>" scope="request"/>
 <jsp:useBean id="lectureseriesIds" type="java.util.ArrayList<Long>" scope="request"/>
 <jsp:useBean id="videoIds" type="java.util.ArrayList<Long>" scope="request"/>
 
@@ -53,13 +53,6 @@
     <portlet:param name="categoryId" value="0"/>
     <portlet:param name="creatorId" value="0"/>
 </portlet:renderURL>
-
-<portlet:resourceURL var="findVideosURL">
-    <portlet:param name="task" value="findVideos"/>
-</portlet:resourceURL>
-
-<div style="display: none;" id="findVideosURL">${findVideosURL}</div>
-<div style="display: none;" id="portletNamespace"><portlet:namespace/></div>
 
 <div class="path-wide">
 	<a href="${portalURL}" class="breadcrumb-item">${company.name}</a>
@@ -338,21 +331,21 @@
 
             <liferay-ui:search-container-results>
                 <%
-                    searchContainer.setTotal(reqLectureseries.size());
-                    searchContainer.setResults(ListUtil.subList(reqLectureseries, searchContainer.getStart(), searchContainer.getEnd()));
+                    searchContainer.setTotal(videoList.size());
+                    searchContainer.setResults(ListUtil.subList(videoList, searchContainer.getStart(), searchContainer.getEnd()));
                 %>
             </liferay-ui:search-container-results>
 
-            <liferay-ui:search-container-row className="de.uhh.l2g.plugins.model.Lectureseries"
+            <liferay-ui:search-container-row className="de.uhh.l2g.plugins.model.VideoListSearchResult"
                                              keyProperty="lectureseriesId" modelVar="lectser">
                 <c:set var="oId" value=""/>
                 <c:set var="isVideo" value="<%=false%>"/>
                 <c:set var="vidDummy" value="<%=VideoLocalServiceUtil.createVideo(0)%>"/>
                 <c:choose>
-                    <c:when test="${lectser.latestOpenAccessVideoId<0 && lectser.lectureseriesId>0}">
+                    <c:when test="${lectser.videoId>0}">
                         <c:set var="isVideo" value="<%=true%>"/>
                         <%try {%><c:set var="vidDummy"
-                                        value="<%=VideoLocalServiceUtil.getVideo(lectser.getLectureseriesId())%>"/><%
+                                        value="<%=VideoLocalServiceUtil.getVideo(lectser.getVideoId())%>"/><%
                         } catch (Exception e) {
                         }
                         ;

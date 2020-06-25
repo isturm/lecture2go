@@ -31,6 +31,7 @@
 <%@page import="de.uhh.l2g.plugins.model.Institution" %>
 <%@page import="de.uhh.l2g.plugins.model.Video_Institution" %>
 <%@page import="de.uhh.l2g.plugins.model.Lectureseries_Institution" %>
+<%@page import="de.uhh.l2g.plugins.model.VideoListSearchResult" %>
 
 <%@page import="de.uhh.l2g.plugins.service.VideoLocalServiceUtil" %>
 <%@page import="de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil" %>
@@ -41,8 +42,6 @@
 <%@page import="de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil" %>
 <%@page import="de.uhh.l2g.plugins.service.Video_CategoryLocalServiceUtil" %>
 <%@page import="de.uhh.l2g.plugins.service.Lectureseries_InstitutionLocalServiceUtil" %>
-
-<%@page import="de.uhh.l2g.plugins.util.AutocompleteManager"%>
 
 <liferay-theme:defineObjects />
 

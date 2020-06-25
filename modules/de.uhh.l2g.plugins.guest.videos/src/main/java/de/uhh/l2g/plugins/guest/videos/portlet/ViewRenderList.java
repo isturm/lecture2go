@@ -1,5 +1,13 @@
 package de.uhh.l2g.plugins.guest.videos.portlet;
 
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.search.ParseException;
+import com.liferay.portal.kernel.search.SearchException;
+import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PortalUtil;
+
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -10,104 +18,130 @@ import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import de.uhh.l2g.plugins.service.*;
 import org.osgi.service.component.annotations.Component;
-
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
-import com.liferay.portal.kernel.util.ParamUtil;
-import com.liferay.portal.kernel.util.PortalUtil;
+import org.osgi.service.component.annotations.Reference;
 
 import de.uhh.l2g.plugins.guest.videos.constants.OpenAccessVideosPortletKeys;
 import de.uhh.l2g.plugins.model.Category;
 import de.uhh.l2g.plugins.model.Creator;
 import de.uhh.l2g.plugins.model.Institution;
-import de.uhh.l2g.plugins.model.Lectureseries;
 import de.uhh.l2g.plugins.model.Term;
+import de.uhh.l2g.plugins.model.VideoListSearchResult;
+import de.uhh.l2g.plugins.service.CategoryLocalServiceUtil;
+import de.uhh.l2g.plugins.service.CreatorLocalServiceUtil;
+import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
+import de.uhh.l2g.plugins.service.TermLocalServiceUtil;
+import de.uhh.l2g.plugins.util.SearchManager;
 
-
-@Component(
-	    immediate = true,
-	    property = {
-	    		"javax.portlet.name=" + OpenAccessVideosPortletKeys.OPEN_ACCESS_VIDEOS,
-	    		"mvc.command.name=/view/render/list", "mvc.command.name=/"
-	    },
-	    service = MVCRenderCommand.class
-)
-public class ViewRenderList implements MVCRenderCommand{
+@Component(immediate = true, property = { "javax.portlet.name=" + OpenAccessVideosPortletKeys.OPEN_ACCESS_VIDEOS,
+		"mvc.command.name=/view/render/list", "mvc.command.name=/" }, service = MVCRenderCommand.class)
+public class ViewRenderList implements MVCRenderCommand {
 	private static final Log _log = LogFactoryUtil.getLog(OpenAccessVideosPortlet.class);
+
+	@Reference
+	protected SearchManager searchManager;
 
 	@Override
 	public String render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException {
 		Long parentInstitutionId = ParamUtil.getLong(renderRequest, "parentInstitutionId");
-		Long institutionId 	= ParamUtil.getLong(renderRequest, "institutionId", 0);
+		Long institutionId = ParamUtil.getLong(renderRequest, "institutionId", 0);
 		Long termId = ParamUtil.getLong(renderRequest, "termId", 0);
 		Long categoryId = ParamUtil.getLong(renderRequest, "categoryId", 0);
 		Long creatorId = ParamUtil.getLong(renderRequest, "creatorId", 0);
 		String findVideos = ParamUtil.getString(renderRequest, "findVideos", "");
 		int maxTerms = 4;
 		int maxCreators = 4;
-		boolean hasInstitutionFiltered 	= (institutionId != 0);
+		boolean hasInstitutionFiltered = (institutionId != 0);
 		boolean hasParentInstitutionFiltered = (parentInstitutionId != 0);
-		boolean hasTermFiltered	= (termId != 0);
-		boolean hasCreatorFiltered	= (creatorId != 0);
-		boolean hasCategoryFiltered	= (categoryId != 0);
-		boolean isSearched = (findVideos.trim().length()>0);
+		boolean hasTermFiltered = (termId != 0);
+		boolean hasCreatorFiltered = (creatorId != 0);
+		boolean hasCategoryFiltered = (categoryId != 0);
+		boolean isSearched = (findVideos.trim().length() > 0);
 		//
 		long companyId = PortalUtil.getCompanyId(renderRequest);
-		long groupId = new Long(0); 
+		long groupId = new Long(0);
 
-		// the institution is dependent on the parentinstitution, do not allow institution-filters without parentinstitution-filter
+		// the institution is dependent on the parentinstitution, do not allow
+		// institution-filters without parentinstitution-filter
 		if (hasInstitutionFiltered && !hasParentInstitutionFiltered) {
 			institutionId = new Long(0);
-		}		
+		}
 		// get filtered lectureseries and single videos
-		List<Lectureseries> reqLectureseries = LectureseriesLocalServiceUtil.getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(institutionId, parentInstitutionId, termId, categoryId, creatorId, findVideos, groupId, companyId);
-		// differentiate returned lectureseries in real lectureseries and fake video lectureseries (openAccessVideoId is negative on videos)
+		// List<Lectureseries> reqLectureseries = LectureseriesLocalServiceUtil
+		// .getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(institutionId,
+		// parentInstitutionId, termId, categoryId, creatorId, findVideos, groupId,
+		// companyId);
+		List<VideoListSearchResult> videoList = new ArrayList<VideoListSearchResult>();
+		Map<String, Object> filters = new HashMap<String, Object>();
+
+		if (hasInstitutionFiltered) {
+			filters.put("institutionId", institutionId);
+		}
+		if (hasParentInstitutionFiltered) {
+			filters.put("institutionParentId", parentInstitutionId);
+		}
+		if (hasTermFiltered) {
+			filters.put("termId", termId);
+		}
+		if (hasCreatorFiltered) {
+			filters.put("creatorId", creatorId);
+		}
+		if (hasCategoryFiltered) {
+			filters.put("categoryId", categoryId);
+		}
+
+		try {
+			videoList = searchManager.searchVideoList(findVideos, filters, -1);
+		} catch (SearchException | ParseException e) {
+			// TODO handle exception
+		}
+		// differentiate returned lectureseries in real lectureseries and fake video
+		// lectureseries
 		ArrayList<Long> lectureseriesIds = new ArrayList<Long>();
 		ArrayList<Long> videoIds = new ArrayList<Long>();
-		long id;
-	 	for (Lectureseries lecture : reqLectureseries) {
-			id = lecture.getLectureseriesId();
-			if (lecture.getLatestOpenAccessVideoId() < 0) {
-				videoIds.add(id);
+		for (VideoListSearchResult searchResult : videoList) {
+			if (searchResult.getVideoId() < 0) {
+				lectureseriesIds.add(searchResult.getLectureseriesId());
 			} else {
-				lectureseriesIds.add(id);
+				videoIds.add(searchResult.getVideoId());
 			}
-		} 
-	 	//
-	 	// get the institutions, parentinstitutuons, terms, categories and creators which are part of the dataset. those are displayed so the user can do further filtering
-		List<Institution> presentParentInstitutions 	= new ArrayList<Institution>();
-		List<Institution> presentInstitutions 			= new ArrayList<Institution>();
-		List<Term> presentTerms 						= new ArrayList<Term>();
-		List<Category> presentCategories 				= new ArrayList<Category>();
+		}
+		//
+		// get the institutions, parentinstitutuons, terms, categories and creators
+		// which are part of the dataset. those are displayed so the user can do further
+		// filtering
+		List<Institution> presentParentInstitutions = new ArrayList<Institution>();
+		List<Institution> presentInstitutions = new ArrayList<Institution>();
+		List<Term> presentTerms = new ArrayList<Term>();
+		List<Category> presentCategories = new ArrayList<Category>();
 
 		// if a filter is selected, only show the selected one else show all
-	 	if (hasParentInstitutionFiltered) {
+		if (hasParentInstitutionFiltered) {
 			presentParentInstitutions.add(InstitutionLocalServiceUtil.getById(parentInstitutionId));
 		} else {
-			presentParentInstitutions = InstitutionLocalServiceUtil.getInstitutionsFromLectureseriesIdsAndVideoIds(lectureseriesIds, videoIds);
-		} 
-		
-	 	if (hasParentInstitutionFiltered && hasInstitutionFiltered) {
+			presentParentInstitutions = InstitutionLocalServiceUtil
+					.getInstitutionsFromLectureseriesIdsAndVideoIds(lectureseriesIds, videoIds);
+		}
+
+		if (hasParentInstitutionFiltered && hasInstitutionFiltered) {
 			presentInstitutions.add(InstitutionLocalServiceUtil.getById(institutionId));
 		} else {
-			presentInstitutions = InstitutionLocalServiceUtil.getInstitutionsFromLectureseriesIdsAndVideoIds(lectureseriesIds, videoIds, parentInstitutionId);
+			presentInstitutions = InstitutionLocalServiceUtil
+					.getInstitutionsFromLectureseriesIdsAndVideoIds(lectureseriesIds, videoIds, parentInstitutionId);
 		}
-		
+
 		if (hasTermFiltered) {
 			try {
 				presentTerms.add(TermLocalServiceUtil.getById(termId));
 			} catch (Exception e) {
 				_log.error("can't add term id" + termId);
-			} 
+			}
 		} else {
 			presentTerms = TermLocalServiceUtil.getTermsFromLectureseriesIdsAndVideoIds(lectureseriesIds, videoIds);
 		}
 
 		/*
-		FILTER BY CREATOR
+		 * FILTER BY CREATOR
 		 */
 		List<Creator> presentCreators = filterCreators(hasCreatorFiltered, creatorId, lectureseriesIds, videoIds);
 		Map<Character, List<Creator>> creatorsSplitAlphabetically = splitCreatorsAlphabetically(presentCreators);
@@ -125,7 +159,8 @@ public class ViewRenderList implements MVCRenderCommand{
 				_log.error("can't add category with id" + categoryId);
 			}
 		} else {
-			presentCategories = CategoryLocalServiceUtil.getCategoriesFromLectureseriesIdsAndVideoIds(lectureseriesIds, videoIds);
+			presentCategories = CategoryLocalServiceUtil.getCategoriesFromLectureseriesIdsAndVideoIds(lectureseriesIds,
+					videoIds);
 		}
 		//
 		PortletURL portletURL = renderResponse.createRenderURL();
@@ -138,27 +173,30 @@ public class ViewRenderList implements MVCRenderCommand{
 		portletURL.setParameter("findVideos", findVideos);
 		//
 		boolean resultSetEmpty = true;
-		if(presentParentInstitutions.size()>0||presentInstitutions.size()>0||presentTerms.size()>0||presentCategories.size()>0){
-			resultSetEmpty=false;
+		if (presentParentInstitutions.size() > 0 || presentInstitutions.size() > 0 || presentTerms.size() > 0
+				|| presentCategories.size() > 0) {
+			resultSetEmpty = false;
 		}
 		//
 		Institution insti = InstitutionLocalServiceUtil.createInstitution(0);
 		try {
-			if(institutionId>0)insti=InstitutionLocalServiceUtil.getById(institutionId);
+			if (institutionId > 0)
+				insti = InstitutionLocalServiceUtil.getById(institutionId);
 		} catch (Exception e) {
 			_log.error("can't get insti bei id");
 		}
 		//
 		Institution pInst = InstitutionLocalServiceUtil.createInstitution(0);
 		try {
-			if(parentInstitutionId>0)pInst=InstitutionLocalServiceUtil.getById(parentInstitutionId);
+			if (parentInstitutionId > 0)
+				pInst = InstitutionLocalServiceUtil.getById(parentInstitutionId);
 		} catch (Exception e) {
 			_log.error("can't get pInst bei id");
 		}
 		//
 		Institution rInst = InstitutionLocalServiceUtil.createInstitution(0);
 		try {
-			rInst=InstitutionLocalServiceUtil.getRootByParentAndCompanyAndGroup(0, companyId, groupId);
+			rInst = InstitutionLocalServiceUtil.getRootByParentAndCompanyAndGroup(0, companyId, groupId);
 		} catch (Exception e) {
 			_log.error("can't get rInst bei company and group id");
 		}
@@ -176,7 +214,7 @@ public class ViewRenderList implements MVCRenderCommand{
 		renderRequest.setAttribute("hasCreatorFiltered", hasCreatorFiltered);
 		renderRequest.setAttribute("hasCategoryFiltered", hasCategoryFiltered);
 		renderRequest.setAttribute("isSearched", isSearched);
-		renderRequest.setAttribute("reqLectureseries", reqLectureseries);
+		renderRequest.setAttribute("videoList", videoList);
 		renderRequest.setAttribute("lectureseriesIds", lectureseriesIds);
 		renderRequest.setAttribute("videoIds", videoIds);
 		renderRequest.setAttribute("presentParentInstitutions", presentParentInstitutions);
@@ -190,25 +228,28 @@ public class ViewRenderList implements MVCRenderCommand{
 		renderRequest.setAttribute("insti", insti);
 		renderRequest.setAttribute("pInst", pInst);
 		renderRequest.setAttribute("rInst", rInst);
-		//	
-	    
-		return "/viewList.jsp"; 
+		//
+
+		return "/viewList.jsp";
 	}
 
 	/**
-	 * Constructs a list of creators from given video and lecture series IDs, and returns a one-item
-	 * list of the creator with id creatorId. If the filter is not active, the entire list is returned.
-	 * @param filterIsActive if true, list is filtered for creatorId
-	 * @param creatorId ID of creator to filter for. Can be null if filterIsActive is false
-	 * @param lectureseriesIds IDs of the lecture series whose creators the list will contain
-	 * @param videoIds IDs of the videos whose creators the list will contain
-	 * @return list of creators of given video/lectureSeries IDs.
-	 * Single-item list if filter is active and creator ID is given.
+	 * Constructs a list of creators from given video and lecture series IDs, and
+	 * returns a one-item list of the creator with id creatorId. If the filter is
+	 * not active, the entire list is returned.
+	 * 
+	 * @param filterIsActive   if true, list is filtered for creatorId
+	 * @param creatorId        ID of creator to filter for. Can be null if
+	 *                         filterIsActive is false
+	 * @param lectureseriesIds IDs of the lecture series whose creators the list
+	 *                         will contain
+	 * @param videoIds         IDs of the videos whose creators the list will
+	 *                         contain
+	 * @return list of creators of given video/lectureSeries IDs. Single-item list
+	 *         if filter is active and creator ID is given.
 	 */
-	private List<Creator> filterCreators(Boolean filterIsActive,
-															 long creatorId,
-															 ArrayList<Long> lectureseriesIds,
-															 ArrayList<Long> videoIds) {
+	private List<Creator> filterCreators(Boolean filterIsActive, long creatorId, ArrayList<Long> lectureseriesIds,
+			ArrayList<Long> videoIds) {
 		List<Creator> filteredCreators = new ArrayList<>();
 		if (filterIsActive) {
 			try {
@@ -217,15 +258,18 @@ public class ViewRenderList implements MVCRenderCommand{
 				_log.error("can't add creator id " + creatorId);
 			}
 		} else {
-			filteredCreators = CreatorLocalServiceUtil.getCreatorsFromLectureseriesIdsAndVideoIds(lectureseriesIds, videoIds);
+			filteredCreators = CreatorLocalServiceUtil.getCreatorsFromLectureseriesIdsAndVideoIds(lectureseriesIds,
+					videoIds);
 		}
 
 		return filteredCreators;
 	}
 
 	/**
-	 * Takes a map with creators that are mapped to their last name's first character and returns a
-	 * flat alphabetical list. Special characters are last in the list (unlike initial sorting)
+	 * Takes a map with creators that are mapped to their last name's first
+	 * character and returns a flat alphabetical list. Special characters are last
+	 * in the list (unlike initial sorting)
+	 * 
 	 * @param splitMap A={Aaronson, John; ...}, B={Biene, Maja; ...}
 	 * @return {Aaronson, John; ...; Biene, Maja; ...}
 	 */
@@ -239,6 +283,7 @@ public class ViewRenderList implements MVCRenderCommand{
 
 	/**
 	 * Takes a flat list of creators and sorts it to an alphabetical map
+	 * 
 	 * @param creatorList {Biene, Maja; Aaronson, John; ...}
 	 * @return A={Aaronson, John; ...}, B={Biene, Maja; ...}
 	 */
@@ -246,7 +291,7 @@ public class ViewRenderList implements MVCRenderCommand{
 		Map<Character, List<Creator>> presentCreatorsAlphabetMap = new HashMap<>();
 		String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ+";
 
-		for (int i=0; i<alphabet.length(); i++) {
+		for (int i = 0; i < alphabet.length(); i++) {
 			presentCreatorsAlphabetMap.put(alphabet.charAt(i), new ArrayList<>());
 		}
 
@@ -254,11 +299,16 @@ public class ViewRenderList implements MVCRenderCommand{
 			char firstChar = creator.getLastName().toUpperCase().charAt(0);
 
 			// Umlauts/accents are mapped to "base" character
-			if (firstChar == 'Š' || firstChar == 'Ş') firstChar = 'S';
-			if (firstChar == 'Ö') firstChar = 'O';
-			if (firstChar == 'Ü') firstChar = 'U';
-			if (firstChar == 'Ä') firstChar = 'A';
-			if (firstChar == 'İ') firstChar = 'I';
+			if (firstChar == 'Š' || firstChar == 'Ş')
+				firstChar = 'S';
+			if (firstChar == 'Ö')
+				firstChar = 'O';
+			if (firstChar == 'Ü')
+				firstChar = 'U';
+			if (firstChar == 'Ä')
+				firstChar = 'A';
+			if (firstChar == 'İ')
+				firstChar = 'I';
 
 			List<Creator> creatorsForChar = presentCreatorsAlphabetMap.get(firstChar);
 

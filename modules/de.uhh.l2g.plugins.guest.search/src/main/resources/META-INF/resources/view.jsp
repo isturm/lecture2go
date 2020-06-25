@@ -6,7 +6,7 @@
 
 <div style="display: none;" id="<portlet:namespace/>findVideosURL">${findVideosURL}</div>
 
-<aui:form action="/web/vod/l2go/-/get/0/0/0/0/0/" method="POST" name="submitForm">
+<aui:form action="/web/vod/l2go/-/get/0/0/0/0/0/0/" method="POST" name="submitForm">
 	<aui:input name="findVideos" id="findVideos" placeholder="Suche nach Videos, Veranstaltungen, Dozierenden, ..." label="" inlineField="true" value="${memberDTO.findVideos}"/>
 	<input type="submit"/>
 </aui:form>		

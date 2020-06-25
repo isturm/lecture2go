@@ -23,8 +23,6 @@
 <%@page import="java.util.List" %>
 <%@page import="java.util.ArrayList" %>
 
-<%@page import="de.uhh.l2g.plugins.util.AutocompleteManager"%>
-
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />
