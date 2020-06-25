@@ -674,7 +674,48 @@
             <finder-column name="year"></finder-column>
         </finder>
     </entity>
-    <entity name="Category" local-service="true"
+	<entity name="MediaType" local-service="true" remote-service="false">
+		<column name="mediaTypeId" type="long" primary="true"
+				id-type="increment">
+		</column>
+		<column name="mediaTypeName" type="String"></column>
+		<column name="groupId" type="long"></column>
+		<column name="companyId" type="long"></column>
+		<column name="userId" type="long"></column>
+		<column name="userName" type="String"></column>
+		<column name="createDate" type="Date"></column>
+		<column name="modifiedDate" type="Date"></column>
+		<order by="asc">
+			<order-column name="mediaTypeName" order-by="asc"></order-column>
+		</order>
+		<finder name="Group" return-type="Collection">
+			<finder-column name="groupId"></finder-column>
+		</finder>
+		<finder name="Company" return-type="Collection">
+			<finder-column name="companyId"></finder-column>
+		</finder>
+		<finder name="GroupAndCompany" return-type="Collection">
+			<finder-column name="groupId"></finder-column>
+			<finder-column name="companyId"></finder-column>
+		</finder>
+	</entity>
+	<entity name="Video_MediaType" local-service="true"
+			remote-service="false">
+		<column name="videoMediaTypeId" type="long" primary="true" id-type="increment"></column>
+		<column name="videoId" type="long"></column>
+		<column name="MediaTypeId" type="long"></column>
+		<finder name="Video" return-type="Collection">
+			<finder-column name="videoId"></finder-column>
+		</finder>
+		<finder name="MediaType" return-type="Collection">
+			<finder-column name="MediaTypeId"></finder-column>
+		</finder>
+		<finder name="VideoMediaType" return-type="Collection">
+			<finder-column name="videoId"></finder-column>
+			<finder-column name="MediaTypeId"></finder-column>
+		</finder>
+	</entity>
+	<entity name="Category" local-service="true"
     	remote-service="false">
     	<column name="categoryId" type="long" primary="true"
     		id-type="increment">

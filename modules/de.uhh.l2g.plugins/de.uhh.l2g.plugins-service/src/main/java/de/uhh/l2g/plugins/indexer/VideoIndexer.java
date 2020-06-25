@@ -13,27 +13,20 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.GetterUtil;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
+import de.uhh.l2g.plugins.model.*;
+import de.uhh.l2g.plugins.service.*;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 import de.uhh.l2g.plugins.exception.NoSuchTagcloudException;
-import de.uhh.l2g.plugins.model.Tagcloud;
-import de.uhh.l2g.plugins.model.Video;
-import de.uhh.l2g.plugins.model.Video_Category;
-import de.uhh.l2g.plugins.model.Video_Creator;
-import de.uhh.l2g.plugins.model.Video_Institution;
 import de.uhh.l2g.plugins.model.impl.VideoImpl;
-import de.uhh.l2g.plugins.service.TagcloudLocalServiceUtil;
-import de.uhh.l2g.plugins.service.VideoLocalService;
-import de.uhh.l2g.plugins.service.Video_CategoryLocalServiceUtil;
-import de.uhh.l2g.plugins.service.Video_CreatorLocalServiceUtil;
-import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.impl.TagcloudLocalServiceImpl;
 
 @Component(immediate = true, service = Indexer.class)
@@ -50,7 +43,7 @@ public class VideoIndexer extends BaseIndexer<Video> {
 		setDefaultSelectedFieldNames(Field.COMPANY_ID, "videoId", "tagCloud", "lectureSeriesId", "producerId",
 				"containerFormat", "resolution", "duration", "hostId", "generationDate", "openAccess", "metaDataId",
 				"hits", "uploadDate", "permittedToSegment", "rootInstitutionId", "citation2Go", "termId", "licenseId",
-				"createDate", "modifiedDate", "categoryId", "institutionId", "institutionParentId");
+				"createDate", "modifiedDate", "categoryId", "institutionId", "institutionParentId", "mediaTypeId");
 	}
 
 	@Override
@@ -93,6 +86,7 @@ public class VideoIndexer extends BaseIndexer<Video> {
 		setCategoryIds(document, video.getVideoId());
 		setInstitutionIds(document, video.getVideoId());
 		setCreatorIds(document, video.getVideoId());
+		setMediaTypeIds(document, video.getVideoId());
 
 		return document;
 	}
@@ -187,5 +181,15 @@ public class VideoIndexer extends BaseIndexer<Video> {
 		}
 
 		document.addKeyword("creatorId", creatorIds);
+	}
+
+	private void setMediaTypeIds(Document document, long videoId) {
+		List<Video_MediaType> video_mediaTypes = Video_MediaTypeLocalServiceUtil.getByVideo(videoId);
+		long[] mediaTypeIds = new long[video_mediaTypes.size()];
+		for (int i = 0; i < video_mediaTypes.size(); i++) {
+			mediaTypeIds[i] = video_mediaTypes.get(i).getMediaTypeId();
+		}
+
+		document.addKeyword("mediaTypeId", mediaTypeIds);
 	}
 }

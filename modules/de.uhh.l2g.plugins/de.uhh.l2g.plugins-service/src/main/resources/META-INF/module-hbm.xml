@@ -14,6 +14,7 @@
 	<import class="de.uhh.l2g.plugins.model.Lectureseries_Creator" />
 	<import class="de.uhh.l2g.plugins.model.Lectureseries_Institution" />
 	<import class="de.uhh.l2g.plugins.model.License" />
+	<import class="de.uhh.l2g.plugins.model.MediaType" />
 	<import class="de.uhh.l2g.plugins.model.Metadata" />
 	<import class="de.uhh.l2g.plugins.model.Office" />
 	<import class="de.uhh.l2g.plugins.model.Producer" />
@@ -28,6 +29,7 @@
 	<import class="de.uhh.l2g.plugins.model.Video_Category" />
 	<import class="de.uhh.l2g.plugins.model.Video_Creator" />
 	<import class="de.uhh.l2g.plugins.model.Video_Institution" />
+	<import class="de.uhh.l2g.plugins.model.Video_MediaType" />
 	<import class="de.uhh.l2g.plugins.model.Videohitlist" />
 	<class name="de.uhh.l2g.plugins.model.impl.CategoryImpl" table="LG_Category">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="categoryId" type="long">
@@ -186,6 +188,18 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="schemeUrl" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="selectable" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="description" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
+	<class name="de.uhh.l2g.plugins.model.impl.MediaTypeImpl" table="LG_MediaType">
+		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="mediaTypeId" type="long">
+			<generator class="increment" />
+		</id>
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="mediaTypeName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.MetadataImpl" table="LG_Metadata">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="metadataId" type="long">
@@ -379,6 +393,13 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="videoId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="institutionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="institutionParentId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+	<class name="de.uhh.l2g.plugins.model.impl.Video_MediaTypeImpl" table="LG_Video_MediaType">
+		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="videoMediaTypeId" type="long">
+			<generator class="increment" />
+		</id>
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="videoId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="MediaTypeId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.VideohitlistImpl" table="LG_Videohitlist">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="videohitlistId" type="long">

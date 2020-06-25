@@ -41,46 +41,13 @@ import javax.portlet.RenderResponse;
 import javax.portlet.ResourceRequest;
 import javax.portlet.ResourceResponse;
 
+import de.uhh.l2g.plugins.model.*;
+import de.uhh.l2g.plugins.service.*;
 import org.osgi.service.component.annotations.Component;
 
 import de.uhh.l2g.plugins.admin.videos.constants.AdminVideoManagementPortletKeys;
 import de.uhh.l2g.plugins.admin.videos.search.VideoDisplayTerms;
 import de.uhh.l2g.plugins.admin.videos.search.VideoSearchContainer;
-import de.uhh.l2g.plugins.model.Category;
-import de.uhh.l2g.plugins.model.Coordinator;
-import de.uhh.l2g.plugins.model.Creator;
-import de.uhh.l2g.plugins.model.Host;
-import de.uhh.l2g.plugins.model.Institution;
-import de.uhh.l2g.plugins.model.Lectureseries;
-import de.uhh.l2g.plugins.model.Lectureseries_Institution;
-import de.uhh.l2g.plugins.model.License;
-import de.uhh.l2g.plugins.model.Metadata;
-import de.uhh.l2g.plugins.model.Producer;
-import de.uhh.l2g.plugins.model.Segment;
-import de.uhh.l2g.plugins.model.Term;
-import de.uhh.l2g.plugins.model.Video;
-import de.uhh.l2g.plugins.model.Video_Category;
-import de.uhh.l2g.plugins.model.Video_Creator;
-import de.uhh.l2g.plugins.model.Video_Institution;
-import de.uhh.l2g.plugins.model.Video_Lectureseries;
-import de.uhh.l2g.plugins.service.CategoryLocalServiceUtil;
-import de.uhh.l2g.plugins.service.CoordinatorLocalServiceUtil;
-import de.uhh.l2g.plugins.service.CreatorLocalServiceUtil;
-import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
-import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
-import de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil;
-import de.uhh.l2g.plugins.service.Lectureseries_InstitutionLocalServiceUtil;
-import de.uhh.l2g.plugins.service.LicenseLocalServiceUtil;
-import de.uhh.l2g.plugins.service.MetadataLocalServiceUtil;
-import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
-import de.uhh.l2g.plugins.service.SegmentLocalServiceUtil;
-import de.uhh.l2g.plugins.service.TagcloudLocalServiceUtil;
-import de.uhh.l2g.plugins.service.TermLocalServiceUtil;
-import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
-import de.uhh.l2g.plugins.service.Video_CategoryLocalServiceUtil;
-import de.uhh.l2g.plugins.service.Video_CreatorLocalServiceUtil;
-import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
-import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.util.FFmpegManager;
 import de.uhh.l2g.plugins.util.FileManager;
 import de.uhh.l2g.plugins.util.Htaccess;
@@ -142,7 +109,6 @@ public class AdminVideoManagementPortlet extends MVCPortlet {
 		response.setRenderParameter("jspPage", "/admin/segments.jsp");
 	}
 
-	
 	@Override
 	public void render(RenderRequest renderRequest, RenderResponse renderResponse) throws IOException, PortletException {
 		String mvcPath = ParamUtil.getString(renderRequest, "mvcPath");
@@ -183,11 +149,13 @@ public class AdminVideoManagementPortlet extends MVCPortlet {
 		Long coordinatorId = ParamUtil.getLong(renderRequest, "coordinatorId", 0);
 		Long producerId = ParamUtil.getLong(renderRequest, "producerId", 0);
 		Long lectureseriesId = ParamUtil.getLong(renderRequest, "lectureseriesId", 0);
-		//if coordinator, producer or lecture series clicked, 
+		long mediaTypeId = ParamUtil.getLong(renderRequest, "mediaTypeId", 0);
+		//if coordinator, producer or lecture series clicked,
 		//add to portlet url
 		if(coordinatorId>0)portletURL.setParameter("coordinatorId", coordinatorId.toString());
 		if(producerId>0)portletURL.setParameter("producerId", producerId.toString());
 		if(lectureseriesId>0)portletURL.setParameter("lectureseriesId", lectureseriesId.toString());
+		if(mediaTypeId>0)portletURL.setParameter("mediaTypeId", String.valueOf(mediaTypeId));
 		//detail all possible view variables
 		Long videoId = ParamUtil.getLong(renderRequest, "videoId", 0);
 		boolean is360Video = false;
@@ -202,6 +170,7 @@ public class AdminVideoManagementPortlet extends MVCPortlet {
 		try {reqVideo = VideoLocalServiceUtil.getVideo(videoId);} catch (PortalException e1) {}
 		List<Lectureseries> reqLectureseriesList = new ArrayList<Lectureseries>();
 		Lectureseries reqLectureseries = LectureseriesLocalServiceUtil.createLectureseries(0);
+		MediaType reqMediaType = MediaTypeLocalServiceUtil.createMediaType(0);
 		License reqLicense = LicenseLocalServiceUtil.createLicense(0);
 		// requested license list - all licenses to choose from
 		List<License> reqLicenseList = new ArrayList<License>();
@@ -209,10 +178,12 @@ public class AdminVideoManagementPortlet extends MVCPortlet {
 		Producer reqProducer = ProducerLocalServiceUtil.createProducer(0);
 		Long reqPproducerId = ParamUtil.getLong(renderRequest, "pproducerId", 0);
 		Long reqLectureseriesId = ParamUtil.getLong(renderRequest, "lectureseriesId", 0);
+		long reqMediaTypeId = ParamUtil.getLong(renderRequest, "mediaTypeId", 0);
 		Metadata reqMetadata = MetadataLocalServiceUtil.createMetadata(0);
 		List<Video_Institution> reqSubInstitutions = new ArrayList<Video_Institution>();	
 		JSONArray allCreatorsJSON = JSONFactoryUtil.createJSONArray();
-		List<Term> terms = new ArrayList<Term>(); 
+		List<Term> terms = new ArrayList<Term>();
+		List<MediaType> mediaTypes = new ArrayList<>();
 		List<Category> categories = new ArrayList<Category>();
 		List<Institution> producersSubInstitutions = new ArrayList<Institution>();
 		Host host = HostLocalServiceUtil.createHost(0);
@@ -332,7 +303,10 @@ public class AdminVideoManagementPortlet extends MVCPortlet {
 			
 			//terms 
 			try{terms = TermLocalServiceUtil.getAllSemesters();}catch(Exception e){}
-			
+
+			//mediaTypes
+			try{mediaTypes = MediaTypeLocalServiceUtil.getMediaTypes(-1, -1);}catch(Exception e){}
+
 			//categories
 			try{categories = CategoryLocalServiceUtil.getAllCategories(com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS , com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);}catch(Exception e){}
 
@@ -356,7 +330,8 @@ public class AdminVideoManagementPortlet extends MVCPortlet {
 		//assign to render request and response finally
 		renderRequest.setAttribute("uploadRepository", uploadRepository);	
 		renderRequest.setAttribute("reqHost", host);	
-		renderRequest.setAttribute("terms", terms);	
+		renderRequest.setAttribute("terms", terms);
+		renderRequest.setAttribute("mediaTypes", mediaTypes);
 		renderRequest.setAttribute("categories", categories);	
 		renderRequest.setAttribute("allCreatorsJSON", allCreatorsJSON);	
 		renderRequest.setAttribute("reqMetadata", reqMetadata);	
@@ -398,6 +373,10 @@ public class AdminVideoManagementPortlet extends MVCPortlet {
 
 		//lecture series
 		Long lectureseriesId = new Long(request.getParameter("lectureseriesId"));
+
+		// media type
+		long mediaTypeId = new Long(request.getParameter("mediaTypeId"));
+
 		//forward to the render method
 		response.setRenderParameter("lectureseriesId", lectureseriesId+"");
 		//
@@ -448,6 +427,12 @@ public class AdminVideoManagementPortlet extends MVCPortlet {
 		vl.setVideoId(newVideo.getVideoId());
 		vl.setOpenAccess(newVideo.getOpenAccess()); 
 		Video_LectureseriesLocalServiceUtil.addVideo_Lectureseries(vl);
+
+		// link to mediaType list
+		Video_MediaType video_mediaType = Video_MediaTypeLocalServiceUtil.createVideo_MediaType(0);
+		video_mediaType.setMediaTypeId(mediaTypeId);
+		video_mediaType.setVideoId(newVideo.getVideoId());
+		Video_MediaTypeLocalServiceUtil.addVideo_MediaType(video_mediaType);
 		
 		//requested sub institutions
 		List<Video_Institution> reqSubInstitutions = new ArrayList<Video_Institution>();
@@ -721,6 +706,7 @@ public class AdminVideoManagementPortlet extends MVCPortlet {
 			Long lId = ParamUtil.getLong(resourceRequest, "lectureseriesId");
 			Long termId = ParamUtil.getLong(resourceRequest, "termId");
 			Long categoryId = ParamUtil.getLong(resourceRequest, "categoryId");
+			Long mediaTypeId = ParamUtil.getLong(resourceRequest, "mediaTypeId");
 			Integer citationAllowed = ParamUtil.getInteger(resourceRequest, "citationAllowedCheckbox");
 	 	    String password = ParamUtil.getString(resourceRequest, "password");	
 	 	    //
@@ -748,6 +734,23 @@ public class AdminVideoManagementPortlet extends MVCPortlet {
 					Video_LectureseriesLocalServiceUtil.removeByVideoId(video.getVideoId());
 				}
 				video.setTags(tags);
+
+				// update media type if set
+				if (mediaTypeId > 0) {
+					List<Video_MediaType> mediaTypeList = Video_MediaTypeLocalServiceUtil.getByVideo(video.getVideoId());
+					if (mediaTypeList.size() > 0) {
+						mediaTypeList.forEach(mediaType -> {
+							mediaType.setMediaTypeId(mediaTypeId);
+							Video_MediaTypeLocalServiceUtil.updateVideo_MediaType(mediaType);
+						});
+					} else {
+						Video_MediaType mediaType = Video_MediaTypeLocalServiceUtil.createVideo_MediaType(0);
+						mediaType.setVideoId(video.getVideoId());
+						mediaType.setMediaTypeId(mediaTypeId);
+						Video_MediaTypeLocalServiceUtil.updateVideo_MediaType(mediaType);
+					}
+				}
+
 				if(lId>0){
 					newLect = LectureseriesLocalServiceUtil.getLectureseries(lId);
 					//

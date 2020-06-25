@@ -144,6 +144,17 @@ create table LG_License (
 	description VARCHAR(75) null
 );
 
+create table LG_MediaType (
+	mediaTypeId LONG not null primary key,
+	mediaTypeName VARCHAR(75) null,
+	groupId LONG,
+	companyId LONG,
+	userId LONG,
+	userName VARCHAR(75) null,
+	createDate DATE null,
+	modifiedDate DATE null
+);
+
 create table LG_Metadata (
 	metadataId LONG not null primary key,
 	type_ VARCHAR(75) null,
@@ -352,6 +363,12 @@ create table LG_Video_Lectureseries (
 	videoId LONG,
 	lectureseriesId LONG,
 	openAccess INTEGER
+);
+
+create table LG_Video_MediaType (
+	videoMediaTypeId LONG not null primary key,
+	videoId LONG,
+	MediaTypeId LONG
 );
 
 create table LG_Videohitlist (
