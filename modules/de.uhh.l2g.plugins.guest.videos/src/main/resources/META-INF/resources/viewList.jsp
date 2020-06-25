@@ -342,10 +342,10 @@
                 <c:set var="isVideo" value="<%=false%>"/>
                 <c:set var="vidDummy" value="<%=VideoLocalServiceUtil.createVideo(0)%>"/>
                 <c:choose>
-                    <c:when test="${lectser.latestOpenAccessVideoId<0 && lectser.lectureseriesId>0}">
+                    <c:when test="${lectser.videoId>0}">
                         <c:set var="isVideo" value="<%=true%>"/>
                         <%try {%><c:set var="vidDummy"
-                                        value="<%=VideoLocalServiceUtil.getVideo(lectser.getLectureseriesId())%>"/><%
+                                        value="<%=VideoLocalServiceUtil.getVideo(lectser.getVideoId())%>"/><%
                         } catch (Exception e) {
                         }
                         ;

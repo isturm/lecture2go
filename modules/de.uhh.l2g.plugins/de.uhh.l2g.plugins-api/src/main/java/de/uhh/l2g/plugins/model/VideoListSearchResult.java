@@ -2,10 +2,18 @@ package de.uhh.l2g.plugins.model;
 
 public class VideoListSearchResult {
 
-	private long lectureseriesId, latestOpenAccessVideoId, previewVideoId, termId, categoryId,
-			numberOfOpenAccessVideos = -1;
+	private long videoId = -1, lectureseriesId = -1, latestOpenAccessVideoId = -1, previewVideoId = -1, termId = -1,
+			categoryId = -1, numberOfOpenAccessVideos = 0;
 
 	private String name;
+
+	public long getVideoId() {
+		return videoId;
+	}
+
+	public void setVideoId(long videoId) {
+		this.videoId = videoId;
+	}
 
 	public long getLectureseriesId() {
 		return lectureseriesId;

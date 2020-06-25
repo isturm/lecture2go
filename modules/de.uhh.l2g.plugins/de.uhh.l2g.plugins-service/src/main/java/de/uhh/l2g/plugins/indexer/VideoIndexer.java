@@ -70,6 +70,7 @@ public class VideoIndexer extends BaseIndexer<Video> {
 		}
 		document.addKeyword("name", video.getTitle());
 		document.addKeyword("lectureSeriesId", video.getLectureseriesId());
+		document.addKeyword("isSeparateVideoListItem", video.getLectureseriesId() < 0);
 		document.addKeyword("producerId", video.getProducerId());
 		document.addKeyword("containerFormat", video.getContainerFormat());
 		document.addKeyword("resolution", video.getResolution());
@@ -155,12 +156,13 @@ public class VideoIndexer extends BaseIndexer<Video> {
 
 	private void setCategoryIds(Document document, long videoId) {
 		List<Video_Category> videoCategories = Video_CategoryLocalServiceUtil.getByVideo(videoId);
-		long[] categoryIds = new long[videoCategories.size()];
-		for (int i = 0; i < videoCategories.size(); i++) {
-			categoryIds[i] = videoCategories.get(i).getCategoryId();
+		if (videoCategories != null && !videoCategories.isEmpty()) {
+			long[] categoryIds = new long[videoCategories.size()];
+			for (int i = 0; i < videoCategories.size(); i++) {
+				categoryIds[i] = videoCategories.get(i).getCategoryId();
+			}
+			document.addKeyword("categoryId", categoryIds);
 		}
-
-		document.addKeyword("categoryId", categoryIds);
 	}
 
 	private void setInstitutionIds(Document document, long videoId) {

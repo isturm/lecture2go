@@ -19,6 +19,7 @@ import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
 import org.osgi.service.component.annotations.Component;
+import org.osgi.service.component.annotations.Reference;
 
 import de.uhh.l2g.plugins.guest.videos.constants.OpenAccessVideosPortletKeys;
 import de.uhh.l2g.plugins.model.Category;
@@ -36,6 +37,9 @@ import de.uhh.l2g.plugins.util.SearchManager;
 		"mvc.command.name=/view/render/list", "mvc.command.name=/" }, service = MVCRenderCommand.class)
 public class ViewRenderList implements MVCRenderCommand {
 	private static final Log _log = LogFactoryUtil.getLog(OpenAccessVideosPortlet.class);
+
+	@Reference
+	protected SearchManager searchManager;
 
 	@Override
 	public String render(RenderRequest renderRequest, RenderResponse renderResponse) throws PortletException {
@@ -68,22 +72,38 @@ public class ViewRenderList implements MVCRenderCommand {
 		// parentInstitutionId, termId, categoryId, creatorId, findVideos, groupId,
 		// companyId);
 		List<VideoListSearchResult> videoList = new ArrayList<VideoListSearchResult>();
+		Map<String, Object> filters = new HashMap<String, Object>();
+
+		if (hasInstitutionFiltered) {
+			filters.put("institutionId", institutionId);
+		}
+		if (hasParentInstitutionFiltered) {
+			filters.put("institutionParentId", parentInstitutionId);
+		}
+		if (hasTermFiltered) {
+			filters.put("termId", termId);
+		}
+		if (hasCreatorFiltered) {
+			filters.put("creatorId", creatorId);
+		}
+		if (hasCategoryFiltered) {
+			filters.put("categoryId", categoryId);
+		}
+
 		try {
-			videoList = SearchManager.searchVideoList(findVideos, null, 20);
+			videoList = searchManager.searchVideoList(findVideos, filters, -1);
 		} catch (SearchException | ParseException e) {
 			// TODO handle exception
 		}
 		// differentiate returned lectureseries in real lectureseries and fake video
-		// lectureseries (openAccessVideoId is negative on videos)
+		// lectureseries
 		ArrayList<Long> lectureseriesIds = new ArrayList<Long>();
 		ArrayList<Long> videoIds = new ArrayList<Long>();
-		long id;
 		for (VideoListSearchResult searchResult : videoList) {
-			id = searchResult.getLectureseriesId();
-			if (searchResult.getLatestOpenAccessVideoId() < 0) {
-				videoIds.add(id);
+			if (searchResult.getVideoId() < 0) {
+				lectureseriesIds.add(searchResult.getLectureseriesId());
 			} else {
-				lectureseriesIds.add(id);
+				videoIds.add(searchResult.getVideoId());
 			}
 		}
 		//

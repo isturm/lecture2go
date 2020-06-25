@@ -62,6 +62,7 @@ public class LectureSeriesIndexer extends BaseIndexer<Lectureseries> {
 		Document document = getBaseModelDocument(Lectureseries.class.getName(), lectureseries);
 		document.addKeyword(Field.COMPANY_ID, lectureseries.getCompanyId());
 		document.addKeyword("lectureSeriesId", lectureseries.getLectureseriesId());
+		document.addKeyword("isSeparateVideoListItem", true);
 		try {
 			document.addText("tagCloud", getTagCloudStrings(lectureseries.getLectureseriesId()));
 		} catch (NoSuchTagcloudException e) {
@@ -82,8 +83,12 @@ public class LectureSeriesIndexer extends BaseIndexer<Lectureseries> {
 		document.addKeyword("previewVideoId", lectureseries.getPreviewVideoId());
 		document.addDate("createDate", lectureseries.getCreateDate());
 		document.addDate("modifiedDate", lectureseries.getModifiedDate());
-		document.addKeyword("numberOfOpenAccessVideos",
-				VideoLocalServiceUtil.countByLectureseriesAndOpenaccess(lectureseries.getLectureseriesId(), 1));
+		int numberOfOpenAccessVideos = VideoLocalServiceUtil
+				.countByLectureseriesAndOpenaccess(lectureseries.getLectureseriesId(), 1);
+		document.addKeyword("numberOfOpenAccessVideos", numberOfOpenAccessVideos);
+		if (numberOfOpenAccessVideos > 0) {
+			document.addKeyword("openAccess", 1);
+		}
 
 		// ids for filtering
 		document.addKeyword("termId", lectureseries.getTermId());
