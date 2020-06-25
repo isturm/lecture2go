@@ -67,6 +67,9 @@ create index IX_4B074373 on LG_Lectureseries_Institution (lectureseriesId, insti
 
 create index IX_A6E366AD on LG_License (selectable);
 
+create index IX_D31DA388 on LG_MediaType (companyId);
+create index IX_6B458DDE on LG_MediaType (groupId, companyId);
+
 create index IX_5613EDEF on LG_Metadata (companyId);
 create index IX_614F0757 on LG_Metadata (groupId, companyId);
 
@@ -136,6 +139,9 @@ create index IX_B5AE333 on LG_Video_Institution (videoId, institutionId);
 create index IX_544FF28F on LG_Video_Lectureseries (lectureseriesId, openAccess);
 create index IX_2833C2F5 on LG_Video_Lectureseries (openAccess);
 create index IX_F35885D3 on LG_Video_Lectureseries (videoId);
+
+create index IX_85EBE88D on LG_Video_MediaType (MediaTypeId);
+create index IX_9E516E9F on LG_Video_MediaType (videoId, MediaTypeId);
 
 create index IX_B9B84A8 on LG_Videohitlist (companyId);
 create index IX_8502F0BE on LG_Videohitlist (groupId, companyId);

@@ -58,6 +58,7 @@ import de.uhh.l2g.plugins.service.persistence.Lectureseries_CategoryPersistence;
 import de.uhh.l2g.plugins.service.persistence.Lectureseries_CreatorPersistence;
 import de.uhh.l2g.plugins.service.persistence.Lectureseries_InstitutionPersistence;
 import de.uhh.l2g.plugins.service.persistence.LicensePersistence;
+import de.uhh.l2g.plugins.service.persistence.MediaTypePersistence;
 import de.uhh.l2g.plugins.service.persistence.MetadataPersistence;
 import de.uhh.l2g.plugins.service.persistence.OfficePersistence;
 import de.uhh.l2g.plugins.service.persistence.ProducerFinder;
@@ -76,6 +77,7 @@ import de.uhh.l2g.plugins.service.persistence.VideoPersistence;
 import de.uhh.l2g.plugins.service.persistence.Video_CategoryPersistence;
 import de.uhh.l2g.plugins.service.persistence.Video_CreatorPersistence;
 import de.uhh.l2g.plugins.service.persistence.Video_InstitutionPersistence;
+import de.uhh.l2g.plugins.service.persistence.Video_MediaTypePersistence;
 import de.uhh.l2g.plugins.service.persistence.VideohitlistPersistence;
 
 import java.io.Serializable;
@@ -949,6 +951,49 @@ public abstract class CreatorLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the media type local service.
+	 *
+	 * @return the media type local service
+	 */
+	public de.uhh.l2g.plugins.service.MediaTypeLocalService
+		getMediaTypeLocalService() {
+
+		return mediaTypeLocalService;
+	}
+
+	/**
+	 * Sets the media type local service.
+	 *
+	 * @param mediaTypeLocalService the media type local service
+	 */
+	public void setMediaTypeLocalService(
+		de.uhh.l2g.plugins.service.MediaTypeLocalService
+			mediaTypeLocalService) {
+
+		this.mediaTypeLocalService = mediaTypeLocalService;
+	}
+
+	/**
+	 * Returns the media type persistence.
+	 *
+	 * @return the media type persistence
+	 */
+	public MediaTypePersistence getMediaTypePersistence() {
+		return mediaTypePersistence;
+	}
+
+	/**
+	 * Sets the media type persistence.
+	 *
+	 * @param mediaTypePersistence the media type persistence
+	 */
+	public void setMediaTypePersistence(
+		MediaTypePersistence mediaTypePersistence) {
+
+		this.mediaTypePersistence = mediaTypePersistence;
+	}
+
+	/**
 	 * Returns the metadata local service.
 	 *
 	 * @return the metadata local service
@@ -1603,6 +1648,49 @@ public abstract class CreatorLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the video_ media type local service.
+	 *
+	 * @return the video_ media type local service
+	 */
+	public de.uhh.l2g.plugins.service.Video_MediaTypeLocalService
+		getVideo_MediaTypeLocalService() {
+
+		return video_MediaTypeLocalService;
+	}
+
+	/**
+	 * Sets the video_ media type local service.
+	 *
+	 * @param video_MediaTypeLocalService the video_ media type local service
+	 */
+	public void setVideo_MediaTypeLocalService(
+		de.uhh.l2g.plugins.service.Video_MediaTypeLocalService
+			video_MediaTypeLocalService) {
+
+		this.video_MediaTypeLocalService = video_MediaTypeLocalService;
+	}
+
+	/**
+	 * Returns the video_ media type persistence.
+	 *
+	 * @return the video_ media type persistence
+	 */
+	public Video_MediaTypePersistence getVideo_MediaTypePersistence() {
+		return video_MediaTypePersistence;
+	}
+
+	/**
+	 * Sets the video_ media type persistence.
+	 *
+	 * @param video_MediaTypePersistence the video_ media type persistence
+	 */
+	public void setVideo_MediaTypePersistence(
+		Video_MediaTypePersistence video_MediaTypePersistence) {
+
+		this.video_MediaTypePersistence = video_MediaTypePersistence;
+	}
+
+	/**
 	 * Returns the videohitlist local service.
 	 *
 	 * @return the videohitlist local service
@@ -1938,6 +2026,15 @@ public abstract class CreatorLocalServiceBaseImpl
 	@BeanReference(type = LicensePersistence.class)
 	protected LicensePersistence licensePersistence;
 
+	@BeanReference(
+		type = de.uhh.l2g.plugins.service.MediaTypeLocalService.class
+	)
+	protected de.uhh.l2g.plugins.service.MediaTypeLocalService
+		mediaTypeLocalService;
+
+	@BeanReference(type = MediaTypePersistence.class)
+	protected MediaTypePersistence mediaTypePersistence;
+
 	@BeanReference(type = de.uhh.l2g.plugins.service.MetadataLocalService.class)
 	protected de.uhh.l2g.plugins.service.MetadataLocalService
 		metadataLocalService;
@@ -2056,6 +2153,15 @@ public abstract class CreatorLocalServiceBaseImpl
 
 	@BeanReference(type = Video_InstitutionPersistence.class)
 	protected Video_InstitutionPersistence video_InstitutionPersistence;
+
+	@BeanReference(
+		type = de.uhh.l2g.plugins.service.Video_MediaTypeLocalService.class
+	)
+	protected de.uhh.l2g.plugins.service.Video_MediaTypeLocalService
+		video_MediaTypeLocalService;
+
+	@BeanReference(type = Video_MediaTypePersistence.class)
+	protected Video_MediaTypePersistence video_MediaTypePersistence;
 
 	@BeanReference(
 		type = de.uhh.l2g.plugins.service.VideohitlistLocalService.class

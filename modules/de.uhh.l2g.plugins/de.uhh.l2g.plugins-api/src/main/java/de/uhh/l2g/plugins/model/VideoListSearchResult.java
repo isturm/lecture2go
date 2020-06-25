@@ -3,7 +3,7 @@ package de.uhh.l2g.plugins.model;
 public class VideoListSearchResult {
 
 	private long videoId = -1, lectureseriesId = -1, latestOpenAccessVideoId = -1, previewVideoId = -1, termId = -1,
-			categoryId = -1, numberOfOpenAccessVideos = 0;
+			categoryId = -1, mediaTypeId = -1, numberOfOpenAccessVideos = 0;
 
 	private String name;
 
@@ -61,6 +61,14 @@ public class VideoListSearchResult {
 
 	public void setCategoryId(long categoryId) {
 		this.categoryId = categoryId;
+	}
+
+	public long getMediaTypeId() {
+		return mediaTypeId;
+	}
+
+	public void setMediaTypeId(long mediaTypeId) {
+		this.mediaTypeId = mediaTypeId;
 	}
 
 	public String getName() {

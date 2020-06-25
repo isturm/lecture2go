@@ -25,11 +25,13 @@ import de.uhh.l2g.plugins.guest.videos.constants.OpenAccessVideosPortletKeys;
 import de.uhh.l2g.plugins.model.Category;
 import de.uhh.l2g.plugins.model.Creator;
 import de.uhh.l2g.plugins.model.Institution;
+import de.uhh.l2g.plugins.model.MediaType;
 import de.uhh.l2g.plugins.model.Term;
 import de.uhh.l2g.plugins.model.VideoListSearchResult;
 import de.uhh.l2g.plugins.service.CategoryLocalServiceUtil;
 import de.uhh.l2g.plugins.service.CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
+import de.uhh.l2g.plugins.service.MediaTypeLocalServiceUtil;
 import de.uhh.l2g.plugins.service.TermLocalServiceUtil;
 import de.uhh.l2g.plugins.util.SearchManager;
 
@@ -48,14 +50,15 @@ public class ViewRenderList implements MVCRenderCommand {
 		Long termId = ParamUtil.getLong(renderRequest, "termId", 0);
 		Long categoryId = ParamUtil.getLong(renderRequest, "categoryId", 0);
 		Long creatorId = ParamUtil.getLong(renderRequest, "creatorId", 0);
+		long mediaTypeId = ParamUtil.getLong(renderRequest, "mediaTypeId", 0);
 		String findVideos = ParamUtil.getString(renderRequest, "findVideos", "");
 		int maxTerms = 4;
-		int maxCreators = 4;
 		boolean hasInstitutionFiltered = (institutionId != 0);
 		boolean hasParentInstitutionFiltered = (parentInstitutionId != 0);
 		boolean hasTermFiltered = (termId != 0);
 		boolean hasCreatorFiltered = (creatorId != 0);
 		boolean hasCategoryFiltered = (categoryId != 0);
+		boolean hasMediaTypeFiltered = (mediaTypeId != 0);
 		boolean isSearched = (findVideos.trim().length() > 0);
 		//
 		long companyId = PortalUtil.getCompanyId(renderRequest);
@@ -66,11 +69,6 @@ public class ViewRenderList implements MVCRenderCommand {
 		if (hasInstitutionFiltered && !hasParentInstitutionFiltered) {
 			institutionId = new Long(0);
 		}
-		// get filtered lectureseries and single videos
-		// List<Lectureseries> reqLectureseries = LectureseriesLocalServiceUtil
-		// .getFilteredByInstitutionParentInstitutionTermCategoryCreatorSearchString(institutionId,
-		// parentInstitutionId, termId, categoryId, creatorId, findVideos, groupId,
-		// companyId);
 		List<VideoListSearchResult> videoList = new ArrayList<VideoListSearchResult>();
 		Map<String, Object> filters = new HashMap<String, Object>();
 
@@ -88,6 +86,9 @@ public class ViewRenderList implements MVCRenderCommand {
 		}
 		if (hasCategoryFiltered) {
 			filters.put("categoryId", categoryId);
+		}
+		if (hasMediaTypeFiltered) {
+			filters.put("mediaTypeId", mediaTypeId);
 		}
 
 		try {
@@ -114,6 +115,7 @@ public class ViewRenderList implements MVCRenderCommand {
 		List<Institution> presentInstitutions = new ArrayList<Institution>();
 		List<Term> presentTerms = new ArrayList<Term>();
 		List<Category> presentCategories = new ArrayList<Category>();
+		List<MediaType> presentMediaTypes = new ArrayList<MediaType>();
 
 		// if a filter is selected, only show the selected one else show all
 		if (hasParentInstitutionFiltered) {
@@ -138,6 +140,19 @@ public class ViewRenderList implements MVCRenderCommand {
 			}
 		} else {
 			presentTerms = TermLocalServiceUtil.getTermsFromLectureseriesIdsAndVideoIds(lectureseriesIds, videoIds);
+		}
+
+		/*
+		 * FILTER BY MEDIA TYPE
+		 */
+		if (hasMediaTypeFiltered) {
+			try {
+				presentMediaTypes.add(MediaTypeLocalServiceUtil.getMediaType(mediaTypeId));
+			} catch (Exception e) {
+				_log.error("can't add media type id " + mediaTypeId);
+			}
+		} else {
+			presentMediaTypes.addAll(MediaTypeLocalServiceUtil.getMediaTypesFromVideoIds(videoIds));
 		}
 
 		/*
@@ -170,11 +185,12 @@ public class ViewRenderList implements MVCRenderCommand {
 		portletURL.setParameter("termId", termId.toString());
 		portletURL.setParameter("categoryId", categoryId.toString());
 		portletURL.setParameter("creatorId", creatorId.toString());
+		portletURL.setParameter("mediaTypeId", String.valueOf(mediaTypeId));
 		portletURL.setParameter("findVideos", findVideos);
 		//
 		boolean resultSetEmpty = true;
 		if (presentParentInstitutions.size() > 0 || presentInstitutions.size() > 0 || presentTerms.size() > 0
-				|| presentCategories.size() > 0) {
+				|| presentCategories.size() > 0 || presentMediaTypes.size() > 0) {
 			resultSetEmpty = false;
 		}
 		//
@@ -206,6 +222,7 @@ public class ViewRenderList implements MVCRenderCommand {
 		renderRequest.setAttribute("termId", termId);
 		renderRequest.setAttribute("categoryId", categoryId);
 		renderRequest.setAttribute("creatorId", creatorId);
+		renderRequest.setAttribute("mediaTypeId", mediaTypeId);
 		renderRequest.setAttribute("findVideos", findVideos);
 		renderRequest.setAttribute("maxTerms", maxTerms);
 		renderRequest.setAttribute("hasInstitutionFiltered", hasInstitutionFiltered);
@@ -213,6 +230,7 @@ public class ViewRenderList implements MVCRenderCommand {
 		renderRequest.setAttribute("hasTermFiltered", hasTermFiltered);
 		renderRequest.setAttribute("hasCreatorFiltered", hasCreatorFiltered);
 		renderRequest.setAttribute("hasCategoryFiltered", hasCategoryFiltered);
+		renderRequest.setAttribute("hasMediaTypeFiltered", hasMediaTypeFiltered);
 		renderRequest.setAttribute("isSearched", isSearched);
 		renderRequest.setAttribute("videoList", videoList);
 		renderRequest.setAttribute("lectureseriesIds", lectureseriesIds);
@@ -222,6 +240,7 @@ public class ViewRenderList implements MVCRenderCommand {
 		renderRequest.setAttribute("presentTerms", presentTerms);
 		renderRequest.setAttribute("creatorsSplitAlphabetically", creatorsSplitAlphabetically);
 		renderRequest.setAttribute("presentCategories", presentCategories);
+		renderRequest.setAttribute("presentMediaTypes", presentMediaTypes);
 		renderRequest.setAttribute("portletURL", portletURL);
 		renderRequest.setAttribute("resultSetEmpty", resultSetEmpty);
 		//

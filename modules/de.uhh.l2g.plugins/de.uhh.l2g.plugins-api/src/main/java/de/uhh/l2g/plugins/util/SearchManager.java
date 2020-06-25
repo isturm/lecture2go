@@ -71,6 +71,7 @@ public class SearchManager {
 			searchResult.setNumberOfOpenAccessVideos(document.getLong("numberOfOpenAccessVideos"));
 			searchResult.setTermId(document.getLong("termId"));
 			searchResult.setCategoryId(document.getLong("categoryId"));
+			searchResult.setMediaTypeId(document.getLong("mediaTypeId"));
 			searchResult.setName(document.getString("name"));
 
 			videoList.add(searchResult);
