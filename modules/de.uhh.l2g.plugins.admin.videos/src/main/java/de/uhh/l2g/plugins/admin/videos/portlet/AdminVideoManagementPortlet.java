@@ -30,6 +30,7 @@ import java.util.Locale;
 import java.util.Map;
 import java.util.ResourceBundle;
 import java.util.TreeMap;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.portlet.ActionRequest;
 import javax.portlet.ActionResponse;
@@ -158,13 +159,17 @@ public class AdminVideoManagementPortlet extends MVCPortlet {
 		if(mediaTypeId>0)portletURL.setParameter("mediaTypeId", String.valueOf(mediaTypeId));
 		//detail all possible view variables
 		Long videoId = ParamUtil.getLong(renderRequest, "videoId", 0);
-		boolean is360Video = false;
+		AtomicBoolean is360Video = new AtomicBoolean(false);
 
 		if (videoId > 0) {
-			List<Video_Category> categories = Video_CategoryLocalServiceUtil.getByVideo(videoId);
-			if (categories.size() > 0) {
-				is360Video = categories.get(0).getCategoryId() == 9;
-			}
+			Video_MediaTypeLocalServiceUtil.getByVideo(videoId).forEach(video_mediaType -> {
+				try {
+					is360Video.set(MediaTypeLocalServiceUtil.getMediaType(video_mediaType.getMediaTypeId())
+							.getMediaTypeName().contains("360"));
+				} catch (PortalException portalException) {
+					portalException.printStackTrace();
+				}
+			});
 		}
 		Video reqVideo = VideoLocalServiceUtil.createVideo(0);
 		try {reqVideo = VideoLocalServiceUtil.getVideo(videoId);} catch (PortalException e1) {}
@@ -359,7 +364,7 @@ public class AdminVideoManagementPortlet extends MVCPortlet {
 		renderRequest.setAttribute("assignedCreators", assignedCreators);
 		renderRequest.setAttribute("displayTerms", displayTerms);
 		renderRequest.setAttribute("videoSearchContainer", videoSearchContainer);
-		renderRequest.setAttribute("is360Video", is360Video);
+		renderRequest.setAttribute("is360Video", is360Video.get());
 		//
 		renderResponse.setProperty("jspPage", mvcPath);
 		super.render(renderRequest, renderResponse);

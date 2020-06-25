@@ -8,11 +8,14 @@ import javax.portlet.*;
 import javax.servlet.http.HttpServletRequest;
 
 import de.uhh.l2g.plugins.model.Video;
+import de.uhh.l2g.plugins.service.MediaTypeLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_CategoryLocalServiceUtil;
+import de.uhh.l2g.plugins.service.Video_MediaTypeLocalServiceUtil;
 import org.osgi.service.component.annotations.Component;
 
 import java.io.IOException;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 /**
  * @author fho
@@ -69,7 +72,15 @@ public class EmbedVideoPortlet extends MVCPortlet {
 		try {
 			long videoId = Long.parseLong(videoIdParam);
 			Video video = VideoLocalServiceUtil.getVideo(videoId);
-			boolean is360Video = Video_CategoryLocalServiceUtil.getByVideo(videoId).get(0).getCategoryId() == 9;
+			AtomicBoolean is360Video = new AtomicBoolean(false);
+			Video_MediaTypeLocalServiceUtil.getByVideo(videoId).forEach(video_mediaType -> {
+				try {
+					 is360Video.set(MediaTypeLocalServiceUtil.getMediaType(video_mediaType.getMediaTypeId())
+							 .getMediaTypeName().contains("360"));
+				} catch (PortalException portalException) {
+					portalException.printStackTrace();
+				}
+			});
 
 			renderRequest.setAttribute("citationAllowed", video.getCitation2go());
 			renderRequest.setAttribute("image", video.getImage());
@@ -78,7 +89,7 @@ public class EmbedVideoPortlet extends MVCPortlet {
 			renderRequest.setAttribute("startTime", startTime);
 			renderRequest.setAttribute("endTime", endTime);
 			renderRequest.setAttribute("sourceUrl", video.getCurrentURL() + urlSuffix);
-			renderRequest.setAttribute("is360Video", is360Video);
+			renderRequest.setAttribute("is360Video", is360Video.get());
 		} catch (PortalException e) {
 			e.printStackTrace();
 		}
