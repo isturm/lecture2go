@@ -26,7 +26,6 @@
 	    	var inputField = '#<portlet:namespace/>findVideos';
 	    	console.log(inputField);
 	        autoCompleteList = new A.AutoCompleteList({
-	            activateFirstItem: 'true',
 	            inputNode: inputField,
 	            resultTextLocator: 'word',
 	            render: 'true',
