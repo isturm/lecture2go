@@ -39,7 +39,7 @@
 	            	A.io.request(searchURL.toString(), {
 	            		dataType: 'json',
 	        	        method: 'POST',
-	        	        sync: true,
+	        	        sync: false,
 	        	        on: {
 		                    success:function(){
 		                       callback(this.get('responseData'));

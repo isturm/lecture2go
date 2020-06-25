@@ -26,11 +26,18 @@ import de.uhh.l2g.plugins.util.SearchManager;
  * @author isturm
  */
 
-@Component(immediate = true, property = { "com.liferay.portlet.display-category=lecture2go.plugins",
-		"com.liferay.portlet.instanceable=true", "javax.portlet.display-name=Autocomplete Search",
-		"javax.portlet.init-param.template-path=/", "javax.portlet.init-param.view-template=/view.jsp",
-		"javax.portlet.name=" + AutocompleteSearchPortletKeys.AUTOCOMPLETE_SEARCH,
-		"javax.portlet.security-role-ref=power-user,user" }, service = Portlet.class)
+@Component(
+		immediate = true, 
+		property = { 
+				"com.liferay.portlet.display-category=lecture2go.plugins",
+				"com.liferay.portlet.instanceable=true", 
+				"javax.portlet.display-name=Autocomplete Search",
+				"javax.portlet.init-param.template-path=/", 
+				"javax.portlet.init-param.view-template=/view.jsp",
+				"javax.portlet.name=" + AutocompleteSearchPortletKeys.AUTOCOMPLETE_SEARCH,
+				"javax.portlet.security-role-ref=power-user,user" 
+		}, 
+		service = Portlet.class)
 public class AutocompleteSearchPortlet extends MVCPortlet {
 	private static final Log _log = LogFactoryUtil.getLog(AutocompleteSearchPortlet.class);
 
