@@ -199,7 +199,7 @@ public interface CreatorLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Creator getById(Long creatorId)
-			throws NoSuchModelException, SystemException;
+		throws NoSuchModelException, SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Creator> getByJobTitleFirstNameMiddleNameLastNameFullName(

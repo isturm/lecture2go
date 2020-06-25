@@ -12,6 +12,7 @@
 <jsp:useBean id="hasTermFiltered" type="java.lang.Boolean" scope="request"/>
 <jsp:useBean id="hasCreatorFiltered" type="java.lang.Boolean" scope="request"/>
 <jsp:useBean id="hasCategoryFiltered" type="java.lang.Boolean" scope="request"/>
+<jsp:useBean id="hasMediaTypeFiltered" type="java.lang.Boolean" scope="request"/>
 <jsp:useBean id="isSearched" type="java.lang.Boolean" scope="request"/>
 <jsp:useBean id="videoList" type="java.util.List<VideoListSearchResult>" scope="request"/>
 <jsp:useBean id="lectureseriesIds" type="java.util.ArrayList<Long>" scope="request"/>
@@ -22,6 +23,7 @@
 <jsp:useBean id="presentTerms" type="java.util.List<Term>" scope="request"/>
 <jsp:useBean id="creatorsSplitAlphabetically" type="java.util.Map<java.lang.Character, java.util.List<Creator>>" scope="request"/>
 <jsp:useBean id="presentCategories" type="java.util.List<Category>" scope="request"/>
+<jsp:useBean id="presentMediaTypes" type="java.util.List<de.uhh.l2g.plugins.model.MediaType>" scope="request"/>
 
 <jsp:useBean id="portletURL" type="javax.portlet.PortletURL" scope="request"/>
 <jsp:useBean id="resultSetEmpty" type="java.lang.Boolean" scope="request"/>
@@ -42,6 +44,7 @@
     pageContext.setAttribute("hasTermFiltered", hasTermFiltered);
     pageContext.setAttribute("hasCreatorFiltered", hasCreatorFiltered);
     pageContext.setAttribute("hasCategoryFiltered", hasCategoryFiltered);
+    pageContext.setAttribute("hasMediaTypeFiltered", hasMediaTypeFiltered);
     pageContext.setAttribute("hasManyTerms", presentTerms.size() > maxTerms);
 %>
 
@@ -52,13 +55,14 @@
     <portlet:param name="termId" value="0"/>
     <portlet:param name="categoryId" value="0"/>
     <portlet:param name="creatorId" value="0"/>
+    <portlet:param name="mediaTypeId" value="0"/>
 </portlet:renderURL>
 
 <div class="path-wide">
-	<a href="${portalURL}" class="breadcrumb-item">${company.name}</a>
-	<span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-	<a href="${backURL0}" class="breadcrumb-item">${pageName}</a>
-	<span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+    <a href="${portalURL}" class="breadcrumb-item">${company.name}</a>
+    <span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+    <a href="${backURL0}" class="breadcrumb-item">${pageName}</a>
+    <span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
 
     <c:if test="${rInst.name.length()>0}">
         <A HREF="${backURL0}" class="breadcrumb-item">${rInst.name}</A>
@@ -72,6 +76,7 @@
             <portlet:param name="termId" value="0"/>
             <portlet:param name="categoryId" value="0"/>
             <portlet:param name="creatorId" value="0"/>
+            <portlet:param name="mediaTypeId" value="0"/>
         </portlet:renderURL>
         <span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
         <A HREF="${backURL1}" class="breadcrumb-item">${pInst.name}</A>
@@ -85,6 +90,7 @@
             <portlet:param name="termId" value="0"/>
             <portlet:param name="categoryId" value="0"/>
             <portlet:param name="creatorId" value="0"/>
+            <portlet:param name="mediaTypeId" value="0"/>
         </portlet:renderURL>
         <span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
         <A HREF="${backURL2}" class="breadcrumb-item">${insti.name}</A>
@@ -111,15 +117,16 @@
                                     <portlet:param name="termId" value="${termId}"/>
                                     <portlet:param name="categoryId" value="${categoryId}"/>
                                     <portlet:param name="creatorId" value="${creatorId}"/>
+                                    <portlet:param name="mediaTypeId" value="${mediaTypeId}"/>
                                     <portlet:param name="findVideos" value="${findVideos}"/>
                                 </portlet:renderURL>
                                 <li class="filter-menu">
-                                	<a href="${filterByParentInstitution}" class="row">
-                                    	<div class="filter-menu-link">
-                                    		${parentInstitution.name}
-                                    	</div>
-                                    	<div class="autofit-col-expand"></div>
-                                    	<span ${hasParentInstitutionFiltered ? 'class="icon-large icon-remove"' : ''}></span>
+                                    <a href="${filterByParentInstitution}" class="row">
+                                        <div class="filter-menu-link">
+                                                ${parentInstitution.name}
+                                        </div>
+                                        <div class="autofit-col-expand"></div>
+                                        <span ${hasParentInstitutionFiltered ? 'class="icon-large icon-remove"' : ''}></span>
                                     </a>
                                 </li>
                             </c:forEach>
@@ -145,12 +152,12 @@
                                         <portlet:param name="findVideos" value="${findVideos}"/>
                                     </portlet:renderURL>
                                     <li class="filter-menu">
-                                    	<a href="${filterByInstitution}" class="row">
-                                        	<div class="filter-menu-link">
-                                            	${institution.name}
-                                        	</div>
-                                        	<div class="autofit-col-expand"></div>
-                                        	<span ${hasInstitutionFiltered ? 'class="icon-large icon-remove"' : ''}></span>
+                                        <a href="${filterByInstitution}" class="row">
+                                            <div class="filter-menu-link">
+                                                    ${institution.name}
+                                            </div>
+                                            <div class="autofit-col-expand"></div>
+                                            <span ${hasInstitutionFiltered ? 'class="icon-large icon-remove"' : ''}></span>
                                         </a>
                                     </li>
                                 </c:forEach>
@@ -172,23 +179,24 @@
                                     <portlet:param name="termId" value='${hasTermFiltered ? "0" : term.termId}'/>
                                     <portlet:param name="categoryId" value="${categoryId}"/>
                                     <portlet:param name="creatorId" value="${creatorId}"/>
+                                    <portlet:param name="mediaTypeId" value="${mediaTypeId}"/>
                                     <portlet:param name="findVideos" value="${findVideos}"/>
                                 </portlet:renderURL>
                                 <li class="filter-menu">
-                                	<a href="${filterByTerm}" class="row">
-                                    	<div class="filter-menu-link">
-                                    		${term.termName}
-                                    	</div>
-                                    	<div class="autofit-col-expand"></div>
-                                    	<span ${hasTermFiltered ? 'class="icon-large icon-remove"' : ''}></span>
+                                    <a href="${filterByTerm}" class="row">
+                                        <div class="filter-menu-link">
+                                                ${term.termName}
+                                        </div>
+                                        <div class="autofit-col-expand"></div>
+                                        <span ${hasTermFiltered ? 'class="icon-large icon-remove"' : ''}></span>
                                     </a>
-									<c:choose>
-										<c:when test="${term.termName==''}">
-											<liferay-ui:message key="no-term"/>
-										</c:when>
-										<c:otherwise>
-										</c:otherwise>
-									</c:choose>
+                                    <c:choose>
+                                        <c:when test="${term.termName==''}">
+                                            <liferay-ui:message key="no-term"/>
+                                        </c:when>
+                                        <c:otherwise>
+                                        </c:otherwise>
+                                    </c:choose>
                                 </li>
                             </c:forEach>
                         </ul>
@@ -212,15 +220,16 @@
                                     <portlet:param name="categoryId"
                                                    value='${hasCategoryFiltered ? "0" : category.categoryId}'/>
                                     <portlet:param name="creatorId" value="${creatorId}"/>
+                                    <portlet:param name="mediaTypeId" value="${mediaTypeId}"/>
                                     <portlet:param name="findVideos" value="${findVideos}"/>
                                 </portlet:renderURL>
                                 <li class="filter-menu">
-                                	<a href="${filterByCategory}" class="row">
-                                    	<div class="filter-menu-link">
-                                    		${category.name}
-                                    	</div>
-                                    	<div class="autofit-col-expand"></div>
-                                    	<span ${hasCategoryFiltered ? 'class="icon-large icon-remove"' : ''}></span>
+                                    <a href="${filterByCategory}" class="row">
+                                        <div class="filter-menu-link">
+                                                ${category.name}
+                                        </div>
+                                        <div class="autofit-col-expand"></div>
+                                        <span ${hasCategoryFiltered ? 'class="icon-large icon-remove"' : ''}></span>
                                     </a>
                                 </li>
                             </c:forEach>
@@ -240,6 +249,7 @@
                                 <portlet:param name="termId" value='${termId}'/>
                                 <portlet:param name="categoryId" value="${categoryId}"/>
                                 <portlet:param name="creatorId" value='${creatorId}'/>
+                                <portlet:param name="mediaTypeId" value="${mediaTypeId}"/>
                                 <portlet:param name="findVideos" value="${findVideos}"/>
                             </portlet:renderURL>
                             <c:if test="${creatorsSplitAlphabetically.get(character).size() == 0}">
@@ -258,6 +268,7 @@
                             <portlet:param name="termId" value='${termId}'/>
                             <portlet:param name="categoryId" value="${categoryId}"/>
                             <portlet:param name="creatorId" value='${creatorId}'/>
+                            <portlet:param name="mediaTypeId" value="${mediaTypeId}"/>
                             <portlet:param name="findVideos" value="${findVideos}"/>
                         </portlet:renderURL>
                         <a data-character="*" class="selectCreatorCharacter selected">
@@ -276,6 +287,7 @@
                                         <portlet:param name="termId" value='${termId}'/>
                                         <portlet:param name="categoryId" value="${categoryId}"/>
                                         <portlet:param name="creatorId" value='${hasCreatorFiltered ? "0" : creator.creatorId}'/>
+                                        <portlet:param name="mediaTypeId" value="${mediaTypeId}"/>
                                         <portlet:param name="findVideos" value="${findVideos}"/>
                                     </portlet:renderURL>
                                     <li class="videoIds">
@@ -319,6 +331,39 @@
                         <liferay-ui:message key="more"/>
                     </a>
                 </liferay-ui:panel>
+
+                <!-- media type filter -->
+                <c:if test="${presentMediaTypes.size()>0}">
+                    <liferay-ui:panel defaultState='${hasMediaTypeFiltered ? "open" : "collapsed"}' extended="true" title="media-types"
+                                      cssClass='${hasMediaTypeFiltered ? "filtered" : "notFiltered"}'>
+
+                        <div class="media-types">
+                            <ul class="colored-bullets">
+                                <c:forEach items="${presentMediaTypes}" var="mediaType">
+                                    <portlet:renderURL var="filterByMediaType">
+                                        <portlet:param name="mvcRenderCommandName" value="/view/render/list"/>
+                                        <portlet:param name="institutionId" value="${institutionId}"/>
+                                        <portlet:param name="parentInstitutionId" value="${parentInstitutionId}"/>
+                                        <portlet:param name="termId" value='${termId}'/>
+                                        <portlet:param name="categoryId" value="${categoryId}"/>
+                                        <portlet:param name="creatorId" value='${creatorId}'/>
+                                        <portlet:param name="mediaTypeId" value='${hasMediaTypeFiltered ? "0" : mediaType.mediaTypeId}'/>
+                                        <portlet:param name="findVideos" value="${findVideos}"/>
+                                    </portlet:renderURL>
+                                    <li class="videoIds">
+                                        <a href="${filterByMediaType}" class="row">
+                                            <div class="filter-menu-link">
+                                                    ${mediaType.mediaTypeName}
+                                            </div>
+                                            <div class="autofit-col-expand"></div>
+                                            <span ${hasMediaTypeFiltered ? 'class="icon-large icon-remove"' : ''}></span>
+                                        </a>
+                                    </li>
+                                </c:forEach>
+                            </ul>
+                        </div>
+                    </liferay-ui:panel>
+                </c:if>
             </liferay-ui:panel-container>
             <!-- span3 -->
         </div>

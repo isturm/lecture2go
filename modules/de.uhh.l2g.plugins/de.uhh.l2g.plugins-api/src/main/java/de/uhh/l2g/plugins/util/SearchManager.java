@@ -88,6 +88,9 @@ public class SearchManager {
 			if (document.hasField("categoryId")) {
 				searchResult.setCategoryId(Long.parseLong(document.getField("categoryId").getValue()));
 			}
+			if (document.hasField("mediaTypeId")) {
+				searchResult.setCategoryId(Long.parseLong(document.getField("mediaTypeId").getValue()));
+			}
 			if (document.hasField("name")) {
 				searchResult.setName(document.getField("name").getValue());
 			}

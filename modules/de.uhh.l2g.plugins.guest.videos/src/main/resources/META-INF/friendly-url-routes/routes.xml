@@ -11,11 +11,11 @@
 		<implicit-parameter name="mvcRenderCommandName">/view/render/details</implicit-parameter>
     </route>
     <route>
-        <pattern>/{institutionId}/{parentInstitutionId}/{categoryId}/{creatorId}/{termId}/{findVideos}</pattern>
+        <pattern>/{institutionId}/{parentInstitutionId}/{categoryId}/{creatorId}/{termId}/{mediaTypeId}/{findVideos}</pattern>
 		<implicit-parameter name="mvcRenderCommandName">/view/render/list</implicit-parameter>
     </route>
     <route>
-        <pattern>/{institutionId}/{parentInstitutionId}/{categoryId}/{creatorId}/{termId}</pattern>
+        <pattern>/{institutionId}/{parentInstitutionId}/{categoryId}/{creatorId}/{mediaTypeId}/{termId}</pattern>
 		<implicit-parameter name="mvcRenderCommandName">/view/render/list</implicit-parameter>
     </route>
 </routes>

@@ -35,6 +35,8 @@
 	<bean class="de.uhh.l2g.plugins.service.persistence.impl.Lectureseries_InstitutionPersistenceImpl" id="de.uhh.l2g.plugins.service.persistence.Lectureseries_InstitutionPersistence" />
 	<bean class="de.uhh.l2g.plugins.service.impl.LicenseLocalServiceImpl" id="de.uhh.l2g.plugins.service.LicenseLocalService" />
 	<bean class="de.uhh.l2g.plugins.service.persistence.impl.LicensePersistenceImpl" id="de.uhh.l2g.plugins.service.persistence.LicensePersistence" />
+	<bean class="de.uhh.l2g.plugins.service.impl.MediaTypeLocalServiceImpl" id="de.uhh.l2g.plugins.service.MediaTypeLocalService" />
+	<bean class="de.uhh.l2g.plugins.service.persistence.impl.MediaTypePersistenceImpl" id="de.uhh.l2g.plugins.service.persistence.MediaTypePersistence" />
 	<bean class="de.uhh.l2g.plugins.service.impl.MetadataLocalServiceImpl" id="de.uhh.l2g.plugins.service.MetadataLocalService" />
 	<bean class="de.uhh.l2g.plugins.service.persistence.impl.MetadataPersistenceImpl" id="de.uhh.l2g.plugins.service.persistence.MetadataPersistence" />
 	<bean class="de.uhh.l2g.plugins.service.impl.OfficeLocalServiceImpl" id="de.uhh.l2g.plugins.service.OfficeLocalService" />
@@ -67,6 +69,8 @@
 	<bean class="de.uhh.l2g.plugins.service.persistence.impl.Video_CreatorPersistenceImpl" id="de.uhh.l2g.plugins.service.persistence.Video_CreatorPersistence" />
 	<bean class="de.uhh.l2g.plugins.service.impl.Video_InstitutionLocalServiceImpl" id="de.uhh.l2g.plugins.service.Video_InstitutionLocalService" />
 	<bean class="de.uhh.l2g.plugins.service.persistence.impl.Video_InstitutionPersistenceImpl" id="de.uhh.l2g.plugins.service.persistence.Video_InstitutionPersistence" />
+	<bean class="de.uhh.l2g.plugins.service.impl.Video_MediaTypeLocalServiceImpl" id="de.uhh.l2g.plugins.service.Video_MediaTypeLocalService" />
+	<bean class="de.uhh.l2g.plugins.service.persistence.impl.Video_MediaTypePersistenceImpl" id="de.uhh.l2g.plugins.service.persistence.Video_MediaTypePersistence" />
 	<bean class="de.uhh.l2g.plugins.service.impl.VideohitlistLocalServiceImpl" id="de.uhh.l2g.plugins.service.VideohitlistLocalService" />
 	<bean class="de.uhh.l2g.plugins.service.persistence.impl.VideohitlistPersistenceImpl" id="de.uhh.l2g.plugins.service.persistence.VideohitlistPersistence" />
 </beans>

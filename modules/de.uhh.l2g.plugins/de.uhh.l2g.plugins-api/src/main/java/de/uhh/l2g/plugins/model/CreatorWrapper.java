@@ -173,6 +173,11 @@ public class CreatorWrapper
 		return model.getCreatorId();
 	}
 
+	@Override
+	public String getCreatorName() {
+		return model.getCreatorName();
+	}
+
 	/**
 	 * Returns the first name of this creator.
 	 *

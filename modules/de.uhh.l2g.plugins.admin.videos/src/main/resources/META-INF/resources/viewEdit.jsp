@@ -17,6 +17,7 @@
 <jsp:useBean id="remoteUser" type="com.liferay.portal.kernel.model.User" scope="request"/>
 <jsp:useBean id="allCreatorsJSON" type="com.liferay.portal.kernel.json.JSONArray" scope="request"/>
 <jsp:useBean id="terms" type="java.util.List<de.uhh.l2g.plugins.model.Term>" scope="request"/>
+<jsp:useBean id="mediaTypes" type="java.util.List<de.uhh.l2g.plugins.model.MediaType>" scope="request"/>
 <jsp:useBean id="categories" type="java.util.List<de.uhh.l2g.plugins.model.Category>" scope="request"/>
 <jsp:useBean id="uploadRepository" type="java.lang.String" scope="request"/>
 <jsp:useBean id="backURL" type="java.lang.String" scope="request"/>
@@ -180,8 +181,15 @@
 	                                    value='${item.termId}'>${item.prefix} &nbsp; ${item.year}</aui:option>
 	                        </c:forEach>
 	                    </aui:select>
-	
-	                    <aui:select size="1" id="categoryId" name="categoryId" label="category" required="true">
+
+						<aui:select size="1" id="mediaTypeId" name="mediaTypeId" label="mediaType" required="true">
+							<c:forEach items="${mediaTypes}" var="item">
+								<aui:option
+										value='${item.mediaTypeId}'>${item.mediaTypeName}</aui:option>
+							</c:forEach>
+						</aui:select>
+
+						<aui:select size="1" id="categoryId" name="categoryId" label="category" required="true">
 	                        <c:forEach items="${categories}" var="item">
 	                            <aui:option value='${item.categoryId}'>${item.name}</aui:option>
 	                        </c:forEach>
@@ -583,6 +591,7 @@
         var jsonSubInstitutionsArray = JSON.stringify(getJsonSubInstitutionsArray());
         var termId = 0;
         var categoryId = 0;
+        var mediaTypeId = 0;
         var chebox;
         //
         $('#<portlet:namespace/>citationAllowedCheckbox').prop("checked") ? chebox = 1 : chebox = 0;
@@ -590,6 +599,7 @@
         if (!$("#options").is(':hidden')) {
             termId = $('#<portlet:namespace/>termId').val();
             categoryId = $('#<portlet:namespace/>categoryId').val();
+            mediaTypeId = $('#<portlet:namespace/>mediaTypeId').val();
         }
         //action
         $.ajax({
@@ -611,6 +621,7 @@
                 "<portlet:namespace/>datetimepicker": $('#<portlet:namespace/>datetimepicker').val(),
                 "<portlet:namespace/>citationAllowedCheckbox": chebox,
                 "<portlet:namespace/>categoryId": categoryId,
+                "<portlet:namespace/>mediaTypeId": mediaTypeId,
                 "<portlet:namespace/>termId": termId,
                 "<portlet:namespace/>password": $('#<portlet:namespace/>password').val()
                 //metadata end

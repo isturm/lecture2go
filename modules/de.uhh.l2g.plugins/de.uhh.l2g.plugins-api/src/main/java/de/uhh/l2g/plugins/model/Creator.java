@@ -56,4 +56,6 @@ public interface Creator extends CreatorModel, PersistedModel {
 
 		};
 
+	public String getCreatorName();
+
 }

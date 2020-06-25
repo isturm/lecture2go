@@ -135,6 +135,16 @@
 		<field name="selectable" type="boolean" />
 		<field name="description" type="String" />
 	</model>
+	<model name="de.uhh.l2g.plugins.model.MediaType">
+		<field name="mediaTypeId" type="long" />
+		<field name="mediaTypeName" type="String" />
+		<field name="groupId" type="long" />
+		<field name="companyId" type="long" />
+		<field name="userId" type="long" />
+		<field name="userName" type="String" />
+		<field name="createDate" type="Date" />
+		<field name="modifiedDate" type="Date" />
+	</model>
 	<model name="de.uhh.l2g.plugins.model.Metadata">
 		<field name="metadataId" type="long" />
 		<field name="type" type="String" />
@@ -299,6 +309,11 @@
 		<field name="videoId" type="long" />
 		<field name="institutionId" type="long" />
 		<field name="institutionParentId" type="long" />
+	</model>
+	<model name="de.uhh.l2g.plugins.model.Video_MediaType">
+		<field name="videoMediaTypeId" type="long" />
+		<field name="videoId" type="long" />
+		<field name="MediaTypeId" type="long" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Videohitlist">
 		<field name="videohitlistId" type="long" />
