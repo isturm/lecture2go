@@ -18,6 +18,7 @@ import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
+import de.uhh.l2g.plugins.service.*;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -28,11 +29,6 @@ import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.model.MediaType;
 import de.uhh.l2g.plugins.model.Term;
 import de.uhh.l2g.plugins.model.VideoListSearchResult;
-import de.uhh.l2g.plugins.service.CategoryLocalServiceUtil;
-import de.uhh.l2g.plugins.service.CreatorLocalServiceUtil;
-import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
-import de.uhh.l2g.plugins.service.MediaTypeLocalServiceUtil;
-import de.uhh.l2g.plugins.service.TermLocalServiceUtil;
 import de.uhh.l2g.plugins.util.SearchManager;
 
 @Component(immediate = true, property = { "javax.portlet.name=" + OpenAccessVideosPortletKeys.OPEN_ACCESS_VIDEOS,
@@ -152,7 +148,16 @@ public class ViewRenderList implements MVCRenderCommand {
 				_log.error("can't add media type id " + mediaTypeId);
 			}
 		} else {
-			presentMediaTypes.addAll(MediaTypeLocalServiceUtil.getMediaTypesFromVideoIds(videoIds));
+			ArrayList<Long> allVideoIds = new ArrayList<>();
+
+			lectureseriesIds.forEach(lectureseriesId -> {
+				VideoLocalServiceUtil.getByLectureseries(lectureseriesId).forEach(video -> {
+					allVideoIds.add(video.getVideoId());
+				});
+			});
+
+			allVideoIds.addAll(videoIds);
+			presentMediaTypes.addAll(MediaTypeLocalServiceUtil.getMediaTypesFromVideoIds(allVideoIds));
 		}
 
 		/*
