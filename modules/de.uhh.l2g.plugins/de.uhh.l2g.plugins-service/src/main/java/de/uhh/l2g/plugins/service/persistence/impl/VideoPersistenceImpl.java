@@ -28,9 +28,11 @@ import com.liferay.portal.kernel.security.auth.CompanyThreadLocal;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.ServiceContextThreadLocal;
 import com.liferay.portal.kernel.service.persistence.impl.BasePersistenceImpl;
+import com.liferay.portal.kernel.util.ArrayUtil;
 import com.liferay.portal.kernel.util.OrderByComparator;
 import com.liferay.portal.kernel.util.ProxyUtil;
 import com.liferay.portal.kernel.util.SetUtil;
+import com.liferay.portal.kernel.util.StringUtil;
 import com.liferay.portal.spring.extender.service.ServiceReference;
 
 import de.uhh.l2g.plugins.exception.NoSuchVideoException;
@@ -86,6 +88,612 @@ public class VideoPersistenceImpl
 	private FinderPath _finderPathWithPaginationFindAll;
 	private FinderPath _finderPathWithoutPaginationFindAll;
 	private FinderPath _finderPathCountAll;
+	private FinderPath _finderPathWithPaginationFindByVideoIds;
+	private FinderPath _finderPathWithoutPaginationFindByVideoIds;
+	private FinderPath _finderPathCountByVideoIds;
+	private FinderPath _finderPathWithPaginationCountByVideoIds;
+
+	/**
+	 * Returns all the videos where videoId = &#63;.
+	 *
+	 * @param videoId the video ID
+	 * @return the matching videos
+	 */
+	@Override
+	public List<Video> findByVideoIds(long videoId) {
+		return findByVideoIds(
+			videoId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the videos where videoId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>VideoModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param videoId the video ID
+	 * @param start the lower bound of the range of videos
+	 * @param end the upper bound of the range of videos (not inclusive)
+	 * @return the range of matching videos
+	 */
+	@Override
+	public List<Video> findByVideoIds(long videoId, int start, int end) {
+		return findByVideoIds(videoId, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the videos where videoId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>VideoModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByVideoIds(long, int, int, OrderByComparator)}
+	 * @param videoId the video ID
+	 * @param start the lower bound of the range of videos
+	 * @param end the upper bound of the range of videos (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching videos
+	 */
+	@Deprecated
+	@Override
+	public List<Video> findByVideoIds(
+		long videoId, int start, int end,
+		OrderByComparator<Video> orderByComparator, boolean useFinderCache) {
+
+		return findByVideoIds(videoId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the videos where videoId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>VideoModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param videoId the video ID
+	 * @param start the lower bound of the range of videos
+	 * @param end the upper bound of the range of videos (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching videos
+	 */
+	@Override
+	public List<Video> findByVideoIds(
+		long videoId, int start, int end,
+		OrderByComparator<Video> orderByComparator) {
+
+		boolean pagination = true;
+		FinderPath finderPath = null;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			pagination = false;
+			finderPath = _finderPathWithoutPaginationFindByVideoIds;
+			finderArgs = new Object[] {videoId};
+		}
+		else {
+			finderPath = _finderPathWithPaginationFindByVideoIds;
+			finderArgs = new Object[] {videoId, start, end, orderByComparator};
+		}
+
+		List<Video> list = (List<Video>)finderCache.getResult(
+			finderPath, finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (Video video : list) {
+				if ((videoId != video.getVideoId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = null;
+
+			if (orderByComparator != null) {
+				query = new StringBundler(
+					3 + (orderByComparator.getOrderByFields().length * 2));
+			}
+			else {
+				query = new StringBundler(3);
+			}
+
+			query.append(_SQL_SELECT_VIDEO_WHERE);
+
+			query.append(_FINDER_COLUMN_VIDEOIDS_VIDEOID_2);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else if (pagination) {
+				query.append(VideoModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(videoId);
+
+				if (!pagination) {
+					list = (List<Video>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<Video>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(finderPath, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Returns the first video in the ordered set where videoId = &#63;.
+	 *
+	 * @param videoId the video ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching video
+	 * @throws NoSuchVideoException if a matching video could not be found
+	 */
+	@Override
+	public Video findByVideoIds_First(
+			long videoId, OrderByComparator<Video> orderByComparator)
+		throws NoSuchVideoException {
+
+		Video video = fetchByVideoIds_First(videoId, orderByComparator);
+
+		if (video != null) {
+			return video;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("videoId=");
+		msg.append(videoId);
+
+		msg.append("}");
+
+		throw new NoSuchVideoException(msg.toString());
+	}
+
+	/**
+	 * Returns the first video in the ordered set where videoId = &#63;.
+	 *
+	 * @param videoId the video ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching video, or <code>null</code> if a matching video could not be found
+	 */
+	@Override
+	public Video fetchByVideoIds_First(
+		long videoId, OrderByComparator<Video> orderByComparator) {
+
+		List<Video> list = findByVideoIds(videoId, 0, 1, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns the last video in the ordered set where videoId = &#63;.
+	 *
+	 * @param videoId the video ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching video
+	 * @throws NoSuchVideoException if a matching video could not be found
+	 */
+	@Override
+	public Video findByVideoIds_Last(
+			long videoId, OrderByComparator<Video> orderByComparator)
+		throws NoSuchVideoException {
+
+		Video video = fetchByVideoIds_Last(videoId, orderByComparator);
+
+		if (video != null) {
+			return video;
+		}
+
+		StringBundler msg = new StringBundler(4);
+
+		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+
+		msg.append("videoId=");
+		msg.append(videoId);
+
+		msg.append("}");
+
+		throw new NoSuchVideoException(msg.toString());
+	}
+
+	/**
+	 * Returns the last video in the ordered set where videoId = &#63;.
+	 *
+	 * @param videoId the video ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching video, or <code>null</code> if a matching video could not be found
+	 */
+	@Override
+	public Video fetchByVideoIds_Last(
+		long videoId, OrderByComparator<Video> orderByComparator) {
+
+		int count = countByVideoIds(videoId);
+
+		if (count == 0) {
+			return null;
+		}
+
+		List<Video> list = findByVideoIds(
+			videoId, count - 1, count, orderByComparator);
+
+		if (!list.isEmpty()) {
+			return list.get(0);
+		}
+
+		return null;
+	}
+
+	/**
+	 * Returns all the videos where videoId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>VideoModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param videoIds the video IDs
+	 * @return the matching videos
+	 */
+	@Override
+	public List<Video> findByVideoIds(long[] videoIds) {
+		return findByVideoIds(
+			videoIds, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null);
+	}
+
+	/**
+	 * Returns a range of all the videos where videoId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>VideoModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param videoIds the video IDs
+	 * @param start the lower bound of the range of videos
+	 * @param end the upper bound of the range of videos (not inclusive)
+	 * @return the range of matching videos
+	 */
+	@Override
+	public List<Video> findByVideoIds(long[] videoIds, int start, int end) {
+		return findByVideoIds(videoIds, start, end, null);
+	}
+
+	/**
+	 * Returns an ordered range of all the videos where videoId = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>VideoModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByVideoIds(long, int, int, OrderByComparator)}
+	 * @param videoId the video ID
+	 * @param start the lower bound of the range of videos
+	 * @param end the upper bound of the range of videos (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching videos
+	 */
+	@Deprecated
+	@Override
+	public List<Video> findByVideoIds(
+		long[] videoIds, int start, int end,
+		OrderByComparator<Video> orderByComparator, boolean useFinderCache) {
+
+		return findByVideoIds(videoIds, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns an ordered range of all the videos where videoId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>VideoModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param videoIds the video IDs
+	 * @param start the lower bound of the range of videos
+	 * @param end the upper bound of the range of videos (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching videos
+	 */
+	@Override
+	public List<Video> findByVideoIds(
+		long[] videoIds, int start, int end,
+		OrderByComparator<Video> orderByComparator) {
+
+		if (videoIds == null) {
+			videoIds = new long[0];
+		}
+		else if (videoIds.length > 1) {
+			videoIds = ArrayUtil.unique(videoIds);
+		}
+
+		if (videoIds.length == 1) {
+			return findByVideoIds(videoIds[0], start, end, orderByComparator);
+		}
+
+		boolean pagination = true;
+		Object[] finderArgs = null;
+
+		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
+			(orderByComparator == null)) {
+
+			pagination = false;
+			finderArgs = new Object[] {StringUtil.merge(videoIds)};
+		}
+		else {
+			finderArgs = new Object[] {
+				StringUtil.merge(videoIds), start, end, orderByComparator
+			};
+		}
+
+		List<Video> list = (List<Video>)finderCache.getResult(
+			_finderPathWithPaginationFindByVideoIds, finderArgs, this);
+
+		if ((list != null) && !list.isEmpty()) {
+			for (Video video : list) {
+				if (!ArrayUtil.contains(videoIds, video.getVideoId())) {
+					list = null;
+
+					break;
+				}
+			}
+		}
+
+		if (list == null) {
+			StringBundler query = new StringBundler();
+
+			query.append(_SQL_SELECT_VIDEO_WHERE);
+
+			if (videoIds.length > 0) {
+				query.append("(");
+
+				query.append(_FINDER_COLUMN_VIDEOIDS_VIDEOID_7);
+
+				query.append(StringUtil.merge(videoIds));
+
+				query.append(")");
+
+				query.append(")");
+			}
+
+			query.setStringAt(
+				removeConjunction(query.stringAt(query.index() - 1)),
+				query.index() - 1);
+
+			if (orderByComparator != null) {
+				appendOrderByComparator(
+					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+			}
+			else if (pagination) {
+				query.append(VideoModelImpl.ORDER_BY_JPQL);
+			}
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				if (!pagination) {
+					list = (List<Video>)QueryUtil.list(
+						q, getDialect(), start, end, false);
+
+					Collections.sort(list);
+
+					list = Collections.unmodifiableList(list);
+				}
+				else {
+					list = (List<Video>)QueryUtil.list(
+						q, getDialect(), start, end);
+				}
+
+				cacheResult(list);
+
+				finderCache.putResult(
+					_finderPathWithPaginationFindByVideoIds, finderArgs, list);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(
+					_finderPathWithPaginationFindByVideoIds, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return list;
+	}
+
+	/**
+	 * Removes all the videos where videoId = &#63; from the database.
+	 *
+	 * @param videoId the video ID
+	 */
+	@Override
+	public void removeByVideoIds(long videoId) {
+		for (Video video :
+				findByVideoIds(
+					videoId, QueryUtil.ALL_POS, QueryUtil.ALL_POS, null)) {
+
+			remove(video);
+		}
+	}
+
+	/**
+	 * Returns the number of videos where videoId = &#63;.
+	 *
+	 * @param videoId the video ID
+	 * @return the number of matching videos
+	 */
+	@Override
+	public int countByVideoIds(long videoId) {
+		FinderPath finderPath = _finderPathCountByVideoIds;
+
+		Object[] finderArgs = new Object[] {videoId};
+
+		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler(2);
+
+			query.append(_SQL_COUNT_VIDEO_WHERE);
+
+			query.append(_FINDER_COLUMN_VIDEOIDS_VIDEOID_2);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				QueryPos qPos = QueryPos.getInstance(q);
+
+				qPos.add(videoId);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(finderPath, finderArgs, count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(finderPath, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	/**
+	 * Returns the number of videos where videoId = any &#63;.
+	 *
+	 * @param videoIds the video IDs
+	 * @return the number of matching videos
+	 */
+	@Override
+	public int countByVideoIds(long[] videoIds) {
+		if (videoIds == null) {
+			videoIds = new long[0];
+		}
+		else if (videoIds.length > 1) {
+			videoIds = ArrayUtil.unique(videoIds);
+		}
+
+		Object[] finderArgs = new Object[] {StringUtil.merge(videoIds)};
+
+		Long count = (Long)finderCache.getResult(
+			_finderPathWithPaginationCountByVideoIds, finderArgs, this);
+
+		if (count == null) {
+			StringBundler query = new StringBundler();
+
+			query.append(_SQL_COUNT_VIDEO_WHERE);
+
+			if (videoIds.length > 0) {
+				query.append("(");
+
+				query.append(_FINDER_COLUMN_VIDEOIDS_VIDEOID_7);
+
+				query.append(StringUtil.merge(videoIds));
+
+				query.append(")");
+
+				query.append(")");
+			}
+
+			query.setStringAt(
+				removeConjunction(query.stringAt(query.index() - 1)),
+				query.index() - 1);
+
+			String sql = query.toString();
+
+			Session session = null;
+
+			try {
+				session = openSession();
+
+				Query q = session.createQuery(sql);
+
+				count = (Long)q.uniqueResult();
+
+				finderCache.putResult(
+					_finderPathWithPaginationCountByVideoIds, finderArgs,
+					count);
+			}
+			catch (Exception e) {
+				finderCache.removeResult(
+					_finderPathWithPaginationCountByVideoIds, finderArgs);
+
+				throw processException(e);
+			}
+			finally {
+				closeSession(session);
+			}
+		}
+
+		return count.intValue();
+	}
+
+	private static final String _FINDER_COLUMN_VIDEOIDS_VIDEOID_2 =
+		"video.videoId = ?";
+
+	private static final String _FINDER_COLUMN_VIDEOIDS_VIDEOID_7 =
+		"video.videoId IN (";
+
 	private FinderPath _finderPathWithPaginationFindByProducer;
 	private FinderPath _finderPathWithoutPaginationFindByProducer;
 	private FinderPath _finderPathCountByProducer;
@@ -7178,7 +7786,13 @@ public class VideoPersistenceImpl
 			finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
 		}
 		else if (isNew) {
-			Object[] args = new Object[] {videoModelImpl.getProducerId()};
+			Object[] args = new Object[] {videoModelImpl.getVideoId()};
+
+			finderCache.removeResult(_finderPathCountByVideoIds, args);
+			finderCache.removeResult(
+				_finderPathWithoutPaginationFindByVideoIds, args);
+
+			args = new Object[] {videoModelImpl.getProducerId()};
 
 			finderCache.removeResult(_finderPathCountByProducer, args);
 			finderCache.removeResult(
@@ -7277,6 +7891,25 @@ public class VideoPersistenceImpl
 				_finderPathWithoutPaginationFindAll, FINDER_ARGS_EMPTY);
 		}
 		else {
+			if ((videoModelImpl.getColumnBitmask() &
+				 _finderPathWithoutPaginationFindByVideoIds.
+					 getColumnBitmask()) != 0) {
+
+				Object[] args = new Object[] {
+					videoModelImpl.getOriginalVideoId()
+				};
+
+				finderCache.removeResult(_finderPathCountByVideoIds, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByVideoIds, args);
+
+				args = new Object[] {videoModelImpl.getVideoId()};
+
+				finderCache.removeResult(_finderPathCountByVideoIds, args);
+				finderCache.removeResult(
+					_finderPathWithoutPaginationFindByVideoIds, args);
+			}
+
 			if ((videoModelImpl.getColumnBitmask() &
 				 _finderPathWithoutPaginationFindByProducer.
 					 getColumnBitmask()) != 0) {
@@ -7849,6 +8482,35 @@ public class VideoPersistenceImpl
 			VideoModelImpl.FINDER_CACHE_ENABLED, Long.class,
 			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countAll",
 			new String[0]);
+
+		_finderPathWithPaginationFindByVideoIds = new FinderPath(
+			VideoModelImpl.ENTITY_CACHE_ENABLED,
+			VideoModelImpl.FINDER_CACHE_ENABLED, VideoImpl.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "findByVideoIds",
+			new String[] {
+				Long.class.getName(), Integer.class.getName(),
+				Integer.class.getName(), OrderByComparator.class.getName()
+			});
+
+		_finderPathWithoutPaginationFindByVideoIds = new FinderPath(
+			VideoModelImpl.ENTITY_CACHE_ENABLED,
+			VideoModelImpl.FINDER_CACHE_ENABLED, VideoImpl.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "findByVideoIds",
+			new String[] {Long.class.getName()},
+			VideoModelImpl.VIDEOID_COLUMN_BITMASK |
+			VideoModelImpl.UPLOADDATE_COLUMN_BITMASK);
+
+		_finderPathCountByVideoIds = new FinderPath(
+			VideoModelImpl.ENTITY_CACHE_ENABLED,
+			VideoModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION, "countByVideoIds",
+			new String[] {Long.class.getName()});
+
+		_finderPathWithPaginationCountByVideoIds = new FinderPath(
+			VideoModelImpl.ENTITY_CACHE_ENABLED,
+			VideoModelImpl.FINDER_CACHE_ENABLED, Long.class,
+			FINDER_CLASS_NAME_LIST_WITH_PAGINATION, "countByVideoIds",
+			new String[] {Long.class.getName()});
 
 		_finderPathWithPaginationFindByProducer = new FinderPath(
 			VideoModelImpl.ENTITY_CACHE_ENABLED,

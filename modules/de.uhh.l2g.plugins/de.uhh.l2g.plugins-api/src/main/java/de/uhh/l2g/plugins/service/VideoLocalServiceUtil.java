@@ -14,6 +14,8 @@
 
 package de.uhh.l2g.plugins.service;
 
+import com.liferay.portal.kernel.exception.PortalException;
+
 import org.osgi.annotation.versioning.ProviderType;
 import org.osgi.framework.Bundle;
 import org.osgi.framework.FrameworkUtil;
@@ -21,11 +23,11 @@ import org.osgi.util.tracker.ServiceTracker;
 
 /**
  * Provides the local service utility for Video. This utility wraps
- * <code>de.uhh.l2g.plugins.service.impl.VideoLocalServiceImpl</code> and
- * is an access point for service operations in application layer code running
- * on the local server. Methods of this service will not have security checks
- * based on the propagated JAAS credentials because this service can only be
- * accessed from within the same VM.
+ * <code>de.uhh.l2g.plugins.service.impl.VideoLocalServiceImpl</code> and is an
+ * access point for service operations in application layer code running on the
+ * local server. Methods of this service will not have security checks based on
+ * the propagated JAAS credentials because this service can only be accessed
+ * from within the same VM.
  *
  * @author Iavor Sturm
  * @see VideoLocalService
@@ -37,18 +39,19 @@ public class VideoLocalServiceUtil {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify this class directly. Add custom service methods to <code>de.uhh.l2g.plugins.service.impl.VideoLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
+	 * Never modify this class directly. Add custom service methods to
+	 * <code>de.uhh.l2g.plugins.service.impl.VideoLocalServiceImpl</code> and rerun
+	 * ServiceBuilder to regenerate this class.
 	 */
 
 	/**
 	 * required properties for jwplayer in portal-ext.properties file
 	 *
 	 * [host]=configured host in database (automatically e.g. streaming.server.com)
-	 * [ext]=file extension (automatically e.g mp3)
-	 * [l2go_path]=generated lecture2go file path (automatically e.g. 3l2gproducer1)
-	 * [filename]=video file name (automatically e.g 00.000_video_2015-06-08_08-06.mp4)
-	 * [protocol]=host protocol (automatically e.g rtmpt)
-	 * [port]=host port (automatically e.g 80)
+	 * [ext]=file extension (automatically e.g mp3) [l2go_path]=generated lecture2go
+	 * file path (automatically e.g. 3l2gproducer1) [filename]=video file name
+	 * (automatically e.g 00.000_video_2015-06-08_08-06.mp4) [protocol]=host
+	 * protocol (automatically e.g rtmpt) [port]=host port (automatically e.g 80)
 	 * [smilfile]=adaptive streaming file
 	 *
 	 * example for lecture2go configuration
@@ -58,29 +61,28 @@ public class VideoLocalServiceUtil {
 	 * lecture2go.uri4.player.template=${lecture2go.downloadserver.web.root}/abo/[filename]
 	 * lecture2go.uri5.player.template=rtsp://[host]:[port]/vod/_definst/[ext]:[l2go_path]/[filename]
 	 */
-	public static void addPlayerUris2Video(
-		de.uhh.l2g.plugins.model.Video video) {
+	public static void addPlayerUris2Video(de.uhh.l2g.plugins.model.Video video) {
 
 		getService().addPlayerUris2Video(video);
 	}
 
 	/**
-	 * This adds the "tracks" section for the video player json if there are any captions or chapters
+	 * This adds the "tracks" section for the video player json if there are any
+	 * captions or chapters
 	 */
-	public static void addTracksToVideoPlayer(
-		de.uhh.l2g.plugins.model.Video video) {
+	public static void addTracksToVideoPlayer(de.uhh.l2g.plugins.model.Video video) {
 
 		getService().addTracksToVideoPlayer(video);
 	}
 
 	/**
-	 * Adds the video to the database. Also notifies the appropriate model listeners.
+	 * Adds the video to the database. Also notifies the appropriate model
+	 * listeners.
 	 *
 	 * @param video the video
 	 * @return the video that was added
 	 */
-	public static de.uhh.l2g.plugins.model.Video addVideo(
-		de.uhh.l2g.plugins.model.Video video) {
+	public static de.uhh.l2g.plugins.model.Video addVideo(de.uhh.l2g.plugins.model.Video video) {
 
 		return getService().addVideo(video);
 	}
@@ -93,21 +95,18 @@ public class VideoLocalServiceUtil {
 	}
 
 	public static int countByLectureseries(Long lectureseriesId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+			throws com.liferay.portal.kernel.exception.SystemException {
 
 		return getService().countByLectureseries(lectureseriesId);
 	}
 
-	public static int countByLectureseriesAndOpenaccess(
-			Long lectureseriesId, int openAccess)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static int countByLectureseriesAndOpenaccess(Long lectureseriesId, int openAccess)
+			throws com.liferay.portal.kernel.exception.SystemException {
 
-		return getService().countByLectureseriesAndOpenaccess(
-			lectureseriesId, openAccess);
+		return getService().countByLectureseriesAndOpenaccess(lectureseriesId, openAccess);
 	}
 
-	public static void createLastVideoList()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static void createLastVideoList() throws com.liferay.portal.kernel.exception.SystemException {
 
 		getService().createLastVideoList();
 	}
@@ -116,14 +115,13 @@ public class VideoLocalServiceUtil {
 	 * Creates a symlink for the caption of the video to to captions folder
 	 */
 	public static void createSymLinkForCaptionIfExisting(Long videoId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			   com.liferay.portal.kernel.exception.SystemException {
+			throws com.liferay.portal.kernel.exception.PortalException,
+			com.liferay.portal.kernel.exception.SystemException {
 
 		getService().createSymLinkForCaptionIfExisting(videoId);
 	}
 
-	public static void createSymLinkToDownloadableFileIfNotExisting(
-		Long videoId) {
+	public static void createSymLinkToDownloadableFileIfNotExisting(Long videoId) {
 
 		getService().createSymLinkToDownloadableFileIfNotExisting(videoId);
 	}
@@ -133,7 +131,8 @@ public class VideoLocalServiceUtil {
 	}
 
 	/**
-	 * Creates a new video with the primary key. Does not add the video to the database.
+	 * Creates a new video with the primary key. Does not add the video to the
+	 * database.
 	 *
 	 * @param videoId the primary key for the new video
 	 * @return the new video
@@ -145,41 +144,40 @@ public class VideoLocalServiceUtil {
 	/**
 	 * @throws PortalException
 	 */
-	public static com.liferay.portal.kernel.model.PersistedModel
-			deletePersistedModel(
-				com.liferay.portal.kernel.model.PersistedModel persistedModel)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static com.liferay.portal.kernel.model.PersistedModel deletePersistedModel(
+			com.liferay.portal.kernel.model.PersistedModel persistedModel)
+			throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().deletePersistedModel(persistedModel);
 	}
 
 	/**
-	 * Deletes the video with the primary key from the database. Also notifies the appropriate model listeners.
+	 * Deletes the video with the primary key from the database. Also notifies the
+	 * appropriate model listeners.
 	 *
 	 * @param videoId the primary key of the video
 	 * @return the video that was removed
 	 * @throws PortalException if a video with the primary key could not be found
 	 */
 	public static de.uhh.l2g.plugins.model.Video deleteVideo(long videoId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+			throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().deleteVideo(videoId);
 	}
 
 	/**
-	 * Deletes the video from the database. Also notifies the appropriate model listeners.
+	 * Deletes the video from the database. Also notifies the appropriate model
+	 * listeners.
 	 *
 	 * @param video the video
 	 * @return the video that was removed
 	 */
-	public static de.uhh.l2g.plugins.model.Video deleteVideo(
-		de.uhh.l2g.plugins.model.Video video) {
+	public static de.uhh.l2g.plugins.model.Video deleteVideo(de.uhh.l2g.plugins.model.Video video) {
 
 		return getService().deleteVideo(video);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.DynamicQuery
-		dynamicQuery() {
+	public static com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery() {
 
 		return getService().dynamicQuery();
 	}
@@ -190,51 +188,79 @@ public class VideoLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+	public static <T> java.util.List<T> dynamicQuery(com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 
 		return getService().dynamicQuery(dynamicQuery);
 	}
 
 	/**
-	 * Performs a dynamic query on the database and returns a range of the matching rows.
+	 * Performs a dynamic query on the database and returns a range of the matching
+	 * rows.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>de.uhh.l2g.plugins.model.impl.VideoModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code>
+	 * instances. <code>start</code> and <code>end</code> are not primary keys, they
+	 * are indexes in the result set. Thus, <code>0</code> refers to the first
+	 * result in the set. Setting both <code>start</code> and <code>end</code> to
+	 * <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return
+	 * the full result set. If <code>orderByComparator</code> is specified, then the
+	 * query will include the given ORDER BY logic. If
+	 * <code>orderByComparator</code> is absent and pagination is required
+	 * (<code>start</code> and <code>end</code> are not
+	 * <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the
+	 * query will include the default ORDER BY logic from
+	 * <code>de.uhh.l2g.plugins.model.impl.VideoModelImpl</code>. If both
+	 * <code>orderByComparator</code> and pagination are absent, for performance
+	 * reasons, the query will not have an ORDER BY clause and the returned result
+	 * set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
+	 * @param start        the lower bound of the range of model instances
+	 * @param end          the upper bound of the range of model instances (not
+	 *                     inclusive)
 	 * @return the range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end) {
+	public static <T> java.util.List<T> dynamicQuery(com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+			int start, int end) {
 
 		return getService().dynamicQuery(dynamicQuery, start, end);
 	}
 
 	/**
-	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
+	 * Performs a dynamic query on the database and returns an ordered range of the
+	 * matching rows.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>de.uhh.l2g.plugins.model.impl.VideoModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code>
+	 * instances. <code>start</code> and <code>end</code> are not primary keys, they
+	 * are indexes in the result set. Thus, <code>0</code> refers to the first
+	 * result in the set. Setting both <code>start</code> and <code>end</code> to
+	 * <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return
+	 * the full result set. If <code>orderByComparator</code> is specified, then the
+	 * query will include the given ORDER BY logic. If
+	 * <code>orderByComparator</code> is absent and pagination is required
+	 * (<code>start</code> and <code>end</code> are not
+	 * <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the
+	 * query will include the default ORDER BY logic from
+	 * <code>de.uhh.l2g.plugins.model.impl.VideoModelImpl</code>. If both
+	 * <code>orderByComparator</code> and pagination are absent, for performance
+	 * reasons, the query will not have an ORDER BY clause and the returned result
+	 * set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
-	 * @param dynamicQuery the dynamic query
-	 * @param start the lower bound of the range of model instances
-	 * @param end the upper bound of the range of model instances (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param dynamicQuery      the dynamic query
+	 * @param start             the lower bound of the range of model instances
+	 * @param end               the upper bound of the range of model instances (not
+	 *                          inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally
+	 *                          <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
-	public static <T> java.util.List<T> dynamicQuery(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery, int start,
-		int end,
-		com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
+	public static <T> java.util.List<T> dynamicQuery(com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+			int start, int end, com.liferay.portal.kernel.util.OrderByComparator<T> orderByComparator) {
 
-		return getService().dynamicQuery(
-			dynamicQuery, start, end, orderByComparator);
+		return getService().dynamicQuery(dynamicQuery, start, end, orderByComparator);
 	}
 
 	/**
@@ -243,8 +269,7 @@ public class VideoLocalServiceUtil {
 	 * @param dynamicQuery the dynamic query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
+	public static long dynamicQueryCount(com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery) {
 
 		return getService().dynamicQueryCount(dynamicQuery);
 	}
@@ -253,12 +278,11 @@ public class VideoLocalServiceUtil {
 	 * Returns the number of rows matching the dynamic query.
 	 *
 	 * @param dynamicQuery the dynamic query
-	 * @param projection the projection to apply to the query
+	 * @param projection   the projection to apply to the query
 	 * @return the number of rows matching the dynamic query
 	 */
-	public static long dynamicQueryCount(
-		com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
-		com.liferay.portal.kernel.dao.orm.Projection projection) {
+	public static long dynamicQueryCount(com.liferay.portal.kernel.dao.orm.DynamicQuery dynamicQuery,
+			com.liferay.portal.kernel.dao.orm.Projection projection) {
 
 		return getService().dynamicQueryCount(dynamicQuery, projection);
 	}
@@ -267,34 +291,31 @@ public class VideoLocalServiceUtil {
 		return getService().fetchVideo(videoId);
 	}
 
-	public static boolean fileStringSegmentFoundInArray(
-		String file, com.liferay.portal.kernel.json.JSONArray jsonArray) {
+	public static boolean fileStringSegmentFoundInArray(String file,
+			com.liferay.portal.kernel.json.JSONArray jsonArray) {
 
 		return getService().fileStringSegmentFoundInArray(file, jsonArray);
 	}
 
-	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
-		getActionableDynamicQuery() {
+	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery getActionableDynamicQuery() {
 
 		return getService().getActionableDynamicQuery();
 	}
 
 	public static java.util.List<de.uhh.l2g.plugins.model.Video> getAll()
-		throws com.liferay.portal.kernel.exception.SystemException {
+			throws com.liferay.portal.kernel.exception.SystemException {
 
 		return getService().getAll();
 	}
 
-	public static java.util.List<de.uhh.l2g.plugins.model.Video>
-			getByAllSearchWords()
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static java.util.List<de.uhh.l2g.plugins.model.Video> getByAllSearchWords()
+			throws com.liferay.portal.kernel.exception.SystemException {
 
 		return getService().getByAllSearchWords();
 	}
 
-	public static java.util.List<de.uhh.l2g.plugins.model.Video> getByFilename(
-			String filename)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static java.util.List<de.uhh.l2g.plugins.model.Video> getByFilename(String filename)
+			throws com.liferay.portal.kernel.exception.SystemException {
 
 		return getService().getByFilename(filename);
 	}
@@ -303,115 +324,95 @@ public class VideoLocalServiceUtil {
 		return getService().getByHits();
 	}
 
-	public static java.util.List<de.uhh.l2g.plugins.model.Video> getByHits(
-		Long hits) {
+	public static java.util.List<de.uhh.l2g.plugins.model.Video> getByHits(Long hits) {
 
 		return getService().getByHits(hits);
 	}
 
-	public static java.util.List<de.uhh.l2g.plugins.model.Video>
-		getByHitsAndOpenAccess(Long hits) {
+	public static java.util.List<de.uhh.l2g.plugins.model.Video> getByHitsAndOpenAccess(Long hits) {
 
 		return getService().getByHitsAndOpenAccess(hits);
 	}
 
-	public static java.util.List<de.uhh.l2g.plugins.model.Video>
-			getByLectureseries(Long lectureseriesId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static java.util.List<de.uhh.l2g.plugins.model.Video> getByLectureseries(Long lectureseriesId)
+			throws com.liferay.portal.kernel.exception.SystemException {
 
 		return getService().getByLectureseries(lectureseriesId);
 	}
 
-	public static java.util.List<de.uhh.l2g.plugins.model.Video>
-			getByLectureseriesAndOpenaccess(
-				Long lectureseriesId, int openAccess)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static java.util.List<de.uhh.l2g.plugins.model.Video> getByLectureseriesAndOpenaccess(Long lectureseriesId,
+			int openAccess) throws com.liferay.portal.kernel.exception.SystemException {
 
-		return getService().getByLectureseriesAndOpenaccess(
-			lectureseriesId, openAccess);
+		return getService().getByLectureseriesAndOpenaccess(lectureseriesId, openAccess);
 	}
 
-	public static java.util.List<de.uhh.l2g.plugins.model.Video>
-			getByOpenAccess(int bool)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static java.util.List<de.uhh.l2g.plugins.model.Video> getByOpenAccess(int bool)
+			throws com.liferay.portal.kernel.exception.SystemException {
 
 		return getService().getByOpenAccess(bool);
 	}
 
 	public static int getByOpenAccessAndUploadedFile(int bool)
-		throws com.liferay.portal.kernel.exception.SystemException {
+			throws com.liferay.portal.kernel.exception.SystemException {
 
 		return getService().getByOpenAccessAndUploadedFile(bool);
 	}
 
-	public static java.util.List<de.uhh.l2g.plugins.model.Video> getByProducer(
-			Long producerId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static java.util.List<de.uhh.l2g.plugins.model.Video> getByProducer(Long producerId)
+			throws com.liferay.portal.kernel.exception.SystemException {
 
 		return getService().getByProducer(producerId);
 	}
 
-	public static java.util.List<de.uhh.l2g.plugins.model.Video>
-			getByProducerAndDownloadLink(Long producerId, int downloadLink)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static java.util.List<de.uhh.l2g.plugins.model.Video> getByProducerAndDownloadLink(Long producerId,
+			int downloadLink) throws com.liferay.portal.kernel.exception.SystemException {
 
-		return getService().getByProducerAndDownloadLink(
-			producerId, downloadLink);
+		return getService().getByProducerAndDownloadLink(producerId, downloadLink);
 	}
 
-	public static java.util.List<de.uhh.l2g.plugins.model.Video>
-			getByProducerAndLectureseries(Long producerId, Long lectureseriesId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static java.util.List<de.uhh.l2g.plugins.model.Video> getByProducerAndLectureseries(Long producerId,
+			Long lectureseriesId) throws com.liferay.portal.kernel.exception.SystemException {
 
-		return getService().getByProducerAndLectureseries(
-			producerId, lectureseriesId);
+		return getService().getByProducerAndLectureseries(producerId, lectureseriesId);
 	}
 
-	public static java.util.List<de.uhh.l2g.plugins.model.Video>
-			getByRootInstitution(Long rootInstitutionId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static java.util.List<de.uhh.l2g.plugins.model.Video> getByRootInstitution(Long rootInstitutionId)
+			throws com.liferay.portal.kernel.exception.SystemException {
 
 		return getService().getByRootInstitution(rootInstitutionId);
 	}
 
-	public static java.util.List<de.uhh.l2g.plugins.model.Video>
-			getBySearchWord(String word, int limit)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static java.util.List<de.uhh.l2g.plugins.model.Video> getBySearchWord(String word, int limit)
+			throws com.liferay.portal.kernel.exception.SystemException {
 
 		return getService().getBySearchWord(word, limit);
 	}
 
-	public static java.util.List<de.uhh.l2g.plugins.model.Video>
-			getBySearchWordAndLectureseriesId(String word, Long lectureseriesId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static java.util.List<de.uhh.l2g.plugins.model.Video> getBySearchWordAndLectureseriesId(String word,
+			Long lectureseriesId) throws com.liferay.portal.kernel.exception.SystemException {
 
-		return getService().getBySearchWordAndLectureseriesId(
-			word, lectureseriesId);
+		return getService().getBySearchWordAndLectureseriesId(word, lectureseriesId);
 	}
 
 	public static de.uhh.l2g.plugins.model.Video getBySecureUrl(String surl)
-		throws com.liferay.portal.kernel.exception.SystemException,
-			   de.uhh.l2g.plugins.exception.NoSuchVideoException {
+			throws com.liferay.portal.kernel.exception.SystemException,
+			de.uhh.l2g.plugins.exception.NoSuchVideoException {
 
 		return getService().getBySecureUrl(surl);
 	}
 
-	public static java.util.List<de.uhh.l2g.plugins.model.Video> getByTerm(
-			Long termId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static java.util.List<de.uhh.l2g.plugins.model.Video> getByTerm(Long termId)
+			throws com.liferay.portal.kernel.exception.SystemException {
 
 		return getService().getByTerm(termId);
 	}
 
-	public static
-		com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
-			getIndexableActionableDynamicQuery() {
+	public static com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery getIndexableActionableDynamicQuery() {
 
 		return getService().getIndexableActionableDynamicQuery();
 	}
 
-	public static com.liferay.portal.kernel.json.JSONArray getJSONVideo(
-		Long videoId) {
+	public static com.liferay.portal.kernel.json.JSONArray getJSONVideo(Long videoId) {
 
 		return getService().getJSONVideo(videoId);
 	}
@@ -420,15 +421,12 @@ public class VideoLocalServiceUtil {
 		return getService().getLatestClosedAccessVideoId(lectureseriesId);
 	}
 
-	public static de.uhh.l2g.plugins.model.Video
-		getLatestOpenAccessVideoForLectureseries(Long lectureseriesId) {
+	public static de.uhh.l2g.plugins.model.Video getLatestOpenAccessVideoForLectureseries(Long lectureseriesId) {
 
-		return getService().getLatestOpenAccessVideoForLectureseries(
-			lectureseriesId);
+		return getService().getLatestOpenAccessVideoForLectureseries(lectureseriesId);
 	}
 
-	public static java.util.List<de.uhh.l2g.plugins.model.Video>
-		getLatestVideos() {
+	public static java.util.List<de.uhh.l2g.plugins.model.Video> getLatestVideos() {
 
 		return getService().getLatestVideos();
 	}
@@ -442,15 +440,13 @@ public class VideoLocalServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static com.liferay.portal.kernel.model.PersistedModel
-			getPersistedModel(java.io.Serializable primaryKeyObj)
-		throws com.liferay.portal.kernel.exception.PortalException {
+	public static com.liferay.portal.kernel.model.PersistedModel getPersistedModel(java.io.Serializable primaryKeyObj)
+			throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
-	public static java.util.List<de.uhh.l2g.plugins.model.Video> getPopular(
-		int limit) {
+	public static java.util.List<de.uhh.l2g.plugins.model.Video> getPopular(int limit) {
 
 		return getService().getPopular(limit);
 	}
@@ -463,7 +459,7 @@ public class VideoLocalServiceUtil {
 	 * @throws PortalException if a video with the primary key could not be found
 	 */
 	public static de.uhh.l2g.plugins.model.Video getVideo(long videoId)
-		throws com.liferay.portal.kernel.exception.PortalException {
+			throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getVideo(videoId);
 	}
@@ -472,17 +468,40 @@ public class VideoLocalServiceUtil {
 	 * Returns a range of all the videos.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>de.uhh.l2g.plugins.model.impl.VideoModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code>
+	 * instances. <code>start</code> and <code>end</code> are not primary keys, they
+	 * are indexes in the result set. Thus, <code>0</code> refers to the first
+	 * result in the set. Setting both <code>start</code> and <code>end</code> to
+	 * <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return
+	 * the full result set. If <code>orderByComparator</code> is specified, then the
+	 * query will include the given ORDER BY logic. If
+	 * <code>orderByComparator</code> is absent and pagination is required
+	 * (<code>start</code> and <code>end</code> are not
+	 * <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the
+	 * query will include the default ORDER BY logic from
+	 * <code>de.uhh.l2g.plugins.model.impl.VideoModelImpl</code>. If both
+	 * <code>orderByComparator</code> and pagination are absent, for performance
+	 * reasons, the query will not have an ORDER BY clause and the returned result
+	 * set will be sorted on by the primary key in an ascending order.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of videos
-	 * @param end the upper bound of the range of videos (not inclusive)
+	 * @param end   the upper bound of the range of videos (not inclusive)
 	 * @return the range of videos
 	 */
-	public static java.util.List<de.uhh.l2g.plugins.model.Video> getVideos(
-		int start, int end) {
+	public static java.util.List<de.uhh.l2g.plugins.model.Video> getVideos(int start, int end) {
 
 		return getService().getVideos(start, end);
+	}
+
+	/**
+	 * Returns videos with given ids.
+	 *
+	 * @param videoIds videoIds of the videos
+	 * @return all videos with specified ids
+	 */
+	public static java.util.List<de.uhh.l2g.plugins.model.Video> getVideos(long[] videoIds) {
+		return getService().getVideos(videoIds);
 	}
 
 	/**
@@ -509,13 +528,13 @@ public class VideoLocalServiceUtil {
 	}
 
 	/**
-	 * Updates the video in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
+	 * Updates the video in the database or adds it if it does not yet exist. Also
+	 * notifies the appropriate model listeners.
 	 *
 	 * @param video the video
 	 * @return the video that was updated
 	 */
-	public static de.uhh.l2g.plugins.model.Video updateVideo(
-		de.uhh.l2g.plugins.model.Video video) {
+	public static de.uhh.l2g.plugins.model.Video updateVideo(de.uhh.l2g.plugins.model.Video video) {
 
 		return getService().updateVideo(video);
 	}
@@ -524,14 +543,12 @@ public class VideoLocalServiceUtil {
 		return _serviceTracker.getService();
 	}
 
-	private static ServiceTracker<VideoLocalService, VideoLocalService>
-		_serviceTracker;
+	private static ServiceTracker<VideoLocalService, VideoLocalService> _serviceTracker;
 
 	static {
 		Bundle bundle = FrameworkUtil.getBundle(VideoLocalService.class);
 
-		ServiceTracker<VideoLocalService, VideoLocalService> serviceTracker =
-			new ServiceTracker<VideoLocalService, VideoLocalService>(
+		ServiceTracker<VideoLocalService, VideoLocalService> serviceTracker = new ServiceTracker<VideoLocalService, VideoLocalService>(
 				bundle.getBundleContext(), VideoLocalService.class, null);
 
 		serviceTracker.open();

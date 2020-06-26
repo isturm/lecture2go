@@ -92,7 +92,7 @@ public class ViewRenderList implements MVCRenderCommand {
 		}
 
 		try {
-			videoList = searchManager.searchVideoList(findVideos, filters, -1);
+			videoList = searchManager.searchVideoList(companyId, findVideos, filters, -1);
 		} catch (SearchException | ParseException e) {
 			// TODO handle exception
 		}

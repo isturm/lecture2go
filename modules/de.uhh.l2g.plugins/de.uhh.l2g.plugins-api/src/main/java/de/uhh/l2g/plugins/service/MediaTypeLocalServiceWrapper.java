@@ -16,11 +16,7 @@ package de.uhh.l2g.plugins.service;
 
 import com.liferay.portal.kernel.service.ServiceWrapper;
 
-import de.uhh.l2g.plugins.model.MediaType;
 import org.osgi.annotation.versioning.ProviderType;
-
-import java.util.ArrayList;
-import java.util.List;
 
 /**
  * Provides a wrapper for {@link MediaTypeLocalService}.
@@ -254,6 +250,13 @@ public class MediaTypeLocalServiceWrapper
 		return _mediaTypeLocalService.getMediaTypesCount();
 	}
 
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.MediaType>
+		getMediaTypesFromVideoIds(java.util.ArrayList<Long> videoIds) {
+
+		return _mediaTypeLocalService.getMediaTypesFromVideoIds(videoIds);
+	}
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -270,11 +273,6 @@ public class MediaTypeLocalServiceWrapper
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return _mediaTypeLocalService.getPersistedModel(primaryKeyObj);
-	}
-
-	@Override
-	public List<MediaType> getMediaTypesFromVideoIds(ArrayList<Long> videoIds) {
-		return _mediaTypeLocalService.getMediaTypesFromVideoIds(videoIds);
 	}
 
 	/**
