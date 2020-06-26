@@ -48,7 +48,10 @@ public class MediaTypeLocalServiceImpl extends MediaTypeLocalServiceBaseImpl {
 		videoIds.forEach(videoId -> {
 			video_MediaTypeLocalService.getByVideo(videoId).forEach(videoMediaType -> {
 				try {
-					mediaTypes.add(mediaTypeLocalService.getMediaType(videoMediaType.getMediaTypeId()));
+					MediaType mediaType = mediaTypeLocalService.getMediaType(videoMediaType.getMediaTypeId());
+					if (!mediaTypes.contains(mediaType)) {
+						mediaTypes.add(mediaType);
+					}
 				} catch (PortalException e) {
 					e.printStackTrace();
 				}
