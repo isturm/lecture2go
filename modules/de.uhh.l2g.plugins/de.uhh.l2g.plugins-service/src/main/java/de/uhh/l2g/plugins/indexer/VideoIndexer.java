@@ -13,20 +13,29 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.GetterUtil;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Locale;
 
 import javax.portlet.PortletRequest;
 import javax.portlet.PortletResponse;
 
-import de.uhh.l2g.plugins.model.*;
-import de.uhh.l2g.plugins.service.*;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 import de.uhh.l2g.plugins.exception.NoSuchTagcloudException;
+import de.uhh.l2g.plugins.model.Tagcloud;
+import de.uhh.l2g.plugins.model.Video;
+import de.uhh.l2g.plugins.model.Video_Category;
+import de.uhh.l2g.plugins.model.Video_Creator;
+import de.uhh.l2g.plugins.model.Video_Institution;
+import de.uhh.l2g.plugins.model.Video_MediaType;
 import de.uhh.l2g.plugins.model.impl.VideoImpl;
+import de.uhh.l2g.plugins.service.TagcloudLocalServiceUtil;
+import de.uhh.l2g.plugins.service.VideoLocalService;
+import de.uhh.l2g.plugins.service.Video_CategoryLocalServiceUtil;
+import de.uhh.l2g.plugins.service.Video_CreatorLocalServiceUtil;
+import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
+import de.uhh.l2g.plugins.service.Video_MediaTypeLocalServiceUtil;
 import de.uhh.l2g.plugins.service.impl.TagcloudLocalServiceImpl;
 
 @Component(immediate = true, service = Indexer.class)
@@ -61,7 +70,7 @@ public class VideoIndexer extends BaseIndexer<Video> {
 		} catch (NoSuchTagcloudException e) {
 			log.warn(String.format("No tag cloud for video with id %d found to create index!", video.getVideoId()), e);
 		}
-		document.addKeyword("name", video.getTitle());
+		document.addKeywordSortable("name", video.getTitle());
 		document.addKeyword("lectureSeriesId", video.getLectureseriesId());
 		document.addKeyword("producerId", video.getProducerId());
 		document.addKeyword("containerFormat", video.getContainerFormat());
@@ -69,6 +78,7 @@ public class VideoIndexer extends BaseIndexer<Video> {
 		document.addKeyword("duration", video.getDuration());
 		document.addKeyword("hostId", video.getHostId());
 		document.addKeyword("generationDate", video.getGenerationDate());
+		document.addKeywordSortable("latestVideoGenerationDate", video.getGenerationDate());
 		document.addKeyword("openAccess", video.getOpenAccess());
 		document.addKeyword("metaDataId", video.getMetadataId());
 		document.addNumber("hits", video.getHits());

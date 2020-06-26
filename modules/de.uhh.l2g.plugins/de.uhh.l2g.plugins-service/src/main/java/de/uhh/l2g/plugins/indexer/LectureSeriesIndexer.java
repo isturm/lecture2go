@@ -68,7 +68,7 @@ public class LectureSeriesIndexer extends BaseIndexer<Lectureseries> {
 			log.warn(String.format("No tag cloud for lectureseries with id %d found to create index!",
 					lectureseries.getLectureseriesId()), e);
 		}
-		document.addKeyword("name", lectureseries.getName());
+		document.addKeywordSortable("name", lectureseries.getName());
 		document.addText("shortDesc", lectureseries.getShortDesc());
 		document.addKeyword("language", lectureseries.getLanguage());
 		document.addKeyword("facultyName", lectureseries.getFacultyName());
@@ -76,7 +76,7 @@ public class LectureSeriesIndexer extends BaseIndexer<Lectureseries> {
 		document.addText("longDesc", lectureseries.getLongDesc());
 		document.addKeyword("latestOpenAccessVideoId", lectureseries.getLatestOpenAccessVideoId());
 		document.addDate("latestVideoUploadDate", lectureseries.getLatestVideoUploadDate());
-		document.addKeyword("latestVideoGenerationDate", lectureseries.getLatestVideoGenerationDate());
+		document.addKeywordSortable("latestVideoGenerationDate", lectureseries.getLatestVideoGenerationDate());
 		document.addKeyword("videoSort", lectureseries.getVideoSort());
 		document.addKeyword("USID", lectureseries.getUSID());
 		document.addKeyword("previewVideoId", lectureseries.getPreviewVideoId());

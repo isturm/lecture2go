@@ -18,6 +18,9 @@ import com.liferay.portal.search.searcher.SearchRequestBuilder;
 import com.liferay.portal.search.searcher.SearchRequestBuilderFactory;
 import com.liferay.portal.search.searcher.SearchResponse;
 import com.liferay.portal.search.searcher.Searcher;
+import com.liferay.portal.search.sort.Sort;
+import com.liferay.portal.search.sort.SortOrder;
+import com.liferay.portal.search.sort.Sorts;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -28,6 +31,7 @@ import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
 import de.uhh.l2g.plugins.model.Lectureseries;
+import de.uhh.l2g.plugins.model.Video;
 import de.uhh.l2g.plugins.model.VideoListSearchResult;
 import de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
@@ -39,6 +43,9 @@ public class SearchManager {
 	protected Queries queries;
 
 	@Reference
+	protected Sorts sorts;
+
+	@Reference
 	protected Searcher searcher;
 
 	@Reference
@@ -47,7 +54,7 @@ public class SearchManager {
 	public JSONArray getAutocompleteResultArrayBySearchWord(long companyId, String searchText, int resultLimit)
 			throws SearchException, ParseException {
 		Stream<Document> searchResults = getSearchResultsBySearchWordAndFilter(companyId, searchText, null, resultLimit,
-				false);
+				null);
 		List<String> resultList = new ArrayList<String>();
 		searchResults.forEach(document -> {
 			for (String value : document.getStrings("tagCloud")) {
@@ -63,9 +70,9 @@ public class SearchManager {
 	}
 
 	public List<VideoListSearchResult> searchVideoList(long companyId, String searchText, Map<String, Object> filters,
-			int resultLimit) throws SearchException, ParseException {
+			int resultLimit, String sortByField) throws SearchException, ParseException {
 		Stream<Document> searchResults = getSearchResultsBySearchWordAndFilter(companyId, searchText, filters,
-				resultLimit, true);
+				resultLimit, sortByField);
 		List<VideoListSearchResult> videoList = new ArrayList<VideoListSearchResult>();
 		searchResults.forEach(document -> {
 			VideoListSearchResult searchResult = new VideoListSearchResult();
@@ -156,8 +163,7 @@ public class SearchManager {
 	}
 
 	public Stream<Document> getSearchResultsBySearchWordAndFilter(long companyId, String searchText,
-			Map<String, Object> filters, int resultLimit, boolean getOnlySeparateItems)
-			throws SearchException, ParseException {
+			Map<String, Object> filters, int resultLimit, String sortByField) throws SearchException, ParseException {
 		BooleanQuery completeQuery = queries.booleanQuery();
 
 		// search query
@@ -191,9 +197,20 @@ public class SearchManager {
 		searchRequestBuilder.emptySearchEnabled(true);
 		searchRequestBuilder.withSearchContext(searchContext -> {
 			searchContext.setCompanyId(companyId);
+			String[] entryClassNames = { Video.class.getName(), Lectureseries.class.getName() };
+			searchContext.setEntryClassNames(entryClassNames);
 		});
 		if (resultLimit > 0) {
 			searchRequestBuilder.size(resultLimit);
+		}
+		if (sortByField != null && !sortByField.isEmpty()) {
+			Sort sort;
+			if ("latestVideoGenerationDate".equals(sortByField)) {
+				sort = sorts.field(sortByField + "_String_sortable", SortOrder.DESC);
+			} else {
+				sort = sorts.field(sortByField + "_String_sortable");
+			}
+			searchRequestBuilder.sorts(sort);
 		}
 		SearchRequest searchRequest = searchRequestBuilder.query(completeQuery).build();
 		SearchResponse searchResponse = searcher.search(searchRequest);

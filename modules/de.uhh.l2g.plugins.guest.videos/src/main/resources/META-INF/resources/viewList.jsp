@@ -6,6 +6,8 @@
 <jsp:useBean id="categoryId" type="java.lang.Long" scope="request"/>
 <jsp:useBean id="creatorId" type="java.lang.Long" scope="request"/>
 <jsp:useBean id="findVideos" type="java.lang.String" scope="request"/>
+<jsp:useBean id="sortBy" type="java.lang.String" scope="request"/>
+<jsp:useBean id="sortableFields" type="java.util.List<java.lang.String>" scope="request"/>
 <jsp:useBean id="maxTerms" type="java.lang.Integer" scope="request"/>
 <jsp:useBean id="hasInstitutionFiltered" type="java.lang.Boolean" scope="request"/>
 <jsp:useBean id="hasParentInstitutionFiltered" type="java.lang.Boolean" scope="request"/>
@@ -98,6 +100,31 @@
 </div>
 
 <h1><liferay-ui:message key="video-catalog"/></h1>
+
+<div class="sortByList">
+	<c:forEach items="${sortableFields}" var="sortBySelect">
+		<portlet:renderURL var="sort">
+		    <portlet:param name="mvcRenderCommandName" value="/view/render/list"/>
+		    <portlet:param name="parentInstitutionId" value='${parentInstitutionId}'/>
+		    <portlet:param name="institutionId" value="${institutionId}"/>
+		    <portlet:param name="termId" value="${termId}"/>
+		    <portlet:param name="categoryId" value="${categoryId}"/>
+		    <portlet:param name="creatorId" value="${creatorId}"/>
+		    <portlet:param name="mediaTypeId" value="${mediaTypeId}"/>
+		    <portlet:param name="findVideos" value="${findVideos}"/>
+		    <portlet:param name="sortBy" value="${sortBySelect}"/>
+		</portlet:renderURL>
+        <c:choose>
+            <c:when test="${sortBySelect == sortBy}">
+                <span class="selected"><liferay-ui:message key="sort-by-${sortBySelect}"/></span>
+            </c:when>
+            <c:otherwise>
+            	<a href="${sort}"><liferay-ui:message key="sort-by-${sortBySelect}"/></a>
+            </c:otherwise>
+        </c:choose>
+		<span>|</span>
+	</c:forEach>
+</div>
 
 <div class="catalogue-container row">
     <c:if test="${!resultSetEmpty}">
