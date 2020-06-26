@@ -2,6 +2,7 @@ package de.uhh.l2g.plugins.guest.videos.portlet;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -17,7 +18,6 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.util.ParamUtil;
 
-import de.uhh.l2g.plugins.exception.NoSuchLicenseException;
 import de.uhh.l2g.plugins.exception.NoSuchVideoException;
 import de.uhh.l2g.plugins.guest.videos.constants.OpenAccessVideosPortletKeys;
 import de.uhh.l2g.plugins.util.ProzessManager;
@@ -46,22 +46,15 @@ public class ViewRenderDetails implements MVCRenderCommand{
 
 	    try{
 	    	objectId = new Long(oid);
-				List<Video_Category> categories = Video_CategoryLocalServiceUtil.getByVideo(objectId);
-				if (categories.size() > 0) {
-					is360Video = categories.get(0).getCategoryId() == 9;
-				}
-	    }catch(NumberFormatException e){
+				is360Video = is360Video(objectId);
+			} catch(NumberFormatException e){
 		    if(objectType.equals("v")){ //for video objects
 	    		try {
 					objectId = VideoLocalServiceUtil.getBySecureUrl(oid).getVideoId();
-					List<Video_Category> categories = Video_CategoryLocalServiceUtil.getByVideo(objectId);
-					if (categories.size() > 0) {
-						is360Video = categories.get(0).getCategoryId() == 9;
-					}
-					secLink = true;
-				} catch (NoSuchVideoException e1) {
-				} catch (SystemException e1) {}
-	    	 }
+						is360Video = is360Video(objectId);
+						secLink = true;
+				} catch (NoSuchVideoException | SystemException ignored) { }
+				}
 		    if(objectType.equals("l")){ //for lecture series objects
 		    	objectId = LectureseriesLocalServiceUtil.getByUSID(oid).getLectureseriesId();
 				secLink = true;
@@ -215,6 +208,24 @@ public class ViewRenderDetails implements MVCRenderCommand{
 	    }
 	    
 		return "/viewDetails.jsp"; 
+	}
+
+	private boolean is360Video(Long objectId) {
+		AtomicBoolean is360Video = new AtomicBoolean(false);
+		List<Video_MediaType> mediaTypes = Video_MediaTypeLocalServiceUtil.getByVideo(objectId);
+
+		mediaTypes.forEach(video_mediaType -> {
+			try {
+				if (MediaTypeLocalServiceUtil.getMediaType(video_mediaType.getMediaTypeId())
+						.getMediaTypeName().contains("360")) {
+					is360Video.set(true);
+				}
+			} catch (PortalException e) {
+				e.printStackTrace();
+			}
+		});
+
+		return is360Video.get();
 	}
 
 }
