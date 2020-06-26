@@ -124,6 +124,242 @@ public class VideoUtil {
 	}
 
 	/**
+	 * Returns all the videos where videoId = &#63;.
+	 *
+	 * @param videoId the video ID
+	 * @return the matching videos
+	 */
+	public static List<Video> findByVideoIds(long videoId) {
+		return getPersistence().findByVideoIds(videoId);
+	}
+
+	/**
+	 * Returns a range of all the videos where videoId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>VideoModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param videoId the video ID
+	 * @param start the lower bound of the range of videos
+	 * @param end the upper bound of the range of videos (not inclusive)
+	 * @return the range of matching videos
+	 */
+	public static List<Video> findByVideoIds(long videoId, int start, int end) {
+		return getPersistence().findByVideoIds(videoId, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the videos where videoId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>VideoModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByVideoIds(long, int, int, OrderByComparator)}
+	 * @param videoId the video ID
+	 * @param start the lower bound of the range of videos
+	 * @param end the upper bound of the range of videos (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching videos
+	 */
+	@Deprecated
+	public static List<Video> findByVideoIds(
+		long videoId, int start, int end,
+		OrderByComparator<Video> orderByComparator, boolean useFinderCache) {
+
+		return getPersistence().findByVideoIds(
+			videoId, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns an ordered range of all the videos where videoId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>VideoModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param videoId the video ID
+	 * @param start the lower bound of the range of videos
+	 * @param end the upper bound of the range of videos (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching videos
+	 */
+	public static List<Video> findByVideoIds(
+		long videoId, int start, int end,
+		OrderByComparator<Video> orderByComparator) {
+
+		return getPersistence().findByVideoIds(
+			videoId, start, end, orderByComparator);
+	}
+
+	/**
+	 * Returns the first video in the ordered set where videoId = &#63;.
+	 *
+	 * @param videoId the video ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching video
+	 * @throws NoSuchVideoException if a matching video could not be found
+	 */
+	public static Video findByVideoIds_First(
+			long videoId, OrderByComparator<Video> orderByComparator)
+		throws de.uhh.l2g.plugins.exception.NoSuchVideoException {
+
+		return getPersistence().findByVideoIds_First(
+			videoId, orderByComparator);
+	}
+
+	/**
+	 * Returns the first video in the ordered set where videoId = &#63;.
+	 *
+	 * @param videoId the video ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the first matching video, or <code>null</code> if a matching video could not be found
+	 */
+	public static Video fetchByVideoIds_First(
+		long videoId, OrderByComparator<Video> orderByComparator) {
+
+		return getPersistence().fetchByVideoIds_First(
+			videoId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last video in the ordered set where videoId = &#63;.
+	 *
+	 * @param videoId the video ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching video
+	 * @throws NoSuchVideoException if a matching video could not be found
+	 */
+	public static Video findByVideoIds_Last(
+			long videoId, OrderByComparator<Video> orderByComparator)
+		throws de.uhh.l2g.plugins.exception.NoSuchVideoException {
+
+		return getPersistence().findByVideoIds_Last(videoId, orderByComparator);
+	}
+
+	/**
+	 * Returns the last video in the ordered set where videoId = &#63;.
+	 *
+	 * @param videoId the video ID
+	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
+	 * @return the last matching video, or <code>null</code> if a matching video could not be found
+	 */
+	public static Video fetchByVideoIds_Last(
+		long videoId, OrderByComparator<Video> orderByComparator) {
+
+		return getPersistence().fetchByVideoIds_Last(
+			videoId, orderByComparator);
+	}
+
+	/**
+	 * Returns all the videos where videoId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>VideoModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param videoIds the video IDs
+	 * @return the matching videos
+	 */
+	public static List<Video> findByVideoIds(long[] videoIds) {
+		return getPersistence().findByVideoIds(videoIds);
+	}
+
+	/**
+	 * Returns a range of all the videos where videoId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>VideoModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param videoIds the video IDs
+	 * @param start the lower bound of the range of videos
+	 * @param end the upper bound of the range of videos (not inclusive)
+	 * @return the range of matching videos
+	 */
+	public static List<Video> findByVideoIds(
+		long[] videoIds, int start, int end) {
+
+		return getPersistence().findByVideoIds(videoIds, start, end);
+	}
+
+	/**
+	 * Returns an ordered range of all the videos where videoId = &#63;, optionally using the finder cache.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>VideoModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByVideoIds(long, int, int, OrderByComparator)}
+	 * @param videoId the video ID
+	 * @param start the lower bound of the range of videos
+	 * @param end the upper bound of the range of videos (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching videos
+	 */
+	@Deprecated
+	public static List<Video> findByVideoIds(
+		long[] videoIds, int start, int end,
+		OrderByComparator<Video> orderByComparator, boolean useFinderCache) {
+
+		return getPersistence().findByVideoIds(
+			videoIds, start, end, orderByComparator, useFinderCache);
+	}
+
+	/**
+	 * Returns an ordered range of all the videos where videoId = any &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>VideoModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * </p>
+	 *
+	 * @param videoIds the video IDs
+	 * @param start the lower bound of the range of videos
+	 * @param end the upper bound of the range of videos (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching videos
+	 */
+	public static List<Video> findByVideoIds(
+		long[] videoIds, int start, int end,
+		OrderByComparator<Video> orderByComparator) {
+
+		return getPersistence().findByVideoIds(
+			videoIds, start, end, orderByComparator);
+	}
+
+	/**
+	 * Removes all the videos where videoId = &#63; from the database.
+	 *
+	 * @param videoId the video ID
+	 */
+	public static void removeByVideoIds(long videoId) {
+		getPersistence().removeByVideoIds(videoId);
+	}
+
+	/**
+	 * Returns the number of videos where videoId = &#63;.
+	 *
+	 * @param videoId the video ID
+	 * @return the number of matching videos
+	 */
+	public static int countByVideoIds(long videoId) {
+		return getPersistence().countByVideoIds(videoId);
+	}
+
+	/**
+	 * Returns the number of videos where videoId = any &#63;.
+	 *
+	 * @param videoIds the video IDs
+	 * @return the number of matching videos
+	 */
+	public static int countByVideoIds(long[] videoIds) {
+		return getPersistence().countByVideoIds(videoIds);
+	}
+
+	/**
 	 * Returns all the videos where producerId = &#63;.
 	 *
 	 * @param producerId the producer ID

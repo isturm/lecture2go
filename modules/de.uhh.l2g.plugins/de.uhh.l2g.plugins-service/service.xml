@@ -543,6 +543,9 @@
 			<order-column name="videoId" order-by="desc"></order-column>
 			<order-column name="uploadDate" order-by="desc"></order-column>
 		</order>
+		<finder name="VideoIds" return-type="Collection" >
+			<finder-column name="videoId" arrayable-operator="OR"></finder-column>
+		</finder>
 		<finder name="Producer" return-type="Collection">
 			<finder-column name="producerId"></finder-column>
 		</finder>

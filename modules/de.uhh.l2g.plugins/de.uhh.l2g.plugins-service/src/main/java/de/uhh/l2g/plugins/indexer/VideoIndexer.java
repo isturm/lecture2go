@@ -63,7 +63,6 @@ public class VideoIndexer extends BaseIndexer<Video> {
 		}
 		document.addKeyword("name", video.getTitle());
 		document.addKeyword("lectureSeriesId", video.getLectureseriesId());
-		document.addKeyword("isSeparateVideoListItem", video.getLectureseriesId() < 0);
 		document.addKeyword("producerId", video.getProducerId());
 		document.addKeyword("containerFormat", video.getContainerFormat());
 		document.addKeyword("resolution", video.getResolution());

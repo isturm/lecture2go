@@ -193,16 +193,16 @@ public class Video_MediaTypeLocalServiceUtil {
 		return getService().fetchVideo_MediaType(videoMediaTypeId);
 	}
 
-	public static java.util.List<de.uhh.l2g.plugins.model.Video_MediaType>
-	getByVideo(Long videoId) {
-
-		return getService().getByVideo(videoId);
-	}
-
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
 		return getService().getActionableDynamicQuery();
+	}
+
+	public static java.util.List<de.uhh.l2g.plugins.model.Video_MediaType>
+		getByVideo(Long videoId) {
+
+		return getService().getByVideo(videoId);
 	}
 
 	public static

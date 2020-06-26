@@ -192,11 +192,6 @@ public class MediaTypeLocalServiceUtil {
 		return getService().fetchMediaType(mediaTypeId);
 	}
 
-	public static java.util.List<de.uhh.l2g.plugins.model.MediaType> getMediaTypesFromVideoIds(
-			java.util.ArrayList<Long> videoIds) {
-		return getService().getMediaTypesFromVideoIds(videoIds);
-	}
-
 	public static com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
@@ -248,6 +243,12 @@ public class MediaTypeLocalServiceUtil {
 	 */
 	public static int getMediaTypesCount() {
 		return getService().getMediaTypesCount();
+	}
+
+	public static java.util.List<de.uhh.l2g.plugins.model.MediaType>
+		getMediaTypesFromVideoIds(java.util.ArrayList<Long> videoIds) {
+
+		return getService().getMediaTypesFromVideoIds(videoIds);
 	}
 
 	/**

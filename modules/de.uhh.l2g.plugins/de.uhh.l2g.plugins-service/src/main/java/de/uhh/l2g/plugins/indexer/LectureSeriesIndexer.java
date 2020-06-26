@@ -62,7 +62,6 @@ public class LectureSeriesIndexer extends BaseIndexer<Lectureseries> {
 		Document document = getBaseModelDocument(Lectureseries.class.getName(), lectureseries);
 		document.addKeyword(Field.COMPANY_ID, lectureseries.getCompanyId());
 		document.addKeyword("lectureSeriesId", lectureseries.getLectureseriesId());
-		document.addKeyword("isSeparateVideoListItem", true);
 		try {
 			document.addText("tagCloud", getTagCloudStrings(lectureseries.getLectureseriesId()));
 		} catch (NoSuchTagcloudException e) {

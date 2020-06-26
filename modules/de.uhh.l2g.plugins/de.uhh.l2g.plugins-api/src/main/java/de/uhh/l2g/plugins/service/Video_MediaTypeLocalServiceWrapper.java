@@ -205,17 +205,17 @@ public class Video_MediaTypeLocalServiceWrapper
 	}
 
 	@Override
-	public java.util.List<de.uhh.l2g.plugins.model.Video_MediaType>
-	getByVideo(Long videoId) {
-
-		return _video_MediaTypeLocalService.getByVideo(videoId);
-	}
-
-	@Override
 	public com.liferay.portal.kernel.dao.orm.ActionableDynamicQuery
 		getActionableDynamicQuery() {
 
 		return _video_MediaTypeLocalService.getActionableDynamicQuery();
+	}
+
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Video_MediaType> getByVideo(
+		Long videoId) {
+
+		return _video_MediaTypeLocalService.getByVideo(videoId);
 	}
 
 	@Override

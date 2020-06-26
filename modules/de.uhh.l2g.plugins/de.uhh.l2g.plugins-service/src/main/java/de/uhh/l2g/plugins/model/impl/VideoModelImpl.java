@@ -419,7 +419,17 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 	public void setVideoId(long videoId) {
 		_columnBitmask = -1L;
 
+		if (!_setOriginalVideoId) {
+			_setOriginalVideoId = true;
+
+			_originalVideoId = _videoId;
+		}
+
 		_videoId = videoId;
+	}
+
+	public long getOriginalVideoId() {
+		return _originalVideoId;
 	}
 
 	@Override
@@ -1047,6 +1057,10 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 	public void resetOriginalValues() {
 		VideoModelImpl videoModelImpl = this;
 
+		videoModelImpl._originalVideoId = videoModelImpl._videoId;
+
+		videoModelImpl._setOriginalVideoId = false;
+
 		videoModelImpl._originalLectureseriesId =
 			videoModelImpl._lectureseriesId;
 
@@ -1311,6 +1325,8 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 	}
 
 	private long _videoId;
+	private long _originalVideoId;
+	private boolean _setOriginalVideoId;
 	private String _title;
 	private long _lectureseriesId;
 	private long _originalLectureseriesId;

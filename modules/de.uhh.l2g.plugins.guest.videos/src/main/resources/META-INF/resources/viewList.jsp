@@ -411,10 +411,10 @@
                 <c:set var="vl" value="<%=new ArrayList<Video>()%>"/>
 
                 <c:choose>
-                    <c:when test="${videoCount>0 && isSearched}">
-                        <!-- get videos by search word and lecture series -->
+                    <c:when test="${videoCount>0 && isSearched && lectser.videoIds.size() > 0}">
+                        <!-- get videos by id list -->
                         <c:set var="vl"
-                               value="<%=VideoLocalServiceUtil.getBySearchWordAndLectureseriesId(findVideos, (Long)pageContext.getAttribute("oId"))%>"/>
+                               value="<%=VideoLocalServiceUtil.getVideos(lectser.getVideoIdsArray())%>"/>
                     </c:when>
                     <c:otherwise>
                         <!-- get all videos of the lecture series -->

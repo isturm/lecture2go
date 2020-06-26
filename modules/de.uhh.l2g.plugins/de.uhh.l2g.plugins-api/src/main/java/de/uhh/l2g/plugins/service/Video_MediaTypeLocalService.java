@@ -181,10 +181,10 @@ public interface Video_MediaTypeLocalService
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
+	public List<Video_MediaType> getByVideo(Long videoId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Video_MediaType> getByVideo(Long videoId);
+	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	/**
 	 * Returns the OSGi service identifier.

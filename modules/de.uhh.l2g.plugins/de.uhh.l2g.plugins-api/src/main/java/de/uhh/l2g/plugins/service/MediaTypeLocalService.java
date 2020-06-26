@@ -214,6 +214,9 @@ public interface MediaTypeLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getMediaTypesCount();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<MediaType> getMediaTypesFromVideoIds(ArrayList<Long> videoIds);
+
 	/**
 	 * Returns the OSGi service identifier.
 	 *
@@ -225,9 +228,6 @@ public interface MediaTypeLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<MediaType> getMediaTypesFromVideoIds(ArrayList<Long> videoIds);
 
 	/**
 	 * Updates the media type in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
