@@ -9,6 +9,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import com.liferay.portal.kernel.util.PortalUtil;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -48,6 +49,7 @@ public class ViewRenderList implements MVCRenderCommand {
 		Long creatorId = ParamUtil.getLong(renderRequest, "creatorId", 0);
 		long mediaTypeId = ParamUtil.getLong(renderRequest, "mediaTypeId", 0);
 		String findVideos = ParamUtil.getString(renderRequest, "findVideos", "");
+		String sortBy = ParamUtil.getString(renderRequest, "sortBy", "");
 		int maxTerms = 4;
 		boolean hasInstitutionFiltered = (institutionId != 0);
 		boolean hasParentInstitutionFiltered = (parentInstitutionId != 0);
@@ -88,7 +90,7 @@ public class ViewRenderList implements MVCRenderCommand {
 		}
 
 		try {
-			videoList = searchManager.searchVideoList(companyId, findVideos, filters, -1);
+			videoList = searchManager.searchVideoList(companyId, findVideos, filters, -1, sortBy);
 		} catch (SearchException | ParseException e) {
 			// TODO handle exception
 		}
@@ -229,6 +231,8 @@ public class ViewRenderList implements MVCRenderCommand {
 		renderRequest.setAttribute("creatorId", creatorId);
 		renderRequest.setAttribute("mediaTypeId", mediaTypeId);
 		renderRequest.setAttribute("findVideos", findVideos);
+		renderRequest.setAttribute("sortBy", sortBy);
+		renderRequest.setAttribute("sortableFields", Arrays.asList("name", "latestVideoGenerationDate"));
 		renderRequest.setAttribute("maxTerms", maxTerms);
 		renderRequest.setAttribute("hasInstitutionFiltered", hasInstitutionFiltered);
 		renderRequest.setAttribute("hasParentInstitutionFiltered", hasParentInstitutionFiltered);
