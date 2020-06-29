@@ -35,8 +35,10 @@ $( function() {
 
 	// only show 4 creators at first
 	const maxCreators = 4;
-	const loadMoreLink = $('.loadMoreCreators');
+	const loadMoreCreatorsLink = $('.load-more-creators');
+	const loadMoreTagsLink = $('.load-more-tags');
 	toggleCreatorsForCharacter('*');
+	toggleTagsForCharacter('*');
 
 	function toggleCreatorsForCharacter(character) {
 		let hiddenCreators;
@@ -54,9 +56,31 @@ $( function() {
 			hiddenCreators = $('div.creators[data-character="' + character + '"] > ul > li:hidden');
 		}
 
-		loadMoreLink.hide();
+		loadMoreCreatorsLink.hide();
 		if (hiddenCreators.length > maxCreators) {
-			$('.loadMoreCreators[data-character="' + character + '"]').show();
+			$('.load-more-creators[data-character="' + character + '"]').show();
+		}
+	}
+
+	function toggleTagsForCharacter(character) {
+		let hiddenTags;
+
+		if (character === '*') {
+			$('div.tags').show();
+			$('div.tags > ul > li').slice(maxCreators).hide();
+			hiddenTags = $('div.tags > ul > li:hidden');
+		} else {
+			$('div.tags').hide();
+			$('div.tags[data-character="' + character + '"]').show();
+			const tags = $('div.tags[data-character="' + character + '"] > ul > li');
+			tags.slice(0, maxCreators).show();
+			tags.slice(maxCreators).hide();
+			hiddenTags = $('div.tags[data-character="' + character + '"] > ul > li:hidden');
+		}
+
+		loadMoreTagsLink.hide();
+		if (hiddenTags.length > maxCreators) {
+			$('.load-more-tags[data-character="' + character + '"]').show();
 		}
 	}
 
@@ -66,7 +90,7 @@ $( function() {
 			const hiddenCreators = $('div.creators > ul > li:hidden');
 			if (hiddenCreators.length <= 50) {
 				hiddenCreators.show();
-				loadMoreLink.hide();
+				loadMoreCreatorsLink.hide();
 			} else {
 				for (let i=0; i<50; i++) {
 					hiddenCreators.eq(i).show();
@@ -76,7 +100,7 @@ $( function() {
 			const hiddenCreators = $('div.creators[data-character="' + character + '"] > ul > li:hidden');
 			if (hiddenCreators.length <= 50) {
 				hiddenCreators.show();
-				$('.loadMoreCreators[data-character="' + character + '"]').hide();
+				$('.load-more-creators[data-character="' + character + '"]').hide();
 			} else {
 				for (let i=0; i<50; i++) {
 					hiddenCreators.eq(i).show();
@@ -85,14 +109,50 @@ $( function() {
 		}
 	}
 
-	loadMoreLink.click(function (event) {
+	// show the remaining tags in batches of 50
+	function expandTags(character) {
+		if (character === '*') {
+			const hiddenTags = $('div.tags > ul > li:hidden');
+			if (hiddenTags.length <= 50) {
+				hiddenTags.show();
+				loadMoreTagsLink.hide();
+			} else {
+				for (let i=0; i<50; i++) {
+					hiddenTags.eq(i).show();
+				}
+			}
+		} else {
+			const hiddenTags = $('div.tags[data-character="' + character + '"] > ul > li:hidden');
+			if (hiddenTags.length <= 50) {
+				hiddenTags.show();
+				$('.load-more-tags[data-character="' + character + '"]').hide();
+			} else {
+				for (let i=0; i<50; i++) {
+					hiddenTags.eq(i).show();
+				}
+			}
+		}
+	}
+
+	loadMoreCreatorsLink.click(function (event) {
 		expandCreators(event.target.dataset.character);
 	});
 
-	$('.selectCreatorCharacter').click(function(event) {
+	loadMoreTagsLink.click(function (event) {
+		expandTags(event.target.dataset.character);
+	});
+
+	$('.select-creator-character').click(function(event) {
 		const target = event.target;
-		$('a.selectCreatorCharacter.selected').removeClass('selected');
+		$('a.select-creator-character.selected').removeClass('selected');
 		target.classList.add('selected');
 		toggleCreatorsForCharacter(target.dataset.character);
+	});
+
+	$('.select-tag-character').click(function(event) {
+		const target = event.target;
+		$('a.select-tag-character.selected').removeClass('selected');
+		target.classList.add('selected');
+		toggleTagsForCharacter(target.dataset.character);
 	});
 });

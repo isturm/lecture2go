@@ -23,11 +23,11 @@
   .panel-body {
     padding: 15px 18px 3px 27px;
 
-    div.creators {
+    div.creators, div.tags {
       display: none;
     }
 
-    a.load-more-link, a.selectCreatorCharacter {
+    a.load-more-link, a.select-character {
       &:hover {
         cursor: pointer;
         color: #004ad7;

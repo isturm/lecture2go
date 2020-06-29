@@ -13,6 +13,8 @@ import com.liferay.portal.kernel.search.Indexer;
 import com.liferay.portal.kernel.search.Summary;
 import com.liferay.portal.kernel.util.GetterUtil;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Locale;
 
@@ -96,6 +98,7 @@ public class VideoIndexer extends BaseIndexer<Video> {
 		setInstitutionIds(document, video.getVideoId());
 		setCreatorIds(document, video.getVideoId());
 		setMediaTypeIds(document, video.getVideoId());
+		setTags(document, video.getTags());
 
 		return document;
 	}
@@ -200,5 +203,20 @@ public class VideoIndexer extends BaseIndexer<Video> {
 		}
 
 		document.addKeyword("mediaTypeId", mediaTypeIds);
+	}
+
+	private void setTags(Document document, String tags) {
+		List<String> tagList = new ArrayList<>();
+
+		if (!tags.isEmpty()) {
+			String[] splitBySemicolon = tags.split(";");
+			if (splitBySemicolon.length > 1) {
+				tagList.addAll(Arrays.asList(splitBySemicolon));
+			} else {
+				tagList.addAll(Arrays.asList(tags.split(",")));
+			}
+		}
+
+		document.addKeyword("tags", tagList.toArray(new String[0]));
 	}
 }

@@ -5,6 +5,8 @@
 <jsp:useBean id="termId" type="java.lang.Long" scope="request"/>
 <jsp:useBean id="categoryId" type="java.lang.Long" scope="request"/>
 <jsp:useBean id="creatorId" type="java.lang.Long" scope="request"/>
+<jsp:useBean id="mediaTypeId" type="java.lang.Long" scope="request"/>
+<jsp:useBean id="tag" type="java.lang.String" scope="request"/>
 <jsp:useBean id="findVideos" type="java.lang.String" scope="request"/>
 <jsp:useBean id="sortBy" type="java.lang.String" scope="request"/>
 <jsp:useBean id="sortableFields" type="java.util.List<java.lang.String>" scope="request"/>
@@ -15,6 +17,7 @@
 <jsp:useBean id="hasCreatorFiltered" type="java.lang.Boolean" scope="request"/>
 <jsp:useBean id="hasCategoryFiltered" type="java.lang.Boolean" scope="request"/>
 <jsp:useBean id="hasMediaTypeFiltered" type="java.lang.Boolean" scope="request"/>
+<jsp:useBean id="hasTagFiltered" type="java.lang.Boolean" scope="request"/>
 <jsp:useBean id="isSearched" type="java.lang.Boolean" scope="request"/>
 <jsp:useBean id="videoList" type="java.util.List<VideoListSearchResult>" scope="request"/>
 <jsp:useBean id="lectureseriesIds" type="java.util.ArrayList<Long>" scope="request"/>
@@ -23,9 +26,11 @@
 <jsp:useBean id="presentParentInstitutions" type="java.util.List<Institution>" scope="request"/>
 <jsp:useBean id="presentInstitutions" type="java.util.List<Institution>" scope="request"/>
 <jsp:useBean id="presentTerms" type="java.util.List<Term>" scope="request"/>
-<jsp:useBean id="creatorsSplitAlphabetically" type="java.util.Map<java.lang.Character, java.util.List<Creator>>" scope="request"/>
+<jsp:useBean id="creatorsSplitAlphabetically" type="java.util.Map<java.lang.Character, java.util.Set<Creator>>" scope="request"/>
+<jsp:useBean id="tagsSplitAlphabetically" type="java.util.Map<java.lang.Character, java.util.Set<java.lang.String>>" scope="request"/>
 <jsp:useBean id="presentCategories" type="java.util.List<Category>" scope="request"/>
-<jsp:useBean id="presentMediaTypes" type="java.util.List<de.uhh.l2g.plugins.model.MediaType>" scope="request"/>
+<jsp:useBean id="presentMediaTypes" type="java.util.Set<de.uhh.l2g.plugins.model.MediaType>" scope="request"/>
+<jsp:useBean id="presentTags" type="java.util.Set<java.lang.String>" scope="request"/>
 
 <jsp:useBean id="portletURL" type="javax.portlet.PortletURL" scope="request"/>
 <jsp:useBean id="resultSetEmpty" type="java.lang.Boolean" scope="request"/>
@@ -47,6 +52,7 @@
     pageContext.setAttribute("hasCreatorFiltered", hasCreatorFiltered);
     pageContext.setAttribute("hasCategoryFiltered", hasCategoryFiltered);
     pageContext.setAttribute("hasMediaTypeFiltered", hasMediaTypeFiltered);
+    pageContext.setAttribute("hasTagFiltered", hasTagFiltered);
     pageContext.setAttribute("hasManyTerms", presentTerms.size() > maxTerms);
 %>
 
@@ -58,6 +64,7 @@
     <portlet:param name="categoryId" value="0"/>
     <portlet:param name="creatorId" value="0"/>
     <portlet:param name="mediaTypeId" value="0"/>
+    <portlet:param name="tag" value="0"/>
 </portlet:renderURL>
 
 <div class="path-wide">
@@ -79,6 +86,7 @@
             <portlet:param name="categoryId" value="0"/>
             <portlet:param name="creatorId" value="0"/>
             <portlet:param name="mediaTypeId" value="0"/>
+            <portlet:param name="tag" value="0"/>
         </portlet:renderURL>
         <span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
         <A HREF="${backURL1}" class="breadcrumb-item">${pInst.name}</A>
@@ -93,6 +101,7 @@
             <portlet:param name="categoryId" value="0"/>
             <portlet:param name="creatorId" value="0"/>
             <portlet:param name="mediaTypeId" value="0"/>
+            <portlet:param name="tag" value="0"/>
         </portlet:renderURL>
         <span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
         <A HREF="${backURL2}" class="breadcrumb-item">${insti.name}</A>
@@ -145,6 +154,7 @@
                                     <portlet:param name="categoryId" value="${categoryId}"/>
                                     <portlet:param name="creatorId" value="${creatorId}"/>
                                     <portlet:param name="mediaTypeId" value="${mediaTypeId}"/>
+                                    <portlet:param name="tag" value="${tag}"/>
                                     <portlet:param name="findVideos" value="${findVideos}"/>
                                 </portlet:renderURL>
                                 <li class="filter-menu">
@@ -176,6 +186,8 @@
                                         <portlet:param name="termId" value="${termId}"/>
                                         <portlet:param name="categoryId" value="${categoryId}"/>
                                         <portlet:param name="creatorId" value="${creatorId}"/>
+                                        <portlet:param name="mediaTypeId" value="${mediaTypeId}"/>
+                                        <portlet:param name="tag" value="${tag}"/>
                                         <portlet:param name="findVideos" value="${findVideos}"/>
                                     </portlet:renderURL>
                                     <li class="filter-menu">
@@ -207,6 +219,7 @@
                                     <portlet:param name="categoryId" value="${categoryId}"/>
                                     <portlet:param name="creatorId" value="${creatorId}"/>
                                     <portlet:param name="mediaTypeId" value="${mediaTypeId}"/>
+                                    <portlet:param name="tag" value="${tag}"/>
                                     <portlet:param name="findVideos" value="${findVideos}"/>
                                 </portlet:renderURL>
                                 <li class="filter-menu">
@@ -248,6 +261,7 @@
                                                    value='${hasCategoryFiltered ? "0" : category.categoryId}'/>
                                     <portlet:param name="creatorId" value="${creatorId}"/>
                                     <portlet:param name="mediaTypeId" value="${mediaTypeId}"/>
+                                    <portlet:param name="tag" value="${tag}"/>
                                     <portlet:param name="findVideos" value="${findVideos}"/>
                                 </portlet:renderURL>
                                 <li class="filter-menu">
@@ -277,13 +291,14 @@
                                 <portlet:param name="categoryId" value="${categoryId}"/>
                                 <portlet:param name="creatorId" value='${creatorId}'/>
                                 <portlet:param name="mediaTypeId" value="${mediaTypeId}"/>
+                                <portlet:param name="tag" value="${tag}"/>
                                 <portlet:param name="findVideos" value="${findVideos}"/>
                             </portlet:renderURL>
                             <c:if test="${creatorsSplitAlphabetically.get(character).size() == 0}">
                                 <span>${character}</span>
                             </c:if>
                             <c:if test="${creatorsSplitAlphabetically.get(character).size() > 0}">
-                                <a class="selectCreatorCharacter" data-character="${character}">
+                                <a class="select-creator-character select-character" data-character="${character}">
                                         ${character}
                                 </a>
                             </c:if>
@@ -296,9 +311,10 @@
                             <portlet:param name="categoryId" value="${categoryId}"/>
                             <portlet:param name="creatorId" value='${creatorId}'/>
                             <portlet:param name="mediaTypeId" value="${mediaTypeId}"/>
+                            <portlet:param name="tag" value="${tag}"/>
                             <portlet:param name="findVideos" value="${findVideos}"/>
                         </portlet:renderURL>
-                        <a data-character="*" class="selectCreatorCharacter selected">
+                        <a data-character="*" class="select-creator-character select-character selected">
                             Alle
                         </a>
                     </div>
@@ -315,6 +331,7 @@
                                         <portlet:param name="categoryId" value="${categoryId}"/>
                                         <portlet:param name="creatorId" value='${hasCreatorFiltered ? "0" : creator.creatorId}'/>
                                         <portlet:param name="mediaTypeId" value="${mediaTypeId}"/>
+                                        <portlet:param name="tag" value="${tag}"/>
                                         <portlet:param name="findVideos" value="${findVideos}"/>
                                     </portlet:renderURL>
                                     <li class="videoIds">
@@ -349,12 +366,12 @@
                                     </li>
                                 </c:forEach>
                             </ul>
-                            <a class="loadMoreCreators load-more-link" data-character="${creatorKey}">
+                            <a class="load-more-creators load-more-link" data-character="${creatorKey}">
                                 <liferay-ui:message key="more"/>
                             </a>
                         </div>
                     </c:forEach>
-                    <a class="loadMoreCreators load-more-link all-characters" data-character="*">
+                    <a class="load-more-creators load-more-link all-characters" data-character="*">
                         <liferay-ui:message key="more"/>
                     </a>
                 </liferay-ui:panel>
@@ -375,6 +392,7 @@
                                         <portlet:param name="categoryId" value="${categoryId}"/>
                                         <portlet:param name="creatorId" value='${creatorId}'/>
                                         <portlet:param name="mediaTypeId" value='${hasMediaTypeFiltered ? "0" : mediaType.mediaTypeId}'/>
+                                        <portlet:param name="tag" value='${tag}'/>
                                         <portlet:param name="findVideos" value="${findVideos}"/>
                                     </portlet:renderURL>
                                     <li class="videoIds">
@@ -389,6 +407,85 @@
                                 </c:forEach>
                             </ul>
                         </div>
+                    </liferay-ui:panel>
+                </c:if>
+
+                <!-- tag filter -->
+                <c:if test="${presentTags.size() > 0}">
+                    <liferay-ui:panel defaultState='${hasTagFiltered ? "open" : "collapsed"}' extended="true" title="tags"
+                                      cssClass='${hasTagFiltered ? "filtered" : "notFiltered"}'>
+                        <div class="firstCharacterSelector">
+                            <c:forEach items="${tagsSplitAlphabetically.keySet()}" var="character">
+                                <portlet:renderURL var="filterByTagCharacter">
+                                    <portlet:param name="mvcRenderCommandName" value="/view/render/list"/>
+                                    <portlet:param name="institutionId" value="${institutionId}"/>
+                                    <portlet:param name="parentInstitutionId" value="${parentInstitutionId}"/>
+                                    <portlet:param name="termId" value='${termId}'/>
+                                    <portlet:param name="categoryId" value="${categoryId}"/>
+                                    <portlet:param name="creatorId" value='${creatorId}'/>
+                                    <portlet:param name="mediaTypeId" value="${mediaTypeId}"/>
+                                    <portlet:param name="tag" value="${tag}"/>
+                                    <portlet:param name="findVideos" value="${findVideos}"/>
+                                </portlet:renderURL>
+                                <c:if test="${tagsSplitAlphabetically.get(character).size() == 0}">
+                                    <span>${character}</span>
+                                </c:if>
+                                <c:if test="${tagsSplitAlphabetically.get(character).size() > 0}">
+                                    <a class="select-character select-tag-character" data-character="${character}">
+                                            ${character}
+                                    </a>
+                                </c:if>
+                            </c:forEach>
+                            <portlet:renderURL var="filterByTagCharacter">
+                                <portlet:param name="mvcRenderCommandName" value="/view/render/list"/>
+                                <portlet:param name="institutionId" value="${institutionId}"/>
+                                <portlet:param name="parentInstitutionId" value="${parentInstitutionId}"/>
+                                <portlet:param name="termId" value='${termId}'/>
+                                <portlet:param name="categoryId" value="${categoryId}"/>
+                                <portlet:param name="creatorId" value='${creatorId}'/>
+                                <portlet:param name="mediaTypeId" value="${mediaTypeId}"/>
+                                <portlet:param name="tag" value="${tag}"/>
+                                <portlet:param name="findVideos" value="${findVideos}"/>
+                            </portlet:renderURL>
+                            <a data-character="*" class="select-character select-tag-character selected">
+                                Alle
+                            </a>
+                        </div>
+
+                        <c:forEach items="${tagsSplitAlphabetically.keySet()}" var="tagKey">
+                            <div class="tags" data-character="${tagKey}">
+                                <ul class="colored-bullets">
+                                    <c:forEach items="${tagsSplitAlphabetically.get(tagKey)}" var="tag">
+                                        <portlet:renderURL var="filterByTag">
+                                            <portlet:param name="mvcRenderCommandName" value="/view/render/list"/>
+                                            <portlet:param name="institutionId" value="${institutionId}"/>
+                                            <portlet:param name="parentInstitutionId" value="${parentInstitutionId}"/>
+                                            <portlet:param name="termId" value='${termId}'/>
+                                            <portlet:param name="categoryId" value="${categoryId}"/>
+                                            <portlet:param name="creatorId" value='${creatorId}'/>
+                                            <portlet:param name="mediaTypeId" value="${mediaTypeId}"/>
+                                            <portlet:param name="tag" value="${hasTagFiltered ? \"0\" : tag}"/>
+                                            <portlet:param name="findVideos" value="${findVideos}"/>
+                                        </portlet:renderURL>
+                                        <li class="videoIds">
+                                            <a href="${filterByTag}" class="row">
+                                                <div class="filter-menu-link">
+                                                        ${tag}
+                                                </div>
+                                                <div class="autofit-col-expand"></div>
+                                                <span ${hasTagFiltered ? 'class="icon-large icon-remove"' : ''}></span>
+                                            </a>
+                                        </li>
+                                    </c:forEach>
+                                </ul>
+                                <a class="load-more-tags load-more-link" data-character="${tagKey}">
+                                    <liferay-ui:message key="more"/>
+                                </a>
+                            </div>
+                        </c:forEach>
+                        <a class="load-more-tags load-more-link all-characters" data-character="*">
+                            <liferay-ui:message key="more"/>
+                        </a>
                     </liferay-ui:panel>
                 </c:if>
             </liferay-ui:panel-container>
@@ -475,14 +572,14 @@
                                             <c:set var="cId"
                                                    value="<%=Video_CategoryLocalServiceUtil.getByVideo(lectser.getLectureseriesId()).get(0).getCategoryId()%>"/>
                                             <c:set var="cat"><a
-                                                    href='/l2go/-/get/0/0/${cId}/0/0/'><%=CategoryLocalServiceUtil.getById((Long) pageContext.getAttribute("cId")).getName()%>
+                                                    href='/l2go/-/get/0/0/${cId}/0/0/0/'><%=CategoryLocalServiceUtil.getById((Long) pageContext.getAttribute("cId")).getName()%>
                                             </a></c:set>
                                                 ${cat}
                                             <c:set var="iId" value="${vi.get(0).institutionId}"/>
                                             <c:set var="inst"
                                                    value="<%=InstitutionLocalServiceUtil.getById((Long)pageContext.getAttribute("iId"))%>"/>
                                             <c:set var="instLink"><a
-                                                    href='/l2go/-/get/${inst.institutionId}/${inst.parentId}/0/0/0/'>${inst.name}</a></a></c:set>
+                                                    href='/l2go/-/get/${inst.institutionId}/${inst.parentId}/0/0/0/0/'>${inst.name}</a></a></c:set>
                                             <%
                                                 } catch (Exception e) {
                                                 }
@@ -519,7 +616,7 @@
                                     <div class="video-content">
                                         <div class="video-label">
                                             <c:set var="cat">
-                                                <a href='/l2go/-/get/0/0/${lectser.categoryId}/0/0/'><%=CategoryLocalServiceUtil.getById(lectser.getCategoryId()).getName()%>
+                                                <a href='/l2go/-/get/0/0/${lectser.categoryId}/0/0/0/'><%=CategoryLocalServiceUtil.getById(lectser.getCategoryId()).getName()%>
                                                 </a>
                                             </c:set>
                                             <c:set var="li"
@@ -530,7 +627,7 @@
                                                    value="<%=InstitutionLocalServiceUtil.getById((Long)pageContext.getAttribute("iId"))%>"/>
                                             <span class="separator">|</span>
                                             <c:set var="instLink"><a
-                                                    href='/l2go/-/get/${inst.institutionId}/${inst.parentId}/0/0/0/'>${inst.name}</a></c:set>
+                                                    href='/l2go/-/get/${inst.institutionId}/${inst.parentId}/0/0/0/0/'>${inst.name}</a></c:set>
                                                 ${instLink}
                                             <%try {%>
                                             <c:set var="term"
