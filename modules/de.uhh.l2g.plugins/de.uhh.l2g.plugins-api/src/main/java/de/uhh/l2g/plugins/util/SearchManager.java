@@ -110,6 +110,9 @@ public class SearchManager {
 		if (fields.containsKey("mediaTypeId")) {
 			searchResult.setMediaTypeId(document.getLong("mediaTypeId"));
 		}
+		if (fields.containsKey("tags")) {
+			searchResult.setTags(document.getString("tags"));
+		}
 		if (fields.containsKey("name")) {
 			searchResult.setName(document.getString("name"));
 		}

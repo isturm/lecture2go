@@ -8,6 +8,8 @@ public class VideoListSearchResult {
 	private long videoId = -1, lectureseriesId = -1, latestOpenAccessVideoId = -1, previewVideoId = -1, termId = -1,
 			categoryId = -1, mediaTypeId = -1, numberOfOpenAccessVideos = 0;
 
+	private String tags;
+
 	private String name;
 
 	private List<Long> videoIds = new ArrayList<Long>();
@@ -74,6 +76,14 @@ public class VideoListSearchResult {
 
 	public void setMediaTypeId(long mediaTypeId) {
 		this.mediaTypeId = mediaTypeId;
+	}
+
+	public String getTags() {
+		return tags;
+	}
+
+	public void setTags(String tags) {
+		this.tags = tags;
 	}
 
 	public String getName() {
