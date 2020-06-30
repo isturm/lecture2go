@@ -1,5 +1,6 @@
 package de.uhh.l2g.plugins.guest.videos.portlet;
 
+import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
@@ -13,6 +14,8 @@ import java.util.Arrays;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
+import java.util.TreeSet;
 
 import javax.portlet.PortletException;
 import javax.portlet.PortletURL;
@@ -42,6 +45,7 @@ import de.uhh.l2g.plugins.util.SearchManager.SearchType;
 		"mvc.command.name=/view/render/list", "mvc.command.name=/" }, service = MVCRenderCommand.class)
 public class ViewRenderList implements MVCRenderCommand {
 	private static final Log _log = LogFactoryUtil.getLog(OpenAccessVideosPortlet.class);
+	private final String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ+";
 
 	@Reference
 	protected SearchManager searchManager;
@@ -57,6 +61,7 @@ public class ViewRenderList implements MVCRenderCommand {
 		Integer searchTypeCode = ParamUtil.getInteger(renderRequest, "searchType", 0);
 		SearchType searchType = SearchType.fromCode(searchTypeCode);
 		String findVideos = ParamUtil.getString(renderRequest, "findVideos", "");
+		String tag = ParamUtil.getString(renderRequest, "tag", "0");
 		String sortBy = ParamUtil.getString(renderRequest, "sortBy", "");
 		int maxTerms = 4;
 		boolean hasInstitutionFiltered = (institutionId != 0);
@@ -65,6 +70,7 @@ public class ViewRenderList implements MVCRenderCommand {
 		boolean hasCreatorFiltered = (creatorId != 0);
 		boolean hasCategoryFiltered = (categoryId != 0);
 		boolean hasMediaTypeFiltered = (mediaTypeId != 0);
+		boolean hasTagFiltered = (!tag.equals("0"));
 		boolean isSearched = (findVideos.trim().length() > 0);
 		//
 		long companyId = PortalUtil.getCompanyId(renderRequest);
@@ -96,6 +102,9 @@ public class ViewRenderList implements MVCRenderCommand {
 		if (hasMediaTypeFiltered) {
 			filters.put("mediaTypeId", mediaTypeId);
 		}
+		if (hasTagFiltered) {
+			filters.put("tags", tag.toLowerCase());
+		}
 
 		try {
 			videoList = searchManager.searchVideoList(companyId, searchType, findVideos, filters, -1, sortBy);
@@ -117,11 +126,11 @@ public class ViewRenderList implements MVCRenderCommand {
 		// get the institutions, parentinstitutuons, terms, categories and creators
 		// which are part of the dataset. those are displayed so the user can do further
 		// filtering
-		List<Institution> presentParentInstitutions = new ArrayList<Institution>();
-		List<Institution> presentInstitutions = new ArrayList<Institution>();
-		List<Term> presentTerms = new ArrayList<Term>();
-		List<Category> presentCategories = new ArrayList<Category>();
-		List<MediaType> presentMediaTypes = new ArrayList<MediaType>();
+		List<Institution> presentParentInstitutions = new ArrayList<>();
+		List<Institution> presentInstitutions = new ArrayList<>();
+		List<Term> presentTerms = new ArrayList<>();
+		List<Category> presentCategories = new ArrayList<>();
+		Set<MediaType> presentMediaTypes;
 
 		// if a filter is selected, only show the selected one else show all
 		if (hasParentInstitutionFiltered) {
@@ -151,37 +160,24 @@ public class ViewRenderList implements MVCRenderCommand {
 		/*
 		 * FILTER BY MEDIA TYPE
 		 */
-		if (hasMediaTypeFiltered) {
-			try {
-				presentMediaTypes.add(MediaTypeLocalServiceUtil.getMediaType(mediaTypeId));
-			} catch (Exception e) {
-				_log.error("can't add media type id " + mediaTypeId);
-			}
-		} else {
-			ArrayList<Long> allVideoIds = new ArrayList<>();
+		presentMediaTypes = filterByMediaTypes(hasMediaTypeFiltered, mediaTypeId, videoIds, lectureseriesIds);
 
-			lectureseriesIds.forEach(lectureseriesId -> {
-				VideoLocalServiceUtil.getByLectureseries(lectureseriesId).forEach(video -> {
-					allVideoIds.add(video.getVideoId());
-				});
-			});
-
-			allVideoIds.addAll(videoIds);
-			presentMediaTypes.addAll(MediaTypeLocalServiceUtil.getMediaTypesFromVideoIds(allVideoIds));
-		}
+		/*
+		 * FILTER BY TAGS
+		 */
+		Map<Character, Set<String>> tagsSplitAlphabetically = splitTagsAlphabetically(
+				filterByTags(hasTagFiltered, tag, videoIds, lectureseriesIds));
+		Set<String> presentTags = filterByTags(hasTagFiltered, tag, videoIds, lectureseriesIds);
 
 		/*
 		 * FILTER BY CREATOR
 		 */
-		List<Creator> presentCreators = filterCreators(hasCreatorFiltered, creatorId, lectureseriesIds, videoIds);
-		Map<Character, List<Creator>> creatorsSplitAlphabetically = splitCreatorsAlphabetically(presentCreators);
-		Character selectedCreatorsChar = ParamUtil.getString(renderRequest, "selectedCreatorsChar", "*").charAt(0);
-		if (selectedCreatorsChar != '*') {
-			presentCreators = creatorsSplitAlphabetically.get(selectedCreatorsChar);
-		} else {
-			presentCreators = flattenCreatorsAlphabetically(creatorsSplitAlphabetically);
-		}
+		Map<Character, List<Creator>> creatorsSplitAlphabetically = splitCreatorsAlphabetically(
+				filterCreators(hasCreatorFiltered, creatorId, lectureseriesIds, videoIds));
 
+		/*
+		 * FILTER BY CATEGORY
+		 */
 		if (hasCategoryFiltered) {
 			try {
 				presentCategories.add(CategoryLocalServiceUtil.getById(categoryId));
@@ -201,6 +197,7 @@ public class ViewRenderList implements MVCRenderCommand {
 		portletURL.setParameter("categoryId", categoryId.toString());
 		portletURL.setParameter("creatorId", creatorId.toString());
 		portletURL.setParameter("mediaTypeId", String.valueOf(mediaTypeId));
+		portletURL.setParameter("tag", tag);
 		portletURL.setParameter("searchType", searchTypeCode.toString());
 		portletURL.setParameter("findVideos", findVideos);
 		//
@@ -238,6 +235,7 @@ public class ViewRenderList implements MVCRenderCommand {
 		renderRequest.setAttribute("termId", termId);
 		renderRequest.setAttribute("categoryId", categoryId);
 		renderRequest.setAttribute("creatorId", creatorId);
+		renderRequest.setAttribute("tag", tag);
 		renderRequest.setAttribute("mediaTypeId", mediaTypeId);
 		renderRequest.setAttribute("searchType", searchTypeCode);
 		renderRequest.setAttribute("findVideos", findVideos);
@@ -250,6 +248,7 @@ public class ViewRenderList implements MVCRenderCommand {
 		renderRequest.setAttribute("hasCreatorFiltered", hasCreatorFiltered);
 		renderRequest.setAttribute("hasCategoryFiltered", hasCategoryFiltered);
 		renderRequest.setAttribute("hasMediaTypeFiltered", hasMediaTypeFiltered);
+		renderRequest.setAttribute("hasTagFiltered", hasTagFiltered);
 		renderRequest.setAttribute("isSearched", isSearched);
 		renderRequest.setAttribute("videoList", videoList);
 		renderRequest.setAttribute("lectureseriesIds", lectureseriesIds);
@@ -258,8 +257,10 @@ public class ViewRenderList implements MVCRenderCommand {
 		renderRequest.setAttribute("presentInstitutions", presentInstitutions);
 		renderRequest.setAttribute("presentTerms", presentTerms);
 		renderRequest.setAttribute("creatorsSplitAlphabetically", creatorsSplitAlphabetically);
+		renderRequest.setAttribute("tagsSplitAlphabetically", tagsSplitAlphabetically);
 		renderRequest.setAttribute("presentCategories", presentCategories);
 		renderRequest.setAttribute("presentMediaTypes", presentMediaTypes);
+		renderRequest.setAttribute("presentTags", presentTags);
 		renderRequest.setAttribute("portletURL", portletURL);
 		renderRequest.setAttribute("resultSetEmpty", resultSetEmpty);
 		//
@@ -269,6 +270,129 @@ public class ViewRenderList implements MVCRenderCommand {
 		//
 
 		return "/viewList.jsp";
+	}
+
+	/**
+	 *
+	 * @param hasTagFiltered
+	 * @param tag
+	 * @param videoIds
+	 * @param lectureseriesIds
+	 * @return
+	 */
+	private Set<String> filterByTags(boolean hasTagFiltered, String tag, List<Long> videoIds,
+			List<Long> lectureseriesIds) {
+		Set<String> tags = new TreeSet<>();
+
+		if (hasTagFiltered) {
+			tags.add(tag);
+		} else {
+			videoIds.forEach(videoId -> {
+				try {
+					tags.addAll(Arrays.asList(getTagsForString(VideoLocalServiceUtil.getVideo(videoId).getTags())));
+				} catch (PortalException portalException) {
+					portalException.printStackTrace();
+				}
+			});
+
+			lectureseriesIds.forEach(lectureseriesId -> {
+				VideoLocalServiceUtil.getByLectureseries(lectureseriesId).forEach(video -> {
+					tags.addAll(Arrays.asList(getTagsForString(video.getTags())));
+				});
+			});
+		}
+
+		return tags;
+	}
+
+	/**
+	 * Takes a flat list of tags and sorts it to an alphabetical map
+	 *
+	 * @param tagList {Apple; Bee; Anaconda; ...}
+	 * @return A={Anaconda; Apple; ...}, B={Bee; ...}
+	 */
+	private Map<Character, Set<String>> splitTagsAlphabetically(Set<String> tagList) {
+		Map<Character, Set<String>> presentTagsAlphabetMap = new HashMap<>();
+
+		for (int i = 0; i < alphabet.length(); i++) {
+			presentTagsAlphabetMap.put(alphabet.charAt(i), new TreeSet<>());
+		}
+
+		tagList.forEach(tag -> {
+			if (!tag.trim().isEmpty()) {
+				char firstChar = mapSpecialCharacters(tag);
+
+				Set<String> tagsForChar = presentTagsAlphabetMap.get(firstChar);
+
+				if (tagsForChar != null) {
+					tagsForChar.add(tag.trim());
+				} else {
+					presentTagsAlphabetMap.get('+').add(tag.trim());
+				}
+			}
+		});
+
+		return presentTagsAlphabetMap;
+	}
+
+	/**
+	 *
+	 * @param string
+	 * @return
+	 */
+	private char mapSpecialCharacters(String string) {
+		char firstChar = string.trim().toUpperCase().charAt(0);
+
+		// Umlauts/accents are mapped to "base" character
+		if (firstChar == 'Š' || firstChar == 'Ş')
+			firstChar = 'S';
+		if (firstChar == 'Ö')
+			firstChar = 'O';
+		if (firstChar == 'Ü')
+			firstChar = 'U';
+		if (firstChar == 'Ä')
+			firstChar = 'A';
+		if (firstChar == 'İ')
+			firstChar = 'I';
+
+		return firstChar;
+	}
+
+	/**
+	 * Accepts two lists with video IDs and lecture series IDs and creates a list of
+	 * media types for those videos. If hasMediaTypeFiltered is set to true, only
+	 * media types for mediaTypeId are returned.
+	 * 
+	 * @param hasMediaTypeFiltered true, if filtering for only one media type
+	 * @param mediaTypeId          media type ID you're filtering for. Only relevant
+	 *                             if hasMediaTypeFiltered is set to true
+	 * @param videoIds             list of video IDs
+	 * @param lectureseriesIds     list of lecture series IDs
+	 * @return list of media types for videos and videos of lecture series.
+	 */
+	private Set<MediaType> filterByMediaTypes(boolean hasMediaTypeFiltered, long mediaTypeId, ArrayList<Long> videoIds,
+			ArrayList<Long> lectureseriesIds) {
+		Set<MediaType> mediaTypes = new TreeSet<>();
+		if (hasMediaTypeFiltered) {
+			try {
+				mediaTypes.add(MediaTypeLocalServiceUtil.getMediaType(mediaTypeId));
+			} catch (Exception e) {
+				_log.error("can't add media type id " + mediaTypeId);
+			}
+		} else {
+			ArrayList<Long> allVideoIds = new ArrayList<>();
+
+			lectureseriesIds.forEach(lectureseriesId -> {
+				VideoLocalServiceUtil.getByLectureseries(lectureseriesId).forEach(video -> {
+					allVideoIds.add(video.getVideoId());
+				});
+			});
+
+			allVideoIds.addAll(videoIds);
+			mediaTypes.addAll(MediaTypeLocalServiceUtil.getMediaTypesFromVideoIds(allVideoIds));
+		}
+
+		return mediaTypes;
 	}
 
 	/**
@@ -304,22 +428,6 @@ public class ViewRenderList implements MVCRenderCommand {
 	}
 
 	/**
-	 * Takes a map with creators that are mapped to their last name's first
-	 * character and returns a flat alphabetical list. Special characters are last
-	 * in the list (unlike initial sorting)
-	 * 
-	 * @param splitMap A={Aaronson, John; ...}, B={Biene, Maja; ...}
-	 * @return {Aaronson, John; ...; Biene, Maja; ...}
-	 */
-	private List<Creator> flattenCreatorsAlphabetically(Map<Character, List<Creator>> splitMap) {
-		List<Creator> creatorsAlphabetically = new ArrayList<>();
-		splitMap.forEach((key, values) -> {
-			creatorsAlphabetically.addAll(values);
-		});
-		return creatorsAlphabetically;
-	}
-
-	/**
 	 * Takes a flat list of creators and sorts it to an alphabetical map
 	 * 
 	 * @param creatorList {Biene, Maja; Aaronson, John; ...}
@@ -327,27 +435,13 @@ public class ViewRenderList implements MVCRenderCommand {
 	 */
 	private Map<Character, List<Creator>> splitCreatorsAlphabetically(List<Creator> creatorList) {
 		Map<Character, List<Creator>> presentCreatorsAlphabetMap = new HashMap<>();
-		String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ+";
 
 		for (int i = 0; i < alphabet.length(); i++) {
 			presentCreatorsAlphabetMap.put(alphabet.charAt(i), new ArrayList<>());
 		}
 
 		creatorList.forEach(creator -> {
-			char firstChar = creator.getLastName().toUpperCase().charAt(0);
-
-			// Umlauts/accents are mapped to "base" character
-			if (firstChar == 'Š' || firstChar == 'Ş')
-				firstChar = 'S';
-			if (firstChar == 'Ö')
-				firstChar = 'O';
-			if (firstChar == 'Ü')
-				firstChar = 'U';
-			if (firstChar == 'Ä')
-				firstChar = 'A';
-			if (firstChar == 'İ')
-				firstChar = 'I';
-
+			char firstChar = mapSpecialCharacters(creator.getLastName());
 			List<Creator> creatorsForChar = presentCreatorsAlphabetMap.get(firstChar);
 
 			if (creatorsForChar != null) {
@@ -358,6 +452,27 @@ public class ViewRenderList implements MVCRenderCommand {
 		});
 
 		return presentCreatorsAlphabetMap;
+	}
+
+	/**
+	 * Accepts a string with arbitrarily formatted tags and tries to make sense of
+	 * it.
+	 * 
+	 * @param tagsString String with tags.
+	 * @return Tags as array; split by semicolon, comma, or not at all (in that
+	 *         order).
+	 */
+	private String[] getTagsForString(String tagsString) {
+		if (tagsString.isEmpty()) {
+			return new String[0];
+		}
+
+		String[] splitBySemicolon = tagsString.split(";");
+		if (splitBySemicolon.length > 1) {
+			return splitBySemicolon;
+		} else {
+			return tagsString.split(",");
+		}
 	}
 
 }

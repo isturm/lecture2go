@@ -64,7 +64,7 @@
 	        A.one('#<portlet:namespace/>submitForm').on('submit',
 	        		function(event) {
 	        			var searchWord=$(inputField).val();
-	        			$('#<portlet:namespace/>submitForm').attr('action', '/web/vod/l2go/-/get/0/0/0/0/0/0/1/' + encodeURIComponent(searchWord).replace(/\./g, '%2E'));
+	        			$('#<portlet:namespace/>submitForm').attr('action', '/web/vod/l2go/-/get/0/0/0/0/0/0/0/0/' + encodeURIComponent(searchWord).replace(/\./g, '%2E'));
 	        		}
 	        );
 		});	
