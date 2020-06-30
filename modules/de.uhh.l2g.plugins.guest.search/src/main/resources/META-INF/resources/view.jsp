@@ -56,7 +56,7 @@
 	        		function(event) {
 	        			var searchWord=event.result.text;
 	        			$(inputField).val(searchWord);
-	        			$('#<portlet:namespace/>submitForm').attr('action', '/web/vod/l2go/-/get/0/0/0/0/0/0/1/' + encodeURIComponent(searchWord).replace(/\./g, '%2E'));
+	        			$('#<portlet:namespace/>submitForm').attr('action', '/web/vod/l2go/-/get/0/0/0/0/0/0/0/1/' + encodeURIComponent(searchWord).replace(/\./g, '%2E'));
 	        			$('#<portlet:namespace/>submitForm').submit();
 	        		}
 	        );

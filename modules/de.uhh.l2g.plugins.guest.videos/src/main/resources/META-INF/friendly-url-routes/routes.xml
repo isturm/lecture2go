@@ -11,7 +11,7 @@
 		<implicit-parameter name="mvcRenderCommandName">/view/render/details</implicit-parameter>
     </route>
     <route>
-        <pattern>/{institutionId}/{parentInstitutionId}/{categoryId}/{creatorId}/{termId}/{mediaTypeId}/{tag}/{searchMode}/{findVideos}</pattern>
+        <pattern>/{institutionId}/{parentInstitutionId}/{categoryId}/{creatorId}/{termId}/{mediaTypeId}/{tag}/{searchType}/{findVideos}</pattern>
 		<implicit-parameter name="mvcRenderCommandName">/view/render/list</implicit-parameter>
     </route>
     <route>
