@@ -111,28 +111,28 @@
 <h1><liferay-ui:message key="video-catalog"/></h1>
 
 <div class="sortByList">
-	<c:forEach items="${sortableFields}" var="sortBySelect">
-		<portlet:renderURL var="sort">
-		    <portlet:param name="mvcRenderCommandName" value="/view/render/list"/>
-		    <portlet:param name="parentInstitutionId" value='${parentInstitutionId}'/>
-		    <portlet:param name="institutionId" value="${institutionId}"/>
-		    <portlet:param name="termId" value="${termId}"/>
-		    <portlet:param name="categoryId" value="${categoryId}"/>
-		    <portlet:param name="creatorId" value="${creatorId}"/>
-		    <portlet:param name="mediaTypeId" value="${mediaTypeId}"/>
-		    <portlet:param name="findVideos" value="${findVideos}"/>
-		    <portlet:param name="sortBy" value="${sortBySelect}"/>
-		</portlet:renderURL>
+    <c:forEach items="${sortableFields}" var="sortBySelect">
+        <portlet:renderURL var="sort">
+            <portlet:param name="mvcRenderCommandName" value="/view/render/list"/>
+            <portlet:param name="parentInstitutionId" value='${parentInstitutionId}'/>
+            <portlet:param name="institutionId" value="${institutionId}"/>
+            <portlet:param name="termId" value="${termId}"/>
+            <portlet:param name="categoryId" value="${categoryId}"/>
+            <portlet:param name="creatorId" value="${creatorId}"/>
+            <portlet:param name="mediaTypeId" value="${mediaTypeId}"/>
+            <portlet:param name="findVideos" value="${findVideos}"/>
+            <portlet:param name="sortBy" value="${sortBySelect}"/>
+        </portlet:renderURL>
         <c:choose>
             <c:when test="${sortBySelect == sortBy}">
                 <span class="selected"><liferay-ui:message key="sort-by-${sortBySelect}"/></span>
             </c:when>
             <c:otherwise>
-            	<a href="${sort}"><liferay-ui:message key="sort-by-${sortBySelect}"/></a>
+                <a href="${sort}"><liferay-ui:message key="sort-by-${sortBySelect}"/></a>
             </c:otherwise>
         </c:choose>
-		<span>|</span>
-	</c:forEach>
+        <span>|</span>
+    </c:forEach>
 </div>
 
 <div class="catalogue-container row">
@@ -283,44 +283,22 @@
                                   cssClass='${hasCreatorFiltered ? "filtered" : "notFiltered"}'>
                     <div class="firstCharacterSelector">
                         <c:forEach items="${creatorsSplitAlphabetically.keySet()}" var="character">
-                            <portlet:renderURL var="filterByCreatorCharacter">
-                                <portlet:param name="mvcRenderCommandName" value="/view/render/list"/>
-                                <portlet:param name="institutionId" value="${institutionId}"/>
-                                <portlet:param name="parentInstitutionId" value="${parentInstitutionId}"/>
-                                <portlet:param name="termId" value='${termId}'/>
-                                <portlet:param name="categoryId" value="${categoryId}"/>
-                                <portlet:param name="creatorId" value='${creatorId}'/>
-                                <portlet:param name="mediaTypeId" value="${mediaTypeId}"/>
-                                <portlet:param name="tag" value="${tag}"/>
-                                <portlet:param name="findVideos" value="${findVideos}"/>
-                            </portlet:renderURL>
                             <c:if test="${creatorsSplitAlphabetically.get(character).size() == 0}">
                                 <span>${character}</span>
                             </c:if>
                             <c:if test="${creatorsSplitAlphabetically.get(character).size() > 0}">
-                                <a class="select-creator-character select-character" data-character="${character}">
+                                <a class="select-character" data-character="${character}" data-entity="creator">
                                         ${character}
                                 </a>
                             </c:if>
                         </c:forEach>
-                        <portlet:renderURL var="filterByCreatorCharacter">
-                            <portlet:param name="mvcRenderCommandName" value="/view/render/list"/>
-                            <portlet:param name="institutionId" value="${institutionId}"/>
-                            <portlet:param name="parentInstitutionId" value="${parentInstitutionId}"/>
-                            <portlet:param name="termId" value='${termId}'/>
-                            <portlet:param name="categoryId" value="${categoryId}"/>
-                            <portlet:param name="creatorId" value='${creatorId}'/>
-                            <portlet:param name="mediaTypeId" value="${mediaTypeId}"/>
-                            <portlet:param name="tag" value="${tag}"/>
-                            <portlet:param name="findVideos" value="${findVideos}"/>
-                        </portlet:renderURL>
-                        <a data-character="*" class="select-creator-character select-character selected">
+                        <a class="select-character selected" data-character="*" data-entity="creator">
                             Alle
                         </a>
                     </div>
 
                     <c:forEach items="${creatorsSplitAlphabetically.keySet()}" var="creatorKey">
-                        <div class="creators creators-${creatorKey}" data-character="${creatorKey}">
+                        <div class="alphabet-list" data-character="${creatorKey}" data-entity="creator">
                             <ul class="colored-bullets">
                                 <c:forEach items="${creatorsSplitAlphabetically.get(creatorKey)}" var="creator">
                                     <portlet:renderURL var="filterByCreator">
@@ -366,12 +344,12 @@
                                     </li>
                                 </c:forEach>
                             </ul>
-                            <a class="load-more-creators load-more-link" data-character="${creatorKey}">
+                            <a class="load-more-link" data-character="${creatorKey}" data-entity="creator">
                                 <liferay-ui:message key="more"/>
                             </a>
                         </div>
                     </c:forEach>
-                    <a class="load-more-creators load-more-link all-characters" data-character="*">
+                    <a class="load-more-link all-characters" data-character="*" data-entity="creator">
                         <liferay-ui:message key="more"/>
                     </a>
                 </liferay-ui:panel>
@@ -416,44 +394,22 @@
                                       cssClass='${hasTagFiltered ? "filtered" : "notFiltered"}'>
                         <div class="firstCharacterSelector">
                             <c:forEach items="${tagsSplitAlphabetically.keySet()}" var="character">
-                                <portlet:renderURL var="filterByTagCharacter">
-                                    <portlet:param name="mvcRenderCommandName" value="/view/render/list"/>
-                                    <portlet:param name="institutionId" value="${institutionId}"/>
-                                    <portlet:param name="parentInstitutionId" value="${parentInstitutionId}"/>
-                                    <portlet:param name="termId" value='${termId}'/>
-                                    <portlet:param name="categoryId" value="${categoryId}"/>
-                                    <portlet:param name="creatorId" value='${creatorId}'/>
-                                    <portlet:param name="mediaTypeId" value="${mediaTypeId}"/>
-                                    <portlet:param name="tag" value="${tag}"/>
-                                    <portlet:param name="findVideos" value="${findVideos}"/>
-                                </portlet:renderURL>
                                 <c:if test="${tagsSplitAlphabetically.get(character).size() == 0}">
                                     <span>${character}</span>
                                 </c:if>
                                 <c:if test="${tagsSplitAlphabetically.get(character).size() > 0}">
-                                    <a class="select-character select-tag-character" data-character="${character}">
+                                    <a class="select-character" data-character="${character}" data-entity="tag">
                                             ${character}
                                     </a>
                                 </c:if>
                             </c:forEach>
-                            <portlet:renderURL var="filterByTagCharacter">
-                                <portlet:param name="mvcRenderCommandName" value="/view/render/list"/>
-                                <portlet:param name="institutionId" value="${institutionId}"/>
-                                <portlet:param name="parentInstitutionId" value="${parentInstitutionId}"/>
-                                <portlet:param name="termId" value='${termId}'/>
-                                <portlet:param name="categoryId" value="${categoryId}"/>
-                                <portlet:param name="creatorId" value='${creatorId}'/>
-                                <portlet:param name="mediaTypeId" value="${mediaTypeId}"/>
-                                <portlet:param name="tag" value="${tag}"/>
-                                <portlet:param name="findVideos" value="${findVideos}"/>
-                            </portlet:renderURL>
-                            <a data-character="*" class="select-character select-tag-character selected">
+                            <a class="select-character selected" data-character="*" data-entity="tag">
                                 Alle
                             </a>
                         </div>
 
                         <c:forEach items="${tagsSplitAlphabetically.keySet()}" var="tagKey">
-                            <div class="tags" data-character="${tagKey}">
+                            <div class="alphabet-list" data-character="${tagKey}" data-entity="tag">
                                 <ul class="colored-bullets">
                                     <c:forEach items="${tagsSplitAlphabetically.get(tagKey)}" var="tag">
                                         <portlet:renderURL var="filterByTag">
@@ -478,12 +434,12 @@
                                         </li>
                                     </c:forEach>
                                 </ul>
-                                <a class="load-more-tags load-more-link" data-character="${tagKey}">
+                                <a class="load-more-link" data-character="${tagKey}" data-entity="tag">
                                     <liferay-ui:message key="more"/>
                                 </a>
                             </div>
                         </c:forEach>
-                        <a class="load-more-tags load-more-link all-characters" data-character="*">
+                        <a class="load-more-link all-characters" data-character="*" data-entity="tag">
                             <liferay-ui:message key="more"/>
                         </a>
                     </liferay-ui:panel>
