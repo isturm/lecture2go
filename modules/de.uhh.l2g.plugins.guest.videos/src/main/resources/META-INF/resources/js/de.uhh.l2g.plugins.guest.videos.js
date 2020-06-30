@@ -33,126 +33,68 @@ $( function() {
 	    $('#loadMoreTerms').hide();
 	});
 
-	// only show 4 creators at first
-	const maxCreators = 4;
-	const loadMoreCreatorsLink = $('.load-more-creators');
-	const loadMoreTagsLink = $('.load-more-tags');
-	toggleCreatorsForCharacter('*');
-	toggleTagsForCharacter('*');
+	// only show 4 entries at first
+	const maxEntries = 4;
+	toggleEntriesForCharacter('*', 'creator');
+	toggleEntriesForCharacter('*', 'tag');
 
-	function toggleCreatorsForCharacter(character) {
-		let hiddenCreators;
+	function toggleEntriesForCharacter(character, entity) {
+		let hiddenEntries;
 
 		if (character === '*') {
-			$('div.creators').show();
-			$('div.creators > ul > li').slice(maxCreators).hide();
-			hiddenCreators = $('div.creators > ul > li:hidden');
+			$('div.alphabet-list[data-entity="' + entity + '"]').show();
+			$('div.alphabet-list[data-entity="' + entity + '"] > ul > li').slice(maxEntries).hide();
+			hiddenEntries = $('div.alphabet-list[data-entity="' + entity + '"] > ul > li:hidden');
 		} else {
-			$('div.creators').hide();
-			$('div.creators[data-character="' + character + '"]').show();
-			const creators = $('div.creators[data-character="' + character + '"] > ul > li');
-			creators.slice(0, maxCreators).show();
-			creators.slice(maxCreators).hide();
-			hiddenCreators = $('div.creators[data-character="' + character + '"] > ul > li:hidden');
+			$('div.alphabet-list[data-entity="' + entity + '"]').hide();
+			$('div.alphabet-list[data-entity="' + entity + '"][data-character="' + character + '"]').show();
+			const listEntries = $('div.alphabet-list[data-entity="' + entity + '"][data-character="' + character + '"] > ul > li');
+			listEntries.slice(0, maxEntries).show();
+			listEntries.slice(maxEntries).hide();
+			hiddenEntries = $('div.alphabet-list[data-entity="' + entity + '"][data-character="' + character + '"] > ul > li:hidden');
 		}
 
-		loadMoreCreatorsLink.hide();
-		if (hiddenCreators.length > maxCreators) {
-			$('.load-more-creators[data-character="' + character + '"]').show();
+		$('a.load-more-link[data-entity="' + entity + '"]').hide();
+		if (hiddenEntries.length > maxEntries) {
+			$('.load-more-link[data-entity="' + entity + '"][data-character="' + character + '"]').show();
 		}
 	}
 
-	function toggleTagsForCharacter(character) {
-		let hiddenTags;
-
+	// show the remaining list entries in batches of 50
+	function expandEntries(character, entity) {
+		let hiddenEntries = $('div.alphabet-list[data-entity="' + entity + '"] > ul > li:hidden');
 		if (character === '*') {
-			$('div.tags').show();
-			$('div.tags > ul > li').slice(maxCreators).hide();
-			hiddenTags = $('div.tags > ul > li:hidden');
-		} else {
-			$('div.tags').hide();
-			$('div.tags[data-character="' + character + '"]').show();
-			const tags = $('div.tags[data-character="' + character + '"] > ul > li');
-			tags.slice(0, maxCreators).show();
-			tags.slice(maxCreators).hide();
-			hiddenTags = $('div.tags[data-character="' + character + '"] > ul > li:hidden');
-		}
-
-		loadMoreTagsLink.hide();
-		if (hiddenTags.length > maxCreators) {
-			$('.load-more-tags[data-character="' + character + '"]').show();
-		}
-	}
-
-	// show the remaining creators in batches of 50
-	function expandCreators(character) {
-		if (character === '*') {
-			const hiddenCreators = $('div.creators > ul > li:hidden');
-			if (hiddenCreators.length <= 50) {
-				hiddenCreators.show();
-				loadMoreCreatorsLink.hide();
+			if (hiddenEntries.length <= 50) {
+				hiddenEntries.show();
+				$('.load-more-link[data-entity="' + entity + '"]').hide();
 			} else {
 				for (let i=0; i<50; i++) {
-					hiddenCreators.eq(i).show();
+					hiddenEntries.eq(i).show();
 				}
 			}
 		} else {
-			const hiddenCreators = $('div.creators[data-character="' + character + '"] > ul > li:hidden');
-			if (hiddenCreators.length <= 50) {
-				hiddenCreators.show();
-				$('.load-more-creators[data-character="' + character + '"]').hide();
+			hiddenEntries = $('div.alphabet-list[data-entity="' + entity + '"][data-character="' + character + '"] > ul > li:hidden');
+			if (hiddenEntries.length <= 50) {
+				hiddenEntries.show();
+				$('.load-more-link[data-character="' + character + '"][data-entity="' + entity + '"]').hide();
 			} else {
 				for (let i=0; i<50; i++) {
-					hiddenCreators.eq(i).show();
+					hiddenEntries.eq(i).show();
 				}
 			}
 		}
 	}
 
-	// show the remaining tags in batches of 50
-	function expandTags(character) {
-		if (character === '*') {
-			const hiddenTags = $('div.tags > ul > li:hidden');
-			if (hiddenTags.length <= 50) {
-				hiddenTags.show();
-				loadMoreTagsLink.hide();
-			} else {
-				for (let i=0; i<50; i++) {
-					hiddenTags.eq(i).show();
-				}
-			}
-		} else {
-			const hiddenTags = $('div.tags[data-character="' + character + '"] > ul > li:hidden');
-			if (hiddenTags.length <= 50) {
-				hiddenTags.show();
-				$('.load-more-tags[data-character="' + character + '"]').hide();
-			} else {
-				for (let i=0; i<50; i++) {
-					hiddenTags.eq(i).show();
-				}
-			}
-		}
-	}
-
-	loadMoreCreatorsLink.click(function (event) {
-		expandCreators(event.target.dataset.character);
+	$('.load-more-link').click(function (event) {
+		expandEntries(event.target.dataset.character, event.target.dataset.entity);
 	});
 
-	loadMoreTagsLink.click(function (event) {
-		expandTags(event.target.dataset.character);
-	});
-
-	$('.select-creator-character').click(function(event) {
+	$('.select-character').click(function(event) {
 		const target = event.target;
-		$('a.select-creator-character.selected').removeClass('selected');
+		$('a.select-character.selected[data-entity="' + target.dataset.entity + '"]').removeClass('selected');
 		target.classList.add('selected');
-		toggleCreatorsForCharacter(target.dataset.character);
-	});
-
-	$('.select-tag-character').click(function(event) {
-		const target = event.target;
-		$('a.select-tag-character.selected').removeClass('selected');
-		target.classList.add('selected');
-		toggleTagsForCharacter(target.dataset.character);
+		const character = target.dataset.character.toString();
+		const entity = target.dataset.entity.toString();
+		toggleEntriesForCharacter(character, entity);
 	});
 });
