@@ -5,6 +5,7 @@
 <jsp:useBean id="termId" type="java.lang.Long" scope="request"/>
 <jsp:useBean id="categoryId" type="java.lang.Long" scope="request"/>
 <jsp:useBean id="creatorId" type="java.lang.Long" scope="request"/>
+<jsp:useBean id="searchType" type="java.lang.Integer" scope="request"/>
 <jsp:useBean id="findVideos" type="java.lang.String" scope="request"/>
 <jsp:useBean id="sortBy" type="java.lang.String" scope="request"/>
 <jsp:useBean id="sortableFields" type="java.util.List<java.lang.String>" scope="request"/>
@@ -111,6 +112,7 @@
 		    <portlet:param name="categoryId" value="${categoryId}"/>
 		    <portlet:param name="creatorId" value="${creatorId}"/>
 		    <portlet:param name="mediaTypeId" value="${mediaTypeId}"/>
+		    <portlet:param name="searchType" value="${searchType}"/>
 		    <portlet:param name="findVideos" value="${findVideos}"/>
 		    <portlet:param name="sortBy" value="${sortBySelect}"/>
 		</portlet:renderURL>
@@ -145,6 +147,7 @@
                                     <portlet:param name="categoryId" value="${categoryId}"/>
                                     <portlet:param name="creatorId" value="${creatorId}"/>
                                     <portlet:param name="mediaTypeId" value="${mediaTypeId}"/>
+                                    <portlet:param name="searchType" value="${searchType}"/>
                                     <portlet:param name="findVideos" value="${findVideos}"/>
                                 </portlet:renderURL>
                                 <li class="filter-menu">
@@ -176,6 +179,8 @@
                                         <portlet:param name="termId" value="${termId}"/>
                                         <portlet:param name="categoryId" value="${categoryId}"/>
                                         <portlet:param name="creatorId" value="${creatorId}"/>
+                                        <portlet:param name="mediaTypeId" value="${mediaTypeId}"/>
+                                        <portlet:param name="searchType" value="${searchType}"/>
                                         <portlet:param name="findVideos" value="${findVideos}"/>
                                     </portlet:renderURL>
                                     <li class="filter-menu">
@@ -207,6 +212,7 @@
                                     <portlet:param name="categoryId" value="${categoryId}"/>
                                     <portlet:param name="creatorId" value="${creatorId}"/>
                                     <portlet:param name="mediaTypeId" value="${mediaTypeId}"/>
+                                    <portlet:param name="searchType" value="${searchType}"/>
                                     <portlet:param name="findVideos" value="${findVideos}"/>
                                 </portlet:renderURL>
                                 <li class="filter-menu">
@@ -248,6 +254,7 @@
                                                    value='${hasCategoryFiltered ? "0" : category.categoryId}'/>
                                     <portlet:param name="creatorId" value="${creatorId}"/>
                                     <portlet:param name="mediaTypeId" value="${mediaTypeId}"/>
+                                    <portlet:param name="searchType" value="${searchType}"/>
                                     <portlet:param name="findVideos" value="${findVideos}"/>
                                 </portlet:renderURL>
                                 <li class="filter-menu">
@@ -277,6 +284,7 @@
                                 <portlet:param name="categoryId" value="${categoryId}"/>
                                 <portlet:param name="creatorId" value='${creatorId}'/>
                                 <portlet:param name="mediaTypeId" value="${mediaTypeId}"/>
+                                <portlet:param name="searchType" value="${searchType}"/>
                                 <portlet:param name="findVideos" value="${findVideos}"/>
                             </portlet:renderURL>
                             <c:if test="${creatorsSplitAlphabetically.get(character).size() == 0}">
@@ -296,6 +304,7 @@
                             <portlet:param name="categoryId" value="${categoryId}"/>
                             <portlet:param name="creatorId" value='${creatorId}'/>
                             <portlet:param name="mediaTypeId" value="${mediaTypeId}"/>
+                            <portlet:param name="searchType" value="${searchType}"/>
                             <portlet:param name="findVideos" value="${findVideos}"/>
                         </portlet:renderURL>
                         <a data-character="*" class="selectCreatorCharacter selected">
@@ -315,6 +324,7 @@
                                         <portlet:param name="categoryId" value="${categoryId}"/>
                                         <portlet:param name="creatorId" value='${hasCreatorFiltered ? "0" : creator.creatorId}'/>
                                         <portlet:param name="mediaTypeId" value="${mediaTypeId}"/>
+                                        <portlet:param name="searchType" value="${searchType}"/>
                                         <portlet:param name="findVideos" value="${findVideos}"/>
                                     </portlet:renderURL>
                                     <li class="videoIds">
@@ -375,6 +385,7 @@
                                         <portlet:param name="categoryId" value="${categoryId}"/>
                                         <portlet:param name="creatorId" value='${creatorId}'/>
                                         <portlet:param name="mediaTypeId" value='${hasMediaTypeFiltered ? "0" : mediaType.mediaTypeId}'/>
+                                        <portlet:param name="searchType" value="${searchType}"/>
                                         <portlet:param name="findVideos" value="${findVideos}"/>
                                     </portlet:renderURL>
                                     <li class="videoIds">

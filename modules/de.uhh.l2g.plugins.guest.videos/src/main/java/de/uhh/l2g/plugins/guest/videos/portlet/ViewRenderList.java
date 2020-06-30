@@ -19,7 +19,6 @@ import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import de.uhh.l2g.plugins.service.*;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -30,7 +29,14 @@ import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.model.MediaType;
 import de.uhh.l2g.plugins.model.Term;
 import de.uhh.l2g.plugins.model.VideoListSearchResult;
+import de.uhh.l2g.plugins.service.CategoryLocalServiceUtil;
+import de.uhh.l2g.plugins.service.CreatorLocalServiceUtil;
+import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
+import de.uhh.l2g.plugins.service.MediaTypeLocalServiceUtil;
+import de.uhh.l2g.plugins.service.TermLocalServiceUtil;
+import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.util.SearchManager;
+import de.uhh.l2g.plugins.util.SearchManager.SearchType;
 
 @Component(immediate = true, property = { "javax.portlet.name=" + OpenAccessVideosPortletKeys.OPEN_ACCESS_VIDEOS,
 		"mvc.command.name=/view/render/list", "mvc.command.name=/" }, service = MVCRenderCommand.class)
@@ -48,6 +54,8 @@ public class ViewRenderList implements MVCRenderCommand {
 		Long categoryId = ParamUtil.getLong(renderRequest, "categoryId", 0);
 		Long creatorId = ParamUtil.getLong(renderRequest, "creatorId", 0);
 		long mediaTypeId = ParamUtil.getLong(renderRequest, "mediaTypeId", 0);
+		Integer searchTypeCode = ParamUtil.getInteger(renderRequest, "searchType", 0);
+		SearchType searchType = SearchType.fromCode(searchTypeCode);
 		String findVideos = ParamUtil.getString(renderRequest, "findVideos", "");
 		String sortBy = ParamUtil.getString(renderRequest, "sortBy", "");
 		int maxTerms = 4;
@@ -90,7 +98,7 @@ public class ViewRenderList implements MVCRenderCommand {
 		}
 
 		try {
-			videoList = searchManager.searchVideoList(companyId, findVideos, filters, -1, sortBy);
+			videoList = searchManager.searchVideoList(companyId, searchType, findVideos, filters, -1, sortBy);
 		} catch (SearchException | ParseException e) {
 			// TODO handle exception
 		}
@@ -193,6 +201,7 @@ public class ViewRenderList implements MVCRenderCommand {
 		portletURL.setParameter("categoryId", categoryId.toString());
 		portletURL.setParameter("creatorId", creatorId.toString());
 		portletURL.setParameter("mediaTypeId", String.valueOf(mediaTypeId));
+		portletURL.setParameter("searchType", searchTypeCode.toString());
 		portletURL.setParameter("findVideos", findVideos);
 		//
 		boolean resultSetEmpty = true;
@@ -230,6 +239,7 @@ public class ViewRenderList implements MVCRenderCommand {
 		renderRequest.setAttribute("categoryId", categoryId);
 		renderRequest.setAttribute("creatorId", creatorId);
 		renderRequest.setAttribute("mediaTypeId", mediaTypeId);
+		renderRequest.setAttribute("searchType", searchTypeCode);
 		renderRequest.setAttribute("findVideos", findVideos);
 		renderRequest.setAttribute("sortBy", sortBy);
 		renderRequest.setAttribute("sortableFields", Arrays.asList("name", "latestVideoGenerationDate"));
