@@ -7,6 +7,7 @@
 <jsp:useBean id="creatorId" type="java.lang.Long" scope="request"/>
 <jsp:useBean id="mediaTypeId" type="java.lang.Long" scope="request"/>
 <jsp:useBean id="tag" type="java.lang.String" scope="request"/>
+<jsp:useBean id="searchType" type="java.lang.Integer" scope="request"/>
 <jsp:useBean id="findVideos" type="java.lang.String" scope="request"/>
 <jsp:useBean id="sortBy" type="java.lang.String" scope="request"/>
 <jsp:useBean id="sortableFields" type="java.util.List<java.lang.String>" scope="request"/>
@@ -111,28 +112,29 @@
 <h1><liferay-ui:message key="video-catalog"/></h1>
 
 <div class="sortByList">
-    <c:forEach items="${sortableFields}" var="sortBySelect">
-        <portlet:renderURL var="sort">
-            <portlet:param name="mvcRenderCommandName" value="/view/render/list"/>
-            <portlet:param name="parentInstitutionId" value='${parentInstitutionId}'/>
-            <portlet:param name="institutionId" value="${institutionId}"/>
-            <portlet:param name="termId" value="${termId}"/>
-            <portlet:param name="categoryId" value="${categoryId}"/>
-            <portlet:param name="creatorId" value="${creatorId}"/>
-            <portlet:param name="mediaTypeId" value="${mediaTypeId}"/>
-            <portlet:param name="findVideos" value="${findVideos}"/>
-            <portlet:param name="sortBy" value="${sortBySelect}"/>
-        </portlet:renderURL>
+	<c:forEach items="${sortableFields}" var="sortBySelect">
+		<portlet:renderURL var="sort">
+		    <portlet:param name="mvcRenderCommandName" value="/view/render/list"/>
+		    <portlet:param name="parentInstitutionId" value='${parentInstitutionId}'/>
+		    <portlet:param name="institutionId" value="${institutionId}"/>
+		    <portlet:param name="termId" value="${termId}"/>
+		    <portlet:param name="categoryId" value="${categoryId}"/>
+		    <portlet:param name="creatorId" value="${creatorId}"/>
+		    <portlet:param name="mediaTypeId" value="${mediaTypeId}"/>
+		    <portlet:param name="searchType" value="${searchType}"/>
+		    <portlet:param name="findVideos" value="${findVideos}"/>
+		    <portlet:param name="sortBy" value="${sortBySelect}"/>
+		</portlet:renderURL>
         <c:choose>
             <c:when test="${sortBySelect == sortBy}">
                 <span class="selected"><liferay-ui:message key="sort-by-${sortBySelect}"/></span>
             </c:when>
             <c:otherwise>
-                <a href="${sort}"><liferay-ui:message key="sort-by-${sortBySelect}"/></a>
+            	<a href="${sort}"><liferay-ui:message key="sort-by-${sortBySelect}"/></a>
             </c:otherwise>
         </c:choose>
-        <span>|</span>
-    </c:forEach>
+		<span>|</span>
+	</c:forEach>
 </div>
 
 <div class="catalogue-container row">
@@ -155,6 +157,7 @@
                                     <portlet:param name="creatorId" value="${creatorId}"/>
                                     <portlet:param name="mediaTypeId" value="${mediaTypeId}"/>
                                     <portlet:param name="tag" value="${tag}"/>
+                                    <portlet:param name="searchType" value="${searchType}"/>
                                     <portlet:param name="findVideos" value="${findVideos}"/>
                                 </portlet:renderURL>
                                 <li class="filter-menu">
@@ -188,6 +191,7 @@
                                         <portlet:param name="creatorId" value="${creatorId}"/>
                                         <portlet:param name="mediaTypeId" value="${mediaTypeId}"/>
                                         <portlet:param name="tag" value="${tag}"/>
+                                        <portlet:param name="searchType" value="${searchType}"/>
                                         <portlet:param name="findVideos" value="${findVideos}"/>
                                     </portlet:renderURL>
                                     <li class="filter-menu">
@@ -220,6 +224,7 @@
                                     <portlet:param name="creatorId" value="${creatorId}"/>
                                     <portlet:param name="mediaTypeId" value="${mediaTypeId}"/>
                                     <portlet:param name="tag" value="${tag}"/>
+                                    <portlet:param name="searchType" value="${searchType}"/>
                                     <portlet:param name="findVideos" value="${findVideos}"/>
                                 </portlet:renderURL>
                                 <li class="filter-menu">
@@ -262,6 +267,7 @@
                                     <portlet:param name="creatorId" value="${creatorId}"/>
                                     <portlet:param name="mediaTypeId" value="${mediaTypeId}"/>
                                     <portlet:param name="tag" value="${tag}"/>
+                                    <portlet:param name="searchType" value="${searchType}"/>
                                     <portlet:param name="findVideos" value="${findVideos}"/>
                                 </portlet:renderURL>
                                 <li class="filter-menu">
@@ -310,6 +316,7 @@
                                         <portlet:param name="creatorId" value='${hasCreatorFiltered ? "0" : creator.creatorId}'/>
                                         <portlet:param name="mediaTypeId" value="${mediaTypeId}"/>
                                         <portlet:param name="tag" value="${tag}"/>
+                                        <portlet:param name="searchType" value="${searchType}"/>
                                         <portlet:param name="findVideos" value="${findVideos}"/>
                                     </portlet:renderURL>
                                     <li class="videoIds">
@@ -371,6 +378,7 @@
                                         <portlet:param name="creatorId" value='${creatorId}'/>
                                         <portlet:param name="mediaTypeId" value='${hasMediaTypeFiltered ? "0" : mediaType.mediaTypeId}'/>
                                         <portlet:param name="tag" value='${tag}'/>
+                                        <portlet:param name="searchType" value="${searchType}"/>
                                         <portlet:param name="findVideos" value="${findVideos}"/>
                                     </portlet:renderURL>
                                     <li class="videoIds">
@@ -421,6 +429,7 @@
                                             <portlet:param name="creatorId" value='${creatorId}'/>
                                             <portlet:param name="mediaTypeId" value="${mediaTypeId}"/>
                                             <portlet:param name="tag" value="${hasTagFiltered ? \"0\" : tag}"/>
+                                            <portlet:param name="searchType" value="${searchType}"/>
                                             <portlet:param name="findVideos" value="${findVideos}"/>
                                         </portlet:renderURL>
                                         <li class="videoIds">

@@ -22,7 +22,11 @@ import com.liferay.portal.search.sort.Sort;
 import com.liferay.portal.search.sort.SortOrder;
 import com.liferay.portal.search.sort.Sorts;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -51,10 +55,23 @@ public class SearchManager {
 	@Reference
 	protected SearchRequestBuilderFactory searchRequestBuilderFactory;
 
+	public static String[] encodeSearchStrings(String[] baseStrings) {
+		String[] normalizedStrings = new String[baseStrings.length];
+		for (int i = 0; i < baseStrings.length; i++) {
+			normalizedStrings[i] = encodeSearchString(baseStrings[i]);
+		}
+		return normalizedStrings;
+	}
+
+	public static String encodeSearchString(String baseString) {
+		return Base64.getEncoder().encodeToString(baseString.getBytes()).replace("=", "").replace("/", "")
+				.toLowerCase();
+	}
+
 	public JSONArray getAutocompleteResultArrayBySearchWord(long companyId, String searchText, int resultLimit)
 			throws SearchException, ParseException {
-		Stream<Document> searchResults = getSearchResultsBySearchWordAndFilter(companyId, searchText, null, resultLimit,
-				null);
+		Stream<Document> searchResults = getSearchResultsBySearchWordAndFilter(companyId, SearchType.WILDCARD_MATCH,
+				searchText, null, resultLimit, null);
 		List<String> resultList = new ArrayList<String>();
 		searchResults.forEach(document -> {
 			for (String value : document.getStrings("tagCloud")) {
@@ -69,10 +86,10 @@ public class SearchManager {
 		return createWordArray(resultList);
 	}
 
-	public List<VideoListSearchResult> searchVideoList(long companyId, String searchText, Map<String, Object> filters,
-			int resultLimit, String sortByField) throws SearchException, ParseException {
-		Stream<Document> searchResults = getSearchResultsBySearchWordAndFilter(companyId, searchText, filters,
-				resultLimit, sortByField);
+	public List<VideoListSearchResult> searchVideoList(long companyId, SearchType searchType, String searchText,
+			Map<String, Object> filters, int resultLimit, String sortByField) throws SearchException, ParseException {
+		Stream<Document> searchResults = getSearchResultsBySearchWordAndFilter(companyId, searchType, searchText,
+				filters, resultLimit, sortByField);
 		List<VideoListSearchResult> videoList = new ArrayList<VideoListSearchResult>();
 		searchResults.forEach(document -> {
 			VideoListSearchResult searchResult = new VideoListSearchResult();
@@ -165,20 +182,33 @@ public class SearchManager {
 		}
 	}
 
-	public Stream<Document> getSearchResultsBySearchWordAndFilter(long companyId, String searchText,
-			Map<String, Object> filters, int resultLimit, String sortByField) throws SearchException, ParseException {
+	public Stream<Document> getSearchResultsBySearchWordAndFilter(long companyId, SearchType searchType,
+			String searchText, Map<String, Object> filters, int resultLimit, String sortByField)
+			throws SearchException, ParseException {
 		BooleanQuery completeQuery = queries.booleanQuery();
 
 		// search query
 		if (searchText != null && !searchText.isEmpty()) {
+			try {
+				searchText = URLDecoder.decode(searchText, StandardCharsets.UTF_8.name());
+			} catch (UnsupportedEncodingException e) {
+				// not going to happen - value came from JDK's own StandardCharsets
+			}
+
 			BooleanQuery enclosingQuery = queries.booleanQuery();
 
-			MatchQuery matchQuery = queries.match("tagCloud", searchText);
-			enclosingQuery.addShouldQueryClauses(matchQuery);
+			if (SearchType.EXACT_MATCH.equals(searchType)) {
+				TermQuery exactQuery = queries.term("encodedTagCloud", encodeSearchString(searchText));
+				enclosingQuery.addMustQueryClauses(exactQuery);
+			} else if (SearchType.WILDCARD_MATCH.equals(searchType)) {
+				MatchQuery matchQuery = queries.match("tagCloud", searchText);
+				enclosingQuery.addShouldQueryClauses(matchQuery);
 
-			for (String singleWord : searchText.split(" ")) {
-				WildcardQuery wildcardQuery = queries.wildcard("tagCloud", "*" + singleWord.trim().toLowerCase() + "*");
-				enclosingQuery.addShouldQueryClauses(wildcardQuery);
+				for (String singleWord : searchText.split(" ")) {
+					WildcardQuery wildcardQuery = queries.wildcard("tagCloud",
+							"*" + singleWord.trim().toLowerCase() + "*");
+					enclosingQuery.addShouldQueryClauses(wildcardQuery);
+				}
 			}
 
 			completeQuery.addMustQueryClauses(enclosingQuery);
@@ -241,6 +271,31 @@ public class SearchManager {
 				ret = true;
 		}
 		return ret;
+	}
+
+	public enum SearchType {
+		WILDCARD_MATCH(0), EXACT_MATCH(1);
+
+		private final int code;
+
+		public int getCode() {
+			return code;
+		}
+
+		private SearchType(int code) {
+			this.code = code;
+		}
+
+		public static SearchType fromCode(int code) {
+			for (SearchType searchType : SearchType.values()) {
+				if (searchType.getCode() == code) {
+					return searchType;
+				}
+			}
+
+			return SearchType.WILDCARD_MATCH;
+		}
+
 	}
 
 }

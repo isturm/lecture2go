@@ -22,7 +22,6 @@ import javax.portlet.PortletURL;
 import javax.portlet.RenderRequest;
 import javax.portlet.RenderResponse;
 
-import de.uhh.l2g.plugins.service.*;
 import org.osgi.service.component.annotations.Component;
 import org.osgi.service.component.annotations.Reference;
 
@@ -33,7 +32,14 @@ import de.uhh.l2g.plugins.model.Institution;
 import de.uhh.l2g.plugins.model.MediaType;
 import de.uhh.l2g.plugins.model.Term;
 import de.uhh.l2g.plugins.model.VideoListSearchResult;
+import de.uhh.l2g.plugins.service.CategoryLocalServiceUtil;
+import de.uhh.l2g.plugins.service.CreatorLocalServiceUtil;
+import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
+import de.uhh.l2g.plugins.service.MediaTypeLocalServiceUtil;
+import de.uhh.l2g.plugins.service.TermLocalServiceUtil;
+import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.util.SearchManager;
+import de.uhh.l2g.plugins.util.SearchManager.SearchType;
 
 @Component(immediate = true, property = { "javax.portlet.name=" + OpenAccessVideosPortletKeys.OPEN_ACCESS_VIDEOS,
 		"mvc.command.name=/view/render/list", "mvc.command.name=/" }, service = MVCRenderCommand.class)
@@ -52,6 +58,8 @@ public class ViewRenderList implements MVCRenderCommand {
 		Long categoryId = ParamUtil.getLong(renderRequest, "categoryId", 0);
 		Long creatorId = ParamUtil.getLong(renderRequest, "creatorId", 0);
 		long mediaTypeId = ParamUtil.getLong(renderRequest, "mediaTypeId", 0);
+		Integer searchTypeCode = ParamUtil.getInteger(renderRequest, "searchType", 0);
+		SearchType searchType = SearchType.fromCode(searchTypeCode);
 		String findVideos = ParamUtil.getString(renderRequest, "findVideos", "");
 		String tag = ParamUtil.getString(renderRequest, "tag", "0");
 		String sortBy = ParamUtil.getString(renderRequest, "sortBy", "");
@@ -99,7 +107,7 @@ public class ViewRenderList implements MVCRenderCommand {
 		}
 
 		try {
-			videoList = searchManager.searchVideoList(companyId, findVideos, filters, -1, sortBy);
+			videoList = searchManager.searchVideoList(companyId, searchType, findVideos, filters, -1, sortBy);
 		} catch (SearchException | ParseException e) {
 			// TODO handle exception
 		}
@@ -158,16 +166,14 @@ public class ViewRenderList implements MVCRenderCommand {
 		 * FILTER BY TAGS
 		 */
 		Map<Character, Set<String>> tagsSplitAlphabetically = splitTagsAlphabetically(
-				filterByTags(hasTagFiltered, tag, videoIds, lectureseriesIds)
-		);
+				filterByTags(hasTagFiltered, tag, videoIds, lectureseriesIds));
 		Set<String> presentTags = filterByTags(hasTagFiltered, tag, videoIds, lectureseriesIds);
 
 		/*
 		 * FILTER BY CREATOR
 		 */
 		Map<Character, List<Creator>> creatorsSplitAlphabetically = splitCreatorsAlphabetically(
-				filterCreators(hasCreatorFiltered, creatorId, lectureseriesIds, videoIds)
-		);
+				filterCreators(hasCreatorFiltered, creatorId, lectureseriesIds, videoIds));
 
 		/*
 		 * FILTER BY CATEGORY
@@ -192,6 +198,7 @@ public class ViewRenderList implements MVCRenderCommand {
 		portletURL.setParameter("creatorId", creatorId.toString());
 		portletURL.setParameter("mediaTypeId", String.valueOf(mediaTypeId));
 		portletURL.setParameter("tag", tag);
+		portletURL.setParameter("searchType", searchTypeCode.toString());
 		portletURL.setParameter("findVideos", findVideos);
 		//
 		boolean resultSetEmpty = true;
@@ -230,6 +237,7 @@ public class ViewRenderList implements MVCRenderCommand {
 		renderRequest.setAttribute("creatorId", creatorId);
 		renderRequest.setAttribute("tag", tag);
 		renderRequest.setAttribute("mediaTypeId", mediaTypeId);
+		renderRequest.setAttribute("searchType", searchTypeCode);
 		renderRequest.setAttribute("findVideos", findVideos);
 		renderRequest.setAttribute("sortBy", sortBy);
 		renderRequest.setAttribute("sortableFields", Arrays.asList("name", "latestVideoGenerationDate"));
@@ -272,7 +280,8 @@ public class ViewRenderList implements MVCRenderCommand {
 	 * @param lectureseriesIds
 	 * @return
 	 */
-	private Set<String> filterByTags(boolean hasTagFiltered, String tag, List<Long> videoIds, List<Long> lectureseriesIds) {
+	private Set<String> filterByTags(boolean hasTagFiltered, String tag, List<Long> videoIds,
+			List<Long> lectureseriesIds) {
 		Set<String> tags = new TreeSet<>();
 
 		if (hasTagFiltered) {
@@ -350,15 +359,19 @@ public class ViewRenderList implements MVCRenderCommand {
 	}
 
 	/**
-	 * Accepts two lists with video IDs and lecture series IDs and creates a list of media types for those videos.
-	 * If hasMediaTypeFiltered is set to true, only media types for mediaTypeId are returned.
+	 * Accepts two lists with video IDs and lecture series IDs and creates a list of
+	 * media types for those videos. If hasMediaTypeFiltered is set to true, only
+	 * media types for mediaTypeId are returned.
+	 * 
 	 * @param hasMediaTypeFiltered true, if filtering for only one media type
-	 * @param mediaTypeId media type ID you're filtering for. Only relevant if hasMediaTypeFiltered is set to true
-	 * @param videoIds list of video IDs
-	 * @param lectureseriesIds list of lecture series IDs
+	 * @param mediaTypeId          media type ID you're filtering for. Only relevant
+	 *                             if hasMediaTypeFiltered is set to true
+	 * @param videoIds             list of video IDs
+	 * @param lectureseriesIds     list of lecture series IDs
 	 * @return list of media types for videos and videos of lecture series.
 	 */
-	private Set<MediaType> filterByMediaTypes(boolean hasMediaTypeFiltered, long mediaTypeId, ArrayList<Long> videoIds, ArrayList<Long> lectureseriesIds) {
+	private Set<MediaType> filterByMediaTypes(boolean hasMediaTypeFiltered, long mediaTypeId, ArrayList<Long> videoIds,
+			ArrayList<Long> lectureseriesIds) {
 		Set<MediaType> mediaTypes = new TreeSet<>();
 		if (hasMediaTypeFiltered) {
 			try {
@@ -442,9 +455,12 @@ public class ViewRenderList implements MVCRenderCommand {
 	}
 
 	/**
-	 * Accepts a string with arbitrarily formatted tags and tries to make sense of it.
+	 * Accepts a string with arbitrarily formatted tags and tries to make sense of
+	 * it.
+	 * 
 	 * @param tagsString String with tags.
-	 * @return Tags as array; split by semicolon, comma, or not at all (in that order).
+	 * @return Tags as array; split by semicolon, comma, or not at all (in that
+	 *         order).
 	 */
 	private String[] getTagsForString(String tagsString) {
 		if (tagsString.isEmpty()) {
