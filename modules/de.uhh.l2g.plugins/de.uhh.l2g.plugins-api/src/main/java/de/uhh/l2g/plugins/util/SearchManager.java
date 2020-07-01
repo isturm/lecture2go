@@ -26,7 +26,6 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
-import java.util.Base64;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -54,19 +53,6 @@ public class SearchManager {
 
 	@Reference
 	protected SearchRequestBuilderFactory searchRequestBuilderFactory;
-
-	public static String[] encodeSearchStrings(String[] baseStrings) {
-		String[] normalizedStrings = new String[baseStrings.length];
-		for (int i = 0; i < baseStrings.length; i++) {
-			normalizedStrings[i] = encodeSearchString(baseStrings[i]);
-		}
-		return normalizedStrings;
-	}
-
-	public static String encodeSearchString(String baseString) {
-		return Base64.getEncoder().encodeToString(baseString.getBytes()).replace("=", "").replace("/", "")
-				.toLowerCase();
-	}
 
 	public JSONArray getAutocompleteResultArrayBySearchWord(long companyId, String searchText, int resultLimit)
 			throws SearchException, ParseException {
@@ -198,7 +184,7 @@ public class SearchManager {
 			BooleanQuery enclosingQuery = queries.booleanQuery();
 
 			if (SearchType.EXACT_MATCH.equals(searchType)) {
-				TermQuery exactQuery = queries.term("encodedTagCloud", encodeSearchString(searchText));
+				TermQuery exactQuery = queries.term("encodedTagCloud", EncodingUtil.encodeString(searchText));
 				enclosingQuery.addMustQueryClauses(exactQuery);
 			} else if (SearchType.WILDCARD_MATCH.equals(searchType)) {
 				MatchQuery matchQuery = queries.match("tagCloud", searchText);

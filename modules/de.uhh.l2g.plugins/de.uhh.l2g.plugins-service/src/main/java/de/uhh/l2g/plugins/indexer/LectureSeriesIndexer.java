@@ -34,7 +34,7 @@ import de.uhh.l2g.plugins.service.Lectureseries_InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.TagcloudLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.impl.TagcloudLocalServiceImpl;
-import de.uhh.l2g.plugins.util.SearchManager;
+import de.uhh.l2g.plugins.util.EncodingUtil;
 
 @Component(immediate = true, service = Indexer.class)
 public class LectureSeriesIndexer extends BaseIndexer<Lectureseries> {
@@ -67,7 +67,7 @@ public class LectureSeriesIndexer extends BaseIndexer<Lectureseries> {
 			String[] tagCloudStrings = getTagCloudStrings(lectureseries.getLectureseriesId());
 			document.addText("tagCloud", tagCloudStrings);
 
-			String[] encodedTagCloudStrings = SearchManager.encodeSearchStrings(tagCloudStrings);
+			String[] encodedTagCloudStrings = EncodingUtil.encodeStrings(tagCloudStrings);
 			document.addKeyword("encodedTagCloud", encodedTagCloudStrings);
 		} catch (NoSuchTagcloudException e) {
 			log.warn(String.format("No tag cloud for lectureseries with id %d found to create index!",

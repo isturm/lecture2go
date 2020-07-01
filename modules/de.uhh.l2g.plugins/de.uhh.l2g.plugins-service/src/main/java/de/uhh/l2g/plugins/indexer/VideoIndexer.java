@@ -39,7 +39,7 @@ import de.uhh.l2g.plugins.service.Video_CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_MediaTypeLocalServiceUtil;
 import de.uhh.l2g.plugins.service.impl.TagcloudLocalServiceImpl;
-import de.uhh.l2g.plugins.util.SearchManager;
+import de.uhh.l2g.plugins.util.EncodingUtil;
 
 @Component(immediate = true, service = Indexer.class)
 public class VideoIndexer extends BaseIndexer<Video> {
@@ -72,7 +72,7 @@ public class VideoIndexer extends BaseIndexer<Video> {
 			String[] tagCloudStrings = getTagCloudStrings(video.getVideoId());
 			document.addText("tagCloud", tagCloudStrings);
 
-			String[] encodedTagCloudStrings = SearchManager.encodeSearchStrings(tagCloudStrings);
+			String[] encodedTagCloudStrings = EncodingUtil.encodeStrings(tagCloudStrings);
 			document.addKeyword("encodedTagCloud", encodedTagCloudStrings);
 		} catch (NoSuchTagcloudException e) {
 			log.warn(String.format("No tag cloud for video with id %d found to create index!", video.getVideoId()), e);
@@ -222,6 +222,10 @@ public class VideoIndexer extends BaseIndexer<Video> {
 			}
 		}
 
-		document.addKeyword("tags", tagList.toArray(new String[0]));
+		String[] tagArray = tagList.toArray(new String[0]);
+		document.addKeyword("tags", tagArray);
+
+		String[] encodedTags = EncodingUtil.encodeStrings(tagArray);
+		document.addKeyword("encodedTags", encodedTags);
 	}
 }
