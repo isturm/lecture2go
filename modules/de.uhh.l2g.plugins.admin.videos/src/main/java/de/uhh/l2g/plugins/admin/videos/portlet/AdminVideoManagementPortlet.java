@@ -1,6 +1,7 @@
 package de.uhh.l2g.plugins.admin.videos.portlet;
 
 import com.liferay.portal.kernel.dao.orm.QueryUtil;
+import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
@@ -186,6 +187,7 @@ public class AdminVideoManagementPortlet extends MVCPortlet {
 		long reqMediaTypeId = ParamUtil.getLong(renderRequest, "mediaTypeId", 0);
 		Metadata reqMetadata = MetadataLocalServiceUtil.createMetadata(0);
 		List<Video_Institution> reqSubInstitutions = new ArrayList<Video_Institution>();	
+		List<Category> reqCategories = new ArrayList<>();
 		JSONArray allCreatorsJSON = JSONFactoryUtil.createJSONArray();
 		List<Term> terms = new ArrayList<Term>();
 		List<MediaType> mediaTypes = new ArrayList<>();
@@ -293,6 +295,15 @@ public class AdminVideoManagementPortlet extends MVCPortlet {
 				
 				//requested sub institutions
 				reqSubInstitutions = Video_InstitutionLocalServiceUtil.getByVideo(reqVideo.getVideoId());
+
+				//requested categories
+				Video_CategoryLocalServiceUtil.getByVideo(reqVideo.getVideoId()).forEach(video_category -> {
+					try {
+						reqCategories.add(CategoryLocalServiceUtil.getById(video_category.getCategoryId()));
+					} catch (NoSuchModelException e) {
+						e.printStackTrace();
+					}
+				});
 			}	
 
 			//all creator to json
@@ -344,6 +355,7 @@ public class AdminVideoManagementPortlet extends MVCPortlet {
 		renderRequest.setAttribute("reqLectureseries", reqLectureseries);
 		renderRequest.setAttribute("reqLectureseriesList", reqLectureseriesList);
 		renderRequest.setAttribute("reqSubInstitutions", reqSubInstitutions);
+		renderRequest.setAttribute("reqCategories", reqCategories);
 		renderRequest.setAttribute("reqLicense", reqLicense);
 		renderRequest.setAttribute("reqLicenseList", reqLicenseList);
 		renderRequest.setAttribute("permissionAdmin", permissionAdmin);				
@@ -701,6 +713,28 @@ public class AdminVideoManagementPortlet extends MVCPortlet {
 				errors.add("SUB_INSTITUTIONS_UPDATE_FAILED_2");
 			}			
 			//sub institutions end
+
+
+			// categories start
+			try {
+				String categories = ParamUtil.getString(resourceRequest, "categories");
+				JSONArray categoriesArray = JSONFactoryUtil.createJSONArray(categories);
+				// remove categories for video
+				Video_CategoryLocalServiceUtil.removeByVideo(videoId);
+
+				// and update with new categories from list
+				for (int i = 0; i < categoriesArray.length(); i++){
+					JSONObject categoryJson =  categoriesArray.getJSONObject(i);
+					Long categoryId = categoryJson.getLong("categoryId");
+					Video_Category video_category = Video_CategoryLocalServiceUtil.createVideo_Category(0);
+					video_category.setCategoryId(categoryId);
+					video_category.setVideoId(videoId);
+					Video_CategoryLocalServiceUtil.addVideo_Category(video_category);
+				}
+			} catch (JSONException e) {
+				e.printStackTrace();
+			}
+			// categories end
 			
 			//metadata start
 			String title = ParamUtil.getString(resourceRequest, "title");
@@ -790,18 +824,9 @@ public class AdminVideoManagementPortlet extends MVCPortlet {
 						Institution parent = InstitutionLocalServiceUtil.getById(inst.getParentId());
 					}
 				}
-				//add category and term to tag cloud
-				//category
-				try{ctgr = CategoryLocalServiceUtil.getCategory(categoryId);}catch(Exception e){}			
 
 				video.setTermId(termId);
-				//and update categories in DB for video
-				Video_CategoryLocalServiceUtil.removeByVideo(videoId);
-				Video_Category vc = Video_CategoryLocalServiceUtil.createVideo_Category(0);
-				vc.setVideoId(videoId);
-				vc.setCategoryId(categoryId);
-				if(categoryId>0)Video_CategoryLocalServiceUtil.addVideo_Category(vc);
-				
+
 				//update date and time for this video if changed 
 				int compartion = VideoGenerationDateComparator.compare(video.getGenerationDate(), datetime);
 				//override the video date_time stamp!
