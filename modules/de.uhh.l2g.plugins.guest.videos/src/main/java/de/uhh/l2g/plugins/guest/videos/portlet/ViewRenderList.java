@@ -38,6 +38,7 @@ import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.MediaTypeLocalServiceUtil;
 import de.uhh.l2g.plugins.service.TermLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
+import de.uhh.l2g.plugins.util.EncodingUtil;
 import de.uhh.l2g.plugins.util.SearchManager;
 import de.uhh.l2g.plugins.util.SearchManager.SearchType;
 
@@ -103,7 +104,7 @@ public class ViewRenderList implements MVCRenderCommand {
 			filters.put("mediaTypeId", mediaTypeId);
 		}
 		if (hasTagFiltered) {
-			filters.put("tags", tag.toLowerCase());
+			filters.put("encodedTags", EncodingUtil.encodeString(tag));
 		}
 
 		try {
