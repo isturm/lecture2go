@@ -1,4 +1,6 @@
 dependencies {
+	implementation enforcedPlatform(group: "javax.servlet", name: "javax.servlet-api", version: "3.0.1")
+
 	compileOnly group: "com.liferay", name: "com.liferay.asset.taglib"
 	compileOnly group: "com.liferay", name: "com.liferay.comment.taglib"
 	compileOnly group: "com.liferay", name: "com.liferay.frontend.taglib"
