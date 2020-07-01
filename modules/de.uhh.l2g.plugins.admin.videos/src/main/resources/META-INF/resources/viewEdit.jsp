@@ -7,6 +7,7 @@
 <jsp:useBean id="reqVideo" type="de.uhh.l2g.plugins.model.Video" scope="request"/>
 <jsp:useBean id="reqMetadata" type="de.uhh.l2g.plugins.model.Metadata" scope="request"/>
 <jsp:useBean id="reqSubInstitutions" type="java.util.List<de.uhh.l2g.plugins.model.Video_Institution>" scope="request"/>
+<jsp:useBean id="reqCategories" type="java.util.List<de.uhh.l2g.plugins.model.Category>" scope="request"/>
 <jsp:useBean id="reqHost" type="de.uhh.l2g.plugins.model.Host" scope="request"/>
 <jsp:useBean id="languages" type="java.lang.String" scope="request"/>
 
@@ -55,15 +56,6 @@
 
 <script id="htmlTitle" type="text/x-tmpl">
 	${reqVideo.title}
-
-
-
-
-
-
-
-
-
 </script>
 
 <aui:input name="ajresult" id="ajresult" type="hidden"></aui:input>
@@ -190,10 +182,24 @@
 						</aui:select>
 
 						<aui:select size="1" id="categoryId" name="categoryId" label="category" required="true">
+							<aui:option value="" selected="true"><liferay-ui:message
+									key="select-category"/></aui:option>
 	                        <c:forEach items="${categories}" var="item">
 	                            <aui:option value='${item.categoryId}'>${item.name}</aui:option>
 	                        </c:forEach>
 	                    </aui:select>
+
+						<div class="categories">
+							<c:forEach items="${reqCategories}" var="item">
+								<div id='${item.categoryId}'>
+										${item.name}
+									<a class="icon-large icon-remove" style='cursor:pointer;'
+									   onClick='document.getElementById("${item.categoryId}").remove();'></a>
+									<aui:input type="hidden" name="categories" id="categories"
+											   value="${item.categoryId}"/>
+								</div>
+							</c:forEach>
+						</div>
 	                </div>
 	
 	                <aui:select size="1" name="language" label="language" required="true">
@@ -589,6 +595,7 @@
         var license = $("input[name=<portlet:namespace/>license]:checked").val();
         var creatorsJsonArray = JSON.stringify(getJsonCreatorsArray());
         var jsonSubInstitutionsArray = JSON.stringify(getJsonSubInstitutionsArray());
+        var jsonCategoriesArray = JSON.stringify(getJsonCategoriesArray());
         var termId = 0;
         var categoryId = 0;
         var mediaTypeId = 0;
@@ -612,6 +619,7 @@
                 "<portlet:namespace/>license": license,
                 "<portlet:namespace/>creatorsJsonArray": creatorsJsonArray,
                 "<portlet:namespace/>subInstitutions": jsonSubInstitutionsArray,
+                "<portlet:namespace/>categories": jsonCategoriesArray,
                 //metadata start
                 "<portlet:namespace/>lectureseriesId": $('#<portlet:namespace/>lectureseriesId').val(),
                 "<portlet:namespace/>language": $('#<portlet:namespace/>language').val(),
@@ -882,6 +890,17 @@
         return jsonArray;
     }
 
+    function getJsonCategoriesArray() {
+        const jsonArray = [];
+        $('.categories').children().each(function (n) {
+            const parameters = {};
+            const $div = $(this);
+			parameters['categoryId'] = $div.attr('id');
+            jsonArray[n] = parameters;
+        });
+        return jsonArray;
+    }
+
     function updateThumbnail() {
         $.ajax({
             url: "${updateThumbnailURL}",
@@ -898,7 +917,7 @@
         $("#" + nameSpace + c).remove();
     }
 
-    //load subinstitution
+    //load subinstitution and category
     AUI().use('aui-node',
         function (A) {
             // Select the node(s) using a css selector string
@@ -912,6 +931,21 @@
                         var n = subInstitutionId.get(subInstitutionId.get('selectedIndex')).get('value');
                         var t = subInstitutionId.get(subInstitutionId.get('selectedIndex')).get('text') + "&nbsp;&nbsp;&nbsp;";
                         subInstitutions.append("<div id='" + n + "'> " + t + " <a class='icon-large icon-remove style='cursor:pointer;' onClick='document.getElementById(&quot;" + n + "&quot;).remove();'/><input id='<portlet:namespace></portlet:namespace>institutions' name='<portlet:namespace></portlet:namespace>institutions' value='" + n + "' type='hidden'/></div>");
+                    }
+                }
+            );
+
+            // Select the node(s) using a css selector string
+            const categoryId = A.one('#<portlet:namespace/>categoryId');
+			const categories = A.one('.categories');
+
+			categoryId.on(
+                'change',
+                function (A) {
+                    if (categoryId.get('value') > 0) {
+						const n = categoryId.get(categoryId.get('selectedIndex')).get('value');
+						const t = categoryId.get(categoryId.get('selectedIndex')).get('text') + "&nbsp;&nbsp;&nbsp;";
+						categories.append("<div id='" + n + "'> " + t + " <a class='icon-large icon-remove style='cursor:pointer;' onClick='document.getElementById(&quot;" + n + "&quot;).remove();'/><input id='<portlet:namespace></portlet:namespace>categories' name='<portlet:namespace></portlet:namespace>categories' value='" + n + "' type='hidden'/></div>");
                     }
                 }
             );
