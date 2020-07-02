@@ -123,11 +123,19 @@
 		    <portlet:param name="mediaTypeId" value="${mediaTypeId}"/>
 		    <portlet:param name="searchType" value="${searchType}"/>
 		    <portlet:param name="findVideos" value="${findVideos}"/>
+		    <portlet:param name="previousSortBy" value="${sortBy}"/>
 		    <portlet:param name="sortBy" value="${sortBySelect}"/>
+		    <portlet:param name="sortByOrder" value="${sortByOrder}"/>
 		</portlet:renderURL>
         <c:choose>
             <c:when test="${sortBySelect == sortBy}">
-                <span class="selected"><liferay-ui:message key="sort-by-${sortBySelect}"/></span>
+            	<a href="${sort}" class="selected"><liferay-ui:message key="sort-by-${sortBySelect}"/></a>
+                <c:if test="${sortByOrder == 'ASC'}">
+	                <i class="icon-chevron-up"></i>
+	            </c:if>
+                <c:if test="${sortByOrder == 'DESC'}">
+	            	<i class="icon-chevron-down"></i>
+	            </c:if>
             </c:when>
             <c:otherwise>
             	<a href="${sort}"><liferay-ui:message key="sort-by-${sortBySelect}"/></a>

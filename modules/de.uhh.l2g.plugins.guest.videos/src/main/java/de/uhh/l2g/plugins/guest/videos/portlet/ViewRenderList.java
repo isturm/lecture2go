@@ -64,6 +64,8 @@ public class ViewRenderList implements MVCRenderCommand {
 		String findVideos = ParamUtil.getString(renderRequest, "findVideos", "");
 		String tag = ParamUtil.getString(renderRequest, "tag", "0");
 		String sortBy = ParamUtil.getString(renderRequest, "sortBy", "");
+		String previousSortBy = ParamUtil.getString(renderRequest, "previousSortBy", "");
+		String sortByOrder = ParamUtil.getString(renderRequest, "sortByOrder", "");
 		int maxTerms = 4;
 		boolean hasInstitutionFiltered = (institutionId != 0);
 		boolean hasParentInstitutionFiltered = (parentInstitutionId != 0);
@@ -107,8 +109,24 @@ public class ViewRenderList implements MVCRenderCommand {
 			filters.put("encodedTags", EncodingUtil.encodeString(tag));
 		}
 
+		// get desired sorting
+		if (sortBy != null && !sortBy.isEmpty()) {
+			if (!sortBy.equals(previousSortBy)) {
+				// default sort by for field
+				sortByOrder = "latestVideoGenerationDate".equals(sortBy) ? "DESC" : "ASC";
+			} else {
+				// toggle order
+				sortByOrder = "ASC".equals(sortByOrder) ? "DESC" : "ASC";
+			}
+		} else if (findVideos == null || findVideos.isEmpty()) {
+			// order by date if no order is selected and it is no search
+			sortBy = "latestVideoGenerationDate";
+			sortByOrder = "DESC";
+		}
+
 		try {
-			videoList = searchManager.searchVideoList(companyId, searchType, findVideos, filters, -1, sortBy);
+			videoList = searchManager.searchVideoList(companyId, searchType, findVideos, filters, -1, sortBy,
+					sortByOrder);
 		} catch (SearchException | ParseException e) {
 			// TODO handle exception
 		}
@@ -241,7 +259,9 @@ public class ViewRenderList implements MVCRenderCommand {
 		renderRequest.setAttribute("searchType", searchTypeCode);
 		renderRequest.setAttribute("findVideos", findVideos);
 		renderRequest.setAttribute("sortBy", sortBy);
+		renderRequest.setAttribute("sortByOrder", sortByOrder);
 		renderRequest.setAttribute("sortableFields", Arrays.asList("name", "latestVideoGenerationDate"));
+
 		renderRequest.setAttribute("maxTerms", maxTerms);
 		renderRequest.setAttribute("hasInstitutionFiltered", hasInstitutionFiltered);
 		renderRequest.setAttribute("hasParentInstitutionFiltered", hasParentInstitutionFiltered);
