@@ -50,11 +50,13 @@
 				</div>
 			</div>
 			<div aria-expanded="false" class="autocompleteSearch collapse searchCollapse container" id="desktopSearchCollapse">
-				<@liferay_portlet["runtime"]
-			        portletProviderAction=portletProviderAction.VIEW
-			        portletName="AutocompleteSearch"
-			        instanceId="GlobalDesktopSearch"
-				/>
+				<span>
+					<@liferay_portlet["runtime"]
+				        portletProviderAction=portletProviderAction.VIEW
+				        portletName="AutocompleteSearch"
+				        instanceId="GlobalDesktopSearch"
+					/>
+				</span>
 			</div>
 			<div class="sticky-margin"/>
 		</header>

@@ -280,12 +280,13 @@
 	}
 	
 	#desktopSearch {
-		cursor: pointer;
+		width: 100%;
 		span {
+			cursor: pointer;
 			content: "";
 			height: 45px;
 			width: 50px;
-			float: left;
+			float: right;
 			background-color: $primary-color;
 			background-image: url("../images/UHH_web_lupe_desktop_grau.png");
 			background-position: center;
@@ -314,10 +315,21 @@
 }
 
 #desktopSearchCollapse {
+	height: 45px;
+	background: none;
 	position: inherit;
 	margin-top: -12px;
 	margin-bottom: 12px;
-	border-top: none;
+	padding: 0;
+	border: none;
+	
+	&>span {
+		height: 42px;
+		width: 50%;
+		border: 1px solid $primary-color;
+		float: right;
+		margin-right: 12px;
+	}
 	
 	&.sticky {
 		position: fixed;
@@ -332,7 +344,7 @@
 }
 
 .sticky.show ~ .sticky-margin {
-	padding-bottom: 165px;
+	padding-bottom: 100px;
 }
 
 .searchCollapse {
