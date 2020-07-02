@@ -943,9 +943,11 @@
                 'change',
                 function (A) {
                 	let categoryAlreadyChosen = false;
+                	const selectedCategory = categoryId.get(categoryId.get('selectedIndex')).get('text').trim();
                 	for (let child of categories._node.children) {
-						if (categoryId.get(categoryId.get('selectedIndex')).get('text').trim() === child.innerText.trim()) {
+						if (selectedCategory === child.innerText.trim()) {
 							categoryAlreadyChosen = true;
+							break;
 						}
 					}
                     if (categoryId.get('value') > 0 && !categoryAlreadyChosen) {
