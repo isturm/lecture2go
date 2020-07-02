@@ -4,6 +4,8 @@ import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.search.ParseException;
 import com.liferay.portal.kernel.search.SearchException;
 import com.liferay.portal.search.document.Document;
@@ -42,6 +44,8 @@ import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 @Component(service = SearchManager.class)
 public class SearchManager {
 
+	private Log LOG = LogFactoryUtil.getLog(PermissionManager.class.getName());
+
 	@Reference
 	protected Queries queries;
 
@@ -57,7 +61,7 @@ public class SearchManager {
 	public JSONArray getAutocompleteResultArrayBySearchWord(long companyId, String searchText, int resultLimit)
 			throws SearchException, ParseException {
 		Stream<Document> searchResults = getSearchResultsBySearchWordAndFilter(companyId, SearchType.WILDCARD_MATCH,
-				searchText, null, resultLimit, null);
+				searchText, null, resultLimit, null, null);
 		List<String> resultList = new ArrayList<String>();
 		searchResults.forEach(document -> {
 			for (String value : document.getStrings("tagCloud")) {
@@ -73,9 +77,10 @@ public class SearchManager {
 	}
 
 	public List<VideoListSearchResult> searchVideoList(long companyId, SearchType searchType, String searchText,
-			Map<String, Object> filters, int resultLimit, String sortByField) throws SearchException, ParseException {
+			Map<String, Object> filters, int resultLimit, String sortByField, String sortByOrder)
+			throws SearchException, ParseException {
 		Stream<Document> searchResults = getSearchResultsBySearchWordAndFilter(companyId, searchType, searchText,
-				filters, resultLimit, sortByField);
+				filters, resultLimit, sortByField, sortByOrder);
 		List<VideoListSearchResult> videoList = new ArrayList<VideoListSearchResult>();
 		searchResults.forEach(document -> {
 			VideoListSearchResult searchResult = new VideoListSearchResult();
@@ -169,7 +174,7 @@ public class SearchManager {
 	}
 
 	public Stream<Document> getSearchResultsBySearchWordAndFilter(long companyId, SearchType searchType,
-			String searchText, Map<String, Object> filters, int resultLimit, String sortByField)
+			String searchText, Map<String, Object> filters, int resultLimit, String sortByField, String sortByOrder)
 			throws SearchException, ParseException {
 		BooleanQuery completeQuery = queries.booleanQuery();
 
@@ -223,12 +228,14 @@ public class SearchManager {
 			searchRequestBuilder.size(resultLimit);
 		}
 		if (sortByField != null && !sortByField.isEmpty()) {
-			Sort sort;
-			if ("latestVideoGenerationDate".equals(sortByField)) {
-				sort = sorts.field(sortByField + "_String_sortable", SortOrder.DESC);
+			SortOrder sortOrder;
+			if ("ASC".equals(sortByOrder) || "DESC".equals(sortByOrder)) {
+				sortOrder = SortOrder.valueOf(sortByOrder);
 			} else {
-				sort = sorts.field(sortByField + "_String_sortable");
+				LOG.warn(String.format("Given sort order '%s' is invalid, defaulting to 'ASC'", sortByOrder));
+				sortOrder = SortOrder.ASC;
 			}
+			Sort sort = sorts.field(sortByField + "_String_sortable", sortOrder);
 			searchRequestBuilder.sorts(sort);
 		}
 		SearchRequest searchRequest = searchRequestBuilder.query(completeQuery).build();
