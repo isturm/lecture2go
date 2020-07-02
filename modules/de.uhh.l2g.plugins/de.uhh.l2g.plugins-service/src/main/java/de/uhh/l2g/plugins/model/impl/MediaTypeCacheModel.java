@@ -27,29 +27,26 @@ import java.io.ObjectOutput;
 
 import java.util.Date;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The cache model class for representing MediaType in entity cache.
  *
  * @author Iavor Sturm
  * @generated
  */
-@ProviderType
 public class MediaTypeCacheModel
 	implements CacheModel<MediaType>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof MediaTypeCacheModel)) {
+		if (!(object instanceof MediaTypeCacheModel)) {
 			return false;
 		}
 
-		MediaTypeCacheModel mediaTypeCacheModel = (MediaTypeCacheModel)obj;
+		MediaTypeCacheModel mediaTypeCacheModel = (MediaTypeCacheModel)object;
 
 		if (mediaTypeId == mediaTypeCacheModel.mediaTypeId) {
 			return true;

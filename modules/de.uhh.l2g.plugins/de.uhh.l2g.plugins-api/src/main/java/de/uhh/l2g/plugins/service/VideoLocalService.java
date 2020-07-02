@@ -31,36 +31,38 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import de.uhh.l2g.plugins.exception.NoSuchVideoException;
+import de.uhh.l2g.plugins.model.Video;
+
 import java.io.File;
 import java.io.Serializable;
+
 import java.util.List;
 
 import org.osgi.annotation.versioning.ProviderType;
 
-import de.uhh.l2g.plugins.exception.NoSuchVideoException;
-import de.uhh.l2g.plugins.model.Video;
-
 /**
- * Provides the local service interface for Video. Methods of this service will
- * not have security checks based on the propagated JAAS credentials because
- * this service can only be accessed from within the same VM.
+ * Provides the local service interface for Video. Methods of this
+ * service will not have security checks based on the propagated JAAS
+ * credentials because this service can only be accessed from within the same
+ * VM.
  *
  * @author Iavor Sturm
  * @see VideoLocalServiceUtil
  * @generated
  */
 @ProviderType
-@Transactional(isolation = Isolation.PORTAL, rollbackFor = { PortalException.class, SystemException.class })
-public interface VideoLocalService extends BaseLocalService, PersistedModelLocalService {
+@Transactional(
+	isolation = Isolation.PORTAL,
+	rollbackFor = {PortalException.class, SystemException.class}
+)
+public interface VideoLocalService
+	extends BaseLocalService, PersistedModelLocalService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never modify or reference this interface directly. Always use {@link
-	 * VideoLocalServiceUtil} to access the video local service. Add custom service
-	 * methods to <code>de.uhh.l2g.plugins.service.impl.VideoLocalServiceImpl</code>
-	 * and rerun ServiceBuilder to automatically copy the method declarations to
-	 * this interface.
+	 * Never modify or reference this interface directly. Always use {@link VideoLocalServiceUtil} to access the video local service. Add custom service methods to <code>de.uhh.l2g.plugins.service.impl.VideoLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 
 	/**
@@ -89,8 +91,7 @@ public interface VideoLocalService extends BaseLocalService, PersistedModelLocal
 	public void addTracksToVideoPlayer(Video video);
 
 	/**
-	 * Adds the video to the database. Also notifies the appropriate model
-	 * listeners.
+	 * Adds the video to the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param video the video
 	 * @return the video that was added
@@ -103,24 +104,27 @@ public interface VideoLocalService extends BaseLocalService, PersistedModelLocal
 	 */
 	public boolean checkSmilFile(Video video);
 
-	public int countByLectureseries(Long lectureseriesId) throws SystemException;
+	public int countByLectureseries(Long lectureseriesId)
+		throws SystemException;
 
-	public int countByLectureseriesAndOpenaccess(Long lectureseriesId, int openAccess) throws SystemException;
+	public int countByLectureseriesAndOpenaccess(
+			Long lectureseriesId, int openAccess)
+		throws SystemException;
 
 	public void createLastVideoList() throws SystemException;
 
 	/**
 	 * Creates a symlink for the caption of the video to to captions folder
 	 */
-	public void createSymLinkForCaptionIfExisting(Long videoId) throws PortalException, SystemException;
+	public void createSymLinkForCaptionIfExisting(Long videoId)
+		throws PortalException, SystemException;
 
 	public void createSymLinkToDownloadableFileIfNotExisting(Long videoId);
 
 	public void createThumbnailsIfNotExisting(Long videoId);
 
 	/**
-	 * Creates a new video with the primary key. Does not add the video to the
-	 * database.
+	 * Creates a new video with the primary key. Does not add the video to the database.
 	 *
 	 * @param videoId the primary key for the new video
 	 * @return the new video
@@ -132,11 +136,11 @@ public interface VideoLocalService extends BaseLocalService, PersistedModelLocal
 	 * @throws PortalException
 	 */
 	@Override
-	public PersistedModel deletePersistedModel(PersistedModel persistedModel) throws PortalException;
+	public PersistedModel deletePersistedModel(PersistedModel persistedModel)
+		throws PortalException;
 
 	/**
-	 * Deletes the video with the primary key from the database. Also notifies the
-	 * appropriate model listeners.
+	 * Deletes the video with the primary key from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param videoId the primary key of the video
 	 * @return the video that was removed
@@ -146,8 +150,7 @@ public interface VideoLocalService extends BaseLocalService, PersistedModelLocal
 	public Video deleteVideo(long videoId) throws PortalException;
 
 	/**
-	 * Deletes the video from the database. Also notifies the appropriate model
-	 * listeners.
+	 * Deletes the video from the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param video the video
 	 * @return the video that was removed
@@ -168,69 +171,38 @@ public interface VideoLocalService extends BaseLocalService, PersistedModelLocal
 	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery);
 
 	/**
-	 * Performs a dynamic query on the database and returns a range of the matching
-	 * rows.
+	 * Performs a dynamic query on the database and returns a range of the matching rows.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code>
-	 * instances. <code>start</code> and <code>end</code> are not primary keys, they
-	 * are indexes in the result set. Thus, <code>0</code> refers to the first
-	 * result in the set. Setting both <code>start</code> and <code>end</code> to
-	 * <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return
-	 * the full result set. If <code>orderByComparator</code> is specified, then the
-	 * query will include the given ORDER BY logic. If
-	 * <code>orderByComparator</code> is absent and pagination is required
-	 * (<code>start</code> and <code>end</code> are not
-	 * <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the
-	 * query will include the default ORDER BY logic from
-	 * <code>de.uhh.l2g.plugins.model.impl.VideoModelImpl</code>. If both
-	 * <code>orderByComparator</code> and pagination are absent, for performance
-	 * reasons, the query will not have an ORDER BY clause and the returned result
-	 * set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>de.uhh.l2g.plugins.model.impl.VideoModelImpl</code>.
 	 * </p>
 	 *
 	 * @param dynamicQuery the dynamic query
-	 * @param start        the lower bound of the range of model instances
-	 * @param end          the upper bound of the range of model instances (not
-	 *                     inclusive)
+	 * @param start the lower bound of the range of model instances
+	 * @param end the upper bound of the range of model instances (not inclusive)
 	 * @return the range of matching rows
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start, int end);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end);
 
 	/**
-	 * Performs a dynamic query on the database and returns an ordered range of the
-	 * matching rows.
+	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code>
-	 * instances. <code>start</code> and <code>end</code> are not primary keys, they
-	 * are indexes in the result set. Thus, <code>0</code> refers to the first
-	 * result in the set. Setting both <code>start</code> and <code>end</code> to
-	 * <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return
-	 * the full result set. If <code>orderByComparator</code> is specified, then the
-	 * query will include the given ORDER BY logic. If
-	 * <code>orderByComparator</code> is absent and pagination is required
-	 * (<code>start</code> and <code>end</code> are not
-	 * <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the
-	 * query will include the default ORDER BY logic from
-	 * <code>de.uhh.l2g.plugins.model.impl.VideoModelImpl</code>. If both
-	 * <code>orderByComparator</code> and pagination are absent, for performance
-	 * reasons, the query will not have an ORDER BY clause and the returned result
-	 * set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>de.uhh.l2g.plugins.model.impl.VideoModelImpl</code>.
 	 * </p>
 	 *
-	 * @param dynamicQuery      the dynamic query
-	 * @param start             the lower bound of the range of model instances
-	 * @param end               the upper bound of the range of model instances (not
-	 *                          inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally
-	 *                          <code>null</code>)
+	 * @param dynamicQuery the dynamic query
+	 * @param start the lower bound of the range of model instances
+	 * @param end the upper bound of the range of model instances (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @return the ordered range of matching rows
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public <T> List<T> dynamicQuery(DynamicQuery dynamicQuery, int start, int end,
-			OrderByComparator<T> orderByComparator);
+	public <T> List<T> dynamicQuery(
+		DynamicQuery dynamicQuery, int start, int end,
+		OrderByComparator<T> orderByComparator);
 
 	/**
 	 * Returns the number of rows matching the dynamic query.
@@ -245,16 +217,18 @@ public interface VideoLocalService extends BaseLocalService, PersistedModelLocal
 	 * Returns the number of rows matching the dynamic query.
 	 *
 	 * @param dynamicQuery the dynamic query
-	 * @param projection   the projection to apply to the query
+	 * @param projection the projection to apply to the query
 	 * @return the number of rows matching the dynamic query
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long dynamicQueryCount(DynamicQuery dynamicQuery, Projection projection);
+	public long dynamicQueryCount(
+		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Video fetchVideo(long videoId);
 
-	public boolean fileStringSegmentFoundInArray(String file, JSONArray jsonArray);
+	public boolean fileStringSegmentFoundInArray(
+		String file, JSONArray jsonArray);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -278,10 +252,13 @@ public interface VideoLocalService extends BaseLocalService, PersistedModelLocal
 	public List<Video> getByHitsAndOpenAccess(Long hits);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Video> getByLectureseries(Long lectureseriesId) throws SystemException;
+	public List<Video> getByLectureseries(Long lectureseriesId)
+		throws SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Video> getByLectureseriesAndOpenaccess(Long lectureseriesId, int openAccess) throws SystemException;
+	public List<Video> getByLectureseriesAndOpenaccess(
+			Long lectureseriesId, int openAccess)
+		throws SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Video> getByOpenAccess(int bool) throws SystemException;
@@ -293,25 +270,37 @@ public interface VideoLocalService extends BaseLocalService, PersistedModelLocal
 	public List<Video> getByProducer(Long producerId) throws SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Video> getByProducerAndDownloadLink(Long producerId, int downloadLink) throws SystemException;
+	public List<Video> getByProducerAndDownloadLink(
+			Long producerId, int downloadLink)
+		throws SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Video> getByProducerAndLectureseries(Long producerId, Long lectureseriesId) throws SystemException;
+	public List<Video> getByProducerAndLectureseries(
+			Long producerId, Long lectureseriesId)
+		throws SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Video> getByRootInstitution(Long rootInstitutionId) throws SystemException;
+	public List<Video> getByRootInstitution(Long rootInstitutionId)
+		throws SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Video> getBySearchWord(String word, int limit) throws SystemException;
+	public List<Video> getBySearchWord(String word, int limit)
+		throws SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Video> getBySearchWordAndLectureseriesId(String word, Long lectureseriesId) throws SystemException;
+	public List<Video> getBySearchWordAndLectureseriesId(
+			String word, Long lectureseriesId)
+		throws SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Video getBySecureUrl(String surl) throws NoSuchVideoException, SystemException;
+	public Video getBySecureUrl(String surl)
+		throws NoSuchVideoException, SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Video> getByTerm(Long termId) throws SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Video> getByVideoIds(long[] videoIds);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -335,9 +324,13 @@ public interface VideoLocalService extends BaseLocalService, PersistedModelLocal
 	 */
 	public String getOSGiServiceIdentifier();
 
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public PersistedModel getPersistedModel(Serializable primaryKeyObj) throws PortalException;
+	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Video> getPopular(int limit);
@@ -356,38 +349,15 @@ public interface VideoLocalService extends BaseLocalService, PersistedModelLocal
 	 * Returns a range of all the videos.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code>
-	 * instances. <code>start</code> and <code>end</code> are not primary keys, they
-	 * are indexes in the result set. Thus, <code>0</code> refers to the first
-	 * result in the set. Setting both <code>start</code> and <code>end</code> to
-	 * <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return
-	 * the full result set. If <code>orderByComparator</code> is specified, then the
-	 * query will include the given ORDER BY logic. If
-	 * <code>orderByComparator</code> is absent and pagination is required
-	 * (<code>start</code> and <code>end</code> are not
-	 * <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the
-	 * query will include the default ORDER BY logic from
-	 * <code>de.uhh.l2g.plugins.model.impl.VideoModelImpl</code>. If both
-	 * <code>orderByComparator</code> and pagination are absent, for performance
-	 * reasons, the query will not have an ORDER BY clause and the returned result
-	 * set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>de.uhh.l2g.plugins.model.impl.VideoModelImpl</code>.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of videos
-	 * @param end   the upper bound of the range of videos (not inclusive)
+	 * @param end the upper bound of the range of videos (not inclusive)
 	 * @return the range of videos
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Video> getVideos(int start, int end);
-
-	/**
-	 * Returns videos with given ids.
-	 *
-	 * @param videoIds videoIds of the videos
-	 * @return all videos with specified ids
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Video> getVideos(long[] videoIds);
 
 	/**
 	 * Returns the number of videos.
@@ -409,8 +379,7 @@ public interface VideoLocalService extends BaseLocalService, PersistedModelLocal
 	public int unlinkLectureseriesFromVideos(Long lectureseriesId);
 
 	/**
-	 * Updates the video in the database or adds it if it does not yet exist. Also
-	 * notifies the appropriate model listeners.
+	 * Updates the video in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
 	 *
 	 * @param video the video
 	 * @return the video that was updated

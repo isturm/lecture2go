@@ -15,7 +15,6 @@
 package de.uhh.l2g.plugins.service.persistence;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.util.OrderByComparator;
 
 import de.uhh.l2g.plugins.exception.NoSuchLastvideolistException;
 import de.uhh.l2g.plugins.model.Lastvideolist;
@@ -55,7 +54,7 @@ public interface LastvideolistPersistence
 	 * Returns a range of all the lastvideolists where videoId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LastvideolistModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LastvideolistModelImpl</code>.
 	 * </p>
 	 *
 	 * @param videoId the video ID
@@ -70,10 +69,27 @@ public interface LastvideolistPersistence
 	 * Returns an ordered range of all the lastvideolists where videoId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LastvideolistModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LastvideolistModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByVideo(long, int, int, OrderByComparator)}
+	 * @param videoId the video ID
+	 * @param start the lower bound of the range of lastvideolists
+	 * @param end the upper bound of the range of lastvideolists (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching lastvideolists
+	 */
+	public java.util.List<Lastvideolist> findByVideo(
+		long videoId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Lastvideolist>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the lastvideolists where videoId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LastvideolistModelImpl</code>.
+	 * </p>
+	 *
 	 * @param videoId the video ID
 	 * @param start the lower bound of the range of lastvideolists
 	 * @param end the upper bound of the range of lastvideolists (not inclusive)
@@ -81,28 +97,11 @@ public interface LastvideolistPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lastvideolists
 	 */
-	@Deprecated
 	public java.util.List<Lastvideolist> findByVideo(
 		long videoId, int start, int end,
-		OrderByComparator<Lastvideolist> orderByComparator,
+		com.liferay.portal.kernel.util.OrderByComparator<Lastvideolist>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the lastvideolists where videoId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LastvideolistModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param videoId the video ID
-	 * @param start the lower bound of the range of lastvideolists
-	 * @param end the upper bound of the range of lastvideolists (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching lastvideolists
-	 */
-	public java.util.List<Lastvideolist> findByVideo(
-		long videoId, int start, int end,
-		OrderByComparator<Lastvideolist> orderByComparator);
 
 	/**
 	 * Returns the first lastvideolist in the ordered set where videoId = &#63;.
@@ -113,7 +112,9 @@ public interface LastvideolistPersistence
 	 * @throws NoSuchLastvideolistException if a matching lastvideolist could not be found
 	 */
 	public Lastvideolist findByVideo_First(
-			long videoId, OrderByComparator<Lastvideolist> orderByComparator)
+			long videoId,
+			com.liferay.portal.kernel.util.OrderByComparator<Lastvideolist>
+				orderByComparator)
 		throws NoSuchLastvideolistException;
 
 	/**
@@ -124,7 +125,9 @@ public interface LastvideolistPersistence
 	 * @return the first matching lastvideolist, or <code>null</code> if a matching lastvideolist could not be found
 	 */
 	public Lastvideolist fetchByVideo_First(
-		long videoId, OrderByComparator<Lastvideolist> orderByComparator);
+		long videoId,
+		com.liferay.portal.kernel.util.OrderByComparator<Lastvideolist>
+			orderByComparator);
 
 	/**
 	 * Returns the last lastvideolist in the ordered set where videoId = &#63;.
@@ -135,7 +138,9 @@ public interface LastvideolistPersistence
 	 * @throws NoSuchLastvideolistException if a matching lastvideolist could not be found
 	 */
 	public Lastvideolist findByVideo_Last(
-			long videoId, OrderByComparator<Lastvideolist> orderByComparator)
+			long videoId,
+			com.liferay.portal.kernel.util.OrderByComparator<Lastvideolist>
+				orderByComparator)
 		throws NoSuchLastvideolistException;
 
 	/**
@@ -146,7 +151,9 @@ public interface LastvideolistPersistence
 	 * @return the last matching lastvideolist, or <code>null</code> if a matching lastvideolist could not be found
 	 */
 	public Lastvideolist fetchByVideo_Last(
-		long videoId, OrderByComparator<Lastvideolist> orderByComparator);
+		long videoId,
+		com.liferay.portal.kernel.util.OrderByComparator<Lastvideolist>
+			orderByComparator);
 
 	/**
 	 * Returns the lastvideolists before and after the current lastvideolist in the ordered set where videoId = &#63;.
@@ -159,7 +166,8 @@ public interface LastvideolistPersistence
 	 */
 	public Lastvideolist[] findByVideo_PrevAndNext(
 			int lastvideolistId, long videoId,
-			OrderByComparator<Lastvideolist> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Lastvideolist>
+				orderByComparator)
 		throws NoSuchLastvideolistException;
 
 	/**
@@ -189,7 +197,7 @@ public interface LastvideolistPersistence
 	 * Returns a range of all the lastvideolists where groupId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LastvideolistModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LastvideolistModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -204,10 +212,27 @@ public interface LastvideolistPersistence
 	 * Returns an ordered range of all the lastvideolists where groupId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LastvideolistModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LastvideolistModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByGroup(long, int, int, OrderByComparator)}
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of lastvideolists
+	 * @param end the upper bound of the range of lastvideolists (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching lastvideolists
+	 */
+	public java.util.List<Lastvideolist> findByGroup(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Lastvideolist>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the lastvideolists where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LastvideolistModelImpl</code>.
+	 * </p>
+	 *
 	 * @param groupId the group ID
 	 * @param start the lower bound of the range of lastvideolists
 	 * @param end the upper bound of the range of lastvideolists (not inclusive)
@@ -215,28 +240,11 @@ public interface LastvideolistPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lastvideolists
 	 */
-	@Deprecated
 	public java.util.List<Lastvideolist> findByGroup(
 		long groupId, int start, int end,
-		OrderByComparator<Lastvideolist> orderByComparator,
+		com.liferay.portal.kernel.util.OrderByComparator<Lastvideolist>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the lastvideolists where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LastvideolistModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of lastvideolists
-	 * @param end the upper bound of the range of lastvideolists (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching lastvideolists
-	 */
-	public java.util.List<Lastvideolist> findByGroup(
-		long groupId, int start, int end,
-		OrderByComparator<Lastvideolist> orderByComparator);
 
 	/**
 	 * Returns the first lastvideolist in the ordered set where groupId = &#63;.
@@ -247,7 +255,9 @@ public interface LastvideolistPersistence
 	 * @throws NoSuchLastvideolistException if a matching lastvideolist could not be found
 	 */
 	public Lastvideolist findByGroup_First(
-			long groupId, OrderByComparator<Lastvideolist> orderByComparator)
+			long groupId,
+			com.liferay.portal.kernel.util.OrderByComparator<Lastvideolist>
+				orderByComparator)
 		throws NoSuchLastvideolistException;
 
 	/**
@@ -258,7 +268,9 @@ public interface LastvideolistPersistence
 	 * @return the first matching lastvideolist, or <code>null</code> if a matching lastvideolist could not be found
 	 */
 	public Lastvideolist fetchByGroup_First(
-		long groupId, OrderByComparator<Lastvideolist> orderByComparator);
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<Lastvideolist>
+			orderByComparator);
 
 	/**
 	 * Returns the last lastvideolist in the ordered set where groupId = &#63;.
@@ -269,7 +281,9 @@ public interface LastvideolistPersistence
 	 * @throws NoSuchLastvideolistException if a matching lastvideolist could not be found
 	 */
 	public Lastvideolist findByGroup_Last(
-			long groupId, OrderByComparator<Lastvideolist> orderByComparator)
+			long groupId,
+			com.liferay.portal.kernel.util.OrderByComparator<Lastvideolist>
+				orderByComparator)
 		throws NoSuchLastvideolistException;
 
 	/**
@@ -280,7 +294,9 @@ public interface LastvideolistPersistence
 	 * @return the last matching lastvideolist, or <code>null</code> if a matching lastvideolist could not be found
 	 */
 	public Lastvideolist fetchByGroup_Last(
-		long groupId, OrderByComparator<Lastvideolist> orderByComparator);
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<Lastvideolist>
+			orderByComparator);
 
 	/**
 	 * Returns the lastvideolists before and after the current lastvideolist in the ordered set where groupId = &#63;.
@@ -293,7 +309,8 @@ public interface LastvideolistPersistence
 	 */
 	public Lastvideolist[] findByGroup_PrevAndNext(
 			int lastvideolistId, long groupId,
-			OrderByComparator<Lastvideolist> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Lastvideolist>
+				orderByComparator)
 		throws NoSuchLastvideolistException;
 
 	/**
@@ -323,7 +340,7 @@ public interface LastvideolistPersistence
 	 * Returns a range of all the lastvideolists where companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LastvideolistModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LastvideolistModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
@@ -338,10 +355,27 @@ public interface LastvideolistPersistence
 	 * Returns an ordered range of all the lastvideolists where companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LastvideolistModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LastvideolistModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCompany(long, int, int, OrderByComparator)}
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of lastvideolists
+	 * @param end the upper bound of the range of lastvideolists (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching lastvideolists
+	 */
+	public java.util.List<Lastvideolist> findByCompany(
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Lastvideolist>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the lastvideolists where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LastvideolistModelImpl</code>.
+	 * </p>
+	 *
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of lastvideolists
 	 * @param end the upper bound of the range of lastvideolists (not inclusive)
@@ -349,28 +383,11 @@ public interface LastvideolistPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lastvideolists
 	 */
-	@Deprecated
 	public java.util.List<Lastvideolist> findByCompany(
 		long companyId, int start, int end,
-		OrderByComparator<Lastvideolist> orderByComparator,
+		com.liferay.portal.kernel.util.OrderByComparator<Lastvideolist>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the lastvideolists where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LastvideolistModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of lastvideolists
-	 * @param end the upper bound of the range of lastvideolists (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching lastvideolists
-	 */
-	public java.util.List<Lastvideolist> findByCompany(
-		long companyId, int start, int end,
-		OrderByComparator<Lastvideolist> orderByComparator);
 
 	/**
 	 * Returns the first lastvideolist in the ordered set where companyId = &#63;.
@@ -381,7 +398,9 @@ public interface LastvideolistPersistence
 	 * @throws NoSuchLastvideolistException if a matching lastvideolist could not be found
 	 */
 	public Lastvideolist findByCompany_First(
-			long companyId, OrderByComparator<Lastvideolist> orderByComparator)
+			long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator<Lastvideolist>
+				orderByComparator)
 		throws NoSuchLastvideolistException;
 
 	/**
@@ -392,7 +411,9 @@ public interface LastvideolistPersistence
 	 * @return the first matching lastvideolist, or <code>null</code> if a matching lastvideolist could not be found
 	 */
 	public Lastvideolist fetchByCompany_First(
-		long companyId, OrderByComparator<Lastvideolist> orderByComparator);
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<Lastvideolist>
+			orderByComparator);
 
 	/**
 	 * Returns the last lastvideolist in the ordered set where companyId = &#63;.
@@ -403,7 +424,9 @@ public interface LastvideolistPersistence
 	 * @throws NoSuchLastvideolistException if a matching lastvideolist could not be found
 	 */
 	public Lastvideolist findByCompany_Last(
-			long companyId, OrderByComparator<Lastvideolist> orderByComparator)
+			long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator<Lastvideolist>
+				orderByComparator)
 		throws NoSuchLastvideolistException;
 
 	/**
@@ -414,7 +437,9 @@ public interface LastvideolistPersistence
 	 * @return the last matching lastvideolist, or <code>null</code> if a matching lastvideolist could not be found
 	 */
 	public Lastvideolist fetchByCompany_Last(
-		long companyId, OrderByComparator<Lastvideolist> orderByComparator);
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<Lastvideolist>
+			orderByComparator);
 
 	/**
 	 * Returns the lastvideolists before and after the current lastvideolist in the ordered set where companyId = &#63;.
@@ -427,7 +452,8 @@ public interface LastvideolistPersistence
 	 */
 	public Lastvideolist[] findByCompany_PrevAndNext(
 			int lastvideolistId, long companyId,
-			OrderByComparator<Lastvideolist> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Lastvideolist>
+				orderByComparator)
 		throws NoSuchLastvideolistException;
 
 	/**
@@ -459,7 +485,7 @@ public interface LastvideolistPersistence
 	 * Returns a range of all the lastvideolists where groupId = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LastvideolistModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LastvideolistModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -475,10 +501,28 @@ public interface LastvideolistPersistence
 	 * Returns an ordered range of all the lastvideolists where groupId = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LastvideolistModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LastvideolistModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByGroupAndCompany(long,long, int, int, OrderByComparator)}
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of lastvideolists
+	 * @param end the upper bound of the range of lastvideolists (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching lastvideolists
+	 */
+	public java.util.List<Lastvideolist> findByGroupAndCompany(
+		long groupId, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Lastvideolist>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the lastvideolists where groupId = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LastvideolistModelImpl</code>.
+	 * </p>
+	 *
 	 * @param groupId the group ID
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of lastvideolists
@@ -487,29 +531,11 @@ public interface LastvideolistPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lastvideolists
 	 */
-	@Deprecated
 	public java.util.List<Lastvideolist> findByGroupAndCompany(
 		long groupId, long companyId, int start, int end,
-		OrderByComparator<Lastvideolist> orderByComparator,
+		com.liferay.portal.kernel.util.OrderByComparator<Lastvideolist>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the lastvideolists where groupId = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LastvideolistModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of lastvideolists
-	 * @param end the upper bound of the range of lastvideolists (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching lastvideolists
-	 */
-	public java.util.List<Lastvideolist> findByGroupAndCompany(
-		long groupId, long companyId, int start, int end,
-		OrderByComparator<Lastvideolist> orderByComparator);
 
 	/**
 	 * Returns the first lastvideolist in the ordered set where groupId = &#63; and companyId = &#63;.
@@ -522,7 +548,8 @@ public interface LastvideolistPersistence
 	 */
 	public Lastvideolist findByGroupAndCompany_First(
 			long groupId, long companyId,
-			OrderByComparator<Lastvideolist> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Lastvideolist>
+				orderByComparator)
 		throws NoSuchLastvideolistException;
 
 	/**
@@ -535,7 +562,8 @@ public interface LastvideolistPersistence
 	 */
 	public Lastvideolist fetchByGroupAndCompany_First(
 		long groupId, long companyId,
-		OrderByComparator<Lastvideolist> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Lastvideolist>
+			orderByComparator);
 
 	/**
 	 * Returns the last lastvideolist in the ordered set where groupId = &#63; and companyId = &#63;.
@@ -548,7 +576,8 @@ public interface LastvideolistPersistence
 	 */
 	public Lastvideolist findByGroupAndCompany_Last(
 			long groupId, long companyId,
-			OrderByComparator<Lastvideolist> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Lastvideolist>
+				orderByComparator)
 		throws NoSuchLastvideolistException;
 
 	/**
@@ -561,7 +590,8 @@ public interface LastvideolistPersistence
 	 */
 	public Lastvideolist fetchByGroupAndCompany_Last(
 		long groupId, long companyId,
-		OrderByComparator<Lastvideolist> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Lastvideolist>
+			orderByComparator);
 
 	/**
 	 * Returns the lastvideolists before and after the current lastvideolist in the ordered set where groupId = &#63; and companyId = &#63;.
@@ -575,7 +605,8 @@ public interface LastvideolistPersistence
 	 */
 	public Lastvideolist[] findByGroupAndCompany_PrevAndNext(
 			int lastvideolistId, long groupId, long companyId,
-			OrderByComparator<Lastvideolist> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Lastvideolist>
+				orderByComparator)
 		throws NoSuchLastvideolistException;
 
 	/**
@@ -658,7 +689,7 @@ public interface LastvideolistPersistence
 	 * Returns a range of all the lastvideolists.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LastvideolistModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LastvideolistModelImpl</code>.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of lastvideolists
@@ -671,35 +702,37 @@ public interface LastvideolistPersistence
 	 * Returns an ordered range of all the lastvideolists.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LastvideolistModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LastvideolistModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
+	 * @param start the lower bound of the range of lastvideolists
+	 * @param end the upper bound of the range of lastvideolists (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of lastvideolists
+	 */
+	public java.util.List<Lastvideolist> findAll(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Lastvideolist>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the lastvideolists.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LastvideolistModelImpl</code>.
+	 * </p>
+	 *
 	 * @param start the lower bound of the range of lastvideolists
 	 * @param end the upper bound of the range of lastvideolists (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of lastvideolists
 	 */
-	@Deprecated
 	public java.util.List<Lastvideolist> findAll(
-		int start, int end, OrderByComparator<Lastvideolist> orderByComparator,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Lastvideolist>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the lastvideolists.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LastvideolistModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of lastvideolists
-	 * @param end the upper bound of the range of lastvideolists (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of lastvideolists
-	 */
-	public java.util.List<Lastvideolist> findAll(
-		int start, int end, OrderByComparator<Lastvideolist> orderByComparator);
 
 	/**
 	 * Removes all the lastvideolists from the database.

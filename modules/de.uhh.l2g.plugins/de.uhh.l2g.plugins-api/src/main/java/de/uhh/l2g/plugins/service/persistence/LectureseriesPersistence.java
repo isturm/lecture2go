@@ -15,7 +15,6 @@
 package de.uhh.l2g.plugins.service.persistence;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.util.OrderByComparator;
 
 import de.uhh.l2g.plugins.exception.NoSuchLectureseriesException;
 import de.uhh.l2g.plugins.model.Lectureseries;
@@ -57,7 +56,7 @@ public interface LectureseriesPersistence
 	 * Returns a range of all the lectureserieses where termId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>.
 	 * </p>
 	 *
 	 * @param termId the term ID
@@ -72,10 +71,27 @@ public interface LectureseriesPersistence
 	 * Returns an ordered range of all the lectureserieses where termId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByTerm(long, int, int, OrderByComparator)}
+	 * @param termId the term ID
+	 * @param start the lower bound of the range of lectureserieses
+	 * @param end the upper bound of the range of lectureserieses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching lectureserieses
+	 */
+	public java.util.List<Lectureseries> findByTerm(
+		long termId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the lectureserieses where termId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>.
+	 * </p>
+	 *
 	 * @param termId the term ID
 	 * @param start the lower bound of the range of lectureserieses
 	 * @param end the upper bound of the range of lectureserieses (not inclusive)
@@ -83,28 +99,11 @@ public interface LectureseriesPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lectureserieses
 	 */
-	@Deprecated
 	public java.util.List<Lectureseries> findByTerm(
 		long termId, int start, int end,
-		OrderByComparator<Lectureseries> orderByComparator,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the lectureserieses where termId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param termId the term ID
-	 * @param start the lower bound of the range of lectureserieses
-	 * @param end the upper bound of the range of lectureserieses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching lectureserieses
-	 */
-	public java.util.List<Lectureseries> findByTerm(
-		long termId, int start, int end,
-		OrderByComparator<Lectureseries> orderByComparator);
 
 	/**
 	 * Returns the first lectureseries in the ordered set where termId = &#63;.
@@ -115,7 +114,9 @@ public interface LectureseriesPersistence
 	 * @throws NoSuchLectureseriesException if a matching lectureseries could not be found
 	 */
 	public Lectureseries findByTerm_First(
-			long termId, OrderByComparator<Lectureseries> orderByComparator)
+			long termId,
+			com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+				orderByComparator)
 		throws NoSuchLectureseriesException;
 
 	/**
@@ -126,7 +127,9 @@ public interface LectureseriesPersistence
 	 * @return the first matching lectureseries, or <code>null</code> if a matching lectureseries could not be found
 	 */
 	public Lectureseries fetchByTerm_First(
-		long termId, OrderByComparator<Lectureseries> orderByComparator);
+		long termId,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator);
 
 	/**
 	 * Returns the last lectureseries in the ordered set where termId = &#63;.
@@ -137,7 +140,9 @@ public interface LectureseriesPersistence
 	 * @throws NoSuchLectureseriesException if a matching lectureseries could not be found
 	 */
 	public Lectureseries findByTerm_Last(
-			long termId, OrderByComparator<Lectureseries> orderByComparator)
+			long termId,
+			com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+				orderByComparator)
 		throws NoSuchLectureseriesException;
 
 	/**
@@ -148,7 +153,9 @@ public interface LectureseriesPersistence
 	 * @return the last matching lectureseries, or <code>null</code> if a matching lectureseries could not be found
 	 */
 	public Lectureseries fetchByTerm_Last(
-		long termId, OrderByComparator<Lectureseries> orderByComparator);
+		long termId,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator);
 
 	/**
 	 * Returns the lectureserieses before and after the current lectureseries in the ordered set where termId = &#63;.
@@ -161,7 +168,8 @@ public interface LectureseriesPersistence
 	 */
 	public Lectureseries[] findByTerm_PrevAndNext(
 			long lectureseriesId, long termId,
-			OrderByComparator<Lectureseries> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+				orderByComparator)
 		throws NoSuchLectureseriesException;
 
 	/**
@@ -191,7 +199,7 @@ public interface LectureseriesPersistence
 	 * Returns a range of all the lectureserieses where language = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>.
 	 * </p>
 	 *
 	 * @param language the language
@@ -206,10 +214,27 @@ public interface LectureseriesPersistence
 	 * Returns an ordered range of all the lectureserieses where language = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByLanguage(String, int, int, OrderByComparator)}
+	 * @param language the language
+	 * @param start the lower bound of the range of lectureserieses
+	 * @param end the upper bound of the range of lectureserieses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching lectureserieses
+	 */
+	public java.util.List<Lectureseries> findByLanguage(
+		String language, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the lectureserieses where language = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>.
+	 * </p>
+	 *
 	 * @param language the language
 	 * @param start the lower bound of the range of lectureserieses
 	 * @param end the upper bound of the range of lectureserieses (not inclusive)
@@ -217,28 +242,11 @@ public interface LectureseriesPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lectureserieses
 	 */
-	@Deprecated
 	public java.util.List<Lectureseries> findByLanguage(
 		String language, int start, int end,
-		OrderByComparator<Lectureseries> orderByComparator,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the lectureserieses where language = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param language the language
-	 * @param start the lower bound of the range of lectureserieses
-	 * @param end the upper bound of the range of lectureserieses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching lectureserieses
-	 */
-	public java.util.List<Lectureseries> findByLanguage(
-		String language, int start, int end,
-		OrderByComparator<Lectureseries> orderByComparator);
 
 	/**
 	 * Returns the first lectureseries in the ordered set where language = &#63;.
@@ -249,7 +257,9 @@ public interface LectureseriesPersistence
 	 * @throws NoSuchLectureseriesException if a matching lectureseries could not be found
 	 */
 	public Lectureseries findByLanguage_First(
-			String language, OrderByComparator<Lectureseries> orderByComparator)
+			String language,
+			com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+				orderByComparator)
 		throws NoSuchLectureseriesException;
 
 	/**
@@ -260,7 +270,9 @@ public interface LectureseriesPersistence
 	 * @return the first matching lectureseries, or <code>null</code> if a matching lectureseries could not be found
 	 */
 	public Lectureseries fetchByLanguage_First(
-		String language, OrderByComparator<Lectureseries> orderByComparator);
+		String language,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator);
 
 	/**
 	 * Returns the last lectureseries in the ordered set where language = &#63;.
@@ -271,7 +283,9 @@ public interface LectureseriesPersistence
 	 * @throws NoSuchLectureseriesException if a matching lectureseries could not be found
 	 */
 	public Lectureseries findByLanguage_Last(
-			String language, OrderByComparator<Lectureseries> orderByComparator)
+			String language,
+			com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+				orderByComparator)
 		throws NoSuchLectureseriesException;
 
 	/**
@@ -282,7 +296,9 @@ public interface LectureseriesPersistence
 	 * @return the last matching lectureseries, or <code>null</code> if a matching lectureseries could not be found
 	 */
 	public Lectureseries fetchByLanguage_Last(
-		String language, OrderByComparator<Lectureseries> orderByComparator);
+		String language,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator);
 
 	/**
 	 * Returns the lectureserieses before and after the current lectureseries in the ordered set where language = &#63;.
@@ -295,7 +311,8 @@ public interface LectureseriesPersistence
 	 */
 	public Lectureseries[] findByLanguage_PrevAndNext(
 			long lectureseriesId, String language,
-			OrderByComparator<Lectureseries> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+				orderByComparator)
 		throws NoSuchLectureseriesException;
 
 	/**
@@ -325,7 +342,7 @@ public interface LectureseriesPersistence
 	 * Returns a range of all the lectureserieses where number = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>.
 	 * </p>
 	 *
 	 * @param number the number
@@ -340,10 +357,27 @@ public interface LectureseriesPersistence
 	 * Returns an ordered range of all the lectureserieses where number = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByNumber(String, int, int, OrderByComparator)}
+	 * @param number the number
+	 * @param start the lower bound of the range of lectureserieses
+	 * @param end the upper bound of the range of lectureserieses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching lectureserieses
+	 */
+	public java.util.List<Lectureseries> findByNumber(
+		String number, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the lectureserieses where number = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>.
+	 * </p>
+	 *
 	 * @param number the number
 	 * @param start the lower bound of the range of lectureserieses
 	 * @param end the upper bound of the range of lectureserieses (not inclusive)
@@ -351,28 +385,11 @@ public interface LectureseriesPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lectureserieses
 	 */
-	@Deprecated
 	public java.util.List<Lectureseries> findByNumber(
 		String number, int start, int end,
-		OrderByComparator<Lectureseries> orderByComparator,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the lectureserieses where number = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param number the number
-	 * @param start the lower bound of the range of lectureserieses
-	 * @param end the upper bound of the range of lectureserieses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching lectureserieses
-	 */
-	public java.util.List<Lectureseries> findByNumber(
-		String number, int start, int end,
-		OrderByComparator<Lectureseries> orderByComparator);
 
 	/**
 	 * Returns the first lectureseries in the ordered set where number = &#63;.
@@ -383,7 +400,9 @@ public interface LectureseriesPersistence
 	 * @throws NoSuchLectureseriesException if a matching lectureseries could not be found
 	 */
 	public Lectureseries findByNumber_First(
-			String number, OrderByComparator<Lectureseries> orderByComparator)
+			String number,
+			com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+				orderByComparator)
 		throws NoSuchLectureseriesException;
 
 	/**
@@ -394,7 +413,9 @@ public interface LectureseriesPersistence
 	 * @return the first matching lectureseries, or <code>null</code> if a matching lectureseries could not be found
 	 */
 	public Lectureseries fetchByNumber_First(
-		String number, OrderByComparator<Lectureseries> orderByComparator);
+		String number,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator);
 
 	/**
 	 * Returns the last lectureseries in the ordered set where number = &#63;.
@@ -405,7 +426,9 @@ public interface LectureseriesPersistence
 	 * @throws NoSuchLectureseriesException if a matching lectureseries could not be found
 	 */
 	public Lectureseries findByNumber_Last(
-			String number, OrderByComparator<Lectureseries> orderByComparator)
+			String number,
+			com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+				orderByComparator)
 		throws NoSuchLectureseriesException;
 
 	/**
@@ -416,7 +439,9 @@ public interface LectureseriesPersistence
 	 * @return the last matching lectureseries, or <code>null</code> if a matching lectureseries could not be found
 	 */
 	public Lectureseries fetchByNumber_Last(
-		String number, OrderByComparator<Lectureseries> orderByComparator);
+		String number,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator);
 
 	/**
 	 * Returns the lectureserieses before and after the current lectureseries in the ordered set where number = &#63;.
@@ -429,7 +454,8 @@ public interface LectureseriesPersistence
 	 */
 	public Lectureseries[] findByNumber_PrevAndNext(
 			long lectureseriesId, String number,
-			OrderByComparator<Lectureseries> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+				orderByComparator)
 		throws NoSuchLectureseriesException;
 
 	/**
@@ -459,7 +485,7 @@ public interface LectureseriesPersistence
 	 * Returns a range of all the lectureserieses where eventType = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>.
 	 * </p>
 	 *
 	 * @param eventType the event type
@@ -474,10 +500,27 @@ public interface LectureseriesPersistence
 	 * Returns an ordered range of all the lectureserieses where eventType = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByType(String, int, int, OrderByComparator)}
+	 * @param eventType the event type
+	 * @param start the lower bound of the range of lectureserieses
+	 * @param end the upper bound of the range of lectureserieses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching lectureserieses
+	 */
+	public java.util.List<Lectureseries> findByType(
+		String eventType, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the lectureserieses where eventType = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>.
+	 * </p>
+	 *
 	 * @param eventType the event type
 	 * @param start the lower bound of the range of lectureserieses
 	 * @param end the upper bound of the range of lectureserieses (not inclusive)
@@ -485,28 +528,11 @@ public interface LectureseriesPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lectureserieses
 	 */
-	@Deprecated
 	public java.util.List<Lectureseries> findByType(
 		String eventType, int start, int end,
-		OrderByComparator<Lectureseries> orderByComparator,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the lectureserieses where eventType = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param eventType the event type
-	 * @param start the lower bound of the range of lectureserieses
-	 * @param end the upper bound of the range of lectureserieses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching lectureserieses
-	 */
-	public java.util.List<Lectureseries> findByType(
-		String eventType, int start, int end,
-		OrderByComparator<Lectureseries> orderByComparator);
 
 	/**
 	 * Returns the first lectureseries in the ordered set where eventType = &#63;.
@@ -518,7 +544,8 @@ public interface LectureseriesPersistence
 	 */
 	public Lectureseries findByType_First(
 			String eventType,
-			OrderByComparator<Lectureseries> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+				orderByComparator)
 		throws NoSuchLectureseriesException;
 
 	/**
@@ -529,7 +556,9 @@ public interface LectureseriesPersistence
 	 * @return the first matching lectureseries, or <code>null</code> if a matching lectureseries could not be found
 	 */
 	public Lectureseries fetchByType_First(
-		String eventType, OrderByComparator<Lectureseries> orderByComparator);
+		String eventType,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator);
 
 	/**
 	 * Returns the last lectureseries in the ordered set where eventType = &#63;.
@@ -541,7 +570,8 @@ public interface LectureseriesPersistence
 	 */
 	public Lectureseries findByType_Last(
 			String eventType,
-			OrderByComparator<Lectureseries> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+				orderByComparator)
 		throws NoSuchLectureseriesException;
 
 	/**
@@ -552,7 +582,9 @@ public interface LectureseriesPersistence
 	 * @return the last matching lectureseries, or <code>null</code> if a matching lectureseries could not be found
 	 */
 	public Lectureseries fetchByType_Last(
-		String eventType, OrderByComparator<Lectureseries> orderByComparator);
+		String eventType,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator);
 
 	/**
 	 * Returns the lectureserieses before and after the current lectureseries in the ordered set where eventType = &#63;.
@@ -565,7 +597,8 @@ public interface LectureseriesPersistence
 	 */
 	public Lectureseries[] findByType_PrevAndNext(
 			long lectureseriesId, String eventType,
-			OrderByComparator<Lectureseries> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+				orderByComparator)
 		throws NoSuchLectureseriesException;
 
 	/**
@@ -595,7 +628,7 @@ public interface LectureseriesPersistence
 	 * Returns a range of all the lectureserieses where categoryId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>.
 	 * </p>
 	 *
 	 * @param categoryId the category ID
@@ -610,10 +643,27 @@ public interface LectureseriesPersistence
 	 * Returns an ordered range of all the lectureserieses where categoryId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCategory(long, int, int, OrderByComparator)}
+	 * @param categoryId the category ID
+	 * @param start the lower bound of the range of lectureserieses
+	 * @param end the upper bound of the range of lectureserieses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching lectureserieses
+	 */
+	public java.util.List<Lectureseries> findByCategory(
+		long categoryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the lectureserieses where categoryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>.
+	 * </p>
+	 *
 	 * @param categoryId the category ID
 	 * @param start the lower bound of the range of lectureserieses
 	 * @param end the upper bound of the range of lectureserieses (not inclusive)
@@ -621,28 +671,11 @@ public interface LectureseriesPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lectureserieses
 	 */
-	@Deprecated
 	public java.util.List<Lectureseries> findByCategory(
 		long categoryId, int start, int end,
-		OrderByComparator<Lectureseries> orderByComparator,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the lectureserieses where categoryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param categoryId the category ID
-	 * @param start the lower bound of the range of lectureserieses
-	 * @param end the upper bound of the range of lectureserieses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching lectureserieses
-	 */
-	public java.util.List<Lectureseries> findByCategory(
-		long categoryId, int start, int end,
-		OrderByComparator<Lectureseries> orderByComparator);
 
 	/**
 	 * Returns the first lectureseries in the ordered set where categoryId = &#63;.
@@ -653,7 +686,9 @@ public interface LectureseriesPersistence
 	 * @throws NoSuchLectureseriesException if a matching lectureseries could not be found
 	 */
 	public Lectureseries findByCategory_First(
-			long categoryId, OrderByComparator<Lectureseries> orderByComparator)
+			long categoryId,
+			com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+				orderByComparator)
 		throws NoSuchLectureseriesException;
 
 	/**
@@ -664,7 +699,9 @@ public interface LectureseriesPersistence
 	 * @return the first matching lectureseries, or <code>null</code> if a matching lectureseries could not be found
 	 */
 	public Lectureseries fetchByCategory_First(
-		long categoryId, OrderByComparator<Lectureseries> orderByComparator);
+		long categoryId,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator);
 
 	/**
 	 * Returns the last lectureseries in the ordered set where categoryId = &#63;.
@@ -675,7 +712,9 @@ public interface LectureseriesPersistence
 	 * @throws NoSuchLectureseriesException if a matching lectureseries could not be found
 	 */
 	public Lectureseries findByCategory_Last(
-			long categoryId, OrderByComparator<Lectureseries> orderByComparator)
+			long categoryId,
+			com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+				orderByComparator)
 		throws NoSuchLectureseriesException;
 
 	/**
@@ -686,7 +725,9 @@ public interface LectureseriesPersistence
 	 * @return the last matching lectureseries, or <code>null</code> if a matching lectureseries could not be found
 	 */
 	public Lectureseries fetchByCategory_Last(
-		long categoryId, OrderByComparator<Lectureseries> orderByComparator);
+		long categoryId,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator);
 
 	/**
 	 * Returns the lectureserieses before and after the current lectureseries in the ordered set where categoryId = &#63;.
@@ -699,7 +740,8 @@ public interface LectureseriesPersistence
 	 */
 	public Lectureseries[] findByCategory_PrevAndNext(
 			long lectureseriesId, long categoryId,
-			OrderByComparator<Lectureseries> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+				orderByComparator)
 		throws NoSuchLectureseriesException;
 
 	/**
@@ -729,7 +771,7 @@ public interface LectureseriesPersistence
 	 * Returns a range of all the lectureserieses where name = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>.
 	 * </p>
 	 *
 	 * @param name the name
@@ -744,10 +786,27 @@ public interface LectureseriesPersistence
 	 * Returns an ordered range of all the lectureserieses where name = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByName(String, int, int, OrderByComparator)}
+	 * @param name the name
+	 * @param start the lower bound of the range of lectureserieses
+	 * @param end the upper bound of the range of lectureserieses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching lectureserieses
+	 */
+	public java.util.List<Lectureseries> findByName(
+		String name, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the lectureserieses where name = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>.
+	 * </p>
+	 *
 	 * @param name the name
 	 * @param start the lower bound of the range of lectureserieses
 	 * @param end the upper bound of the range of lectureserieses (not inclusive)
@@ -755,28 +814,11 @@ public interface LectureseriesPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lectureserieses
 	 */
-	@Deprecated
 	public java.util.List<Lectureseries> findByName(
 		String name, int start, int end,
-		OrderByComparator<Lectureseries> orderByComparator,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the lectureserieses where name = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param name the name
-	 * @param start the lower bound of the range of lectureserieses
-	 * @param end the upper bound of the range of lectureserieses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching lectureserieses
-	 */
-	public java.util.List<Lectureseries> findByName(
-		String name, int start, int end,
-		OrderByComparator<Lectureseries> orderByComparator);
 
 	/**
 	 * Returns the first lectureseries in the ordered set where name = &#63;.
@@ -787,7 +829,9 @@ public interface LectureseriesPersistence
 	 * @throws NoSuchLectureseriesException if a matching lectureseries could not be found
 	 */
 	public Lectureseries findByName_First(
-			String name, OrderByComparator<Lectureseries> orderByComparator)
+			String name,
+			com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+				orderByComparator)
 		throws NoSuchLectureseriesException;
 
 	/**
@@ -798,7 +842,9 @@ public interface LectureseriesPersistence
 	 * @return the first matching lectureseries, or <code>null</code> if a matching lectureseries could not be found
 	 */
 	public Lectureseries fetchByName_First(
-		String name, OrderByComparator<Lectureseries> orderByComparator);
+		String name,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator);
 
 	/**
 	 * Returns the last lectureseries in the ordered set where name = &#63;.
@@ -809,7 +855,9 @@ public interface LectureseriesPersistence
 	 * @throws NoSuchLectureseriesException if a matching lectureseries could not be found
 	 */
 	public Lectureseries findByName_Last(
-			String name, OrderByComparator<Lectureseries> orderByComparator)
+			String name,
+			com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+				orderByComparator)
 		throws NoSuchLectureseriesException;
 
 	/**
@@ -820,7 +868,9 @@ public interface LectureseriesPersistence
 	 * @return the last matching lectureseries, or <code>null</code> if a matching lectureseries could not be found
 	 */
 	public Lectureseries fetchByName_Last(
-		String name, OrderByComparator<Lectureseries> orderByComparator);
+		String name,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator);
 
 	/**
 	 * Returns the lectureserieses before and after the current lectureseries in the ordered set where name = &#63;.
@@ -833,7 +883,8 @@ public interface LectureseriesPersistence
 	 */
 	public Lectureseries[] findByName_PrevAndNext(
 			long lectureseriesId, String name,
-			OrderByComparator<Lectureseries> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+				orderByComparator)
 		throws NoSuchLectureseriesException;
 
 	/**
@@ -863,7 +914,7 @@ public interface LectureseriesPersistence
 	 * Returns a range of all the lectureserieses where facultyName = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>.
 	 * </p>
 	 *
 	 * @param facultyName the faculty name
@@ -878,10 +929,27 @@ public interface LectureseriesPersistence
 	 * Returns an ordered range of all the lectureserieses where facultyName = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByFaculty(String, int, int, OrderByComparator)}
+	 * @param facultyName the faculty name
+	 * @param start the lower bound of the range of lectureserieses
+	 * @param end the upper bound of the range of lectureserieses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching lectureserieses
+	 */
+	public java.util.List<Lectureseries> findByFaculty(
+		String facultyName, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the lectureserieses where facultyName = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>.
+	 * </p>
+	 *
 	 * @param facultyName the faculty name
 	 * @param start the lower bound of the range of lectureserieses
 	 * @param end the upper bound of the range of lectureserieses (not inclusive)
@@ -889,28 +957,11 @@ public interface LectureseriesPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lectureserieses
 	 */
-	@Deprecated
 	public java.util.List<Lectureseries> findByFaculty(
 		String facultyName, int start, int end,
-		OrderByComparator<Lectureseries> orderByComparator,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the lectureserieses where facultyName = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param facultyName the faculty name
-	 * @param start the lower bound of the range of lectureserieses
-	 * @param end the upper bound of the range of lectureserieses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching lectureserieses
-	 */
-	public java.util.List<Lectureseries> findByFaculty(
-		String facultyName, int start, int end,
-		OrderByComparator<Lectureseries> orderByComparator);
 
 	/**
 	 * Returns the first lectureseries in the ordered set where facultyName = &#63;.
@@ -922,7 +973,8 @@ public interface LectureseriesPersistence
 	 */
 	public Lectureseries findByFaculty_First(
 			String facultyName,
-			OrderByComparator<Lectureseries> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+				orderByComparator)
 		throws NoSuchLectureseriesException;
 
 	/**
@@ -933,7 +985,9 @@ public interface LectureseriesPersistence
 	 * @return the first matching lectureseries, or <code>null</code> if a matching lectureseries could not be found
 	 */
 	public Lectureseries fetchByFaculty_First(
-		String facultyName, OrderByComparator<Lectureseries> orderByComparator);
+		String facultyName,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator);
 
 	/**
 	 * Returns the last lectureseries in the ordered set where facultyName = &#63;.
@@ -945,7 +999,8 @@ public interface LectureseriesPersistence
 	 */
 	public Lectureseries findByFaculty_Last(
 			String facultyName,
-			OrderByComparator<Lectureseries> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+				orderByComparator)
 		throws NoSuchLectureseriesException;
 
 	/**
@@ -956,7 +1011,9 @@ public interface LectureseriesPersistence
 	 * @return the last matching lectureseries, or <code>null</code> if a matching lectureseries could not be found
 	 */
 	public Lectureseries fetchByFaculty_Last(
-		String facultyName, OrderByComparator<Lectureseries> orderByComparator);
+		String facultyName,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator);
 
 	/**
 	 * Returns the lectureserieses before and after the current lectureseries in the ordered set where facultyName = &#63;.
@@ -969,7 +1026,8 @@ public interface LectureseriesPersistence
 	 */
 	public Lectureseries[] findByFaculty_PrevAndNext(
 			long lectureseriesId, String facultyName,
-			OrderByComparator<Lectureseries> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+				orderByComparator)
 		throws NoSuchLectureseriesException;
 
 	/**
@@ -999,7 +1057,7 @@ public interface LectureseriesPersistence
 	 * Returns a range of all the lectureserieses where approved = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>.
 	 * </p>
 	 *
 	 * @param approved the approved
@@ -1014,10 +1072,27 @@ public interface LectureseriesPersistence
 	 * Returns an ordered range of all the lectureserieses where approved = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByApproved(int, int, int, OrderByComparator)}
+	 * @param approved the approved
+	 * @param start the lower bound of the range of lectureserieses
+	 * @param end the upper bound of the range of lectureserieses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching lectureserieses
+	 */
+	public java.util.List<Lectureseries> findByApproved(
+		int approved, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the lectureserieses where approved = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>.
+	 * </p>
+	 *
 	 * @param approved the approved
 	 * @param start the lower bound of the range of lectureserieses
 	 * @param end the upper bound of the range of lectureserieses (not inclusive)
@@ -1025,28 +1100,11 @@ public interface LectureseriesPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lectureserieses
 	 */
-	@Deprecated
 	public java.util.List<Lectureseries> findByApproved(
 		int approved, int start, int end,
-		OrderByComparator<Lectureseries> orderByComparator,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the lectureserieses where approved = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param approved the approved
-	 * @param start the lower bound of the range of lectureserieses
-	 * @param end the upper bound of the range of lectureserieses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching lectureserieses
-	 */
-	public java.util.List<Lectureseries> findByApproved(
-		int approved, int start, int end,
-		OrderByComparator<Lectureseries> orderByComparator);
 
 	/**
 	 * Returns the first lectureseries in the ordered set where approved = &#63;.
@@ -1057,7 +1115,9 @@ public interface LectureseriesPersistence
 	 * @throws NoSuchLectureseriesException if a matching lectureseries could not be found
 	 */
 	public Lectureseries findByApproved_First(
-			int approved, OrderByComparator<Lectureseries> orderByComparator)
+			int approved,
+			com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+				orderByComparator)
 		throws NoSuchLectureseriesException;
 
 	/**
@@ -1068,7 +1128,9 @@ public interface LectureseriesPersistence
 	 * @return the first matching lectureseries, or <code>null</code> if a matching lectureseries could not be found
 	 */
 	public Lectureseries fetchByApproved_First(
-		int approved, OrderByComparator<Lectureseries> orderByComparator);
+		int approved,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator);
 
 	/**
 	 * Returns the last lectureseries in the ordered set where approved = &#63;.
@@ -1079,7 +1141,9 @@ public interface LectureseriesPersistence
 	 * @throws NoSuchLectureseriesException if a matching lectureseries could not be found
 	 */
 	public Lectureseries findByApproved_Last(
-			int approved, OrderByComparator<Lectureseries> orderByComparator)
+			int approved,
+			com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+				orderByComparator)
 		throws NoSuchLectureseriesException;
 
 	/**
@@ -1090,7 +1154,9 @@ public interface LectureseriesPersistence
 	 * @return the last matching lectureseries, or <code>null</code> if a matching lectureseries could not be found
 	 */
 	public Lectureseries fetchByApproved_Last(
-		int approved, OrderByComparator<Lectureseries> orderByComparator);
+		int approved,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator);
 
 	/**
 	 * Returns the lectureserieses before and after the current lectureseries in the ordered set where approved = &#63;.
@@ -1103,7 +1169,8 @@ public interface LectureseriesPersistence
 	 */
 	public Lectureseries[] findByApproved_PrevAndNext(
 			long lectureseriesId, int approved,
-			OrderByComparator<Lectureseries> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+				orderByComparator)
 		throws NoSuchLectureseriesException;
 
 	/**
@@ -1133,7 +1200,7 @@ public interface LectureseriesPersistence
 	 * Returns a range of all the lectureserieses where password = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>.
 	 * </p>
 	 *
 	 * @param password the password
@@ -1148,10 +1215,27 @@ public interface LectureseriesPersistence
 	 * Returns an ordered range of all the lectureserieses where password = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByPassword(String, int, int, OrderByComparator)}
+	 * @param password the password
+	 * @param start the lower bound of the range of lectureserieses
+	 * @param end the upper bound of the range of lectureserieses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching lectureserieses
+	 */
+	public java.util.List<Lectureseries> findByPassword(
+		String password, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the lectureserieses where password = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>.
+	 * </p>
+	 *
 	 * @param password the password
 	 * @param start the lower bound of the range of lectureserieses
 	 * @param end the upper bound of the range of lectureserieses (not inclusive)
@@ -1159,28 +1243,11 @@ public interface LectureseriesPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lectureserieses
 	 */
-	@Deprecated
 	public java.util.List<Lectureseries> findByPassword(
 		String password, int start, int end,
-		OrderByComparator<Lectureseries> orderByComparator,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the lectureserieses where password = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param password the password
-	 * @param start the lower bound of the range of lectureserieses
-	 * @param end the upper bound of the range of lectureserieses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching lectureserieses
-	 */
-	public java.util.List<Lectureseries> findByPassword(
-		String password, int start, int end,
-		OrderByComparator<Lectureseries> orderByComparator);
 
 	/**
 	 * Returns the first lectureseries in the ordered set where password = &#63;.
@@ -1191,7 +1258,9 @@ public interface LectureseriesPersistence
 	 * @throws NoSuchLectureseriesException if a matching lectureseries could not be found
 	 */
 	public Lectureseries findByPassword_First(
-			String password, OrderByComparator<Lectureseries> orderByComparator)
+			String password,
+			com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+				orderByComparator)
 		throws NoSuchLectureseriesException;
 
 	/**
@@ -1202,7 +1271,9 @@ public interface LectureseriesPersistence
 	 * @return the first matching lectureseries, or <code>null</code> if a matching lectureseries could not be found
 	 */
 	public Lectureseries fetchByPassword_First(
-		String password, OrderByComparator<Lectureseries> orderByComparator);
+		String password,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator);
 
 	/**
 	 * Returns the last lectureseries in the ordered set where password = &#63;.
@@ -1213,7 +1284,9 @@ public interface LectureseriesPersistence
 	 * @throws NoSuchLectureseriesException if a matching lectureseries could not be found
 	 */
 	public Lectureseries findByPassword_Last(
-			String password, OrderByComparator<Lectureseries> orderByComparator)
+			String password,
+			com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+				orderByComparator)
 		throws NoSuchLectureseriesException;
 
 	/**
@@ -1224,7 +1297,9 @@ public interface LectureseriesPersistence
 	 * @return the last matching lectureseries, or <code>null</code> if a matching lectureseries could not be found
 	 */
 	public Lectureseries fetchByPassword_Last(
-		String password, OrderByComparator<Lectureseries> orderByComparator);
+		String password,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator);
 
 	/**
 	 * Returns the lectureserieses before and after the current lectureseries in the ordered set where password = &#63;.
@@ -1237,7 +1312,8 @@ public interface LectureseriesPersistence
 	 */
 	public Lectureseries[] findByPassword_PrevAndNext(
 			long lectureseriesId, String password,
-			OrderByComparator<Lectureseries> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+				orderByComparator)
 		throws NoSuchLectureseriesException;
 
 	/**
@@ -1268,7 +1344,7 @@ public interface LectureseriesPersistence
 	 * Returns a range of all the lectureserieses where latestOpenAccessVideoId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>.
 	 * </p>
 	 *
 	 * @param latestOpenAccessVideoId the latest open access video ID
@@ -1283,10 +1359,27 @@ public interface LectureseriesPersistence
 	 * Returns an ordered range of all the lectureserieses where latestOpenAccessVideoId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByLatestOpenAccessVideo(long, int, int, OrderByComparator)}
+	 * @param latestOpenAccessVideoId the latest open access video ID
+	 * @param start the lower bound of the range of lectureserieses
+	 * @param end the upper bound of the range of lectureserieses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching lectureserieses
+	 */
+	public java.util.List<Lectureseries> findByLatestOpenAccessVideo(
+		long latestOpenAccessVideoId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the lectureserieses where latestOpenAccessVideoId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>.
+	 * </p>
+	 *
 	 * @param latestOpenAccessVideoId the latest open access video ID
 	 * @param start the lower bound of the range of lectureserieses
 	 * @param end the upper bound of the range of lectureserieses (not inclusive)
@@ -1294,28 +1387,11 @@ public interface LectureseriesPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lectureserieses
 	 */
-	@Deprecated
 	public java.util.List<Lectureseries> findByLatestOpenAccessVideo(
 		long latestOpenAccessVideoId, int start, int end,
-		OrderByComparator<Lectureseries> orderByComparator,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the lectureserieses where latestOpenAccessVideoId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param latestOpenAccessVideoId the latest open access video ID
-	 * @param start the lower bound of the range of lectureserieses
-	 * @param end the upper bound of the range of lectureserieses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching lectureserieses
-	 */
-	public java.util.List<Lectureseries> findByLatestOpenAccessVideo(
-		long latestOpenAccessVideoId, int start, int end,
-		OrderByComparator<Lectureseries> orderByComparator);
 
 	/**
 	 * Returns the first lectureseries in the ordered set where latestOpenAccessVideoId = &#63;.
@@ -1327,7 +1403,8 @@ public interface LectureseriesPersistence
 	 */
 	public Lectureseries findByLatestOpenAccessVideo_First(
 			long latestOpenAccessVideoId,
-			OrderByComparator<Lectureseries> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+				orderByComparator)
 		throws NoSuchLectureseriesException;
 
 	/**
@@ -1339,7 +1416,8 @@ public interface LectureseriesPersistence
 	 */
 	public Lectureseries fetchByLatestOpenAccessVideo_First(
 		long latestOpenAccessVideoId,
-		OrderByComparator<Lectureseries> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator);
 
 	/**
 	 * Returns the last lectureseries in the ordered set where latestOpenAccessVideoId = &#63;.
@@ -1351,7 +1429,8 @@ public interface LectureseriesPersistence
 	 */
 	public Lectureseries findByLatestOpenAccessVideo_Last(
 			long latestOpenAccessVideoId,
-			OrderByComparator<Lectureseries> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+				orderByComparator)
 		throws NoSuchLectureseriesException;
 
 	/**
@@ -1363,7 +1442,8 @@ public interface LectureseriesPersistence
 	 */
 	public Lectureseries fetchByLatestOpenAccessVideo_Last(
 		long latestOpenAccessVideoId,
-		OrderByComparator<Lectureseries> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator);
 
 	/**
 	 * Returns the lectureserieses before and after the current lectureseries in the ordered set where latestOpenAccessVideoId = &#63;.
@@ -1376,7 +1456,8 @@ public interface LectureseriesPersistence
 	 */
 	public Lectureseries[] findByLatestOpenAccessVideo_PrevAndNext(
 			long lectureseriesId, long latestOpenAccessVideoId,
-			OrderByComparator<Lectureseries> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+				orderByComparator)
 		throws NoSuchLectureseriesException;
 
 	/**
@@ -1407,7 +1488,7 @@ public interface LectureseriesPersistence
 	 * Returns a range of all the lectureserieses where latestVideoUploadDate = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>.
 	 * </p>
 	 *
 	 * @param latestVideoUploadDate the latest video upload date
@@ -1422,10 +1503,27 @@ public interface LectureseriesPersistence
 	 * Returns an ordered range of all the lectureserieses where latestVideoUploadDate = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByLatestVideoUploadDate(Date, int, int, OrderByComparator)}
+	 * @param latestVideoUploadDate the latest video upload date
+	 * @param start the lower bound of the range of lectureserieses
+	 * @param end the upper bound of the range of lectureserieses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching lectureserieses
+	 */
+	public java.util.List<Lectureseries> findByLatestVideoUploadDate(
+		Date latestVideoUploadDate, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the lectureserieses where latestVideoUploadDate = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>.
+	 * </p>
+	 *
 	 * @param latestVideoUploadDate the latest video upload date
 	 * @param start the lower bound of the range of lectureserieses
 	 * @param end the upper bound of the range of lectureserieses (not inclusive)
@@ -1433,28 +1531,11 @@ public interface LectureseriesPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lectureserieses
 	 */
-	@Deprecated
 	public java.util.List<Lectureseries> findByLatestVideoUploadDate(
 		Date latestVideoUploadDate, int start, int end,
-		OrderByComparator<Lectureseries> orderByComparator,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the lectureserieses where latestVideoUploadDate = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param latestVideoUploadDate the latest video upload date
-	 * @param start the lower bound of the range of lectureserieses
-	 * @param end the upper bound of the range of lectureserieses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching lectureserieses
-	 */
-	public java.util.List<Lectureseries> findByLatestVideoUploadDate(
-		Date latestVideoUploadDate, int start, int end,
-		OrderByComparator<Lectureseries> orderByComparator);
 
 	/**
 	 * Returns the first lectureseries in the ordered set where latestVideoUploadDate = &#63;.
@@ -1466,7 +1547,8 @@ public interface LectureseriesPersistence
 	 */
 	public Lectureseries findByLatestVideoUploadDate_First(
 			Date latestVideoUploadDate,
-			OrderByComparator<Lectureseries> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+				orderByComparator)
 		throws NoSuchLectureseriesException;
 
 	/**
@@ -1478,7 +1560,8 @@ public interface LectureseriesPersistence
 	 */
 	public Lectureseries fetchByLatestVideoUploadDate_First(
 		Date latestVideoUploadDate,
-		OrderByComparator<Lectureseries> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator);
 
 	/**
 	 * Returns the last lectureseries in the ordered set where latestVideoUploadDate = &#63;.
@@ -1490,7 +1573,8 @@ public interface LectureseriesPersistence
 	 */
 	public Lectureseries findByLatestVideoUploadDate_Last(
 			Date latestVideoUploadDate,
-			OrderByComparator<Lectureseries> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+				orderByComparator)
 		throws NoSuchLectureseriesException;
 
 	/**
@@ -1502,7 +1586,8 @@ public interface LectureseriesPersistence
 	 */
 	public Lectureseries fetchByLatestVideoUploadDate_Last(
 		Date latestVideoUploadDate,
-		OrderByComparator<Lectureseries> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator);
 
 	/**
 	 * Returns the lectureserieses before and after the current lectureseries in the ordered set where latestVideoUploadDate = &#63;.
@@ -1515,7 +1600,8 @@ public interface LectureseriesPersistence
 	 */
 	public Lectureseries[] findByLatestVideoUploadDate_PrevAndNext(
 			long lectureseriesId, Date latestVideoUploadDate,
-			OrderByComparator<Lectureseries> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+				orderByComparator)
 		throws NoSuchLectureseriesException;
 
 	/**
@@ -1546,7 +1632,7 @@ public interface LectureseriesPersistence
 	 * Returns a range of all the lectureserieses where latestVideoGenerationDate = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>.
 	 * </p>
 	 *
 	 * @param latestVideoGenerationDate the latest video generation date
@@ -1561,10 +1647,27 @@ public interface LectureseriesPersistence
 	 * Returns an ordered range of all the lectureserieses where latestVideoGenerationDate = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByLatestVideoGenerationDate(String, int, int, OrderByComparator)}
+	 * @param latestVideoGenerationDate the latest video generation date
+	 * @param start the lower bound of the range of lectureserieses
+	 * @param end the upper bound of the range of lectureserieses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching lectureserieses
+	 */
+	public java.util.List<Lectureseries> findByLatestVideoGenerationDate(
+		String latestVideoGenerationDate, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the lectureserieses where latestVideoGenerationDate = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>.
+	 * </p>
+	 *
 	 * @param latestVideoGenerationDate the latest video generation date
 	 * @param start the lower bound of the range of lectureserieses
 	 * @param end the upper bound of the range of lectureserieses (not inclusive)
@@ -1572,28 +1675,11 @@ public interface LectureseriesPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lectureserieses
 	 */
-	@Deprecated
 	public java.util.List<Lectureseries> findByLatestVideoGenerationDate(
 		String latestVideoGenerationDate, int start, int end,
-		OrderByComparator<Lectureseries> orderByComparator,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the lectureserieses where latestVideoGenerationDate = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param latestVideoGenerationDate the latest video generation date
-	 * @param start the lower bound of the range of lectureserieses
-	 * @param end the upper bound of the range of lectureserieses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching lectureserieses
-	 */
-	public java.util.List<Lectureseries> findByLatestVideoGenerationDate(
-		String latestVideoGenerationDate, int start, int end,
-		OrderByComparator<Lectureseries> orderByComparator);
 
 	/**
 	 * Returns the first lectureseries in the ordered set where latestVideoGenerationDate = &#63;.
@@ -1605,7 +1691,8 @@ public interface LectureseriesPersistence
 	 */
 	public Lectureseries findByLatestVideoGenerationDate_First(
 			String latestVideoGenerationDate,
-			OrderByComparator<Lectureseries> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+				orderByComparator)
 		throws NoSuchLectureseriesException;
 
 	/**
@@ -1617,7 +1704,8 @@ public interface LectureseriesPersistence
 	 */
 	public Lectureseries fetchByLatestVideoGenerationDate_First(
 		String latestVideoGenerationDate,
-		OrderByComparator<Lectureseries> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator);
 
 	/**
 	 * Returns the last lectureseries in the ordered set where latestVideoGenerationDate = &#63;.
@@ -1629,7 +1717,8 @@ public interface LectureseriesPersistence
 	 */
 	public Lectureseries findByLatestVideoGenerationDate_Last(
 			String latestVideoGenerationDate,
-			OrderByComparator<Lectureseries> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+				orderByComparator)
 		throws NoSuchLectureseriesException;
 
 	/**
@@ -1641,7 +1730,8 @@ public interface LectureseriesPersistence
 	 */
 	public Lectureseries fetchByLatestVideoGenerationDate_Last(
 		String latestVideoGenerationDate,
-		OrderByComparator<Lectureseries> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator);
 
 	/**
 	 * Returns the lectureserieses before and after the current lectureseries in the ordered set where latestVideoGenerationDate = &#63;.
@@ -1654,7 +1744,8 @@ public interface LectureseriesPersistence
 	 */
 	public Lectureseries[] findByLatestVideoGenerationDate_PrevAndNext(
 			long lectureseriesId, String latestVideoGenerationDate,
-			OrderByComparator<Lectureseries> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+				orderByComparator)
 		throws NoSuchLectureseriesException;
 
 	/**
@@ -1686,7 +1777,7 @@ public interface LectureseriesPersistence
 	 * Returns a range of all the lectureserieses where USID = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>.
 	 * </p>
 	 *
 	 * @param USID the usid
@@ -1701,10 +1792,27 @@ public interface LectureseriesPersistence
 	 * Returns an ordered range of all the lectureserieses where USID = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByUSID(String, int, int, OrderByComparator)}
+	 * @param USID the usid
+	 * @param start the lower bound of the range of lectureserieses
+	 * @param end the upper bound of the range of lectureserieses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching lectureserieses
+	 */
+	public java.util.List<Lectureseries> findByUSID(
+		String USID, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the lectureserieses where USID = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>.
+	 * </p>
+	 *
 	 * @param USID the usid
 	 * @param start the lower bound of the range of lectureserieses
 	 * @param end the upper bound of the range of lectureserieses (not inclusive)
@@ -1712,28 +1820,11 @@ public interface LectureseriesPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lectureserieses
 	 */
-	@Deprecated
 	public java.util.List<Lectureseries> findByUSID(
 		String USID, int start, int end,
-		OrderByComparator<Lectureseries> orderByComparator,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the lectureserieses where USID = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param USID the usid
-	 * @param start the lower bound of the range of lectureserieses
-	 * @param end the upper bound of the range of lectureserieses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching lectureserieses
-	 */
-	public java.util.List<Lectureseries> findByUSID(
-		String USID, int start, int end,
-		OrderByComparator<Lectureseries> orderByComparator);
 
 	/**
 	 * Returns the first lectureseries in the ordered set where USID = &#63;.
@@ -1744,7 +1835,9 @@ public interface LectureseriesPersistence
 	 * @throws NoSuchLectureseriesException if a matching lectureseries could not be found
 	 */
 	public Lectureseries findByUSID_First(
-			String USID, OrderByComparator<Lectureseries> orderByComparator)
+			String USID,
+			com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+				orderByComparator)
 		throws NoSuchLectureseriesException;
 
 	/**
@@ -1755,7 +1848,9 @@ public interface LectureseriesPersistence
 	 * @return the first matching lectureseries, or <code>null</code> if a matching lectureseries could not be found
 	 */
 	public Lectureseries fetchByUSID_First(
-		String USID, OrderByComparator<Lectureseries> orderByComparator);
+		String USID,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator);
 
 	/**
 	 * Returns the last lectureseries in the ordered set where USID = &#63;.
@@ -1766,7 +1861,9 @@ public interface LectureseriesPersistence
 	 * @throws NoSuchLectureseriesException if a matching lectureseries could not be found
 	 */
 	public Lectureseries findByUSID_Last(
-			String USID, OrderByComparator<Lectureseries> orderByComparator)
+			String USID,
+			com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+				orderByComparator)
 		throws NoSuchLectureseriesException;
 
 	/**
@@ -1777,7 +1874,9 @@ public interface LectureseriesPersistence
 	 * @return the last matching lectureseries, or <code>null</code> if a matching lectureseries could not be found
 	 */
 	public Lectureseries fetchByUSID_Last(
-		String USID, OrderByComparator<Lectureseries> orderByComparator);
+		String USID,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator);
 
 	/**
 	 * Returns the lectureserieses before and after the current lectureseries in the ordered set where USID = &#63;.
@@ -1790,7 +1889,8 @@ public interface LectureseriesPersistence
 	 */
 	public Lectureseries[] findByUSID_PrevAndNext(
 			long lectureseriesId, String USID,
-			OrderByComparator<Lectureseries> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+				orderByComparator)
 		throws NoSuchLectureseriesException;
 
 	/**
@@ -1820,7 +1920,7 @@ public interface LectureseriesPersistence
 	 * Returns a range of all the lectureserieses where groupId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -1835,10 +1935,27 @@ public interface LectureseriesPersistence
 	 * Returns an ordered range of all the lectureserieses where groupId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByGroup(long, int, int, OrderByComparator)}
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of lectureserieses
+	 * @param end the upper bound of the range of lectureserieses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching lectureserieses
+	 */
+	public java.util.List<Lectureseries> findByGroup(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the lectureserieses where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>.
+	 * </p>
+	 *
 	 * @param groupId the group ID
 	 * @param start the lower bound of the range of lectureserieses
 	 * @param end the upper bound of the range of lectureserieses (not inclusive)
@@ -1846,28 +1963,11 @@ public interface LectureseriesPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lectureserieses
 	 */
-	@Deprecated
 	public java.util.List<Lectureseries> findByGroup(
 		long groupId, int start, int end,
-		OrderByComparator<Lectureseries> orderByComparator,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the lectureserieses where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of lectureserieses
-	 * @param end the upper bound of the range of lectureserieses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching lectureserieses
-	 */
-	public java.util.List<Lectureseries> findByGroup(
-		long groupId, int start, int end,
-		OrderByComparator<Lectureseries> orderByComparator);
 
 	/**
 	 * Returns the first lectureseries in the ordered set where groupId = &#63;.
@@ -1878,7 +1978,9 @@ public interface LectureseriesPersistence
 	 * @throws NoSuchLectureseriesException if a matching lectureseries could not be found
 	 */
 	public Lectureseries findByGroup_First(
-			long groupId, OrderByComparator<Lectureseries> orderByComparator)
+			long groupId,
+			com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+				orderByComparator)
 		throws NoSuchLectureseriesException;
 
 	/**
@@ -1889,7 +1991,9 @@ public interface LectureseriesPersistence
 	 * @return the first matching lectureseries, or <code>null</code> if a matching lectureseries could not be found
 	 */
 	public Lectureseries fetchByGroup_First(
-		long groupId, OrderByComparator<Lectureseries> orderByComparator);
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator);
 
 	/**
 	 * Returns the last lectureseries in the ordered set where groupId = &#63;.
@@ -1900,7 +2004,9 @@ public interface LectureseriesPersistence
 	 * @throws NoSuchLectureseriesException if a matching lectureseries could not be found
 	 */
 	public Lectureseries findByGroup_Last(
-			long groupId, OrderByComparator<Lectureseries> orderByComparator)
+			long groupId,
+			com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+				orderByComparator)
 		throws NoSuchLectureseriesException;
 
 	/**
@@ -1911,7 +2017,9 @@ public interface LectureseriesPersistence
 	 * @return the last matching lectureseries, or <code>null</code> if a matching lectureseries could not be found
 	 */
 	public Lectureseries fetchByGroup_Last(
-		long groupId, OrderByComparator<Lectureseries> orderByComparator);
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator);
 
 	/**
 	 * Returns the lectureserieses before and after the current lectureseries in the ordered set where groupId = &#63;.
@@ -1924,7 +2032,8 @@ public interface LectureseriesPersistence
 	 */
 	public Lectureseries[] findByGroup_PrevAndNext(
 			long lectureseriesId, long groupId,
-			OrderByComparator<Lectureseries> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+				orderByComparator)
 		throws NoSuchLectureseriesException;
 
 	/**
@@ -1954,7 +2063,7 @@ public interface LectureseriesPersistence
 	 * Returns a range of all the lectureserieses where companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
@@ -1969,10 +2078,27 @@ public interface LectureseriesPersistence
 	 * Returns an ordered range of all the lectureserieses where companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCompany(long, int, int, OrderByComparator)}
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of lectureserieses
+	 * @param end the upper bound of the range of lectureserieses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching lectureserieses
+	 */
+	public java.util.List<Lectureseries> findByCompany(
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the lectureserieses where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>.
+	 * </p>
+	 *
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of lectureserieses
 	 * @param end the upper bound of the range of lectureserieses (not inclusive)
@@ -1980,28 +2106,11 @@ public interface LectureseriesPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lectureserieses
 	 */
-	@Deprecated
 	public java.util.List<Lectureseries> findByCompany(
 		long companyId, int start, int end,
-		OrderByComparator<Lectureseries> orderByComparator,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the lectureserieses where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of lectureserieses
-	 * @param end the upper bound of the range of lectureserieses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching lectureserieses
-	 */
-	public java.util.List<Lectureseries> findByCompany(
-		long companyId, int start, int end,
-		OrderByComparator<Lectureseries> orderByComparator);
 
 	/**
 	 * Returns the first lectureseries in the ordered set where companyId = &#63;.
@@ -2012,7 +2121,9 @@ public interface LectureseriesPersistence
 	 * @throws NoSuchLectureseriesException if a matching lectureseries could not be found
 	 */
 	public Lectureseries findByCompany_First(
-			long companyId, OrderByComparator<Lectureseries> orderByComparator)
+			long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+				orderByComparator)
 		throws NoSuchLectureseriesException;
 
 	/**
@@ -2023,7 +2134,9 @@ public interface LectureseriesPersistence
 	 * @return the first matching lectureseries, or <code>null</code> if a matching lectureseries could not be found
 	 */
 	public Lectureseries fetchByCompany_First(
-		long companyId, OrderByComparator<Lectureseries> orderByComparator);
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator);
 
 	/**
 	 * Returns the last lectureseries in the ordered set where companyId = &#63;.
@@ -2034,7 +2147,9 @@ public interface LectureseriesPersistence
 	 * @throws NoSuchLectureseriesException if a matching lectureseries could not be found
 	 */
 	public Lectureseries findByCompany_Last(
-			long companyId, OrderByComparator<Lectureseries> orderByComparator)
+			long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+				orderByComparator)
 		throws NoSuchLectureseriesException;
 
 	/**
@@ -2045,7 +2160,9 @@ public interface LectureseriesPersistence
 	 * @return the last matching lectureseries, or <code>null</code> if a matching lectureseries could not be found
 	 */
 	public Lectureseries fetchByCompany_Last(
-		long companyId, OrderByComparator<Lectureseries> orderByComparator);
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator);
 
 	/**
 	 * Returns the lectureserieses before and after the current lectureseries in the ordered set where companyId = &#63;.
@@ -2058,7 +2175,8 @@ public interface LectureseriesPersistence
 	 */
 	public Lectureseries[] findByCompany_PrevAndNext(
 			long lectureseriesId, long companyId,
-			OrderByComparator<Lectureseries> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+				orderByComparator)
 		throws NoSuchLectureseriesException;
 
 	/**
@@ -2090,7 +2208,7 @@ public interface LectureseriesPersistence
 	 * Returns a range of all the lectureserieses where groupId = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -2106,10 +2224,28 @@ public interface LectureseriesPersistence
 	 * Returns an ordered range of all the lectureserieses where groupId = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByGroupAndCompany(long,long, int, int, OrderByComparator)}
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of lectureserieses
+	 * @param end the upper bound of the range of lectureserieses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching lectureserieses
+	 */
+	public java.util.List<Lectureseries> findByGroupAndCompany(
+		long groupId, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the lectureserieses where groupId = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>.
+	 * </p>
+	 *
 	 * @param groupId the group ID
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of lectureserieses
@@ -2118,29 +2254,11 @@ public interface LectureseriesPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lectureserieses
 	 */
-	@Deprecated
 	public java.util.List<Lectureseries> findByGroupAndCompany(
 		long groupId, long companyId, int start, int end,
-		OrderByComparator<Lectureseries> orderByComparator,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the lectureserieses where groupId = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of lectureserieses
-	 * @param end the upper bound of the range of lectureserieses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching lectureserieses
-	 */
-	public java.util.List<Lectureseries> findByGroupAndCompany(
-		long groupId, long companyId, int start, int end,
-		OrderByComparator<Lectureseries> orderByComparator);
 
 	/**
 	 * Returns the first lectureseries in the ordered set where groupId = &#63; and companyId = &#63;.
@@ -2153,7 +2271,8 @@ public interface LectureseriesPersistence
 	 */
 	public Lectureseries findByGroupAndCompany_First(
 			long groupId, long companyId,
-			OrderByComparator<Lectureseries> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+				orderByComparator)
 		throws NoSuchLectureseriesException;
 
 	/**
@@ -2166,7 +2285,8 @@ public interface LectureseriesPersistence
 	 */
 	public Lectureseries fetchByGroupAndCompany_First(
 		long groupId, long companyId,
-		OrderByComparator<Lectureseries> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator);
 
 	/**
 	 * Returns the last lectureseries in the ordered set where groupId = &#63; and companyId = &#63;.
@@ -2179,7 +2299,8 @@ public interface LectureseriesPersistence
 	 */
 	public Lectureseries findByGroupAndCompany_Last(
 			long groupId, long companyId,
-			OrderByComparator<Lectureseries> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+				orderByComparator)
 		throws NoSuchLectureseriesException;
 
 	/**
@@ -2192,7 +2313,8 @@ public interface LectureseriesPersistence
 	 */
 	public Lectureseries fetchByGroupAndCompany_Last(
 		long groupId, long companyId,
-		OrderByComparator<Lectureseries> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator);
 
 	/**
 	 * Returns the lectureserieses before and after the current lectureseries in the ordered set where groupId = &#63; and companyId = &#63;.
@@ -2206,7 +2328,8 @@ public interface LectureseriesPersistence
 	 */
 	public Lectureseries[] findByGroupAndCompany_PrevAndNext(
 			long lectureseriesId, long groupId, long companyId,
-			OrderByComparator<Lectureseries> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+				orderByComparator)
 		throws NoSuchLectureseriesException;
 
 	/**
@@ -2289,7 +2412,7 @@ public interface LectureseriesPersistence
 	 * Returns a range of all the lectureserieses.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of lectureserieses
@@ -2302,35 +2425,37 @@ public interface LectureseriesPersistence
 	 * Returns an ordered range of all the lectureserieses.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
+	 * @param start the lower bound of the range of lectureserieses
+	 * @param end the upper bound of the range of lectureserieses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of lectureserieses
+	 */
+	public java.util.List<Lectureseries> findAll(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the lectureserieses.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>.
+	 * </p>
+	 *
 	 * @param start the lower bound of the range of lectureserieses
 	 * @param end the upper bound of the range of lectureserieses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of lectureserieses
 	 */
-	@Deprecated
 	public java.util.List<Lectureseries> findAll(
-		int start, int end, OrderByComparator<Lectureseries> orderByComparator,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the lectureserieses.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of lectureserieses
-	 * @param end the upper bound of the range of lectureserieses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of lectureserieses
-	 */
-	public java.util.List<Lectureseries> findAll(
-		int start, int end, OrderByComparator<Lectureseries> orderByComparator);
 
 	/**
 	 * Removes all the lectureserieses from the database.

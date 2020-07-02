@@ -21,8 +21,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * <p>
  * This class is a wrapper for {@link Producer}.
@@ -32,10 +30,9 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see Producer
  * @generated
  */
-@ProviderType
 public class ProducerWrapper
 	extends BaseModelWrapper<Producer>
-	implements Producer, ModelWrapper<Producer> {
+	implements ModelWrapper<Producer>, Producer {
 
 	public ProducerWrapper(Producer producer) {
 		super(producer);

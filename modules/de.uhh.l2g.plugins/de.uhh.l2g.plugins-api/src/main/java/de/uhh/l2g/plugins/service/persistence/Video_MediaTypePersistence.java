@@ -15,7 +15,6 @@
 package de.uhh.l2g.plugins.service.persistence;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.util.OrderByComparator;
 
 import de.uhh.l2g.plugins.exception.NoSuchVideo_MediaTypeException;
 import de.uhh.l2g.plugins.model.Video_MediaType;
@@ -55,7 +54,7 @@ public interface Video_MediaTypePersistence
 	 * Returns a range of all the video_ media types where videoId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Video_MediaTypeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Video_MediaTypeModelImpl</code>.
 	 * </p>
 	 *
 	 * @param videoId the video ID
@@ -70,10 +69,27 @@ public interface Video_MediaTypePersistence
 	 * Returns an ordered range of all the video_ media types where videoId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Video_MediaTypeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Video_MediaTypeModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByVideo(long, int, int, OrderByComparator)}
+	 * @param videoId the video ID
+	 * @param start the lower bound of the range of video_ media types
+	 * @param end the upper bound of the range of video_ media types (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching video_ media types
+	 */
+	public java.util.List<Video_MediaType> findByVideo(
+		long videoId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Video_MediaType>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the video_ media types where videoId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Video_MediaTypeModelImpl</code>.
+	 * </p>
+	 *
 	 * @param videoId the video ID
 	 * @param start the lower bound of the range of video_ media types
 	 * @param end the upper bound of the range of video_ media types (not inclusive)
@@ -81,28 +97,11 @@ public interface Video_MediaTypePersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching video_ media types
 	 */
-	@Deprecated
 	public java.util.List<Video_MediaType> findByVideo(
 		long videoId, int start, int end,
-		OrderByComparator<Video_MediaType> orderByComparator,
+		com.liferay.portal.kernel.util.OrderByComparator<Video_MediaType>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the video_ media types where videoId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Video_MediaTypeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param videoId the video ID
-	 * @param start the lower bound of the range of video_ media types
-	 * @param end the upper bound of the range of video_ media types (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching video_ media types
-	 */
-	public java.util.List<Video_MediaType> findByVideo(
-		long videoId, int start, int end,
-		OrderByComparator<Video_MediaType> orderByComparator);
 
 	/**
 	 * Returns the first video_ media type in the ordered set where videoId = &#63;.
@@ -113,7 +112,9 @@ public interface Video_MediaTypePersistence
 	 * @throws NoSuchVideo_MediaTypeException if a matching video_ media type could not be found
 	 */
 	public Video_MediaType findByVideo_First(
-			long videoId, OrderByComparator<Video_MediaType> orderByComparator)
+			long videoId,
+			com.liferay.portal.kernel.util.OrderByComparator<Video_MediaType>
+				orderByComparator)
 		throws NoSuchVideo_MediaTypeException;
 
 	/**
@@ -124,7 +125,9 @@ public interface Video_MediaTypePersistence
 	 * @return the first matching video_ media type, or <code>null</code> if a matching video_ media type could not be found
 	 */
 	public Video_MediaType fetchByVideo_First(
-		long videoId, OrderByComparator<Video_MediaType> orderByComparator);
+		long videoId,
+		com.liferay.portal.kernel.util.OrderByComparator<Video_MediaType>
+			orderByComparator);
 
 	/**
 	 * Returns the last video_ media type in the ordered set where videoId = &#63;.
@@ -135,7 +138,9 @@ public interface Video_MediaTypePersistence
 	 * @throws NoSuchVideo_MediaTypeException if a matching video_ media type could not be found
 	 */
 	public Video_MediaType findByVideo_Last(
-			long videoId, OrderByComparator<Video_MediaType> orderByComparator)
+			long videoId,
+			com.liferay.portal.kernel.util.OrderByComparator<Video_MediaType>
+				orderByComparator)
 		throws NoSuchVideo_MediaTypeException;
 
 	/**
@@ -146,7 +151,9 @@ public interface Video_MediaTypePersistence
 	 * @return the last matching video_ media type, or <code>null</code> if a matching video_ media type could not be found
 	 */
 	public Video_MediaType fetchByVideo_Last(
-		long videoId, OrderByComparator<Video_MediaType> orderByComparator);
+		long videoId,
+		com.liferay.portal.kernel.util.OrderByComparator<Video_MediaType>
+			orderByComparator);
 
 	/**
 	 * Returns the video_ media types before and after the current video_ media type in the ordered set where videoId = &#63;.
@@ -159,7 +166,8 @@ public interface Video_MediaTypePersistence
 	 */
 	public Video_MediaType[] findByVideo_PrevAndNext(
 			long videoMediaTypeId, long videoId,
-			OrderByComparator<Video_MediaType> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Video_MediaType>
+				orderByComparator)
 		throws NoSuchVideo_MediaTypeException;
 
 	/**
@@ -189,7 +197,7 @@ public interface Video_MediaTypePersistence
 	 * Returns a range of all the video_ media types where MediaTypeId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Video_MediaTypeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Video_MediaTypeModelImpl</code>.
 	 * </p>
 	 *
 	 * @param MediaTypeId the media type ID
@@ -204,10 +212,27 @@ public interface Video_MediaTypePersistence
 	 * Returns an ordered range of all the video_ media types where MediaTypeId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Video_MediaTypeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Video_MediaTypeModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByMediaType(long, int, int, OrderByComparator)}
+	 * @param MediaTypeId the media type ID
+	 * @param start the lower bound of the range of video_ media types
+	 * @param end the upper bound of the range of video_ media types (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching video_ media types
+	 */
+	public java.util.List<Video_MediaType> findByMediaType(
+		long MediaTypeId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Video_MediaType>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the video_ media types where MediaTypeId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Video_MediaTypeModelImpl</code>.
+	 * </p>
+	 *
 	 * @param MediaTypeId the media type ID
 	 * @param start the lower bound of the range of video_ media types
 	 * @param end the upper bound of the range of video_ media types (not inclusive)
@@ -215,28 +240,11 @@ public interface Video_MediaTypePersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching video_ media types
 	 */
-	@Deprecated
 	public java.util.List<Video_MediaType> findByMediaType(
 		long MediaTypeId, int start, int end,
-		OrderByComparator<Video_MediaType> orderByComparator,
+		com.liferay.portal.kernel.util.OrderByComparator<Video_MediaType>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the video_ media types where MediaTypeId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Video_MediaTypeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param MediaTypeId the media type ID
-	 * @param start the lower bound of the range of video_ media types
-	 * @param end the upper bound of the range of video_ media types (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching video_ media types
-	 */
-	public java.util.List<Video_MediaType> findByMediaType(
-		long MediaTypeId, int start, int end,
-		OrderByComparator<Video_MediaType> orderByComparator);
 
 	/**
 	 * Returns the first video_ media type in the ordered set where MediaTypeId = &#63;.
@@ -248,7 +256,8 @@ public interface Video_MediaTypePersistence
 	 */
 	public Video_MediaType findByMediaType_First(
 			long MediaTypeId,
-			OrderByComparator<Video_MediaType> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Video_MediaType>
+				orderByComparator)
 		throws NoSuchVideo_MediaTypeException;
 
 	/**
@@ -259,7 +268,9 @@ public interface Video_MediaTypePersistence
 	 * @return the first matching video_ media type, or <code>null</code> if a matching video_ media type could not be found
 	 */
 	public Video_MediaType fetchByMediaType_First(
-		long MediaTypeId, OrderByComparator<Video_MediaType> orderByComparator);
+		long MediaTypeId,
+		com.liferay.portal.kernel.util.OrderByComparator<Video_MediaType>
+			orderByComparator);
 
 	/**
 	 * Returns the last video_ media type in the ordered set where MediaTypeId = &#63;.
@@ -271,7 +282,8 @@ public interface Video_MediaTypePersistence
 	 */
 	public Video_MediaType findByMediaType_Last(
 			long MediaTypeId,
-			OrderByComparator<Video_MediaType> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Video_MediaType>
+				orderByComparator)
 		throws NoSuchVideo_MediaTypeException;
 
 	/**
@@ -282,7 +294,9 @@ public interface Video_MediaTypePersistence
 	 * @return the last matching video_ media type, or <code>null</code> if a matching video_ media type could not be found
 	 */
 	public Video_MediaType fetchByMediaType_Last(
-		long MediaTypeId, OrderByComparator<Video_MediaType> orderByComparator);
+		long MediaTypeId,
+		com.liferay.portal.kernel.util.OrderByComparator<Video_MediaType>
+			orderByComparator);
 
 	/**
 	 * Returns the video_ media types before and after the current video_ media type in the ordered set where MediaTypeId = &#63;.
@@ -295,7 +309,8 @@ public interface Video_MediaTypePersistence
 	 */
 	public Video_MediaType[] findByMediaType_PrevAndNext(
 			long videoMediaTypeId, long MediaTypeId,
-			OrderByComparator<Video_MediaType> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Video_MediaType>
+				orderByComparator)
 		throws NoSuchVideo_MediaTypeException;
 
 	/**
@@ -327,7 +342,7 @@ public interface Video_MediaTypePersistence
 	 * Returns a range of all the video_ media types where videoId = &#63; and MediaTypeId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Video_MediaTypeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Video_MediaTypeModelImpl</code>.
 	 * </p>
 	 *
 	 * @param videoId the video ID
@@ -343,10 +358,28 @@ public interface Video_MediaTypePersistence
 	 * Returns an ordered range of all the video_ media types where videoId = &#63; and MediaTypeId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Video_MediaTypeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Video_MediaTypeModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByVideoMediaType(long,long, int, int, OrderByComparator)}
+	 * @param videoId the video ID
+	 * @param MediaTypeId the media type ID
+	 * @param start the lower bound of the range of video_ media types
+	 * @param end the upper bound of the range of video_ media types (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching video_ media types
+	 */
+	public java.util.List<Video_MediaType> findByVideoMediaType(
+		long videoId, long MediaTypeId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Video_MediaType>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the video_ media types where videoId = &#63; and MediaTypeId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Video_MediaTypeModelImpl</code>.
+	 * </p>
+	 *
 	 * @param videoId the video ID
 	 * @param MediaTypeId the media type ID
 	 * @param start the lower bound of the range of video_ media types
@@ -355,29 +388,11 @@ public interface Video_MediaTypePersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching video_ media types
 	 */
-	@Deprecated
 	public java.util.List<Video_MediaType> findByVideoMediaType(
 		long videoId, long MediaTypeId, int start, int end,
-		OrderByComparator<Video_MediaType> orderByComparator,
+		com.liferay.portal.kernel.util.OrderByComparator<Video_MediaType>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the video_ media types where videoId = &#63; and MediaTypeId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Video_MediaTypeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param videoId the video ID
-	 * @param MediaTypeId the media type ID
-	 * @param start the lower bound of the range of video_ media types
-	 * @param end the upper bound of the range of video_ media types (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching video_ media types
-	 */
-	public java.util.List<Video_MediaType> findByVideoMediaType(
-		long videoId, long MediaTypeId, int start, int end,
-		OrderByComparator<Video_MediaType> orderByComparator);
 
 	/**
 	 * Returns the first video_ media type in the ordered set where videoId = &#63; and MediaTypeId = &#63;.
@@ -390,7 +405,8 @@ public interface Video_MediaTypePersistence
 	 */
 	public Video_MediaType findByVideoMediaType_First(
 			long videoId, long MediaTypeId,
-			OrderByComparator<Video_MediaType> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Video_MediaType>
+				orderByComparator)
 		throws NoSuchVideo_MediaTypeException;
 
 	/**
@@ -403,7 +419,8 @@ public interface Video_MediaTypePersistence
 	 */
 	public Video_MediaType fetchByVideoMediaType_First(
 		long videoId, long MediaTypeId,
-		OrderByComparator<Video_MediaType> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Video_MediaType>
+			orderByComparator);
 
 	/**
 	 * Returns the last video_ media type in the ordered set where videoId = &#63; and MediaTypeId = &#63;.
@@ -416,7 +433,8 @@ public interface Video_MediaTypePersistence
 	 */
 	public Video_MediaType findByVideoMediaType_Last(
 			long videoId, long MediaTypeId,
-			OrderByComparator<Video_MediaType> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Video_MediaType>
+				orderByComparator)
 		throws NoSuchVideo_MediaTypeException;
 
 	/**
@@ -429,7 +447,8 @@ public interface Video_MediaTypePersistence
 	 */
 	public Video_MediaType fetchByVideoMediaType_Last(
 		long videoId, long MediaTypeId,
-		OrderByComparator<Video_MediaType> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Video_MediaType>
+			orderByComparator);
 
 	/**
 	 * Returns the video_ media types before and after the current video_ media type in the ordered set where videoId = &#63; and MediaTypeId = &#63;.
@@ -443,7 +462,8 @@ public interface Video_MediaTypePersistence
 	 */
 	public Video_MediaType[] findByVideoMediaType_PrevAndNext(
 			long videoMediaTypeId, long videoId, long MediaTypeId,
-			OrderByComparator<Video_MediaType> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Video_MediaType>
+				orderByComparator)
 		throws NoSuchVideo_MediaTypeException;
 
 	/**
@@ -526,7 +546,7 @@ public interface Video_MediaTypePersistence
 	 * Returns a range of all the video_ media types.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Video_MediaTypeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Video_MediaTypeModelImpl</code>.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of video_ media types
@@ -539,37 +559,37 @@ public interface Video_MediaTypePersistence
 	 * Returns an ordered range of all the video_ media types.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Video_MediaTypeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Video_MediaTypeModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
+	 * @param start the lower bound of the range of video_ media types
+	 * @param end the upper bound of the range of video_ media types (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of video_ media types
+	 */
+	public java.util.List<Video_MediaType> findAll(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Video_MediaType>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the video_ media types.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Video_MediaTypeModelImpl</code>.
+	 * </p>
+	 *
 	 * @param start the lower bound of the range of video_ media types
 	 * @param end the upper bound of the range of video_ media types (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of video_ media types
 	 */
-	@Deprecated
 	public java.util.List<Video_MediaType> findAll(
 		int start, int end,
-		OrderByComparator<Video_MediaType> orderByComparator,
+		com.liferay.portal.kernel.util.OrderByComparator<Video_MediaType>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the video_ media types.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Video_MediaTypeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of video_ media types
-	 * @param end the upper bound of the range of video_ media types (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of video_ media types
-	 */
-	public java.util.List<Video_MediaType> findAll(
-		int start, int end,
-		OrderByComparator<Video_MediaType> orderByComparator);
 
 	/**
 	 * Removes all the video_ media types from the database.

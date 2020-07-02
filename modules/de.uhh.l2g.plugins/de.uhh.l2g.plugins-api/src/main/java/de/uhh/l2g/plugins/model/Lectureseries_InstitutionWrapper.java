@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * <p>
  * This class is a wrapper for {@link Lectureseries_Institution}.
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see Lectureseries_Institution
  * @generated
  */
-@ProviderType
 public class Lectureseries_InstitutionWrapper
 	extends BaseModelWrapper<Lectureseries_Institution>
 	implements Lectureseries_Institution,

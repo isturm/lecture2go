@@ -27,28 +27,25 @@ import java.io.ObjectOutput;
 
 import java.util.Date;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The cache model class for representing Creator in entity cache.
  *
  * @author Iavor Sturm
  * @generated
  */
-@ProviderType
 public class CreatorCacheModel implements CacheModel<Creator>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof CreatorCacheModel)) {
+		if (!(object instanceof CreatorCacheModel)) {
 			return false;
 		}
 
-		CreatorCacheModel creatorCacheModel = (CreatorCacheModel)obj;
+		CreatorCacheModel creatorCacheModel = (CreatorCacheModel)object;
 
 		if (creatorId == creatorCacheModel.creatorId) {
 			return true;

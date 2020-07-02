@@ -27,29 +27,26 @@ import java.io.ObjectOutput;
 
 import java.util.Date;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The cache model class for representing Statistic in entity cache.
  *
  * @author Iavor Sturm
  * @generated
  */
-@ProviderType
 public class StatisticCacheModel
 	implements CacheModel<Statistic>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof StatisticCacheModel)) {
+		if (!(object instanceof StatisticCacheModel)) {
 			return false;
 		}
 
-		StatisticCacheModel statisticCacheModel = (StatisticCacheModel)obj;
+		StatisticCacheModel statisticCacheModel = (StatisticCacheModel)object;
 
 		if (statisticId == statisticCacheModel.statisticId) {
 			return true;

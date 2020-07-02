@@ -17,8 +17,6 @@ package de.uhh.l2g.plugins.model.impl;
 import de.uhh.l2g.plugins.model.Video_Institution;
 import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the Video_Institution service. Represents a row in the &quot;LG_Video_Institution&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see Video_Institution
  * @generated
  */
-@ProviderType
 public abstract class Video_InstitutionBaseImpl
 	extends Video_InstitutionModelImpl implements Video_Institution {
 

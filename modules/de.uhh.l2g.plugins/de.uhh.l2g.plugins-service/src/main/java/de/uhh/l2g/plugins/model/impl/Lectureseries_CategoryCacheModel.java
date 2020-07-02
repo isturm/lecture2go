@@ -25,30 +25,27 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The cache model class for representing Lectureseries_Category in entity cache.
  *
  * @author Iavor Sturm
  * @generated
  */
-@ProviderType
 public class Lectureseries_CategoryCacheModel
 	implements CacheModel<Lectureseries_Category>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof Lectureseries_CategoryCacheModel)) {
+		if (!(object instanceof Lectureseries_CategoryCacheModel)) {
 			return false;
 		}
 
 		Lectureseries_CategoryCacheModel lectureseries_CategoryCacheModel =
-			(Lectureseries_CategoryCacheModel)obj;
+			(Lectureseries_CategoryCacheModel)object;
 
 		if (lectureseriesCategoryId ==
 				lectureseries_CategoryCacheModel.lectureseriesCategoryId) {

@@ -15,7 +15,6 @@
 package de.uhh.l2g.plugins.service.persistence;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.util.OrderByComparator;
 
 import de.uhh.l2g.plugins.exception.NoSuchVideo_CreatorException;
 import de.uhh.l2g.plugins.model.Video_Creator;
@@ -55,7 +54,7 @@ public interface Video_CreatorPersistence
 	 * Returns a range of all the video_ creators where videoId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Video_CreatorModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Video_CreatorModelImpl</code>.
 	 * </p>
 	 *
 	 * @param videoId the video ID
@@ -70,10 +69,27 @@ public interface Video_CreatorPersistence
 	 * Returns an ordered range of all the video_ creators where videoId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Video_CreatorModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Video_CreatorModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByVideo(long, int, int, OrderByComparator)}
+	 * @param videoId the video ID
+	 * @param start the lower bound of the range of video_ creators
+	 * @param end the upper bound of the range of video_ creators (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching video_ creators
+	 */
+	public java.util.List<Video_Creator> findByVideo(
+		long videoId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Video_Creator>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the video_ creators where videoId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Video_CreatorModelImpl</code>.
+	 * </p>
+	 *
 	 * @param videoId the video ID
 	 * @param start the lower bound of the range of video_ creators
 	 * @param end the upper bound of the range of video_ creators (not inclusive)
@@ -81,28 +97,11 @@ public interface Video_CreatorPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching video_ creators
 	 */
-	@Deprecated
 	public java.util.List<Video_Creator> findByVideo(
 		long videoId, int start, int end,
-		OrderByComparator<Video_Creator> orderByComparator,
+		com.liferay.portal.kernel.util.OrderByComparator<Video_Creator>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the video_ creators where videoId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Video_CreatorModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param videoId the video ID
-	 * @param start the lower bound of the range of video_ creators
-	 * @param end the upper bound of the range of video_ creators (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching video_ creators
-	 */
-	public java.util.List<Video_Creator> findByVideo(
-		long videoId, int start, int end,
-		OrderByComparator<Video_Creator> orderByComparator);
 
 	/**
 	 * Returns the first video_ creator in the ordered set where videoId = &#63;.
@@ -113,7 +112,9 @@ public interface Video_CreatorPersistence
 	 * @throws NoSuchVideo_CreatorException if a matching video_ creator could not be found
 	 */
 	public Video_Creator findByVideo_First(
-			long videoId, OrderByComparator<Video_Creator> orderByComparator)
+			long videoId,
+			com.liferay.portal.kernel.util.OrderByComparator<Video_Creator>
+				orderByComparator)
 		throws NoSuchVideo_CreatorException;
 
 	/**
@@ -124,7 +125,9 @@ public interface Video_CreatorPersistence
 	 * @return the first matching video_ creator, or <code>null</code> if a matching video_ creator could not be found
 	 */
 	public Video_Creator fetchByVideo_First(
-		long videoId, OrderByComparator<Video_Creator> orderByComparator);
+		long videoId,
+		com.liferay.portal.kernel.util.OrderByComparator<Video_Creator>
+			orderByComparator);
 
 	/**
 	 * Returns the last video_ creator in the ordered set where videoId = &#63;.
@@ -135,7 +138,9 @@ public interface Video_CreatorPersistence
 	 * @throws NoSuchVideo_CreatorException if a matching video_ creator could not be found
 	 */
 	public Video_Creator findByVideo_Last(
-			long videoId, OrderByComparator<Video_Creator> orderByComparator)
+			long videoId,
+			com.liferay.portal.kernel.util.OrderByComparator<Video_Creator>
+				orderByComparator)
 		throws NoSuchVideo_CreatorException;
 
 	/**
@@ -146,7 +151,9 @@ public interface Video_CreatorPersistence
 	 * @return the last matching video_ creator, or <code>null</code> if a matching video_ creator could not be found
 	 */
 	public Video_Creator fetchByVideo_Last(
-		long videoId, OrderByComparator<Video_Creator> orderByComparator);
+		long videoId,
+		com.liferay.portal.kernel.util.OrderByComparator<Video_Creator>
+			orderByComparator);
 
 	/**
 	 * Returns the video_ creators before and after the current video_ creator in the ordered set where videoId = &#63;.
@@ -159,7 +166,8 @@ public interface Video_CreatorPersistence
 	 */
 	public Video_Creator[] findByVideo_PrevAndNext(
 			long videoCreatorId, long videoId,
-			OrderByComparator<Video_Creator> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Video_Creator>
+				orderByComparator)
 		throws NoSuchVideo_CreatorException;
 
 	/**
@@ -189,7 +197,7 @@ public interface Video_CreatorPersistence
 	 * Returns a range of all the video_ creators where creatorId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Video_CreatorModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Video_CreatorModelImpl</code>.
 	 * </p>
 	 *
 	 * @param creatorId the creator ID
@@ -204,10 +212,27 @@ public interface Video_CreatorPersistence
 	 * Returns an ordered range of all the video_ creators where creatorId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Video_CreatorModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Video_CreatorModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCreator(long, int, int, OrderByComparator)}
+	 * @param creatorId the creator ID
+	 * @param start the lower bound of the range of video_ creators
+	 * @param end the upper bound of the range of video_ creators (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching video_ creators
+	 */
+	public java.util.List<Video_Creator> findByCreator(
+		long creatorId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Video_Creator>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the video_ creators where creatorId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Video_CreatorModelImpl</code>.
+	 * </p>
+	 *
 	 * @param creatorId the creator ID
 	 * @param start the lower bound of the range of video_ creators
 	 * @param end the upper bound of the range of video_ creators (not inclusive)
@@ -215,28 +240,11 @@ public interface Video_CreatorPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching video_ creators
 	 */
-	@Deprecated
 	public java.util.List<Video_Creator> findByCreator(
 		long creatorId, int start, int end,
-		OrderByComparator<Video_Creator> orderByComparator,
+		com.liferay.portal.kernel.util.OrderByComparator<Video_Creator>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the video_ creators where creatorId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Video_CreatorModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param creatorId the creator ID
-	 * @param start the lower bound of the range of video_ creators
-	 * @param end the upper bound of the range of video_ creators (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching video_ creators
-	 */
-	public java.util.List<Video_Creator> findByCreator(
-		long creatorId, int start, int end,
-		OrderByComparator<Video_Creator> orderByComparator);
 
 	/**
 	 * Returns the first video_ creator in the ordered set where creatorId = &#63;.
@@ -247,7 +255,9 @@ public interface Video_CreatorPersistence
 	 * @throws NoSuchVideo_CreatorException if a matching video_ creator could not be found
 	 */
 	public Video_Creator findByCreator_First(
-			long creatorId, OrderByComparator<Video_Creator> orderByComparator)
+			long creatorId,
+			com.liferay.portal.kernel.util.OrderByComparator<Video_Creator>
+				orderByComparator)
 		throws NoSuchVideo_CreatorException;
 
 	/**
@@ -258,7 +268,9 @@ public interface Video_CreatorPersistence
 	 * @return the first matching video_ creator, or <code>null</code> if a matching video_ creator could not be found
 	 */
 	public Video_Creator fetchByCreator_First(
-		long creatorId, OrderByComparator<Video_Creator> orderByComparator);
+		long creatorId,
+		com.liferay.portal.kernel.util.OrderByComparator<Video_Creator>
+			orderByComparator);
 
 	/**
 	 * Returns the last video_ creator in the ordered set where creatorId = &#63;.
@@ -269,7 +281,9 @@ public interface Video_CreatorPersistence
 	 * @throws NoSuchVideo_CreatorException if a matching video_ creator could not be found
 	 */
 	public Video_Creator findByCreator_Last(
-			long creatorId, OrderByComparator<Video_Creator> orderByComparator)
+			long creatorId,
+			com.liferay.portal.kernel.util.OrderByComparator<Video_Creator>
+				orderByComparator)
 		throws NoSuchVideo_CreatorException;
 
 	/**
@@ -280,7 +294,9 @@ public interface Video_CreatorPersistence
 	 * @return the last matching video_ creator, or <code>null</code> if a matching video_ creator could not be found
 	 */
 	public Video_Creator fetchByCreator_Last(
-		long creatorId, OrderByComparator<Video_Creator> orderByComparator);
+		long creatorId,
+		com.liferay.portal.kernel.util.OrderByComparator<Video_Creator>
+			orderByComparator);
 
 	/**
 	 * Returns the video_ creators before and after the current video_ creator in the ordered set where creatorId = &#63;.
@@ -293,7 +309,8 @@ public interface Video_CreatorPersistence
 	 */
 	public Video_Creator[] findByCreator_PrevAndNext(
 			long videoCreatorId, long creatorId,
-			OrderByComparator<Video_Creator> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Video_Creator>
+				orderByComparator)
 		throws NoSuchVideo_CreatorException;
 
 	/**
@@ -325,7 +342,7 @@ public interface Video_CreatorPersistence
 	 * Returns a range of all the video_ creators where videoId = &#63; and creatorId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Video_CreatorModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Video_CreatorModelImpl</code>.
 	 * </p>
 	 *
 	 * @param videoId the video ID
@@ -341,10 +358,28 @@ public interface Video_CreatorPersistence
 	 * Returns an ordered range of all the video_ creators where videoId = &#63; and creatorId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Video_CreatorModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Video_CreatorModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByVideoCreator(long,long, int, int, OrderByComparator)}
+	 * @param videoId the video ID
+	 * @param creatorId the creator ID
+	 * @param start the lower bound of the range of video_ creators
+	 * @param end the upper bound of the range of video_ creators (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching video_ creators
+	 */
+	public java.util.List<Video_Creator> findByVideoCreator(
+		long videoId, long creatorId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Video_Creator>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the video_ creators where videoId = &#63; and creatorId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Video_CreatorModelImpl</code>.
+	 * </p>
+	 *
 	 * @param videoId the video ID
 	 * @param creatorId the creator ID
 	 * @param start the lower bound of the range of video_ creators
@@ -353,29 +388,11 @@ public interface Video_CreatorPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching video_ creators
 	 */
-	@Deprecated
 	public java.util.List<Video_Creator> findByVideoCreator(
 		long videoId, long creatorId, int start, int end,
-		OrderByComparator<Video_Creator> orderByComparator,
+		com.liferay.portal.kernel.util.OrderByComparator<Video_Creator>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the video_ creators where videoId = &#63; and creatorId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Video_CreatorModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param videoId the video ID
-	 * @param creatorId the creator ID
-	 * @param start the lower bound of the range of video_ creators
-	 * @param end the upper bound of the range of video_ creators (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching video_ creators
-	 */
-	public java.util.List<Video_Creator> findByVideoCreator(
-		long videoId, long creatorId, int start, int end,
-		OrderByComparator<Video_Creator> orderByComparator);
 
 	/**
 	 * Returns the first video_ creator in the ordered set where videoId = &#63; and creatorId = &#63;.
@@ -388,7 +405,8 @@ public interface Video_CreatorPersistence
 	 */
 	public Video_Creator findByVideoCreator_First(
 			long videoId, long creatorId,
-			OrderByComparator<Video_Creator> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Video_Creator>
+				orderByComparator)
 		throws NoSuchVideo_CreatorException;
 
 	/**
@@ -401,7 +419,8 @@ public interface Video_CreatorPersistence
 	 */
 	public Video_Creator fetchByVideoCreator_First(
 		long videoId, long creatorId,
-		OrderByComparator<Video_Creator> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Video_Creator>
+			orderByComparator);
 
 	/**
 	 * Returns the last video_ creator in the ordered set where videoId = &#63; and creatorId = &#63;.
@@ -414,7 +433,8 @@ public interface Video_CreatorPersistence
 	 */
 	public Video_Creator findByVideoCreator_Last(
 			long videoId, long creatorId,
-			OrderByComparator<Video_Creator> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Video_Creator>
+				orderByComparator)
 		throws NoSuchVideo_CreatorException;
 
 	/**
@@ -427,7 +447,8 @@ public interface Video_CreatorPersistence
 	 */
 	public Video_Creator fetchByVideoCreator_Last(
 		long videoId, long creatorId,
-		OrderByComparator<Video_Creator> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Video_Creator>
+			orderByComparator);
 
 	/**
 	 * Returns the video_ creators before and after the current video_ creator in the ordered set where videoId = &#63; and creatorId = &#63;.
@@ -441,7 +462,8 @@ public interface Video_CreatorPersistence
 	 */
 	public Video_Creator[] findByVideoCreator_PrevAndNext(
 			long videoCreatorId, long videoId, long creatorId,
-			OrderByComparator<Video_Creator> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Video_Creator>
+				orderByComparator)
 		throws NoSuchVideo_CreatorException;
 
 	/**
@@ -524,7 +546,7 @@ public interface Video_CreatorPersistence
 	 * Returns a range of all the video_ creators.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Video_CreatorModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Video_CreatorModelImpl</code>.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of video_ creators
@@ -537,35 +559,37 @@ public interface Video_CreatorPersistence
 	 * Returns an ordered range of all the video_ creators.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Video_CreatorModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Video_CreatorModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
+	 * @param start the lower bound of the range of video_ creators
+	 * @param end the upper bound of the range of video_ creators (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of video_ creators
+	 */
+	public java.util.List<Video_Creator> findAll(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Video_Creator>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the video_ creators.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Video_CreatorModelImpl</code>.
+	 * </p>
+	 *
 	 * @param start the lower bound of the range of video_ creators
 	 * @param end the upper bound of the range of video_ creators (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of video_ creators
 	 */
-	@Deprecated
 	public java.util.List<Video_Creator> findAll(
-		int start, int end, OrderByComparator<Video_Creator> orderByComparator,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Video_Creator>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the video_ creators.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Video_CreatorModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of video_ creators
-	 * @param end the upper bound of the range of video_ creators (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of video_ creators
-	 */
-	public java.util.List<Video_Creator> findAll(
-		int start, int end, OrderByComparator<Video_Creator> orderByComparator);
 
 	/**
 	 * Removes all the video_ creators from the database.

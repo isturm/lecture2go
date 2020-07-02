@@ -33,6 +33,7 @@ import com.liferay.portal.kernel.search.Indexable;
 import com.liferay.portal.kernel.search.IndexableType;
 import com.liferay.portal.kernel.service.BaseLocalServiceImpl;
 import com.liferay.portal.kernel.service.PersistedModelLocalServiceRegistry;
+import com.liferay.portal.kernel.service.persistence.BasePersistence;
 import com.liferay.portal.kernel.service.persistence.ClassNamePersistence;
 import com.liferay.portal.kernel.service.persistence.UserPersistence;
 import com.liferay.portal.kernel.transaction.Transactional;
@@ -57,6 +58,7 @@ import de.uhh.l2g.plugins.service.persistence.LectureseriesPersistence;
 import de.uhh.l2g.plugins.service.persistence.Lectureseries_CategoryPersistence;
 import de.uhh.l2g.plugins.service.persistence.Lectureseries_CreatorPersistence;
 import de.uhh.l2g.plugins.service.persistence.Lectureseries_InstitutionPersistence;
+import de.uhh.l2g.plugins.service.persistence.LicenseFinder;
 import de.uhh.l2g.plugins.service.persistence.LicensePersistence;
 import de.uhh.l2g.plugins.service.persistence.MediaTypePersistence;
 import de.uhh.l2g.plugins.service.persistence.MetadataPersistence;
@@ -86,8 +88,6 @@ import java.util.List;
 
 import javax.sql.DataSource;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * Provides the base implementation for the license local service.
  *
@@ -99,10 +99,9 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see de.uhh.l2g.plugins.service.impl.LicenseLocalServiceImpl
  * @generated
  */
-@ProviderType
 public abstract class LicenseLocalServiceBaseImpl
 	extends BaseLocalServiceImpl
-	implements LicenseLocalService, IdentifiableOSGiService {
+	implements IdentifiableOSGiService, LicenseLocalService {
 
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -184,7 +183,7 @@ public abstract class LicenseLocalServiceBaseImpl
 	 * Performs a dynamic query on the database and returns a range of the matching rows.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>de.uhh.l2g.plugins.model.impl.LicenseModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>de.uhh.l2g.plugins.model.impl.LicenseModelImpl</code>.
 	 * </p>
 	 *
 	 * @param dynamicQuery the dynamic query
@@ -204,7 +203,7 @@ public abstract class LicenseLocalServiceBaseImpl
 	 * Performs a dynamic query on the database and returns an ordered range of the matching rows.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>de.uhh.l2g.plugins.model.impl.LicenseModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>de.uhh.l2g.plugins.model.impl.LicenseModelImpl</code>.
 	 * </p>
 	 *
 	 * @param dynamicQuery the dynamic query
@@ -316,6 +315,13 @@ public abstract class LicenseLocalServiceBaseImpl
 		return licenseLocalService.deleteLicense((License)persistedModel);
 	}
 
+	public BasePersistence<License> getBasePersistence() {
+		return licensePersistence;
+	}
+
+	/**
+	 * @throws PortalException
+	 */
 	@Override
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException {
@@ -327,7 +333,7 @@ public abstract class LicenseLocalServiceBaseImpl
 	 * Returns a range of all the licenses.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>de.uhh.l2g.plugins.model.impl.LicenseModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>com.liferay.portal.kernel.dao.orm.QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>de.uhh.l2g.plugins.model.impl.LicenseModelImpl</code>.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of licenses
@@ -948,6 +954,24 @@ public abstract class LicenseLocalServiceBaseImpl
 	 */
 	public void setLicensePersistence(LicensePersistence licensePersistence) {
 		this.licensePersistence = licensePersistence;
+	}
+
+	/**
+	 * Returns the license finder.
+	 *
+	 * @return the license finder
+	 */
+	public LicenseFinder getLicenseFinder() {
+		return licenseFinder;
+	}
+
+	/**
+	 * Sets the license finder.
+	 *
+	 * @param licenseFinder the license finder
+	 */
+	public void setLicenseFinder(LicenseFinder licenseFinder) {
+		this.licenseFinder = licenseFinder;
 	}
 
 	/**
@@ -1909,8 +1933,8 @@ public abstract class LicenseLocalServiceBaseImpl
 
 			sqlUpdate.update();
 		}
-		catch (Exception e) {
-			throw new SystemException(e);
+		catch (Exception exception) {
+			throw new SystemException(exception);
 		}
 	}
 
@@ -2025,6 +2049,9 @@ public abstract class LicenseLocalServiceBaseImpl
 
 	@BeanReference(type = LicensePersistence.class)
 	protected LicensePersistence licensePersistence;
+
+	@BeanReference(type = LicenseFinder.class)
+	protected LicenseFinder licenseFinder;
 
 	@BeanReference(
 		type = de.uhh.l2g.plugins.service.MediaTypeLocalService.class

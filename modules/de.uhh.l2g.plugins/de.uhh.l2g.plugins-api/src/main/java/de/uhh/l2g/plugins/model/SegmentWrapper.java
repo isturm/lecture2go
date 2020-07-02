@@ -21,8 +21,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * <p>
  * This class is a wrapper for {@link Segment}.
@@ -32,10 +30,9 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see Segment
  * @generated
  */
-@ProviderType
 public class SegmentWrapper
 	extends BaseModelWrapper<Segment>
-	implements Segment, ModelWrapper<Segment> {
+	implements ModelWrapper<Segment>, Segment {
 
 	public SegmentWrapper(Segment segment) {
 		super(segment);

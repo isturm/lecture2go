@@ -15,7 +15,6 @@
 package de.uhh.l2g.plugins.service.persistence;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.util.OrderByComparator;
 
 import de.uhh.l2g.plugins.exception.NoSuchProducerException;
 import de.uhh.l2g.plugins.model.Producer;
@@ -54,7 +53,7 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 	 * Returns a range of all the producers where hostId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ProducerModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ProducerModelImpl</code>.
 	 * </p>
 	 *
 	 * @param hostId the host ID
@@ -68,10 +67,27 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 	 * Returns an ordered range of all the producers where hostId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ProducerModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ProducerModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByHost(long, int, int, OrderByComparator)}
+	 * @param hostId the host ID
+	 * @param start the lower bound of the range of producers
+	 * @param end the upper bound of the range of producers (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching producers
+	 */
+	public java.util.List<Producer> findByHost(
+		long hostId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Producer>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the producers where hostId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ProducerModelImpl</code>.
+	 * </p>
+	 *
 	 * @param hostId the host ID
 	 * @param start the lower bound of the range of producers
 	 * @param end the upper bound of the range of producers (not inclusive)
@@ -79,27 +95,11 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching producers
 	 */
-	@Deprecated
 	public java.util.List<Producer> findByHost(
 		long hostId, int start, int end,
-		OrderByComparator<Producer> orderByComparator, boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the producers where hostId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ProducerModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param hostId the host ID
-	 * @param start the lower bound of the range of producers
-	 * @param end the upper bound of the range of producers (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching producers
-	 */
-	public java.util.List<Producer> findByHost(
-		long hostId, int start, int end,
-		OrderByComparator<Producer> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Producer>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first producer in the ordered set where hostId = &#63;.
@@ -110,7 +110,9 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 	 * @throws NoSuchProducerException if a matching producer could not be found
 	 */
 	public Producer findByHost_First(
-			long hostId, OrderByComparator<Producer> orderByComparator)
+			long hostId,
+			com.liferay.portal.kernel.util.OrderByComparator<Producer>
+				orderByComparator)
 		throws NoSuchProducerException;
 
 	/**
@@ -121,7 +123,9 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 	 * @return the first matching producer, or <code>null</code> if a matching producer could not be found
 	 */
 	public Producer fetchByHost_First(
-		long hostId, OrderByComparator<Producer> orderByComparator);
+		long hostId,
+		com.liferay.portal.kernel.util.OrderByComparator<Producer>
+			orderByComparator);
 
 	/**
 	 * Returns the last producer in the ordered set where hostId = &#63;.
@@ -132,7 +136,9 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 	 * @throws NoSuchProducerException if a matching producer could not be found
 	 */
 	public Producer findByHost_Last(
-			long hostId, OrderByComparator<Producer> orderByComparator)
+			long hostId,
+			com.liferay.portal.kernel.util.OrderByComparator<Producer>
+				orderByComparator)
 		throws NoSuchProducerException;
 
 	/**
@@ -143,7 +149,9 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 	 * @return the last matching producer, or <code>null</code> if a matching producer could not be found
 	 */
 	public Producer fetchByHost_Last(
-		long hostId, OrderByComparator<Producer> orderByComparator);
+		long hostId,
+		com.liferay.portal.kernel.util.OrderByComparator<Producer>
+			orderByComparator);
 
 	/**
 	 * Returns the producers before and after the current producer in the ordered set where hostId = &#63;.
@@ -156,7 +164,8 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 	 */
 	public Producer[] findByHost_PrevAndNext(
 			long producerId, long hostId,
-			OrderByComparator<Producer> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Producer>
+				orderByComparator)
 		throws NoSuchProducerException;
 
 	/**
@@ -186,7 +195,7 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 	 * Returns a range of all the producers where institutionId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ProducerModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ProducerModelImpl</code>.
 	 * </p>
 	 *
 	 * @param institutionId the institution ID
@@ -201,10 +210,27 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 	 * Returns an ordered range of all the producers where institutionId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ProducerModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ProducerModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByInstitution(long, int, int, OrderByComparator)}
+	 * @param institutionId the institution ID
+	 * @param start the lower bound of the range of producers
+	 * @param end the upper bound of the range of producers (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching producers
+	 */
+	public java.util.List<Producer> findByInstitution(
+		long institutionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Producer>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the producers where institutionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ProducerModelImpl</code>.
+	 * </p>
+	 *
 	 * @param institutionId the institution ID
 	 * @param start the lower bound of the range of producers
 	 * @param end the upper bound of the range of producers (not inclusive)
@@ -212,27 +238,11 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching producers
 	 */
-	@Deprecated
 	public java.util.List<Producer> findByInstitution(
 		long institutionId, int start, int end,
-		OrderByComparator<Producer> orderByComparator, boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the producers where institutionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ProducerModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param institutionId the institution ID
-	 * @param start the lower bound of the range of producers
-	 * @param end the upper bound of the range of producers (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching producers
-	 */
-	public java.util.List<Producer> findByInstitution(
-		long institutionId, int start, int end,
-		OrderByComparator<Producer> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Producer>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first producer in the ordered set where institutionId = &#63;.
@@ -243,7 +253,9 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 	 * @throws NoSuchProducerException if a matching producer could not be found
 	 */
 	public Producer findByInstitution_First(
-			long institutionId, OrderByComparator<Producer> orderByComparator)
+			long institutionId,
+			com.liferay.portal.kernel.util.OrderByComparator<Producer>
+				orderByComparator)
 		throws NoSuchProducerException;
 
 	/**
@@ -254,7 +266,9 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 	 * @return the first matching producer, or <code>null</code> if a matching producer could not be found
 	 */
 	public Producer fetchByInstitution_First(
-		long institutionId, OrderByComparator<Producer> orderByComparator);
+		long institutionId,
+		com.liferay.portal.kernel.util.OrderByComparator<Producer>
+			orderByComparator);
 
 	/**
 	 * Returns the last producer in the ordered set where institutionId = &#63;.
@@ -265,7 +279,9 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 	 * @throws NoSuchProducerException if a matching producer could not be found
 	 */
 	public Producer findByInstitution_Last(
-			long institutionId, OrderByComparator<Producer> orderByComparator)
+			long institutionId,
+			com.liferay.portal.kernel.util.OrderByComparator<Producer>
+				orderByComparator)
 		throws NoSuchProducerException;
 
 	/**
@@ -276,7 +292,9 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 	 * @return the last matching producer, or <code>null</code> if a matching producer could not be found
 	 */
 	public Producer fetchByInstitution_Last(
-		long institutionId, OrderByComparator<Producer> orderByComparator);
+		long institutionId,
+		com.liferay.portal.kernel.util.OrderByComparator<Producer>
+			orderByComparator);
 
 	/**
 	 * Returns the producers before and after the current producer in the ordered set where institutionId = &#63;.
@@ -289,7 +307,8 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 	 */
 	public Producer[] findByInstitution_PrevAndNext(
 			long producerId, long institutionId,
-			OrderByComparator<Producer> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Producer>
+				orderByComparator)
 		throws NoSuchProducerException;
 
 	/**
@@ -319,7 +338,7 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 	 * Returns a range of all the producers where approved = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ProducerModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ProducerModelImpl</code>.
 	 * </p>
 	 *
 	 * @param approved the approved
@@ -334,10 +353,27 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 	 * Returns an ordered range of all the producers where approved = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ProducerModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ProducerModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByStatus(int, int, int, OrderByComparator)}
+	 * @param approved the approved
+	 * @param start the lower bound of the range of producers
+	 * @param end the upper bound of the range of producers (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching producers
+	 */
+	public java.util.List<Producer> findByStatus(
+		int approved, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Producer>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the producers where approved = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ProducerModelImpl</code>.
+	 * </p>
+	 *
 	 * @param approved the approved
 	 * @param start the lower bound of the range of producers
 	 * @param end the upper bound of the range of producers (not inclusive)
@@ -345,27 +381,11 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching producers
 	 */
-	@Deprecated
 	public java.util.List<Producer> findByStatus(
 		int approved, int start, int end,
-		OrderByComparator<Producer> orderByComparator, boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the producers where approved = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ProducerModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param approved the approved
-	 * @param start the lower bound of the range of producers
-	 * @param end the upper bound of the range of producers (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching producers
-	 */
-	public java.util.List<Producer> findByStatus(
-		int approved, int start, int end,
-		OrderByComparator<Producer> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Producer>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first producer in the ordered set where approved = &#63;.
@@ -376,7 +396,9 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 	 * @throws NoSuchProducerException if a matching producer could not be found
 	 */
 	public Producer findByStatus_First(
-			int approved, OrderByComparator<Producer> orderByComparator)
+			int approved,
+			com.liferay.portal.kernel.util.OrderByComparator<Producer>
+				orderByComparator)
 		throws NoSuchProducerException;
 
 	/**
@@ -387,7 +409,9 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 	 * @return the first matching producer, or <code>null</code> if a matching producer could not be found
 	 */
 	public Producer fetchByStatus_First(
-		int approved, OrderByComparator<Producer> orderByComparator);
+		int approved,
+		com.liferay.portal.kernel.util.OrderByComparator<Producer>
+			orderByComparator);
 
 	/**
 	 * Returns the last producer in the ordered set where approved = &#63;.
@@ -398,7 +422,9 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 	 * @throws NoSuchProducerException if a matching producer could not be found
 	 */
 	public Producer findByStatus_Last(
-			int approved, OrderByComparator<Producer> orderByComparator)
+			int approved,
+			com.liferay.portal.kernel.util.OrderByComparator<Producer>
+				orderByComparator)
 		throws NoSuchProducerException;
 
 	/**
@@ -409,7 +435,9 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 	 * @return the last matching producer, or <code>null</code> if a matching producer could not be found
 	 */
 	public Producer fetchByStatus_Last(
-		int approved, OrderByComparator<Producer> orderByComparator);
+		int approved,
+		com.liferay.portal.kernel.util.OrderByComparator<Producer>
+			orderByComparator);
 
 	/**
 	 * Returns the producers before and after the current producer in the ordered set where approved = &#63;.
@@ -422,7 +450,8 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 	 */
 	public Producer[] findByStatus_PrevAndNext(
 			long producerId, int approved,
-			OrderByComparator<Producer> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Producer>
+				orderByComparator)
 		throws NoSuchProducerException;
 
 	/**
@@ -451,15 +480,12 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 		throws NoSuchProducerException;
 
 	/**
-	 * Returns the producer where homeDir = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the producer where homeDir = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByDirectory(String)}
 	 * @param homeDir the home dir
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching producer, or <code>null</code> if a matching producer could not be found
 	 */
-	@Deprecated
-	public Producer fetchByDirectory(String homeDir, boolean useFinderCache);
+	public Producer fetchByDirectory(String homeDir);
 
 	/**
 	 * Returns the producer where homeDir = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -468,7 +494,7 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching producer, or <code>null</code> if a matching producer could not be found
 	 */
-	public Producer fetchByDirectory(String homeDir);
+	public Producer fetchByDirectory(String homeDir, boolean useFinderCache);
 
 	/**
 	 * Removes the producer where homeDir = &#63; from the database.
@@ -497,15 +523,12 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 	public Producer findByUID(String idNum) throws NoSuchProducerException;
 
 	/**
-	 * Returns the producer where idNum = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the producer where idNum = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByUID(String)}
 	 * @param idNum the id num
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching producer, or <code>null</code> if a matching producer could not be found
 	 */
-	@Deprecated
-	public Producer fetchByUID(String idNum, boolean useFinderCache);
+	public Producer fetchByUID(String idNum);
 
 	/**
 	 * Returns the producer where idNum = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -514,7 +537,7 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching producer, or <code>null</code> if a matching producer could not be found
 	 */
-	public Producer fetchByUID(String idNum);
+	public Producer fetchByUID(String idNum, boolean useFinderCache);
 
 	/**
 	 * Removes the producer where idNum = &#63; from the database.
@@ -544,7 +567,7 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 	 * Returns a range of all the producers where groupId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ProducerModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ProducerModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -559,10 +582,27 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 	 * Returns an ordered range of all the producers where groupId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ProducerModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ProducerModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByGroup(long, int, int, OrderByComparator)}
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of producers
+	 * @param end the upper bound of the range of producers (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching producers
+	 */
+	public java.util.List<Producer> findByGroup(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Producer>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the producers where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ProducerModelImpl</code>.
+	 * </p>
+	 *
 	 * @param groupId the group ID
 	 * @param start the lower bound of the range of producers
 	 * @param end the upper bound of the range of producers (not inclusive)
@@ -570,27 +610,11 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching producers
 	 */
-	@Deprecated
 	public java.util.List<Producer> findByGroup(
 		long groupId, int start, int end,
-		OrderByComparator<Producer> orderByComparator, boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the producers where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ProducerModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of producers
-	 * @param end the upper bound of the range of producers (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching producers
-	 */
-	public java.util.List<Producer> findByGroup(
-		long groupId, int start, int end,
-		OrderByComparator<Producer> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Producer>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first producer in the ordered set where groupId = &#63;.
@@ -601,7 +625,9 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 	 * @throws NoSuchProducerException if a matching producer could not be found
 	 */
 	public Producer findByGroup_First(
-			long groupId, OrderByComparator<Producer> orderByComparator)
+			long groupId,
+			com.liferay.portal.kernel.util.OrderByComparator<Producer>
+				orderByComparator)
 		throws NoSuchProducerException;
 
 	/**
@@ -612,7 +638,9 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 	 * @return the first matching producer, or <code>null</code> if a matching producer could not be found
 	 */
 	public Producer fetchByGroup_First(
-		long groupId, OrderByComparator<Producer> orderByComparator);
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<Producer>
+			orderByComparator);
 
 	/**
 	 * Returns the last producer in the ordered set where groupId = &#63;.
@@ -623,7 +651,9 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 	 * @throws NoSuchProducerException if a matching producer could not be found
 	 */
 	public Producer findByGroup_Last(
-			long groupId, OrderByComparator<Producer> orderByComparator)
+			long groupId,
+			com.liferay.portal.kernel.util.OrderByComparator<Producer>
+				orderByComparator)
 		throws NoSuchProducerException;
 
 	/**
@@ -634,7 +664,9 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 	 * @return the last matching producer, or <code>null</code> if a matching producer could not be found
 	 */
 	public Producer fetchByGroup_Last(
-		long groupId, OrderByComparator<Producer> orderByComparator);
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<Producer>
+			orderByComparator);
 
 	/**
 	 * Returns the producers before and after the current producer in the ordered set where groupId = &#63;.
@@ -647,7 +679,8 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 	 */
 	public Producer[] findByGroup_PrevAndNext(
 			long producerId, long groupId,
-			OrderByComparator<Producer> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Producer>
+				orderByComparator)
 		throws NoSuchProducerException;
 
 	/**
@@ -677,7 +710,7 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 	 * Returns a range of all the producers where companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ProducerModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ProducerModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
@@ -692,10 +725,27 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 	 * Returns an ordered range of all the producers where companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ProducerModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ProducerModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCompany(long, int, int, OrderByComparator)}
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of producers
+	 * @param end the upper bound of the range of producers (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching producers
+	 */
+	public java.util.List<Producer> findByCompany(
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Producer>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the producers where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ProducerModelImpl</code>.
+	 * </p>
+	 *
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of producers
 	 * @param end the upper bound of the range of producers (not inclusive)
@@ -703,27 +753,11 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching producers
 	 */
-	@Deprecated
 	public java.util.List<Producer> findByCompany(
 		long companyId, int start, int end,
-		OrderByComparator<Producer> orderByComparator, boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the producers where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ProducerModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of producers
-	 * @param end the upper bound of the range of producers (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching producers
-	 */
-	public java.util.List<Producer> findByCompany(
-		long companyId, int start, int end,
-		OrderByComparator<Producer> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Producer>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first producer in the ordered set where companyId = &#63;.
@@ -734,7 +768,9 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 	 * @throws NoSuchProducerException if a matching producer could not be found
 	 */
 	public Producer findByCompany_First(
-			long companyId, OrderByComparator<Producer> orderByComparator)
+			long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator<Producer>
+				orderByComparator)
 		throws NoSuchProducerException;
 
 	/**
@@ -745,7 +781,9 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 	 * @return the first matching producer, or <code>null</code> if a matching producer could not be found
 	 */
 	public Producer fetchByCompany_First(
-		long companyId, OrderByComparator<Producer> orderByComparator);
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<Producer>
+			orderByComparator);
 
 	/**
 	 * Returns the last producer in the ordered set where companyId = &#63;.
@@ -756,7 +794,9 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 	 * @throws NoSuchProducerException if a matching producer could not be found
 	 */
 	public Producer findByCompany_Last(
-			long companyId, OrderByComparator<Producer> orderByComparator)
+			long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator<Producer>
+				orderByComparator)
 		throws NoSuchProducerException;
 
 	/**
@@ -767,7 +807,9 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 	 * @return the last matching producer, or <code>null</code> if a matching producer could not be found
 	 */
 	public Producer fetchByCompany_Last(
-		long companyId, OrderByComparator<Producer> orderByComparator);
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<Producer>
+			orderByComparator);
 
 	/**
 	 * Returns the producers before and after the current producer in the ordered set where companyId = &#63;.
@@ -780,7 +822,8 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 	 */
 	public Producer[] findByCompany_PrevAndNext(
 			long producerId, long companyId,
-			OrderByComparator<Producer> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Producer>
+				orderByComparator)
 		throws NoSuchProducerException;
 
 	/**
@@ -812,7 +855,7 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 	 * Returns a range of all the producers where groupId = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ProducerModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ProducerModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -828,10 +871,28 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 	 * Returns an ordered range of all the producers where groupId = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ProducerModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ProducerModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByGroupAndCompany(long,long, int, int, OrderByComparator)}
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of producers
+	 * @param end the upper bound of the range of producers (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching producers
+	 */
+	public java.util.List<Producer> findByGroupAndCompany(
+		long groupId, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Producer>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the producers where groupId = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ProducerModelImpl</code>.
+	 * </p>
+	 *
 	 * @param groupId the group ID
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of producers
@@ -840,28 +901,11 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching producers
 	 */
-	@Deprecated
 	public java.util.List<Producer> findByGroupAndCompany(
 		long groupId, long companyId, int start, int end,
-		OrderByComparator<Producer> orderByComparator, boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the producers where groupId = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ProducerModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of producers
-	 * @param end the upper bound of the range of producers (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching producers
-	 */
-	public java.util.List<Producer> findByGroupAndCompany(
-		long groupId, long companyId, int start, int end,
-		OrderByComparator<Producer> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Producer>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first producer in the ordered set where groupId = &#63; and companyId = &#63;.
@@ -874,7 +918,8 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 	 */
 	public Producer findByGroupAndCompany_First(
 			long groupId, long companyId,
-			OrderByComparator<Producer> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Producer>
+				orderByComparator)
 		throws NoSuchProducerException;
 
 	/**
@@ -887,7 +932,8 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 	 */
 	public Producer fetchByGroupAndCompany_First(
 		long groupId, long companyId,
-		OrderByComparator<Producer> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Producer>
+			orderByComparator);
 
 	/**
 	 * Returns the last producer in the ordered set where groupId = &#63; and companyId = &#63;.
@@ -900,7 +946,8 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 	 */
 	public Producer findByGroupAndCompany_Last(
 			long groupId, long companyId,
-			OrderByComparator<Producer> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Producer>
+				orderByComparator)
 		throws NoSuchProducerException;
 
 	/**
@@ -913,7 +960,8 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 	 */
 	public Producer fetchByGroupAndCompany_Last(
 		long groupId, long companyId,
-		OrderByComparator<Producer> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Producer>
+			orderByComparator);
 
 	/**
 	 * Returns the producers before and after the current producer in the ordered set where groupId = &#63; and companyId = &#63;.
@@ -927,7 +975,8 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 	 */
 	public Producer[] findByGroupAndCompany_PrevAndNext(
 			long producerId, long groupId, long companyId,
-			OrderByComparator<Producer> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Producer>
+				orderByComparator)
 		throws NoSuchProducerException;
 
 	/**
@@ -1009,7 +1058,7 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 	 * Returns a range of all the producers.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ProducerModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ProducerModelImpl</code>.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of producers
@@ -1022,35 +1071,37 @@ public interface ProducerPersistence extends BasePersistence<Producer> {
 	 * Returns an ordered range of all the producers.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ProducerModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ProducerModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
+	 * @param start the lower bound of the range of producers
+	 * @param end the upper bound of the range of producers (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of producers
+	 */
+	public java.util.List<Producer> findAll(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Producer>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the producers.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>ProducerModelImpl</code>.
+	 * </p>
+	 *
 	 * @param start the lower bound of the range of producers
 	 * @param end the upper bound of the range of producers (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of producers
 	 */
-	@Deprecated
 	public java.util.List<Producer> findAll(
-		int start, int end, OrderByComparator<Producer> orderByComparator,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Producer>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the producers.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>ProducerModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of producers
-	 * @param end the upper bound of the range of producers (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of producers
-	 */
-	public java.util.List<Producer> findAll(
-		int start, int end, OrderByComparator<Producer> orderByComparator);
 
 	/**
 	 * Removes all the producers from the database.

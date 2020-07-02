@@ -17,8 +17,6 @@ package de.uhh.l2g.plugins.model.impl;
 import de.uhh.l2g.plugins.model.Category;
 import de.uhh.l2g.plugins.service.CategoryLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the Category service. Represents a row in the &quot;LG_Category&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see Category
  * @generated
  */
-@ProviderType
 public abstract class CategoryBaseImpl
 	extends CategoryModelImpl implements Category {
 

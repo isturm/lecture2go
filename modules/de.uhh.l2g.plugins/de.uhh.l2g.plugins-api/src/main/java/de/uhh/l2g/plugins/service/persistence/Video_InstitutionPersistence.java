@@ -15,7 +15,6 @@
 package de.uhh.l2g.plugins.service.persistence;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.util.OrderByComparator;
 
 import de.uhh.l2g.plugins.exception.NoSuchVideo_InstitutionException;
 import de.uhh.l2g.plugins.model.Video_Institution;
@@ -55,7 +54,7 @@ public interface Video_InstitutionPersistence
 	 * Returns a range of all the video_ institutions where videoId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Video_InstitutionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Video_InstitutionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param videoId the video ID
@@ -70,10 +69,27 @@ public interface Video_InstitutionPersistence
 	 * Returns an ordered range of all the video_ institutions where videoId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Video_InstitutionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Video_InstitutionModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByVideo(long, int, int, OrderByComparator)}
+	 * @param videoId the video ID
+	 * @param start the lower bound of the range of video_ institutions
+	 * @param end the upper bound of the range of video_ institutions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching video_ institutions
+	 */
+	public java.util.List<Video_Institution> findByVideo(
+		long videoId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Video_Institution>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the video_ institutions where videoId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Video_InstitutionModelImpl</code>.
+	 * </p>
+	 *
 	 * @param videoId the video ID
 	 * @param start the lower bound of the range of video_ institutions
 	 * @param end the upper bound of the range of video_ institutions (not inclusive)
@@ -81,28 +97,11 @@ public interface Video_InstitutionPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching video_ institutions
 	 */
-	@Deprecated
 	public java.util.List<Video_Institution> findByVideo(
 		long videoId, int start, int end,
-		OrderByComparator<Video_Institution> orderByComparator,
+		com.liferay.portal.kernel.util.OrderByComparator<Video_Institution>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the video_ institutions where videoId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Video_InstitutionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param videoId the video ID
-	 * @param start the lower bound of the range of video_ institutions
-	 * @param end the upper bound of the range of video_ institutions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching video_ institutions
-	 */
-	public java.util.List<Video_Institution> findByVideo(
-		long videoId, int start, int end,
-		OrderByComparator<Video_Institution> orderByComparator);
 
 	/**
 	 * Returns the first video_ institution in the ordered set where videoId = &#63;.
@@ -114,7 +113,8 @@ public interface Video_InstitutionPersistence
 	 */
 	public Video_Institution findByVideo_First(
 			long videoId,
-			OrderByComparator<Video_Institution> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Video_Institution>
+				orderByComparator)
 		throws NoSuchVideo_InstitutionException;
 
 	/**
@@ -125,7 +125,9 @@ public interface Video_InstitutionPersistence
 	 * @return the first matching video_ institution, or <code>null</code> if a matching video_ institution could not be found
 	 */
 	public Video_Institution fetchByVideo_First(
-		long videoId, OrderByComparator<Video_Institution> orderByComparator);
+		long videoId,
+		com.liferay.portal.kernel.util.OrderByComparator<Video_Institution>
+			orderByComparator);
 
 	/**
 	 * Returns the last video_ institution in the ordered set where videoId = &#63;.
@@ -137,7 +139,8 @@ public interface Video_InstitutionPersistence
 	 */
 	public Video_Institution findByVideo_Last(
 			long videoId,
-			OrderByComparator<Video_Institution> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Video_Institution>
+				orderByComparator)
 		throws NoSuchVideo_InstitutionException;
 
 	/**
@@ -148,7 +151,9 @@ public interface Video_InstitutionPersistence
 	 * @return the last matching video_ institution, or <code>null</code> if a matching video_ institution could not be found
 	 */
 	public Video_Institution fetchByVideo_Last(
-		long videoId, OrderByComparator<Video_Institution> orderByComparator);
+		long videoId,
+		com.liferay.portal.kernel.util.OrderByComparator<Video_Institution>
+			orderByComparator);
 
 	/**
 	 * Returns the video_ institutions before and after the current video_ institution in the ordered set where videoId = &#63;.
@@ -161,7 +166,8 @@ public interface Video_InstitutionPersistence
 	 */
 	public Video_Institution[] findByVideo_PrevAndNext(
 			long videoInstitutionId, long videoId,
-			OrderByComparator<Video_Institution> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Video_Institution>
+				orderByComparator)
 		throws NoSuchVideo_InstitutionException;
 
 	/**
@@ -192,7 +198,7 @@ public interface Video_InstitutionPersistence
 	 * Returns a range of all the video_ institutions where institutionId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Video_InstitutionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Video_InstitutionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param institutionId the institution ID
@@ -207,10 +213,27 @@ public interface Video_InstitutionPersistence
 	 * Returns an ordered range of all the video_ institutions where institutionId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Video_InstitutionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Video_InstitutionModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByInstitution(long, int, int, OrderByComparator)}
+	 * @param institutionId the institution ID
+	 * @param start the lower bound of the range of video_ institutions
+	 * @param end the upper bound of the range of video_ institutions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching video_ institutions
+	 */
+	public java.util.List<Video_Institution> findByInstitution(
+		long institutionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Video_Institution>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the video_ institutions where institutionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Video_InstitutionModelImpl</code>.
+	 * </p>
+	 *
 	 * @param institutionId the institution ID
 	 * @param start the lower bound of the range of video_ institutions
 	 * @param end the upper bound of the range of video_ institutions (not inclusive)
@@ -218,28 +241,11 @@ public interface Video_InstitutionPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching video_ institutions
 	 */
-	@Deprecated
 	public java.util.List<Video_Institution> findByInstitution(
 		long institutionId, int start, int end,
-		OrderByComparator<Video_Institution> orderByComparator,
+		com.liferay.portal.kernel.util.OrderByComparator<Video_Institution>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the video_ institutions where institutionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Video_InstitutionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param institutionId the institution ID
-	 * @param start the lower bound of the range of video_ institutions
-	 * @param end the upper bound of the range of video_ institutions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching video_ institutions
-	 */
-	public java.util.List<Video_Institution> findByInstitution(
-		long institutionId, int start, int end,
-		OrderByComparator<Video_Institution> orderByComparator);
 
 	/**
 	 * Returns the first video_ institution in the ordered set where institutionId = &#63;.
@@ -251,7 +257,8 @@ public interface Video_InstitutionPersistence
 	 */
 	public Video_Institution findByInstitution_First(
 			long institutionId,
-			OrderByComparator<Video_Institution> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Video_Institution>
+				orderByComparator)
 		throws NoSuchVideo_InstitutionException;
 
 	/**
@@ -263,7 +270,8 @@ public interface Video_InstitutionPersistence
 	 */
 	public Video_Institution fetchByInstitution_First(
 		long institutionId,
-		OrderByComparator<Video_Institution> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Video_Institution>
+			orderByComparator);
 
 	/**
 	 * Returns the last video_ institution in the ordered set where institutionId = &#63;.
@@ -275,7 +283,8 @@ public interface Video_InstitutionPersistence
 	 */
 	public Video_Institution findByInstitution_Last(
 			long institutionId,
-			OrderByComparator<Video_Institution> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Video_Institution>
+				orderByComparator)
 		throws NoSuchVideo_InstitutionException;
 
 	/**
@@ -287,7 +296,8 @@ public interface Video_InstitutionPersistence
 	 */
 	public Video_Institution fetchByInstitution_Last(
 		long institutionId,
-		OrderByComparator<Video_Institution> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Video_Institution>
+			orderByComparator);
 
 	/**
 	 * Returns the video_ institutions before and after the current video_ institution in the ordered set where institutionId = &#63;.
@@ -300,7 +310,8 @@ public interface Video_InstitutionPersistence
 	 */
 	public Video_Institution[] findByInstitution_PrevAndNext(
 			long videoInstitutionId, long institutionId,
-			OrderByComparator<Video_Institution> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Video_Institution>
+				orderByComparator)
 		throws NoSuchVideo_InstitutionException;
 
 	/**
@@ -332,7 +343,7 @@ public interface Video_InstitutionPersistence
 	 * Returns a range of all the video_ institutions where videoId = &#63; and institutionId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Video_InstitutionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Video_InstitutionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param videoId the video ID
@@ -348,10 +359,28 @@ public interface Video_InstitutionPersistence
 	 * Returns an ordered range of all the video_ institutions where videoId = &#63; and institutionId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Video_InstitutionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Video_InstitutionModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByVideoInstitution(long,long, int, int, OrderByComparator)}
+	 * @param videoId the video ID
+	 * @param institutionId the institution ID
+	 * @param start the lower bound of the range of video_ institutions
+	 * @param end the upper bound of the range of video_ institutions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching video_ institutions
+	 */
+	public java.util.List<Video_Institution> findByVideoInstitution(
+		long videoId, long institutionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Video_Institution>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the video_ institutions where videoId = &#63; and institutionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Video_InstitutionModelImpl</code>.
+	 * </p>
+	 *
 	 * @param videoId the video ID
 	 * @param institutionId the institution ID
 	 * @param start the lower bound of the range of video_ institutions
@@ -360,29 +389,11 @@ public interface Video_InstitutionPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching video_ institutions
 	 */
-	@Deprecated
 	public java.util.List<Video_Institution> findByVideoInstitution(
 		long videoId, long institutionId, int start, int end,
-		OrderByComparator<Video_Institution> orderByComparator,
+		com.liferay.portal.kernel.util.OrderByComparator<Video_Institution>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the video_ institutions where videoId = &#63; and institutionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Video_InstitutionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param videoId the video ID
-	 * @param institutionId the institution ID
-	 * @param start the lower bound of the range of video_ institutions
-	 * @param end the upper bound of the range of video_ institutions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching video_ institutions
-	 */
-	public java.util.List<Video_Institution> findByVideoInstitution(
-		long videoId, long institutionId, int start, int end,
-		OrderByComparator<Video_Institution> orderByComparator);
 
 	/**
 	 * Returns the first video_ institution in the ordered set where videoId = &#63; and institutionId = &#63;.
@@ -395,7 +406,8 @@ public interface Video_InstitutionPersistence
 	 */
 	public Video_Institution findByVideoInstitution_First(
 			long videoId, long institutionId,
-			OrderByComparator<Video_Institution> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Video_Institution>
+				orderByComparator)
 		throws NoSuchVideo_InstitutionException;
 
 	/**
@@ -408,7 +420,8 @@ public interface Video_InstitutionPersistence
 	 */
 	public Video_Institution fetchByVideoInstitution_First(
 		long videoId, long institutionId,
-		OrderByComparator<Video_Institution> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Video_Institution>
+			orderByComparator);
 
 	/**
 	 * Returns the last video_ institution in the ordered set where videoId = &#63; and institutionId = &#63;.
@@ -421,7 +434,8 @@ public interface Video_InstitutionPersistence
 	 */
 	public Video_Institution findByVideoInstitution_Last(
 			long videoId, long institutionId,
-			OrderByComparator<Video_Institution> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Video_Institution>
+				orderByComparator)
 		throws NoSuchVideo_InstitutionException;
 
 	/**
@@ -434,7 +448,8 @@ public interface Video_InstitutionPersistence
 	 */
 	public Video_Institution fetchByVideoInstitution_Last(
 		long videoId, long institutionId,
-		OrderByComparator<Video_Institution> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Video_Institution>
+			orderByComparator);
 
 	/**
 	 * Returns the video_ institutions before and after the current video_ institution in the ordered set where videoId = &#63; and institutionId = &#63;.
@@ -448,7 +463,8 @@ public interface Video_InstitutionPersistence
 	 */
 	public Video_Institution[] findByVideoInstitution_PrevAndNext(
 			long videoInstitutionId, long videoId, long institutionId,
-			OrderByComparator<Video_Institution> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Video_Institution>
+				orderByComparator)
 		throws NoSuchVideo_InstitutionException;
 
 	/**
@@ -481,7 +497,7 @@ public interface Video_InstitutionPersistence
 	 * Returns a range of all the video_ institutions where institutionParentId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Video_InstitutionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Video_InstitutionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param institutionParentId the institution parent ID
@@ -496,10 +512,27 @@ public interface Video_InstitutionPersistence
 	 * Returns an ordered range of all the video_ institutions where institutionParentId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Video_InstitutionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Video_InstitutionModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByInstitutionParentId(long, int, int, OrderByComparator)}
+	 * @param institutionParentId the institution parent ID
+	 * @param start the lower bound of the range of video_ institutions
+	 * @param end the upper bound of the range of video_ institutions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching video_ institutions
+	 */
+	public java.util.List<Video_Institution> findByInstitutionParentId(
+		long institutionParentId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Video_Institution>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the video_ institutions where institutionParentId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Video_InstitutionModelImpl</code>.
+	 * </p>
+	 *
 	 * @param institutionParentId the institution parent ID
 	 * @param start the lower bound of the range of video_ institutions
 	 * @param end the upper bound of the range of video_ institutions (not inclusive)
@@ -507,28 +540,11 @@ public interface Video_InstitutionPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching video_ institutions
 	 */
-	@Deprecated
 	public java.util.List<Video_Institution> findByInstitutionParentId(
 		long institutionParentId, int start, int end,
-		OrderByComparator<Video_Institution> orderByComparator,
+		com.liferay.portal.kernel.util.OrderByComparator<Video_Institution>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the video_ institutions where institutionParentId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Video_InstitutionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param institutionParentId the institution parent ID
-	 * @param start the lower bound of the range of video_ institutions
-	 * @param end the upper bound of the range of video_ institutions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching video_ institutions
-	 */
-	public java.util.List<Video_Institution> findByInstitutionParentId(
-		long institutionParentId, int start, int end,
-		OrderByComparator<Video_Institution> orderByComparator);
 
 	/**
 	 * Returns the first video_ institution in the ordered set where institutionParentId = &#63;.
@@ -540,7 +556,8 @@ public interface Video_InstitutionPersistence
 	 */
 	public Video_Institution findByInstitutionParentId_First(
 			long institutionParentId,
-			OrderByComparator<Video_Institution> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Video_Institution>
+				orderByComparator)
 		throws NoSuchVideo_InstitutionException;
 
 	/**
@@ -552,7 +569,8 @@ public interface Video_InstitutionPersistence
 	 */
 	public Video_Institution fetchByInstitutionParentId_First(
 		long institutionParentId,
-		OrderByComparator<Video_Institution> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Video_Institution>
+			orderByComparator);
 
 	/**
 	 * Returns the last video_ institution in the ordered set where institutionParentId = &#63;.
@@ -564,7 +582,8 @@ public interface Video_InstitutionPersistence
 	 */
 	public Video_Institution findByInstitutionParentId_Last(
 			long institutionParentId,
-			OrderByComparator<Video_Institution> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Video_Institution>
+				orderByComparator)
 		throws NoSuchVideo_InstitutionException;
 
 	/**
@@ -576,7 +595,8 @@ public interface Video_InstitutionPersistence
 	 */
 	public Video_Institution fetchByInstitutionParentId_Last(
 		long institutionParentId,
-		OrderByComparator<Video_Institution> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Video_Institution>
+			orderByComparator);
 
 	/**
 	 * Returns the video_ institutions before and after the current video_ institution in the ordered set where institutionParentId = &#63;.
@@ -589,7 +609,8 @@ public interface Video_InstitutionPersistence
 	 */
 	public Video_Institution[] findByInstitutionParentId_PrevAndNext(
 			long videoInstitutionId, long institutionParentId,
-			OrderByComparator<Video_Institution> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Video_Institution>
+				orderByComparator)
 		throws NoSuchVideo_InstitutionException;
 
 	/**
@@ -671,7 +692,7 @@ public interface Video_InstitutionPersistence
 	 * Returns a range of all the video_ institutions.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Video_InstitutionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Video_InstitutionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of video_ institutions
@@ -684,37 +705,37 @@ public interface Video_InstitutionPersistence
 	 * Returns an ordered range of all the video_ institutions.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Video_InstitutionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Video_InstitutionModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
+	 * @param start the lower bound of the range of video_ institutions
+	 * @param end the upper bound of the range of video_ institutions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of video_ institutions
+	 */
+	public java.util.List<Video_Institution> findAll(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Video_Institution>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the video_ institutions.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Video_InstitutionModelImpl</code>.
+	 * </p>
+	 *
 	 * @param start the lower bound of the range of video_ institutions
 	 * @param end the upper bound of the range of video_ institutions (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of video_ institutions
 	 */
-	@Deprecated
 	public java.util.List<Video_Institution> findAll(
 		int start, int end,
-		OrderByComparator<Video_Institution> orderByComparator,
+		com.liferay.portal.kernel.util.OrderByComparator<Video_Institution>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the video_ institutions.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Video_InstitutionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of video_ institutions
-	 * @param end the upper bound of the range of video_ institutions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of video_ institutions
-	 */
-	public java.util.List<Video_Institution> findAll(
-		int start, int end,
-		OrderByComparator<Video_Institution> orderByComparator);
 
 	/**
 	 * Removes all the video_ institutions from the database.

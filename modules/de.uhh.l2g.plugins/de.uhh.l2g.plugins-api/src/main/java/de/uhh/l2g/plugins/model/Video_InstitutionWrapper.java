@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * <p>
  * This class is a wrapper for {@link Video_Institution}.
@@ -31,10 +29,9 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see Video_Institution
  * @generated
  */
-@ProviderType
 public class Video_InstitutionWrapper
 	extends BaseModelWrapper<Video_Institution>
-	implements Video_Institution, ModelWrapper<Video_Institution> {
+	implements ModelWrapper<Video_Institution>, Video_Institution {
 
 	public Video_InstitutionWrapper(Video_Institution video_Institution) {
 		super(video_Institution);

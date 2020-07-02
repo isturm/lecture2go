@@ -25,28 +25,25 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The cache model class for representing License in entity cache.
  *
  * @author Iavor Sturm
  * @generated
  */
-@ProviderType
 public class LicenseCacheModel implements CacheModel<License>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof LicenseCacheModel)) {
+		if (!(object instanceof LicenseCacheModel)) {
 			return false;
 		}
 
-		LicenseCacheModel licenseCacheModel = (LicenseCacheModel)obj;
+		LicenseCacheModel licenseCacheModel = (LicenseCacheModel)object;
 
 		if (licenseId == licenseCacheModel.licenseId) {
 			return true;

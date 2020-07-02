@@ -25,30 +25,27 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The cache model class for representing Video_MediaType in entity cache.
  *
  * @author Iavor Sturm
  * @generated
  */
-@ProviderType
 public class Video_MediaTypeCacheModel
 	implements CacheModel<Video_MediaType>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof Video_MediaTypeCacheModel)) {
+		if (!(object instanceof Video_MediaTypeCacheModel)) {
 			return false;
 		}
 
 		Video_MediaTypeCacheModel video_MediaTypeCacheModel =
-			(Video_MediaTypeCacheModel)obj;
+			(Video_MediaTypeCacheModel)object;
 
 		if (videoMediaTypeId == video_MediaTypeCacheModel.videoMediaTypeId) {
 			return true;

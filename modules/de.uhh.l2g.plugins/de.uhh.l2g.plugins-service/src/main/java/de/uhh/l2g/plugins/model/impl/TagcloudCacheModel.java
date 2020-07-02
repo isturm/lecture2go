@@ -27,29 +27,26 @@ import java.io.ObjectOutput;
 
 import java.util.Date;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The cache model class for representing Tagcloud in entity cache.
  *
  * @author Iavor Sturm
  * @generated
  */
-@ProviderType
 public class TagcloudCacheModel
 	implements CacheModel<Tagcloud>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof TagcloudCacheModel)) {
+		if (!(object instanceof TagcloudCacheModel)) {
 			return false;
 		}
 
-		TagcloudCacheModel tagcloudCacheModel = (TagcloudCacheModel)obj;
+		TagcloudCacheModel tagcloudCacheModel = (TagcloudCacheModel)object;
 
 		if (tagcloudId == tagcloudCacheModel.tagcloudId) {
 			return true;

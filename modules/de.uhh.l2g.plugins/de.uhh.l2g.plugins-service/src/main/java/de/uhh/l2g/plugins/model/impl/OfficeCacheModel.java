@@ -27,28 +27,25 @@ import java.io.ObjectOutput;
 
 import java.util.Date;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The cache model class for representing Office in entity cache.
  *
  * @author Iavor Sturm
  * @generated
  */
-@ProviderType
 public class OfficeCacheModel implements CacheModel<Office>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof OfficeCacheModel)) {
+		if (!(object instanceof OfficeCacheModel)) {
 			return false;
 		}
 
-		OfficeCacheModel officeCacheModel = (OfficeCacheModel)obj;
+		OfficeCacheModel officeCacheModel = (OfficeCacheModel)object;
 
 		if (officeId == officeCacheModel.officeId) {
 			return true;

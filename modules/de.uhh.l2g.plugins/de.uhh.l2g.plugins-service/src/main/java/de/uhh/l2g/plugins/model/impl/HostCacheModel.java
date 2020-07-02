@@ -27,28 +27,25 @@ import java.io.ObjectOutput;
 
 import java.util.Date;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The cache model class for representing Host in entity cache.
  *
  * @author Iavor Sturm
  * @generated
  */
-@ProviderType
 public class HostCacheModel implements CacheModel<Host>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof HostCacheModel)) {
+		if (!(object instanceof HostCacheModel)) {
 			return false;
 		}
 
-		HostCacheModel hostCacheModel = (HostCacheModel)obj;
+		HostCacheModel hostCacheModel = (HostCacheModel)object;
 
 		if (hostId == hostCacheModel.hostId) {
 			return true;

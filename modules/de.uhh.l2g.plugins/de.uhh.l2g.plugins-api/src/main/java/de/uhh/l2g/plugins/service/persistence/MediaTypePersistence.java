@@ -15,7 +15,6 @@
 package de.uhh.l2g.plugins.service.persistence;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.util.OrderByComparator;
 
 import de.uhh.l2g.plugins.exception.NoSuchMediaTypeException;
 import de.uhh.l2g.plugins.model.MediaType;
@@ -54,7 +53,7 @@ public interface MediaTypePersistence extends BasePersistence<MediaType> {
 	 * Returns a range of all the media types where groupId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MediaTypeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MediaTypeModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -69,10 +68,27 @@ public interface MediaTypePersistence extends BasePersistence<MediaType> {
 	 * Returns an ordered range of all the media types where groupId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MediaTypeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MediaTypeModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByGroup(long, int, int, OrderByComparator)}
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of media types
+	 * @param end the upper bound of the range of media types (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching media types
+	 */
+	public java.util.List<MediaType> findByGroup(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<MediaType>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the media types where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MediaTypeModelImpl</code>.
+	 * </p>
+	 *
 	 * @param groupId the group ID
 	 * @param start the lower bound of the range of media types
 	 * @param end the upper bound of the range of media types (not inclusive)
@@ -80,27 +96,11 @@ public interface MediaTypePersistence extends BasePersistence<MediaType> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching media types
 	 */
-	@Deprecated
 	public java.util.List<MediaType> findByGroup(
 		long groupId, int start, int end,
-		OrderByComparator<MediaType> orderByComparator, boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the media types where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MediaTypeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of media types
-	 * @param end the upper bound of the range of media types (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching media types
-	 */
-	public java.util.List<MediaType> findByGroup(
-		long groupId, int start, int end,
-		OrderByComparator<MediaType> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<MediaType>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first media type in the ordered set where groupId = &#63;.
@@ -111,7 +111,9 @@ public interface MediaTypePersistence extends BasePersistence<MediaType> {
 	 * @throws NoSuchMediaTypeException if a matching media type could not be found
 	 */
 	public MediaType findByGroup_First(
-			long groupId, OrderByComparator<MediaType> orderByComparator)
+			long groupId,
+			com.liferay.portal.kernel.util.OrderByComparator<MediaType>
+				orderByComparator)
 		throws NoSuchMediaTypeException;
 
 	/**
@@ -122,7 +124,9 @@ public interface MediaTypePersistence extends BasePersistence<MediaType> {
 	 * @return the first matching media type, or <code>null</code> if a matching media type could not be found
 	 */
 	public MediaType fetchByGroup_First(
-		long groupId, OrderByComparator<MediaType> orderByComparator);
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<MediaType>
+			orderByComparator);
 
 	/**
 	 * Returns the last media type in the ordered set where groupId = &#63;.
@@ -133,7 +137,9 @@ public interface MediaTypePersistence extends BasePersistence<MediaType> {
 	 * @throws NoSuchMediaTypeException if a matching media type could not be found
 	 */
 	public MediaType findByGroup_Last(
-			long groupId, OrderByComparator<MediaType> orderByComparator)
+			long groupId,
+			com.liferay.portal.kernel.util.OrderByComparator<MediaType>
+				orderByComparator)
 		throws NoSuchMediaTypeException;
 
 	/**
@@ -144,7 +150,9 @@ public interface MediaTypePersistence extends BasePersistence<MediaType> {
 	 * @return the last matching media type, or <code>null</code> if a matching media type could not be found
 	 */
 	public MediaType fetchByGroup_Last(
-		long groupId, OrderByComparator<MediaType> orderByComparator);
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<MediaType>
+			orderByComparator);
 
 	/**
 	 * Returns the media types before and after the current media type in the ordered set where groupId = &#63;.
@@ -157,7 +165,8 @@ public interface MediaTypePersistence extends BasePersistence<MediaType> {
 	 */
 	public MediaType[] findByGroup_PrevAndNext(
 			long mediaTypeId, long groupId,
-			OrderByComparator<MediaType> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<MediaType>
+				orderByComparator)
 		throws NoSuchMediaTypeException;
 
 	/**
@@ -187,7 +196,7 @@ public interface MediaTypePersistence extends BasePersistence<MediaType> {
 	 * Returns a range of all the media types where companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MediaTypeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MediaTypeModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
@@ -202,10 +211,27 @@ public interface MediaTypePersistence extends BasePersistence<MediaType> {
 	 * Returns an ordered range of all the media types where companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MediaTypeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MediaTypeModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCompany(long, int, int, OrderByComparator)}
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of media types
+	 * @param end the upper bound of the range of media types (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching media types
+	 */
+	public java.util.List<MediaType> findByCompany(
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<MediaType>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the media types where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MediaTypeModelImpl</code>.
+	 * </p>
+	 *
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of media types
 	 * @param end the upper bound of the range of media types (not inclusive)
@@ -213,27 +239,11 @@ public interface MediaTypePersistence extends BasePersistence<MediaType> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching media types
 	 */
-	@Deprecated
 	public java.util.List<MediaType> findByCompany(
 		long companyId, int start, int end,
-		OrderByComparator<MediaType> orderByComparator, boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the media types where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MediaTypeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of media types
-	 * @param end the upper bound of the range of media types (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching media types
-	 */
-	public java.util.List<MediaType> findByCompany(
-		long companyId, int start, int end,
-		OrderByComparator<MediaType> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<MediaType>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first media type in the ordered set where companyId = &#63;.
@@ -244,7 +254,9 @@ public interface MediaTypePersistence extends BasePersistence<MediaType> {
 	 * @throws NoSuchMediaTypeException if a matching media type could not be found
 	 */
 	public MediaType findByCompany_First(
-			long companyId, OrderByComparator<MediaType> orderByComparator)
+			long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator<MediaType>
+				orderByComparator)
 		throws NoSuchMediaTypeException;
 
 	/**
@@ -255,7 +267,9 @@ public interface MediaTypePersistence extends BasePersistence<MediaType> {
 	 * @return the first matching media type, or <code>null</code> if a matching media type could not be found
 	 */
 	public MediaType fetchByCompany_First(
-		long companyId, OrderByComparator<MediaType> orderByComparator);
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<MediaType>
+			orderByComparator);
 
 	/**
 	 * Returns the last media type in the ordered set where companyId = &#63;.
@@ -266,7 +280,9 @@ public interface MediaTypePersistence extends BasePersistence<MediaType> {
 	 * @throws NoSuchMediaTypeException if a matching media type could not be found
 	 */
 	public MediaType findByCompany_Last(
-			long companyId, OrderByComparator<MediaType> orderByComparator)
+			long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator<MediaType>
+				orderByComparator)
 		throws NoSuchMediaTypeException;
 
 	/**
@@ -277,7 +293,9 @@ public interface MediaTypePersistence extends BasePersistence<MediaType> {
 	 * @return the last matching media type, or <code>null</code> if a matching media type could not be found
 	 */
 	public MediaType fetchByCompany_Last(
-		long companyId, OrderByComparator<MediaType> orderByComparator);
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<MediaType>
+			orderByComparator);
 
 	/**
 	 * Returns the media types before and after the current media type in the ordered set where companyId = &#63;.
@@ -290,7 +308,8 @@ public interface MediaTypePersistence extends BasePersistence<MediaType> {
 	 */
 	public MediaType[] findByCompany_PrevAndNext(
 			long mediaTypeId, long companyId,
-			OrderByComparator<MediaType> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<MediaType>
+				orderByComparator)
 		throws NoSuchMediaTypeException;
 
 	/**
@@ -322,7 +341,7 @@ public interface MediaTypePersistence extends BasePersistence<MediaType> {
 	 * Returns a range of all the media types where groupId = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MediaTypeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MediaTypeModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -338,10 +357,28 @@ public interface MediaTypePersistence extends BasePersistence<MediaType> {
 	 * Returns an ordered range of all the media types where groupId = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MediaTypeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MediaTypeModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByGroupAndCompany(long,long, int, int, OrderByComparator)}
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of media types
+	 * @param end the upper bound of the range of media types (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching media types
+	 */
+	public java.util.List<MediaType> findByGroupAndCompany(
+		long groupId, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<MediaType>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the media types where groupId = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MediaTypeModelImpl</code>.
+	 * </p>
+	 *
 	 * @param groupId the group ID
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of media types
@@ -350,28 +387,11 @@ public interface MediaTypePersistence extends BasePersistence<MediaType> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching media types
 	 */
-	@Deprecated
 	public java.util.List<MediaType> findByGroupAndCompany(
 		long groupId, long companyId, int start, int end,
-		OrderByComparator<MediaType> orderByComparator, boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the media types where groupId = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MediaTypeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of media types
-	 * @param end the upper bound of the range of media types (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching media types
-	 */
-	public java.util.List<MediaType> findByGroupAndCompany(
-		long groupId, long companyId, int start, int end,
-		OrderByComparator<MediaType> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<MediaType>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first media type in the ordered set where groupId = &#63; and companyId = &#63;.
@@ -384,7 +404,8 @@ public interface MediaTypePersistence extends BasePersistence<MediaType> {
 	 */
 	public MediaType findByGroupAndCompany_First(
 			long groupId, long companyId,
-			OrderByComparator<MediaType> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<MediaType>
+				orderByComparator)
 		throws NoSuchMediaTypeException;
 
 	/**
@@ -397,7 +418,8 @@ public interface MediaTypePersistence extends BasePersistence<MediaType> {
 	 */
 	public MediaType fetchByGroupAndCompany_First(
 		long groupId, long companyId,
-		OrderByComparator<MediaType> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<MediaType>
+			orderByComparator);
 
 	/**
 	 * Returns the last media type in the ordered set where groupId = &#63; and companyId = &#63;.
@@ -410,7 +432,8 @@ public interface MediaTypePersistence extends BasePersistence<MediaType> {
 	 */
 	public MediaType findByGroupAndCompany_Last(
 			long groupId, long companyId,
-			OrderByComparator<MediaType> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<MediaType>
+				orderByComparator)
 		throws NoSuchMediaTypeException;
 
 	/**
@@ -423,7 +446,8 @@ public interface MediaTypePersistence extends BasePersistence<MediaType> {
 	 */
 	public MediaType fetchByGroupAndCompany_Last(
 		long groupId, long companyId,
-		OrderByComparator<MediaType> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<MediaType>
+			orderByComparator);
 
 	/**
 	 * Returns the media types before and after the current media type in the ordered set where groupId = &#63; and companyId = &#63;.
@@ -437,7 +461,8 @@ public interface MediaTypePersistence extends BasePersistence<MediaType> {
 	 */
 	public MediaType[] findByGroupAndCompany_PrevAndNext(
 			long mediaTypeId, long groupId, long companyId,
-			OrderByComparator<MediaType> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<MediaType>
+				orderByComparator)
 		throws NoSuchMediaTypeException;
 
 	/**
@@ -519,7 +544,7 @@ public interface MediaTypePersistence extends BasePersistence<MediaType> {
 	 * Returns a range of all the media types.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MediaTypeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MediaTypeModelImpl</code>.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of media types
@@ -532,35 +557,37 @@ public interface MediaTypePersistence extends BasePersistence<MediaType> {
 	 * Returns an ordered range of all the media types.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MediaTypeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MediaTypeModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
+	 * @param start the lower bound of the range of media types
+	 * @param end the upper bound of the range of media types (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of media types
+	 */
+	public java.util.List<MediaType> findAll(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<MediaType>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the media types.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>MediaTypeModelImpl</code>.
+	 * </p>
+	 *
 	 * @param start the lower bound of the range of media types
 	 * @param end the upper bound of the range of media types (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of media types
 	 */
-	@Deprecated
 	public java.util.List<MediaType> findAll(
-		int start, int end, OrderByComparator<MediaType> orderByComparator,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<MediaType>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the media types.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>MediaTypeModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of media types
-	 * @param end the upper bound of the range of media types (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of media types
-	 */
-	public java.util.List<MediaType> findAll(
-		int start, int end, OrderByComparator<MediaType> orderByComparator);
 
 	/**
 	 * Removes all the media types from the database.

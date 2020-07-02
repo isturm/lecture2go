@@ -25,30 +25,27 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The cache model class for representing Institution in entity cache.
  *
  * @author Iavor Sturm
  * @generated
  */
-@ProviderType
 public class InstitutionCacheModel
 	implements CacheModel<Institution>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof InstitutionCacheModel)) {
+		if (!(object instanceof InstitutionCacheModel)) {
 			return false;
 		}
 
 		InstitutionCacheModel institutionCacheModel =
-			(InstitutionCacheModel)obj;
+			(InstitutionCacheModel)object;
 
 		if (institutionId == institutionCacheModel.institutionId) {
 			return true;

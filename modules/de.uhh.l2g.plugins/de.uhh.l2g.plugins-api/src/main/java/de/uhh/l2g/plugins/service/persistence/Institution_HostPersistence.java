@@ -15,7 +15,6 @@
 package de.uhh.l2g.plugins.service.persistence;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.util.OrderByComparator;
 
 import de.uhh.l2g.plugins.exception.NoSuchInstitution_HostException;
 import de.uhh.l2g.plugins.model.Institution_Host;
@@ -56,7 +55,7 @@ public interface Institution_HostPersistence
 	 * Returns a range of all the institution_ hosts where institutionId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Institution_HostModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Institution_HostModelImpl</code>.
 	 * </p>
 	 *
 	 * @param institutionId the institution ID
@@ -71,10 +70,27 @@ public interface Institution_HostPersistence
 	 * Returns an ordered range of all the institution_ hosts where institutionId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Institution_HostModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Institution_HostModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByinstitutionId(long, int, int, OrderByComparator)}
+	 * @param institutionId the institution ID
+	 * @param start the lower bound of the range of institution_ hosts
+	 * @param end the upper bound of the range of institution_ hosts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching institution_ hosts
+	 */
+	public java.util.List<Institution_Host> findByinstitutionId(
+		long institutionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Institution_Host>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the institution_ hosts where institutionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Institution_HostModelImpl</code>.
+	 * </p>
+	 *
 	 * @param institutionId the institution ID
 	 * @param start the lower bound of the range of institution_ hosts
 	 * @param end the upper bound of the range of institution_ hosts (not inclusive)
@@ -82,28 +98,11 @@ public interface Institution_HostPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching institution_ hosts
 	 */
-	@Deprecated
 	public java.util.List<Institution_Host> findByinstitutionId(
 		long institutionId, int start, int end,
-		OrderByComparator<Institution_Host> orderByComparator,
+		com.liferay.portal.kernel.util.OrderByComparator<Institution_Host>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the institution_ hosts where institutionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Institution_HostModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param institutionId the institution ID
-	 * @param start the lower bound of the range of institution_ hosts
-	 * @param end the upper bound of the range of institution_ hosts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching institution_ hosts
-	 */
-	public java.util.List<Institution_Host> findByinstitutionId(
-		long institutionId, int start, int end,
-		OrderByComparator<Institution_Host> orderByComparator);
 
 	/**
 	 * Returns the first institution_ host in the ordered set where institutionId = &#63;.
@@ -115,7 +114,8 @@ public interface Institution_HostPersistence
 	 */
 	public Institution_Host findByinstitutionId_First(
 			long institutionId,
-			OrderByComparator<Institution_Host> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Institution_Host>
+				orderByComparator)
 		throws NoSuchInstitution_HostException;
 
 	/**
@@ -127,7 +127,8 @@ public interface Institution_HostPersistence
 	 */
 	public Institution_Host fetchByinstitutionId_First(
 		long institutionId,
-		OrderByComparator<Institution_Host> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Institution_Host>
+			orderByComparator);
 
 	/**
 	 * Returns the last institution_ host in the ordered set where institutionId = &#63;.
@@ -139,7 +140,8 @@ public interface Institution_HostPersistence
 	 */
 	public Institution_Host findByinstitutionId_Last(
 			long institutionId,
-			OrderByComparator<Institution_Host> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Institution_Host>
+				orderByComparator)
 		throws NoSuchInstitution_HostException;
 
 	/**
@@ -151,7 +153,8 @@ public interface Institution_HostPersistence
 	 */
 	public Institution_Host fetchByinstitutionId_Last(
 		long institutionId,
-		OrderByComparator<Institution_Host> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Institution_Host>
+			orderByComparator);
 
 	/**
 	 * Returns the institution_ hosts before and after the current institution_ host in the ordered set where institutionId = &#63;.
@@ -164,7 +167,8 @@ public interface Institution_HostPersistence
 	 */
 	public Institution_Host[] findByinstitutionId_PrevAndNext(
 			long institutionHostId, long institutionId,
-			OrderByComparator<Institution_Host> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Institution_Host>
+				orderByComparator)
 		throws NoSuchInstitution_HostException;
 
 	/**
@@ -194,7 +198,7 @@ public interface Institution_HostPersistence
 	 * Returns a range of all the institution_ hosts where hostId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Institution_HostModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Institution_HostModelImpl</code>.
 	 * </p>
 	 *
 	 * @param hostId the host ID
@@ -209,10 +213,27 @@ public interface Institution_HostPersistence
 	 * Returns an ordered range of all the institution_ hosts where hostId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Institution_HostModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Institution_HostModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByhostId(long, int, int, OrderByComparator)}
+	 * @param hostId the host ID
+	 * @param start the lower bound of the range of institution_ hosts
+	 * @param end the upper bound of the range of institution_ hosts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching institution_ hosts
+	 */
+	public java.util.List<Institution_Host> findByhostId(
+		long hostId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Institution_Host>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the institution_ hosts where hostId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Institution_HostModelImpl</code>.
+	 * </p>
+	 *
 	 * @param hostId the host ID
 	 * @param start the lower bound of the range of institution_ hosts
 	 * @param end the upper bound of the range of institution_ hosts (not inclusive)
@@ -220,28 +241,11 @@ public interface Institution_HostPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching institution_ hosts
 	 */
-	@Deprecated
 	public java.util.List<Institution_Host> findByhostId(
 		long hostId, int start, int end,
-		OrderByComparator<Institution_Host> orderByComparator,
+		com.liferay.portal.kernel.util.OrderByComparator<Institution_Host>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the institution_ hosts where hostId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Institution_HostModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param hostId the host ID
-	 * @param start the lower bound of the range of institution_ hosts
-	 * @param end the upper bound of the range of institution_ hosts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching institution_ hosts
-	 */
-	public java.util.List<Institution_Host> findByhostId(
-		long hostId, int start, int end,
-		OrderByComparator<Institution_Host> orderByComparator);
 
 	/**
 	 * Returns the first institution_ host in the ordered set where hostId = &#63;.
@@ -252,7 +256,9 @@ public interface Institution_HostPersistence
 	 * @throws NoSuchInstitution_HostException if a matching institution_ host could not be found
 	 */
 	public Institution_Host findByhostId_First(
-			long hostId, OrderByComparator<Institution_Host> orderByComparator)
+			long hostId,
+			com.liferay.portal.kernel.util.OrderByComparator<Institution_Host>
+				orderByComparator)
 		throws NoSuchInstitution_HostException;
 
 	/**
@@ -263,7 +269,9 @@ public interface Institution_HostPersistence
 	 * @return the first matching institution_ host, or <code>null</code> if a matching institution_ host could not be found
 	 */
 	public Institution_Host fetchByhostId_First(
-		long hostId, OrderByComparator<Institution_Host> orderByComparator);
+		long hostId,
+		com.liferay.portal.kernel.util.OrderByComparator<Institution_Host>
+			orderByComparator);
 
 	/**
 	 * Returns the last institution_ host in the ordered set where hostId = &#63;.
@@ -274,7 +282,9 @@ public interface Institution_HostPersistence
 	 * @throws NoSuchInstitution_HostException if a matching institution_ host could not be found
 	 */
 	public Institution_Host findByhostId_Last(
-			long hostId, OrderByComparator<Institution_Host> orderByComparator)
+			long hostId,
+			com.liferay.portal.kernel.util.OrderByComparator<Institution_Host>
+				orderByComparator)
 		throws NoSuchInstitution_HostException;
 
 	/**
@@ -285,7 +295,9 @@ public interface Institution_HostPersistence
 	 * @return the last matching institution_ host, or <code>null</code> if a matching institution_ host could not be found
 	 */
 	public Institution_Host fetchByhostId_Last(
-		long hostId, OrderByComparator<Institution_Host> orderByComparator);
+		long hostId,
+		com.liferay.portal.kernel.util.OrderByComparator<Institution_Host>
+			orderByComparator);
 
 	/**
 	 * Returns the institution_ hosts before and after the current institution_ host in the ordered set where hostId = &#63;.
@@ -298,7 +310,8 @@ public interface Institution_HostPersistence
 	 */
 	public Institution_Host[] findByhostId_PrevAndNext(
 			long institutionHostId, long hostId,
-			OrderByComparator<Institution_Host> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Institution_Host>
+				orderByComparator)
 		throws NoSuchInstitution_HostException;
 
 	/**
@@ -330,7 +343,7 @@ public interface Institution_HostPersistence
 	 * Returns a range of all the institution_ hosts where groupId = &#63; and hostId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Institution_HostModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Institution_HostModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -346,10 +359,28 @@ public interface Institution_HostPersistence
 	 * Returns an ordered range of all the institution_ hosts where groupId = &#63; and hostId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Institution_HostModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Institution_HostModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByG_H(long,long, int, int, OrderByComparator)}
+	 * @param groupId the group ID
+	 * @param hostId the host ID
+	 * @param start the lower bound of the range of institution_ hosts
+	 * @param end the upper bound of the range of institution_ hosts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching institution_ hosts
+	 */
+	public java.util.List<Institution_Host> findByG_H(
+		long groupId, long hostId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Institution_Host>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the institution_ hosts where groupId = &#63; and hostId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Institution_HostModelImpl</code>.
+	 * </p>
+	 *
 	 * @param groupId the group ID
 	 * @param hostId the host ID
 	 * @param start the lower bound of the range of institution_ hosts
@@ -358,29 +389,11 @@ public interface Institution_HostPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching institution_ hosts
 	 */
-	@Deprecated
 	public java.util.List<Institution_Host> findByG_H(
 		long groupId, long hostId, int start, int end,
-		OrderByComparator<Institution_Host> orderByComparator,
+		com.liferay.portal.kernel.util.OrderByComparator<Institution_Host>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the institution_ hosts where groupId = &#63; and hostId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Institution_HostModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param hostId the host ID
-	 * @param start the lower bound of the range of institution_ hosts
-	 * @param end the upper bound of the range of institution_ hosts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching institution_ hosts
-	 */
-	public java.util.List<Institution_Host> findByG_H(
-		long groupId, long hostId, int start, int end,
-		OrderByComparator<Institution_Host> orderByComparator);
 
 	/**
 	 * Returns the first institution_ host in the ordered set where groupId = &#63; and hostId = &#63;.
@@ -393,7 +406,8 @@ public interface Institution_HostPersistence
 	 */
 	public Institution_Host findByG_H_First(
 			long groupId, long hostId,
-			OrderByComparator<Institution_Host> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Institution_Host>
+				orderByComparator)
 		throws NoSuchInstitution_HostException;
 
 	/**
@@ -406,7 +420,8 @@ public interface Institution_HostPersistence
 	 */
 	public Institution_Host fetchByG_H_First(
 		long groupId, long hostId,
-		OrderByComparator<Institution_Host> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Institution_Host>
+			orderByComparator);
 
 	/**
 	 * Returns the last institution_ host in the ordered set where groupId = &#63; and hostId = &#63;.
@@ -419,7 +434,8 @@ public interface Institution_HostPersistence
 	 */
 	public Institution_Host findByG_H_Last(
 			long groupId, long hostId,
-			OrderByComparator<Institution_Host> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Institution_Host>
+				orderByComparator)
 		throws NoSuchInstitution_HostException;
 
 	/**
@@ -432,7 +448,8 @@ public interface Institution_HostPersistence
 	 */
 	public Institution_Host fetchByG_H_Last(
 		long groupId, long hostId,
-		OrderByComparator<Institution_Host> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Institution_Host>
+			orderByComparator);
 
 	/**
 	 * Returns the institution_ hosts before and after the current institution_ host in the ordered set where groupId = &#63; and hostId = &#63;.
@@ -446,7 +463,8 @@ public interface Institution_HostPersistence
 	 */
 	public Institution_Host[] findByG_H_PrevAndNext(
 			long institutionHostId, long groupId, long hostId,
-			OrderByComparator<Institution_Host> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Institution_Host>
+				orderByComparator)
 		throws NoSuchInstitution_HostException;
 
 	/**
@@ -478,17 +496,13 @@ public interface Institution_HostPersistence
 		throws NoSuchInstitution_HostException;
 
 	/**
-	 * Returns the institution_ host where groupId = &#63; and institutionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the institution_ host where groupId = &#63; and institutionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByG_I(long,long)}
 	 * @param groupId the group ID
 	 * @param institutionId the institution ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching institution_ host, or <code>null</code> if a matching institution_ host could not be found
 	 */
-	@Deprecated
-	public Institution_Host fetchByG_I(
-		long groupId, long institutionId, boolean useFinderCache);
+	public Institution_Host fetchByG_I(long groupId, long institutionId);
 
 	/**
 	 * Returns the institution_ host where groupId = &#63; and institutionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -498,7 +512,8 @@ public interface Institution_HostPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching institution_ host, or <code>null</code> if a matching institution_ host could not be found
 	 */
-	public Institution_Host fetchByG_I(long groupId, long institutionId);
+	public Institution_Host fetchByG_I(
+		long groupId, long institutionId, boolean useFinderCache);
 
 	/**
 	 * Removes the institution_ host where groupId = &#63; and institutionId = &#63; from the database.
@@ -531,7 +546,7 @@ public interface Institution_HostPersistence
 	 * Returns a range of all the institution_ hosts where groupId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Institution_HostModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Institution_HostModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -546,10 +561,27 @@ public interface Institution_HostPersistence
 	 * Returns an ordered range of all the institution_ hosts where groupId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Institution_HostModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Institution_HostModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByGroupId(long, int, int, OrderByComparator)}
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of institution_ hosts
+	 * @param end the upper bound of the range of institution_ hosts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching institution_ hosts
+	 */
+	public java.util.List<Institution_Host> findByGroupId(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Institution_Host>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the institution_ hosts where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Institution_HostModelImpl</code>.
+	 * </p>
+	 *
 	 * @param groupId the group ID
 	 * @param start the lower bound of the range of institution_ hosts
 	 * @param end the upper bound of the range of institution_ hosts (not inclusive)
@@ -557,28 +589,11 @@ public interface Institution_HostPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching institution_ hosts
 	 */
-	@Deprecated
 	public java.util.List<Institution_Host> findByGroupId(
 		long groupId, int start, int end,
-		OrderByComparator<Institution_Host> orderByComparator,
+		com.liferay.portal.kernel.util.OrderByComparator<Institution_Host>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the institution_ hosts where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Institution_HostModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of institution_ hosts
-	 * @param end the upper bound of the range of institution_ hosts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching institution_ hosts
-	 */
-	public java.util.List<Institution_Host> findByGroupId(
-		long groupId, int start, int end,
-		OrderByComparator<Institution_Host> orderByComparator);
 
 	/**
 	 * Returns the first institution_ host in the ordered set where groupId = &#63;.
@@ -589,7 +604,9 @@ public interface Institution_HostPersistence
 	 * @throws NoSuchInstitution_HostException if a matching institution_ host could not be found
 	 */
 	public Institution_Host findByGroupId_First(
-			long groupId, OrderByComparator<Institution_Host> orderByComparator)
+			long groupId,
+			com.liferay.portal.kernel.util.OrderByComparator<Institution_Host>
+				orderByComparator)
 		throws NoSuchInstitution_HostException;
 
 	/**
@@ -600,7 +617,9 @@ public interface Institution_HostPersistence
 	 * @return the first matching institution_ host, or <code>null</code> if a matching institution_ host could not be found
 	 */
 	public Institution_Host fetchByGroupId_First(
-		long groupId, OrderByComparator<Institution_Host> orderByComparator);
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<Institution_Host>
+			orderByComparator);
 
 	/**
 	 * Returns the last institution_ host in the ordered set where groupId = &#63;.
@@ -611,7 +630,9 @@ public interface Institution_HostPersistence
 	 * @throws NoSuchInstitution_HostException if a matching institution_ host could not be found
 	 */
 	public Institution_Host findByGroupId_Last(
-			long groupId, OrderByComparator<Institution_Host> orderByComparator)
+			long groupId,
+			com.liferay.portal.kernel.util.OrderByComparator<Institution_Host>
+				orderByComparator)
 		throws NoSuchInstitution_HostException;
 
 	/**
@@ -622,7 +643,9 @@ public interface Institution_HostPersistence
 	 * @return the last matching institution_ host, or <code>null</code> if a matching institution_ host could not be found
 	 */
 	public Institution_Host fetchByGroupId_Last(
-		long groupId, OrderByComparator<Institution_Host> orderByComparator);
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<Institution_Host>
+			orderByComparator);
 
 	/**
 	 * Returns the institution_ hosts before and after the current institution_ host in the ordered set where groupId = &#63;.
@@ -635,7 +658,8 @@ public interface Institution_HostPersistence
 	 */
 	public Institution_Host[] findByGroupId_PrevAndNext(
 			long institutionHostId, long groupId,
-			OrderByComparator<Institution_Host> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Institution_Host>
+				orderByComparator)
 		throws NoSuchInstitution_HostException;
 
 	/**
@@ -668,7 +692,7 @@ public interface Institution_HostPersistence
 	 * Returns a range of all the institution_ hosts where companyId = &#63; and groupId = &#63; and hostId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Institution_HostModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Institution_HostModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
@@ -685,10 +709,29 @@ public interface Institution_HostPersistence
 	 * Returns an ordered range of all the institution_ hosts where companyId = &#63; and groupId = &#63; and hostId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Institution_HostModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Institution_HostModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_G_H(long,long,long, int, int, OrderByComparator)}
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @param hostId the host ID
+	 * @param start the lower bound of the range of institution_ hosts
+	 * @param end the upper bound of the range of institution_ hosts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching institution_ hosts
+	 */
+	public java.util.List<Institution_Host> findByC_G_H(
+		long companyId, long groupId, long hostId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Institution_Host>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the institution_ hosts where companyId = &#63; and groupId = &#63; and hostId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Institution_HostModelImpl</code>.
+	 * </p>
+	 *
 	 * @param companyId the company ID
 	 * @param groupId the group ID
 	 * @param hostId the host ID
@@ -698,30 +741,11 @@ public interface Institution_HostPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching institution_ hosts
 	 */
-	@Deprecated
 	public java.util.List<Institution_Host> findByC_G_H(
 		long companyId, long groupId, long hostId, int start, int end,
-		OrderByComparator<Institution_Host> orderByComparator,
+		com.liferay.portal.kernel.util.OrderByComparator<Institution_Host>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the institution_ hosts where companyId = &#63; and groupId = &#63; and hostId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Institution_HostModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param groupId the group ID
-	 * @param hostId the host ID
-	 * @param start the lower bound of the range of institution_ hosts
-	 * @param end the upper bound of the range of institution_ hosts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching institution_ hosts
-	 */
-	public java.util.List<Institution_Host> findByC_G_H(
-		long companyId, long groupId, long hostId, int start, int end,
-		OrderByComparator<Institution_Host> orderByComparator);
 
 	/**
 	 * Returns the first institution_ host in the ordered set where companyId = &#63; and groupId = &#63; and hostId = &#63;.
@@ -735,7 +759,8 @@ public interface Institution_HostPersistence
 	 */
 	public Institution_Host findByC_G_H_First(
 			long companyId, long groupId, long hostId,
-			OrderByComparator<Institution_Host> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Institution_Host>
+				orderByComparator)
 		throws NoSuchInstitution_HostException;
 
 	/**
@@ -749,7 +774,8 @@ public interface Institution_HostPersistence
 	 */
 	public Institution_Host fetchByC_G_H_First(
 		long companyId, long groupId, long hostId,
-		OrderByComparator<Institution_Host> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Institution_Host>
+			orderByComparator);
 
 	/**
 	 * Returns the last institution_ host in the ordered set where companyId = &#63; and groupId = &#63; and hostId = &#63;.
@@ -763,7 +789,8 @@ public interface Institution_HostPersistence
 	 */
 	public Institution_Host findByC_G_H_Last(
 			long companyId, long groupId, long hostId,
-			OrderByComparator<Institution_Host> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Institution_Host>
+				orderByComparator)
 		throws NoSuchInstitution_HostException;
 
 	/**
@@ -777,7 +804,8 @@ public interface Institution_HostPersistence
 	 */
 	public Institution_Host fetchByC_G_H_Last(
 		long companyId, long groupId, long hostId,
-		OrderByComparator<Institution_Host> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Institution_Host>
+			orderByComparator);
 
 	/**
 	 * Returns the institution_ hosts before and after the current institution_ host in the ordered set where companyId = &#63; and groupId = &#63; and hostId = &#63;.
@@ -792,7 +820,8 @@ public interface Institution_HostPersistence
 	 */
 	public Institution_Host[] findByC_G_H_PrevAndNext(
 			long institutionHostId, long companyId, long groupId, long hostId,
-			OrderByComparator<Institution_Host> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Institution_Host>
+				orderByComparator)
 		throws NoSuchInstitution_HostException;
 
 	/**
@@ -829,7 +858,7 @@ public interface Institution_HostPersistence
 	 * Returns a range of all the institution_ hosts where companyId = &#63; and groupId = &#63; and institutionId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Institution_HostModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Institution_HostModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
@@ -846,10 +875,29 @@ public interface Institution_HostPersistence
 	 * Returns an ordered range of all the institution_ hosts where companyId = &#63; and groupId = &#63; and institutionId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Institution_HostModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Institution_HostModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByC_G_I(long,long,long, int, int, OrderByComparator)}
+	 * @param companyId the company ID
+	 * @param groupId the group ID
+	 * @param institutionId the institution ID
+	 * @param start the lower bound of the range of institution_ hosts
+	 * @param end the upper bound of the range of institution_ hosts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching institution_ hosts
+	 */
+	public java.util.List<Institution_Host> findByC_G_I(
+		long companyId, long groupId, long institutionId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Institution_Host>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the institution_ hosts where companyId = &#63; and groupId = &#63; and institutionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Institution_HostModelImpl</code>.
+	 * </p>
+	 *
 	 * @param companyId the company ID
 	 * @param groupId the group ID
 	 * @param institutionId the institution ID
@@ -859,30 +907,11 @@ public interface Institution_HostPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching institution_ hosts
 	 */
-	@Deprecated
 	public java.util.List<Institution_Host> findByC_G_I(
 		long companyId, long groupId, long institutionId, int start, int end,
-		OrderByComparator<Institution_Host> orderByComparator,
+		com.liferay.portal.kernel.util.OrderByComparator<Institution_Host>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the institution_ hosts where companyId = &#63; and groupId = &#63; and institutionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Institution_HostModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param groupId the group ID
-	 * @param institutionId the institution ID
-	 * @param start the lower bound of the range of institution_ hosts
-	 * @param end the upper bound of the range of institution_ hosts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching institution_ hosts
-	 */
-	public java.util.List<Institution_Host> findByC_G_I(
-		long companyId, long groupId, long institutionId, int start, int end,
-		OrderByComparator<Institution_Host> orderByComparator);
 
 	/**
 	 * Returns the first institution_ host in the ordered set where companyId = &#63; and groupId = &#63; and institutionId = &#63;.
@@ -896,7 +925,8 @@ public interface Institution_HostPersistence
 	 */
 	public Institution_Host findByC_G_I_First(
 			long companyId, long groupId, long institutionId,
-			OrderByComparator<Institution_Host> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Institution_Host>
+				orderByComparator)
 		throws NoSuchInstitution_HostException;
 
 	/**
@@ -910,7 +940,8 @@ public interface Institution_HostPersistence
 	 */
 	public Institution_Host fetchByC_G_I_First(
 		long companyId, long groupId, long institutionId,
-		OrderByComparator<Institution_Host> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Institution_Host>
+			orderByComparator);
 
 	/**
 	 * Returns the last institution_ host in the ordered set where companyId = &#63; and groupId = &#63; and institutionId = &#63;.
@@ -924,7 +955,8 @@ public interface Institution_HostPersistence
 	 */
 	public Institution_Host findByC_G_I_Last(
 			long companyId, long groupId, long institutionId,
-			OrderByComparator<Institution_Host> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Institution_Host>
+				orderByComparator)
 		throws NoSuchInstitution_HostException;
 
 	/**
@@ -938,7 +970,8 @@ public interface Institution_HostPersistence
 	 */
 	public Institution_Host fetchByC_G_I_Last(
 		long companyId, long groupId, long institutionId,
-		OrderByComparator<Institution_Host> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Institution_Host>
+			orderByComparator);
 
 	/**
 	 * Returns the institution_ hosts before and after the current institution_ host in the ordered set where companyId = &#63; and groupId = &#63; and institutionId = &#63;.
@@ -954,7 +987,8 @@ public interface Institution_HostPersistence
 	public Institution_Host[] findByC_G_I_PrevAndNext(
 			long institutionHostId, long companyId, long groupId,
 			long institutionId,
-			OrderByComparator<Institution_Host> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Institution_Host>
+				orderByComparator)
 		throws NoSuchInstitution_HostException;
 
 	/**
@@ -990,7 +1024,7 @@ public interface Institution_HostPersistence
 	 * Returns a range of all the institution_ hosts where companyId = &#63; and hostId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Institution_HostModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Institution_HostModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
@@ -1006,10 +1040,28 @@ public interface Institution_HostPersistence
 	 * Returns an ordered range of all the institution_ hosts where companyId = &#63; and hostId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Institution_HostModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Institution_HostModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findBycompanyAndHost(long,long, int, int, OrderByComparator)}
+	 * @param companyId the company ID
+	 * @param hostId the host ID
+	 * @param start the lower bound of the range of institution_ hosts
+	 * @param end the upper bound of the range of institution_ hosts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching institution_ hosts
+	 */
+	public java.util.List<Institution_Host> findBycompanyAndHost(
+		long companyId, long hostId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Institution_Host>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the institution_ hosts where companyId = &#63; and hostId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Institution_HostModelImpl</code>.
+	 * </p>
+	 *
 	 * @param companyId the company ID
 	 * @param hostId the host ID
 	 * @param start the lower bound of the range of institution_ hosts
@@ -1018,29 +1070,11 @@ public interface Institution_HostPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching institution_ hosts
 	 */
-	@Deprecated
 	public java.util.List<Institution_Host> findBycompanyAndHost(
 		long companyId, long hostId, int start, int end,
-		OrderByComparator<Institution_Host> orderByComparator,
+		com.liferay.portal.kernel.util.OrderByComparator<Institution_Host>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the institution_ hosts where companyId = &#63; and hostId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Institution_HostModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param hostId the host ID
-	 * @param start the lower bound of the range of institution_ hosts
-	 * @param end the upper bound of the range of institution_ hosts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching institution_ hosts
-	 */
-	public java.util.List<Institution_Host> findBycompanyAndHost(
-		long companyId, long hostId, int start, int end,
-		OrderByComparator<Institution_Host> orderByComparator);
 
 	/**
 	 * Returns the first institution_ host in the ordered set where companyId = &#63; and hostId = &#63;.
@@ -1053,7 +1087,8 @@ public interface Institution_HostPersistence
 	 */
 	public Institution_Host findBycompanyAndHost_First(
 			long companyId, long hostId,
-			OrderByComparator<Institution_Host> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Institution_Host>
+				orderByComparator)
 		throws NoSuchInstitution_HostException;
 
 	/**
@@ -1066,7 +1101,8 @@ public interface Institution_HostPersistence
 	 */
 	public Institution_Host fetchBycompanyAndHost_First(
 		long companyId, long hostId,
-		OrderByComparator<Institution_Host> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Institution_Host>
+			orderByComparator);
 
 	/**
 	 * Returns the last institution_ host in the ordered set where companyId = &#63; and hostId = &#63;.
@@ -1079,7 +1115,8 @@ public interface Institution_HostPersistence
 	 */
 	public Institution_Host findBycompanyAndHost_Last(
 			long companyId, long hostId,
-			OrderByComparator<Institution_Host> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Institution_Host>
+				orderByComparator)
 		throws NoSuchInstitution_HostException;
 
 	/**
@@ -1092,7 +1129,8 @@ public interface Institution_HostPersistence
 	 */
 	public Institution_Host fetchBycompanyAndHost_Last(
 		long companyId, long hostId,
-		OrderByComparator<Institution_Host> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Institution_Host>
+			orderByComparator);
 
 	/**
 	 * Returns the institution_ hosts before and after the current institution_ host in the ordered set where companyId = &#63; and hostId = &#63;.
@@ -1106,7 +1144,8 @@ public interface Institution_HostPersistence
 	 */
 	public Institution_Host[] findBycompanyAndHost_PrevAndNext(
 			long institutionHostId, long companyId, long hostId,
-			OrderByComparator<Institution_Host> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Institution_Host>
+				orderByComparator)
 		throws NoSuchInstitution_HostException;
 
 	/**
@@ -1189,7 +1228,7 @@ public interface Institution_HostPersistence
 	 * Returns a range of all the institution_ hosts.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Institution_HostModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Institution_HostModelImpl</code>.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of institution_ hosts
@@ -1202,37 +1241,37 @@ public interface Institution_HostPersistence
 	 * Returns an ordered range of all the institution_ hosts.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Institution_HostModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Institution_HostModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
+	 * @param start the lower bound of the range of institution_ hosts
+	 * @param end the upper bound of the range of institution_ hosts (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of institution_ hosts
+	 */
+	public java.util.List<Institution_Host> findAll(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Institution_Host>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the institution_ hosts.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Institution_HostModelImpl</code>.
+	 * </p>
+	 *
 	 * @param start the lower bound of the range of institution_ hosts
 	 * @param end the upper bound of the range of institution_ hosts (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of institution_ hosts
 	 */
-	@Deprecated
 	public java.util.List<Institution_Host> findAll(
 		int start, int end,
-		OrderByComparator<Institution_Host> orderByComparator,
+		com.liferay.portal.kernel.util.OrderByComparator<Institution_Host>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the institution_ hosts.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Institution_HostModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of institution_ hosts
-	 * @param end the upper bound of the range of institution_ hosts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of institution_ hosts
-	 */
-	public java.util.List<Institution_Host> findAll(
-		int start, int end,
-		OrderByComparator<Institution_Host> orderByComparator);
 
 	/**
 	 * Removes all the institution_ hosts from the database.

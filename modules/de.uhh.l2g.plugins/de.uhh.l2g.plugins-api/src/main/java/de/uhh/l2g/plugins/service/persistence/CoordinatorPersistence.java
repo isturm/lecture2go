@@ -15,7 +15,6 @@
 package de.uhh.l2g.plugins.service.persistence;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.util.OrderByComparator;
 
 import de.uhh.l2g.plugins.exception.NoSuchCoordinatorException;
 import de.uhh.l2g.plugins.model.Coordinator;
@@ -53,16 +52,12 @@ public interface CoordinatorPersistence extends BasePersistence<Coordinator> {
 		throws NoSuchCoordinatorException;
 
 	/**
-	 * Returns the coordinator where institutionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the coordinator where institutionId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #fetchByInstitution(long)}
 	 * @param institutionId the institution ID
-	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching coordinator, or <code>null</code> if a matching coordinator could not be found
 	 */
-	@Deprecated
-	public Coordinator fetchByInstitution(
-		long institutionId, boolean useFinderCache);
+	public Coordinator fetchByInstitution(long institutionId);
 
 	/**
 	 * Returns the coordinator where institutionId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
@@ -71,7 +66,8 @@ public interface CoordinatorPersistence extends BasePersistence<Coordinator> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching coordinator, or <code>null</code> if a matching coordinator could not be found
 	 */
-	public Coordinator fetchByInstitution(long institutionId);
+	public Coordinator fetchByInstitution(
+		long institutionId, boolean useFinderCache);
 
 	/**
 	 * Removes the coordinator where institutionId = &#63; from the database.
@@ -102,7 +98,7 @@ public interface CoordinatorPersistence extends BasePersistence<Coordinator> {
 	 * Returns a range of all the coordinators where officeId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CoordinatorModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CoordinatorModelImpl</code>.
 	 * </p>
 	 *
 	 * @param officeId the office ID
@@ -117,10 +113,27 @@ public interface CoordinatorPersistence extends BasePersistence<Coordinator> {
 	 * Returns an ordered range of all the coordinators where officeId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CoordinatorModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CoordinatorModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByOffice(long, int, int, OrderByComparator)}
+	 * @param officeId the office ID
+	 * @param start the lower bound of the range of coordinators
+	 * @param end the upper bound of the range of coordinators (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching coordinators
+	 */
+	public java.util.List<Coordinator> findByOffice(
+		long officeId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Coordinator>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the coordinators where officeId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CoordinatorModelImpl</code>.
+	 * </p>
+	 *
 	 * @param officeId the office ID
 	 * @param start the lower bound of the range of coordinators
 	 * @param end the upper bound of the range of coordinators (not inclusive)
@@ -128,28 +141,11 @@ public interface CoordinatorPersistence extends BasePersistence<Coordinator> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching coordinators
 	 */
-	@Deprecated
 	public java.util.List<Coordinator> findByOffice(
 		long officeId, int start, int end,
-		OrderByComparator<Coordinator> orderByComparator,
+		com.liferay.portal.kernel.util.OrderByComparator<Coordinator>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the coordinators where officeId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CoordinatorModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param officeId the office ID
-	 * @param start the lower bound of the range of coordinators
-	 * @param end the upper bound of the range of coordinators (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching coordinators
-	 */
-	public java.util.List<Coordinator> findByOffice(
-		long officeId, int start, int end,
-		OrderByComparator<Coordinator> orderByComparator);
 
 	/**
 	 * Returns the first coordinator in the ordered set where officeId = &#63;.
@@ -160,7 +156,9 @@ public interface CoordinatorPersistence extends BasePersistence<Coordinator> {
 	 * @throws NoSuchCoordinatorException if a matching coordinator could not be found
 	 */
 	public Coordinator findByOffice_First(
-			long officeId, OrderByComparator<Coordinator> orderByComparator)
+			long officeId,
+			com.liferay.portal.kernel.util.OrderByComparator<Coordinator>
+				orderByComparator)
 		throws NoSuchCoordinatorException;
 
 	/**
@@ -171,7 +169,9 @@ public interface CoordinatorPersistence extends BasePersistence<Coordinator> {
 	 * @return the first matching coordinator, or <code>null</code> if a matching coordinator could not be found
 	 */
 	public Coordinator fetchByOffice_First(
-		long officeId, OrderByComparator<Coordinator> orderByComparator);
+		long officeId,
+		com.liferay.portal.kernel.util.OrderByComparator<Coordinator>
+			orderByComparator);
 
 	/**
 	 * Returns the last coordinator in the ordered set where officeId = &#63;.
@@ -182,7 +182,9 @@ public interface CoordinatorPersistence extends BasePersistence<Coordinator> {
 	 * @throws NoSuchCoordinatorException if a matching coordinator could not be found
 	 */
 	public Coordinator findByOffice_Last(
-			long officeId, OrderByComparator<Coordinator> orderByComparator)
+			long officeId,
+			com.liferay.portal.kernel.util.OrderByComparator<Coordinator>
+				orderByComparator)
 		throws NoSuchCoordinatorException;
 
 	/**
@@ -193,7 +195,9 @@ public interface CoordinatorPersistence extends BasePersistence<Coordinator> {
 	 * @return the last matching coordinator, or <code>null</code> if a matching coordinator could not be found
 	 */
 	public Coordinator fetchByOffice_Last(
-		long officeId, OrderByComparator<Coordinator> orderByComparator);
+		long officeId,
+		com.liferay.portal.kernel.util.OrderByComparator<Coordinator>
+			orderByComparator);
 
 	/**
 	 * Returns the coordinators before and after the current coordinator in the ordered set where officeId = &#63;.
@@ -206,7 +210,8 @@ public interface CoordinatorPersistence extends BasePersistence<Coordinator> {
 	 */
 	public Coordinator[] findByOffice_PrevAndNext(
 			long coordinatorId, long officeId,
-			OrderByComparator<Coordinator> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Coordinator>
+				orderByComparator)
 		throws NoSuchCoordinatorException;
 
 	/**
@@ -236,7 +241,7 @@ public interface CoordinatorPersistence extends BasePersistence<Coordinator> {
 	 * Returns a range of all the coordinators where groupId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CoordinatorModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CoordinatorModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -251,10 +256,27 @@ public interface CoordinatorPersistence extends BasePersistence<Coordinator> {
 	 * Returns an ordered range of all the coordinators where groupId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CoordinatorModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CoordinatorModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByGroup(long, int, int, OrderByComparator)}
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of coordinators
+	 * @param end the upper bound of the range of coordinators (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching coordinators
+	 */
+	public java.util.List<Coordinator> findByGroup(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Coordinator>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the coordinators where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CoordinatorModelImpl</code>.
+	 * </p>
+	 *
 	 * @param groupId the group ID
 	 * @param start the lower bound of the range of coordinators
 	 * @param end the upper bound of the range of coordinators (not inclusive)
@@ -262,28 +284,11 @@ public interface CoordinatorPersistence extends BasePersistence<Coordinator> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching coordinators
 	 */
-	@Deprecated
 	public java.util.List<Coordinator> findByGroup(
 		long groupId, int start, int end,
-		OrderByComparator<Coordinator> orderByComparator,
+		com.liferay.portal.kernel.util.OrderByComparator<Coordinator>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the coordinators where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CoordinatorModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of coordinators
-	 * @param end the upper bound of the range of coordinators (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching coordinators
-	 */
-	public java.util.List<Coordinator> findByGroup(
-		long groupId, int start, int end,
-		OrderByComparator<Coordinator> orderByComparator);
 
 	/**
 	 * Returns the first coordinator in the ordered set where groupId = &#63;.
@@ -294,7 +299,9 @@ public interface CoordinatorPersistence extends BasePersistence<Coordinator> {
 	 * @throws NoSuchCoordinatorException if a matching coordinator could not be found
 	 */
 	public Coordinator findByGroup_First(
-			long groupId, OrderByComparator<Coordinator> orderByComparator)
+			long groupId,
+			com.liferay.portal.kernel.util.OrderByComparator<Coordinator>
+				orderByComparator)
 		throws NoSuchCoordinatorException;
 
 	/**
@@ -305,7 +312,9 @@ public interface CoordinatorPersistence extends BasePersistence<Coordinator> {
 	 * @return the first matching coordinator, or <code>null</code> if a matching coordinator could not be found
 	 */
 	public Coordinator fetchByGroup_First(
-		long groupId, OrderByComparator<Coordinator> orderByComparator);
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<Coordinator>
+			orderByComparator);
 
 	/**
 	 * Returns the last coordinator in the ordered set where groupId = &#63;.
@@ -316,7 +325,9 @@ public interface CoordinatorPersistence extends BasePersistence<Coordinator> {
 	 * @throws NoSuchCoordinatorException if a matching coordinator could not be found
 	 */
 	public Coordinator findByGroup_Last(
-			long groupId, OrderByComparator<Coordinator> orderByComparator)
+			long groupId,
+			com.liferay.portal.kernel.util.OrderByComparator<Coordinator>
+				orderByComparator)
 		throws NoSuchCoordinatorException;
 
 	/**
@@ -327,7 +338,9 @@ public interface CoordinatorPersistence extends BasePersistence<Coordinator> {
 	 * @return the last matching coordinator, or <code>null</code> if a matching coordinator could not be found
 	 */
 	public Coordinator fetchByGroup_Last(
-		long groupId, OrderByComparator<Coordinator> orderByComparator);
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<Coordinator>
+			orderByComparator);
 
 	/**
 	 * Returns the coordinators before and after the current coordinator in the ordered set where groupId = &#63;.
@@ -340,7 +353,8 @@ public interface CoordinatorPersistence extends BasePersistence<Coordinator> {
 	 */
 	public Coordinator[] findByGroup_PrevAndNext(
 			long coordinatorId, long groupId,
-			OrderByComparator<Coordinator> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Coordinator>
+				orderByComparator)
 		throws NoSuchCoordinatorException;
 
 	/**
@@ -370,7 +384,7 @@ public interface CoordinatorPersistence extends BasePersistence<Coordinator> {
 	 * Returns a range of all the coordinators where companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CoordinatorModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CoordinatorModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
@@ -385,10 +399,27 @@ public interface CoordinatorPersistence extends BasePersistence<Coordinator> {
 	 * Returns an ordered range of all the coordinators where companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CoordinatorModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CoordinatorModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCompany(long, int, int, OrderByComparator)}
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of coordinators
+	 * @param end the upper bound of the range of coordinators (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching coordinators
+	 */
+	public java.util.List<Coordinator> findByCompany(
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Coordinator>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the coordinators where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CoordinatorModelImpl</code>.
+	 * </p>
+	 *
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of coordinators
 	 * @param end the upper bound of the range of coordinators (not inclusive)
@@ -396,28 +427,11 @@ public interface CoordinatorPersistence extends BasePersistence<Coordinator> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching coordinators
 	 */
-	@Deprecated
 	public java.util.List<Coordinator> findByCompany(
 		long companyId, int start, int end,
-		OrderByComparator<Coordinator> orderByComparator,
+		com.liferay.portal.kernel.util.OrderByComparator<Coordinator>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the coordinators where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CoordinatorModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of coordinators
-	 * @param end the upper bound of the range of coordinators (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching coordinators
-	 */
-	public java.util.List<Coordinator> findByCompany(
-		long companyId, int start, int end,
-		OrderByComparator<Coordinator> orderByComparator);
 
 	/**
 	 * Returns the first coordinator in the ordered set where companyId = &#63;.
@@ -428,7 +442,9 @@ public interface CoordinatorPersistence extends BasePersistence<Coordinator> {
 	 * @throws NoSuchCoordinatorException if a matching coordinator could not be found
 	 */
 	public Coordinator findByCompany_First(
-			long companyId, OrderByComparator<Coordinator> orderByComparator)
+			long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator<Coordinator>
+				orderByComparator)
 		throws NoSuchCoordinatorException;
 
 	/**
@@ -439,7 +455,9 @@ public interface CoordinatorPersistence extends BasePersistence<Coordinator> {
 	 * @return the first matching coordinator, or <code>null</code> if a matching coordinator could not be found
 	 */
 	public Coordinator fetchByCompany_First(
-		long companyId, OrderByComparator<Coordinator> orderByComparator);
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<Coordinator>
+			orderByComparator);
 
 	/**
 	 * Returns the last coordinator in the ordered set where companyId = &#63;.
@@ -450,7 +468,9 @@ public interface CoordinatorPersistence extends BasePersistence<Coordinator> {
 	 * @throws NoSuchCoordinatorException if a matching coordinator could not be found
 	 */
 	public Coordinator findByCompany_Last(
-			long companyId, OrderByComparator<Coordinator> orderByComparator)
+			long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator<Coordinator>
+				orderByComparator)
 		throws NoSuchCoordinatorException;
 
 	/**
@@ -461,7 +481,9 @@ public interface CoordinatorPersistence extends BasePersistence<Coordinator> {
 	 * @return the last matching coordinator, or <code>null</code> if a matching coordinator could not be found
 	 */
 	public Coordinator fetchByCompany_Last(
-		long companyId, OrderByComparator<Coordinator> orderByComparator);
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<Coordinator>
+			orderByComparator);
 
 	/**
 	 * Returns the coordinators before and after the current coordinator in the ordered set where companyId = &#63;.
@@ -474,7 +496,8 @@ public interface CoordinatorPersistence extends BasePersistence<Coordinator> {
 	 */
 	public Coordinator[] findByCompany_PrevAndNext(
 			long coordinatorId, long companyId,
-			OrderByComparator<Coordinator> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Coordinator>
+				orderByComparator)
 		throws NoSuchCoordinatorException;
 
 	/**
@@ -506,7 +529,7 @@ public interface CoordinatorPersistence extends BasePersistence<Coordinator> {
 	 * Returns a range of all the coordinators where groupId = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CoordinatorModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CoordinatorModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -522,10 +545,28 @@ public interface CoordinatorPersistence extends BasePersistence<Coordinator> {
 	 * Returns an ordered range of all the coordinators where groupId = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CoordinatorModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CoordinatorModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByGroupAndCompany(long,long, int, int, OrderByComparator)}
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of coordinators
+	 * @param end the upper bound of the range of coordinators (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching coordinators
+	 */
+	public java.util.List<Coordinator> findByGroupAndCompany(
+		long groupId, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Coordinator>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the coordinators where groupId = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CoordinatorModelImpl</code>.
+	 * </p>
+	 *
 	 * @param groupId the group ID
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of coordinators
@@ -534,29 +575,11 @@ public interface CoordinatorPersistence extends BasePersistence<Coordinator> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching coordinators
 	 */
-	@Deprecated
 	public java.util.List<Coordinator> findByGroupAndCompany(
 		long groupId, long companyId, int start, int end,
-		OrderByComparator<Coordinator> orderByComparator,
+		com.liferay.portal.kernel.util.OrderByComparator<Coordinator>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the coordinators where groupId = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CoordinatorModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of coordinators
-	 * @param end the upper bound of the range of coordinators (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching coordinators
-	 */
-	public java.util.List<Coordinator> findByGroupAndCompany(
-		long groupId, long companyId, int start, int end,
-		OrderByComparator<Coordinator> orderByComparator);
 
 	/**
 	 * Returns the first coordinator in the ordered set where groupId = &#63; and companyId = &#63;.
@@ -569,7 +592,8 @@ public interface CoordinatorPersistence extends BasePersistence<Coordinator> {
 	 */
 	public Coordinator findByGroupAndCompany_First(
 			long groupId, long companyId,
-			OrderByComparator<Coordinator> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Coordinator>
+				orderByComparator)
 		throws NoSuchCoordinatorException;
 
 	/**
@@ -582,7 +606,8 @@ public interface CoordinatorPersistence extends BasePersistence<Coordinator> {
 	 */
 	public Coordinator fetchByGroupAndCompany_First(
 		long groupId, long companyId,
-		OrderByComparator<Coordinator> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Coordinator>
+			orderByComparator);
 
 	/**
 	 * Returns the last coordinator in the ordered set where groupId = &#63; and companyId = &#63;.
@@ -595,7 +620,8 @@ public interface CoordinatorPersistence extends BasePersistence<Coordinator> {
 	 */
 	public Coordinator findByGroupAndCompany_Last(
 			long groupId, long companyId,
-			OrderByComparator<Coordinator> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Coordinator>
+				orderByComparator)
 		throws NoSuchCoordinatorException;
 
 	/**
@@ -608,7 +634,8 @@ public interface CoordinatorPersistence extends BasePersistence<Coordinator> {
 	 */
 	public Coordinator fetchByGroupAndCompany_Last(
 		long groupId, long companyId,
-		OrderByComparator<Coordinator> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Coordinator>
+			orderByComparator);
 
 	/**
 	 * Returns the coordinators before and after the current coordinator in the ordered set where groupId = &#63; and companyId = &#63;.
@@ -622,7 +649,8 @@ public interface CoordinatorPersistence extends BasePersistence<Coordinator> {
 	 */
 	public Coordinator[] findByGroupAndCompany_PrevAndNext(
 			long coordinatorId, long groupId, long companyId,
-			OrderByComparator<Coordinator> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Coordinator>
+				orderByComparator)
 		throws NoSuchCoordinatorException;
 
 	/**
@@ -705,7 +733,7 @@ public interface CoordinatorPersistence extends BasePersistence<Coordinator> {
 	 * Returns a range of all the coordinators.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CoordinatorModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CoordinatorModelImpl</code>.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of coordinators
@@ -718,35 +746,37 @@ public interface CoordinatorPersistence extends BasePersistence<Coordinator> {
 	 * Returns an ordered range of all the coordinators.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CoordinatorModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CoordinatorModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
+	 * @param start the lower bound of the range of coordinators
+	 * @param end the upper bound of the range of coordinators (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of coordinators
+	 */
+	public java.util.List<Coordinator> findAll(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Coordinator>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the coordinators.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>CoordinatorModelImpl</code>.
+	 * </p>
+	 *
 	 * @param start the lower bound of the range of coordinators
 	 * @param end the upper bound of the range of coordinators (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of coordinators
 	 */
-	@Deprecated
 	public java.util.List<Coordinator> findAll(
-		int start, int end, OrderByComparator<Coordinator> orderByComparator,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Coordinator>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the coordinators.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>CoordinatorModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of coordinators
-	 * @param end the upper bound of the range of coordinators (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of coordinators
-	 */
-	public java.util.List<Coordinator> findAll(
-		int start, int end, OrderByComparator<Coordinator> orderByComparator);
 
 	/**
 	 * Removes all the coordinators from the database.

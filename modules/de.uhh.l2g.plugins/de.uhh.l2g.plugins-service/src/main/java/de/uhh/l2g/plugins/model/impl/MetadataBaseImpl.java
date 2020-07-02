@@ -17,8 +17,6 @@ package de.uhh.l2g.plugins.model.impl;
 import de.uhh.l2g.plugins.model.Metadata;
 import de.uhh.l2g.plugins.service.MetadataLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the Metadata service. Represents a row in the &quot;LG_Metadata&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see Metadata
  * @generated
  */
-@ProviderType
 public abstract class MetadataBaseImpl
 	extends MetadataModelImpl implements Metadata {
 

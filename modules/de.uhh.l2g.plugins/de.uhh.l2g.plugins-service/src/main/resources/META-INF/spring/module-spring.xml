@@ -35,6 +35,7 @@
 	<bean class="de.uhh.l2g.plugins.service.persistence.impl.Lectureseries_InstitutionPersistenceImpl" id="de.uhh.l2g.plugins.service.persistence.Lectureseries_InstitutionPersistence" />
 	<bean class="de.uhh.l2g.plugins.service.impl.LicenseLocalServiceImpl" id="de.uhh.l2g.plugins.service.LicenseLocalService" />
 	<bean class="de.uhh.l2g.plugins.service.persistence.impl.LicensePersistenceImpl" id="de.uhh.l2g.plugins.service.persistence.LicensePersistence" />
+	<bean class="de.uhh.l2g.plugins.service.persistence.impl.LicenseFinderImpl" id="de.uhh.l2g.plugins.service.persistence.LicenseFinder" />
 	<bean class="de.uhh.l2g.plugins.service.impl.MediaTypeLocalServiceImpl" id="de.uhh.l2g.plugins.service.MediaTypeLocalService" />
 	<bean class="de.uhh.l2g.plugins.service.persistence.impl.MediaTypePersistenceImpl" id="de.uhh.l2g.plugins.service.persistence.MediaTypePersistence" />
 	<bean class="de.uhh.l2g.plugins.service.impl.MetadataLocalServiceImpl" id="de.uhh.l2g.plugins.service.MetadataLocalService" />

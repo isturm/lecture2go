@@ -15,7 +15,6 @@
 package de.uhh.l2g.plugins.service.persistence;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.util.OrderByComparator;
 
 import de.uhh.l2g.plugins.exception.NoSuchVideo_CategoryException;
 import de.uhh.l2g.plugins.model.Video_Category;
@@ -55,7 +54,7 @@ public interface Video_CategoryPersistence
 	 * Returns a range of all the video_ categories where videoId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Video_CategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Video_CategoryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param videoId the video ID
@@ -70,10 +69,27 @@ public interface Video_CategoryPersistence
 	 * Returns an ordered range of all the video_ categories where videoId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Video_CategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Video_CategoryModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByVideo(long, int, int, OrderByComparator)}
+	 * @param videoId the video ID
+	 * @param start the lower bound of the range of video_ categories
+	 * @param end the upper bound of the range of video_ categories (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching video_ categories
+	 */
+	public java.util.List<Video_Category> findByVideo(
+		long videoId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Video_Category>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the video_ categories where videoId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Video_CategoryModelImpl</code>.
+	 * </p>
+	 *
 	 * @param videoId the video ID
 	 * @param start the lower bound of the range of video_ categories
 	 * @param end the upper bound of the range of video_ categories (not inclusive)
@@ -81,28 +97,11 @@ public interface Video_CategoryPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching video_ categories
 	 */
-	@Deprecated
 	public java.util.List<Video_Category> findByVideo(
 		long videoId, int start, int end,
-		OrderByComparator<Video_Category> orderByComparator,
+		com.liferay.portal.kernel.util.OrderByComparator<Video_Category>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the video_ categories where videoId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Video_CategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param videoId the video ID
-	 * @param start the lower bound of the range of video_ categories
-	 * @param end the upper bound of the range of video_ categories (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching video_ categories
-	 */
-	public java.util.List<Video_Category> findByVideo(
-		long videoId, int start, int end,
-		OrderByComparator<Video_Category> orderByComparator);
 
 	/**
 	 * Returns the first video_ category in the ordered set where videoId = &#63;.
@@ -113,7 +112,9 @@ public interface Video_CategoryPersistence
 	 * @throws NoSuchVideo_CategoryException if a matching video_ category could not be found
 	 */
 	public Video_Category findByVideo_First(
-			long videoId, OrderByComparator<Video_Category> orderByComparator)
+			long videoId,
+			com.liferay.portal.kernel.util.OrderByComparator<Video_Category>
+				orderByComparator)
 		throws NoSuchVideo_CategoryException;
 
 	/**
@@ -124,7 +125,9 @@ public interface Video_CategoryPersistence
 	 * @return the first matching video_ category, or <code>null</code> if a matching video_ category could not be found
 	 */
 	public Video_Category fetchByVideo_First(
-		long videoId, OrderByComparator<Video_Category> orderByComparator);
+		long videoId,
+		com.liferay.portal.kernel.util.OrderByComparator<Video_Category>
+			orderByComparator);
 
 	/**
 	 * Returns the last video_ category in the ordered set where videoId = &#63;.
@@ -135,7 +138,9 @@ public interface Video_CategoryPersistence
 	 * @throws NoSuchVideo_CategoryException if a matching video_ category could not be found
 	 */
 	public Video_Category findByVideo_Last(
-			long videoId, OrderByComparator<Video_Category> orderByComparator)
+			long videoId,
+			com.liferay.portal.kernel.util.OrderByComparator<Video_Category>
+				orderByComparator)
 		throws NoSuchVideo_CategoryException;
 
 	/**
@@ -146,7 +151,9 @@ public interface Video_CategoryPersistence
 	 * @return the last matching video_ category, or <code>null</code> if a matching video_ category could not be found
 	 */
 	public Video_Category fetchByVideo_Last(
-		long videoId, OrderByComparator<Video_Category> orderByComparator);
+		long videoId,
+		com.liferay.portal.kernel.util.OrderByComparator<Video_Category>
+			orderByComparator);
 
 	/**
 	 * Returns the video_ categories before and after the current video_ category in the ordered set where videoId = &#63;.
@@ -159,7 +166,8 @@ public interface Video_CategoryPersistence
 	 */
 	public Video_Category[] findByVideo_PrevAndNext(
 			long videoCategoryId, long videoId,
-			OrderByComparator<Video_Category> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Video_Category>
+				orderByComparator)
 		throws NoSuchVideo_CategoryException;
 
 	/**
@@ -189,7 +197,7 @@ public interface Video_CategoryPersistence
 	 * Returns a range of all the video_ categories where categoryId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Video_CategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Video_CategoryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param categoryId the category ID
@@ -204,10 +212,27 @@ public interface Video_CategoryPersistence
 	 * Returns an ordered range of all the video_ categories where categoryId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Video_CategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Video_CategoryModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCategory(long, int, int, OrderByComparator)}
+	 * @param categoryId the category ID
+	 * @param start the lower bound of the range of video_ categories
+	 * @param end the upper bound of the range of video_ categories (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching video_ categories
+	 */
+	public java.util.List<Video_Category> findByCategory(
+		long categoryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Video_Category>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the video_ categories where categoryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Video_CategoryModelImpl</code>.
+	 * </p>
+	 *
 	 * @param categoryId the category ID
 	 * @param start the lower bound of the range of video_ categories
 	 * @param end the upper bound of the range of video_ categories (not inclusive)
@@ -215,28 +240,11 @@ public interface Video_CategoryPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching video_ categories
 	 */
-	@Deprecated
 	public java.util.List<Video_Category> findByCategory(
 		long categoryId, int start, int end,
-		OrderByComparator<Video_Category> orderByComparator,
+		com.liferay.portal.kernel.util.OrderByComparator<Video_Category>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the video_ categories where categoryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Video_CategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param categoryId the category ID
-	 * @param start the lower bound of the range of video_ categories
-	 * @param end the upper bound of the range of video_ categories (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching video_ categories
-	 */
-	public java.util.List<Video_Category> findByCategory(
-		long categoryId, int start, int end,
-		OrderByComparator<Video_Category> orderByComparator);
 
 	/**
 	 * Returns the first video_ category in the ordered set where categoryId = &#63;.
@@ -248,7 +256,8 @@ public interface Video_CategoryPersistence
 	 */
 	public Video_Category findByCategory_First(
 			long categoryId,
-			OrderByComparator<Video_Category> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Video_Category>
+				orderByComparator)
 		throws NoSuchVideo_CategoryException;
 
 	/**
@@ -259,7 +268,9 @@ public interface Video_CategoryPersistence
 	 * @return the first matching video_ category, or <code>null</code> if a matching video_ category could not be found
 	 */
 	public Video_Category fetchByCategory_First(
-		long categoryId, OrderByComparator<Video_Category> orderByComparator);
+		long categoryId,
+		com.liferay.portal.kernel.util.OrderByComparator<Video_Category>
+			orderByComparator);
 
 	/**
 	 * Returns the last video_ category in the ordered set where categoryId = &#63;.
@@ -271,7 +282,8 @@ public interface Video_CategoryPersistence
 	 */
 	public Video_Category findByCategory_Last(
 			long categoryId,
-			OrderByComparator<Video_Category> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Video_Category>
+				orderByComparator)
 		throws NoSuchVideo_CategoryException;
 
 	/**
@@ -282,7 +294,9 @@ public interface Video_CategoryPersistence
 	 * @return the last matching video_ category, or <code>null</code> if a matching video_ category could not be found
 	 */
 	public Video_Category fetchByCategory_Last(
-		long categoryId, OrderByComparator<Video_Category> orderByComparator);
+		long categoryId,
+		com.liferay.portal.kernel.util.OrderByComparator<Video_Category>
+			orderByComparator);
 
 	/**
 	 * Returns the video_ categories before and after the current video_ category in the ordered set where categoryId = &#63;.
@@ -295,7 +309,8 @@ public interface Video_CategoryPersistence
 	 */
 	public Video_Category[] findByCategory_PrevAndNext(
 			long videoCategoryId, long categoryId,
-			OrderByComparator<Video_Category> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Video_Category>
+				orderByComparator)
 		throws NoSuchVideo_CategoryException;
 
 	/**
@@ -327,7 +342,7 @@ public interface Video_CategoryPersistence
 	 * Returns a range of all the video_ categories where videoId = &#63; and categoryId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Video_CategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Video_CategoryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param videoId the video ID
@@ -343,10 +358,28 @@ public interface Video_CategoryPersistence
 	 * Returns an ordered range of all the video_ categories where videoId = &#63; and categoryId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Video_CategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Video_CategoryModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByVideoCategory(long,long, int, int, OrderByComparator)}
+	 * @param videoId the video ID
+	 * @param categoryId the category ID
+	 * @param start the lower bound of the range of video_ categories
+	 * @param end the upper bound of the range of video_ categories (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching video_ categories
+	 */
+	public java.util.List<Video_Category> findByVideoCategory(
+		long videoId, long categoryId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Video_Category>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the video_ categories where videoId = &#63; and categoryId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Video_CategoryModelImpl</code>.
+	 * </p>
+	 *
 	 * @param videoId the video ID
 	 * @param categoryId the category ID
 	 * @param start the lower bound of the range of video_ categories
@@ -355,29 +388,11 @@ public interface Video_CategoryPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching video_ categories
 	 */
-	@Deprecated
 	public java.util.List<Video_Category> findByVideoCategory(
 		long videoId, long categoryId, int start, int end,
-		OrderByComparator<Video_Category> orderByComparator,
+		com.liferay.portal.kernel.util.OrderByComparator<Video_Category>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the video_ categories where videoId = &#63; and categoryId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Video_CategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param videoId the video ID
-	 * @param categoryId the category ID
-	 * @param start the lower bound of the range of video_ categories
-	 * @param end the upper bound of the range of video_ categories (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching video_ categories
-	 */
-	public java.util.List<Video_Category> findByVideoCategory(
-		long videoId, long categoryId, int start, int end,
-		OrderByComparator<Video_Category> orderByComparator);
 
 	/**
 	 * Returns the first video_ category in the ordered set where videoId = &#63; and categoryId = &#63;.
@@ -390,7 +405,8 @@ public interface Video_CategoryPersistence
 	 */
 	public Video_Category findByVideoCategory_First(
 			long videoId, long categoryId,
-			OrderByComparator<Video_Category> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Video_Category>
+				orderByComparator)
 		throws NoSuchVideo_CategoryException;
 
 	/**
@@ -403,7 +419,8 @@ public interface Video_CategoryPersistence
 	 */
 	public Video_Category fetchByVideoCategory_First(
 		long videoId, long categoryId,
-		OrderByComparator<Video_Category> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Video_Category>
+			orderByComparator);
 
 	/**
 	 * Returns the last video_ category in the ordered set where videoId = &#63; and categoryId = &#63;.
@@ -416,7 +433,8 @@ public interface Video_CategoryPersistence
 	 */
 	public Video_Category findByVideoCategory_Last(
 			long videoId, long categoryId,
-			OrderByComparator<Video_Category> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Video_Category>
+				orderByComparator)
 		throws NoSuchVideo_CategoryException;
 
 	/**
@@ -429,7 +447,8 @@ public interface Video_CategoryPersistence
 	 */
 	public Video_Category fetchByVideoCategory_Last(
 		long videoId, long categoryId,
-		OrderByComparator<Video_Category> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Video_Category>
+			orderByComparator);
 
 	/**
 	 * Returns the video_ categories before and after the current video_ category in the ordered set where videoId = &#63; and categoryId = &#63;.
@@ -443,7 +462,8 @@ public interface Video_CategoryPersistence
 	 */
 	public Video_Category[] findByVideoCategory_PrevAndNext(
 			long videoCategoryId, long videoId, long categoryId,
-			OrderByComparator<Video_Category> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Video_Category>
+				orderByComparator)
 		throws NoSuchVideo_CategoryException;
 
 	/**
@@ -526,7 +546,7 @@ public interface Video_CategoryPersistence
 	 * Returns a range of all the video_ categories.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Video_CategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Video_CategoryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of video_ categories
@@ -539,26 +559,7 @@ public interface Video_CategoryPersistence
 	 * Returns an ordered range of all the video_ categories.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Video_CategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
-	 * @param start the lower bound of the range of video_ categories
-	 * @param end the upper bound of the range of video_ categories (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of video_ categories
-	 */
-	@Deprecated
-	public java.util.List<Video_Category> findAll(
-		int start, int end, OrderByComparator<Video_Category> orderByComparator,
-		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the video_ categories.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Video_CategoryModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Video_CategoryModelImpl</code>.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of video_ categories
@@ -568,7 +569,27 @@ public interface Video_CategoryPersistence
 	 */
 	public java.util.List<Video_Category> findAll(
 		int start, int end,
-		OrderByComparator<Video_Category> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Video_Category>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the video_ categories.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Video_CategoryModelImpl</code>.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of video_ categories
+	 * @param end the upper bound of the range of video_ categories (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of video_ categories
+	 */
+	public java.util.List<Video_Category> findAll(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Video_Category>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Removes all the video_ categories from the database.

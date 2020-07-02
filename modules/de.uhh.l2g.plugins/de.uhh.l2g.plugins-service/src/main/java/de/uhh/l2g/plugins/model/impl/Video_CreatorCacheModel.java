@@ -25,30 +25,27 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The cache model class for representing Video_Creator in entity cache.
  *
  * @author Iavor Sturm
  * @generated
  */
-@ProviderType
 public class Video_CreatorCacheModel
 	implements CacheModel<Video_Creator>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof Video_CreatorCacheModel)) {
+		if (!(object instanceof Video_CreatorCacheModel)) {
 			return false;
 		}
 
 		Video_CreatorCacheModel video_CreatorCacheModel =
-			(Video_CreatorCacheModel)obj;
+			(Video_CreatorCacheModel)object;
 
 		if (videoCreatorId == video_CreatorCacheModel.videoCreatorId) {
 			return true;

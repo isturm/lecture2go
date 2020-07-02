@@ -21,8 +21,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * <p>
  * This class is a wrapper for {@link Videohitlist}.
@@ -32,10 +30,9 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see Videohitlist
  * @generated
  */
-@ProviderType
 public class VideohitlistWrapper
 	extends BaseModelWrapper<Videohitlist>
-	implements Videohitlist, ModelWrapper<Videohitlist> {
+	implements ModelWrapper<Videohitlist>, Videohitlist {
 
 	public VideohitlistWrapper(Videohitlist videohitlist) {
 		super(videohitlist);

@@ -93,7 +93,6 @@ public class VideoIndexer extends BaseIndexer<Video> {
 		document.addKeyword("permittedToSegment", video.getPermittedToSegment());
 		document.addKeyword("rootInstitution", video.getRootInstitutionId());
 		document.addKeyword("citation2Go", video.getCitation2go());
-		document.addKeyword("licenseId", video.getLicenseId());
 		document.addDate("createDate", video.getCreateDate());
 		document.addDate("modifiedDate", video.getModifiedDate());
 
@@ -104,6 +103,7 @@ public class VideoIndexer extends BaseIndexer<Video> {
 		setCreatorIds(document, video.getVideoId());
 		setMediaTypeIds(document, video.getVideoId());
 		setTags(document, video.getTags());
+		document.addKeyword("licenseId", video.getLicenseId());
 
 		return document;
 	}
