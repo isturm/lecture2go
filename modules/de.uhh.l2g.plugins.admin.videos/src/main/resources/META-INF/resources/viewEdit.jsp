@@ -942,10 +942,18 @@
 			categoryId.on(
                 'change',
                 function (A) {
-                    if (categoryId.get('value') > 0) {
+                	let categoryAlreadyChosen = false;
+                	const selectedCategory = categoryId.get(categoryId.get('selectedIndex')).get('text').trim();
+                	for (let child of categories._node.children) {
+						if (selectedCategory === child.innerText.trim()) {
+							categoryAlreadyChosen = true;
+							break;
+						}
+					}
+                    if (categoryId.get('value') > 0 && !categoryAlreadyChosen) {
 						const n = categoryId.get(categoryId.get('selectedIndex')).get('value');
-						const t = categoryId.get(categoryId.get('selectedIndex')).get('text') + "&nbsp;&nbsp;&nbsp;";
-						categories.append("<div id='" + n + "'> " + t + " <a class='icon-large icon-remove style='cursor:pointer;' onClick='document.getElementById(&quot;" + n + "&quot;).remove();'/><input id='<portlet:namespace></portlet:namespace>categories' name='<portlet:namespace></portlet:namespace>categories' value='" + n + "' type='hidden'/></div>");
+						const t = categoryId.get(categoryId.get('selectedIndex')).get('text');
+						categories.append("<div id='" + n + "'> " + t + " <a class='icon-large icon-remove' style='cursor:pointer;' onClick='document.getElementById(&quot;" + n + "&quot;).remove();'/><input id='<portlet:namespace></portlet:namespace>categories' name='<portlet:namespace></portlet:namespace>categories' value='" + n + "' type='hidden'/></div>");
                     }
                 }
             );
