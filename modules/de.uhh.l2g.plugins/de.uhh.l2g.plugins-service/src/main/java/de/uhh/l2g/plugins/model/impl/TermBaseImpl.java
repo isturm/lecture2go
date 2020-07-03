@@ -17,8 +17,6 @@ package de.uhh.l2g.plugins.model.impl;
 import de.uhh.l2g.plugins.model.Term;
 import de.uhh.l2g.plugins.service.TermLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the Term service. Represents a row in the &quot;LG_Term&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see Term
  * @generated
  */
-@ProviderType
 public abstract class TermBaseImpl extends TermModelImpl implements Term {
 
 	/*

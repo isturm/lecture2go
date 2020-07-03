@@ -25,28 +25,25 @@ import java.io.IOException;
 import java.io.ObjectInput;
 import java.io.ObjectOutput;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The cache model class for representing Sys in entity cache.
  *
  * @author Iavor Sturm
  * @generated
  */
-@ProviderType
 public class SysCacheModel implements CacheModel<Sys>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof SysCacheModel)) {
+		if (!(object instanceof SysCacheModel)) {
 			return false;
 		}
 
-		SysCacheModel sysCacheModel = (SysCacheModel)obj;
+		SysCacheModel sysCacheModel = (SysCacheModel)object;
 
 		if (sysId == sysCacheModel.sysId) {
 			return true;

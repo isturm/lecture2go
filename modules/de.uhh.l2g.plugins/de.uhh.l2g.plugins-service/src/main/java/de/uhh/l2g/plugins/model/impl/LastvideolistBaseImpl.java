@@ -17,8 +17,6 @@ package de.uhh.l2g.plugins.model.impl;
 import de.uhh.l2g.plugins.model.Lastvideolist;
 import de.uhh.l2g.plugins.service.LastvideolistLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the Lastvideolist service. Represents a row in the &quot;LG_Lastvideolist&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see Lastvideolist
  * @generated
  */
-@ProviderType
 public abstract class LastvideolistBaseImpl
 	extends LastvideolistModelImpl implements Lastvideolist {
 

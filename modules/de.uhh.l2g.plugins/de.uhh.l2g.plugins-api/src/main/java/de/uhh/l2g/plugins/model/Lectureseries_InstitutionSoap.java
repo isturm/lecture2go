@@ -19,15 +19,12 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * This class is used by SOAP remote services.
  *
  * @author Iavor Sturm
  * @generated
  */
-@ProviderType
 public class Lectureseries_InstitutionSoap implements Serializable {
 
 	public static Lectureseries_InstitutionSoap toSoapModel(

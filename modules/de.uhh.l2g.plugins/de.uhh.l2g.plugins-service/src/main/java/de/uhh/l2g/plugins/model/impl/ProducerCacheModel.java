@@ -27,29 +27,26 @@ import java.io.ObjectOutput;
 
 import java.util.Date;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The cache model class for representing Producer in entity cache.
  *
  * @author Iavor Sturm
  * @generated
  */
-@ProviderType
 public class ProducerCacheModel
 	implements CacheModel<Producer>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof ProducerCacheModel)) {
+		if (!(object instanceof ProducerCacheModel)) {
 			return false;
 		}
 
-		ProducerCacheModel producerCacheModel = (ProducerCacheModel)obj;
+		ProducerCacheModel producerCacheModel = (ProducerCacheModel)object;
 
 		if (producerId == producerCacheModel.producerId) {
 			return true;

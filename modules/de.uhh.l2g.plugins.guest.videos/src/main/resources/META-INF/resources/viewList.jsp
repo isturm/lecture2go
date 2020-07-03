@@ -7,6 +7,7 @@
 <jsp:useBean id="creatorId" type="java.lang.Long" scope="request"/>
 <jsp:useBean id="mediaTypeId" type="java.lang.Long" scope="request"/>
 <jsp:useBean id="tag" type="java.lang.String" scope="request"/>
+<jsp:useBean id="licenseId" type="java.lang.Long" scope="request"/>
 <jsp:useBean id="searchType" type="java.lang.Integer" scope="request"/>
 <jsp:useBean id="findVideos" type="java.lang.String" scope="request"/>
 <jsp:useBean id="sortBy" type="java.lang.String" scope="request"/>
@@ -19,6 +20,7 @@
 <jsp:useBean id="hasCategoryFiltered" type="java.lang.Boolean" scope="request"/>
 <jsp:useBean id="hasMediaTypeFiltered" type="java.lang.Boolean" scope="request"/>
 <jsp:useBean id="hasTagFiltered" type="java.lang.Boolean" scope="request"/>
+<jsp:useBean id="hasLicenseFiltered" type="java.lang.Boolean" scope="request"/>
 <jsp:useBean id="isSearched" type="java.lang.Boolean" scope="request"/>
 <jsp:useBean id="videoList" type="java.util.List<VideoListSearchResult>" scope="request"/>
 <jsp:useBean id="lectureseriesIds" type="java.util.ArrayList<Long>" scope="request"/>
@@ -32,6 +34,7 @@
 <jsp:useBean id="presentCategories" type="java.util.List<Category>" scope="request"/>
 <jsp:useBean id="presentMediaTypes" type="java.util.Set<de.uhh.l2g.plugins.model.MediaType>" scope="request"/>
 <jsp:useBean id="presentTags" type="java.util.Set<java.lang.String>" scope="request"/>
+<jsp:useBean id="presentLicenses" type="java.util.List<de.uhh.l2g.plugins.model.License>" scope="request"/>
 
 <jsp:useBean id="portletURL" type="javax.portlet.PortletURL" scope="request"/>
 <jsp:useBean id="resultSetEmpty" type="java.lang.Boolean" scope="request"/>
@@ -54,6 +57,7 @@
     pageContext.setAttribute("hasCategoryFiltered", hasCategoryFiltered);
     pageContext.setAttribute("hasMediaTypeFiltered", hasMediaTypeFiltered);
     pageContext.setAttribute("hasTagFiltered", hasTagFiltered);
+    pageContext.setAttribute("hasLicenseFiltered", hasLicenseFiltered);
     pageContext.setAttribute("hasManyTerms", presentTerms.size() > maxTerms);
 %>
 
@@ -66,6 +70,7 @@
     <portlet:param name="creatorId" value="0"/>
     <portlet:param name="mediaTypeId" value="0"/>
     <portlet:param name="tag" value="0"/>
+    <portlet:param name="licenseId" value="0"/>
 </portlet:renderURL>
 
 <div class="path-wide">
@@ -88,6 +93,7 @@
             <portlet:param name="creatorId" value="0"/>
             <portlet:param name="mediaTypeId" value="0"/>
             <portlet:param name="tag" value="0"/>
+            <portlet:param name="licenseId" value="0"/>
         </portlet:renderURL>
         <span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
         <A HREF="${backURL1}" class="breadcrumb-item">${pInst.name}</A>
@@ -103,6 +109,7 @@
             <portlet:param name="creatorId" value="0"/>
             <portlet:param name="mediaTypeId" value="0"/>
             <portlet:param name="tag" value="0"/>
+            <portlet:param name="licenseId" value="0"/>
         </portlet:renderURL>
         <span class="uhh-icon-arrow-right">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
         <A HREF="${backURL2}" class="breadcrumb-item">${insti.name}</A>
@@ -121,6 +128,8 @@
 		    <portlet:param name="categoryId" value="${categoryId}"/>
 		    <portlet:param name="creatorId" value="${creatorId}"/>
 		    <portlet:param name="mediaTypeId" value="${mediaTypeId}"/>
+		    <portlet:param name="tag" value="${tag}"/>
+		    <portlet:param name="licenseId" value="${licenseId}"/>
 		    <portlet:param name="searchType" value="${searchType}"/>
 		    <portlet:param name="findVideos" value="${findVideos}"/>
 		    <portlet:param name="previousSortBy" value="${sortBy}"/>
@@ -165,6 +174,7 @@
                                     <portlet:param name="creatorId" value="${creatorId}"/>
                                     <portlet:param name="mediaTypeId" value="${mediaTypeId}"/>
                                     <portlet:param name="tag" value="${tag}"/>
+                                    <portlet:param name="licenseId" value="${licenseId}"/>
                                     <portlet:param name="searchType" value="${searchType}"/>
                                     <portlet:param name="findVideos" value="${findVideos}"/>
                                 </portlet:renderURL>
@@ -199,6 +209,7 @@
                                         <portlet:param name="creatorId" value="${creatorId}"/>
                                         <portlet:param name="mediaTypeId" value="${mediaTypeId}"/>
                                         <portlet:param name="tag" value="${tag}"/>
+                                        <portlet:param name="licenseId" value="${licenseId}"/>
                                         <portlet:param name="searchType" value="${searchType}"/>
                                         <portlet:param name="findVideos" value="${findVideos}"/>
                                     </portlet:renderURL>
@@ -232,6 +243,7 @@
                                     <portlet:param name="creatorId" value="${creatorId}"/>
                                     <portlet:param name="mediaTypeId" value="${mediaTypeId}"/>
                                     <portlet:param name="tag" value="${tag}"/>
+                                    <portlet:param name="licenseId" value="${licenseId}"/>
                                     <portlet:param name="searchType" value="${searchType}"/>
                                     <portlet:param name="findVideos" value="${findVideos}"/>
                                 </portlet:renderURL>
@@ -275,6 +287,7 @@
                                     <portlet:param name="creatorId" value="${creatorId}"/>
                                     <portlet:param name="mediaTypeId" value="${mediaTypeId}"/>
                                     <portlet:param name="tag" value="${tag}"/>
+                                    <portlet:param name="licenseId" value="${licenseId}"/>
                                     <portlet:param name="searchType" value="${searchType}"/>
                                     <portlet:param name="findVideos" value="${findVideos}"/>
                                 </portlet:renderURL>
@@ -324,6 +337,7 @@
                                         <portlet:param name="creatorId" value='${hasCreatorFiltered ? "0" : creator.creatorId}'/>
                                         <portlet:param name="mediaTypeId" value="${mediaTypeId}"/>
                                         <portlet:param name="tag" value="${tag}"/>
+                                        <portlet:param name="licenseId" value="${licenseId}"/>
                                         <portlet:param name="searchType" value="${searchType}"/>
                                         <portlet:param name="findVideos" value="${findVideos}"/>
                                     </portlet:renderURL>
@@ -386,6 +400,7 @@
                                         <portlet:param name="creatorId" value='${creatorId}'/>
                                         <portlet:param name="mediaTypeId" value='${hasMediaTypeFiltered ? "0" : mediaType.mediaTypeId}'/>
                                         <portlet:param name="tag" value='${tag}'/>
+                                        <portlet:param name="licenseId" value="${licenseId}"/>
                                         <portlet:param name="searchType" value="${searchType}"/>
                                         <portlet:param name="findVideos" value="${findVideos}"/>
                                     </portlet:renderURL>
@@ -437,6 +452,7 @@
                                             <portlet:param name="creatorId" value='${creatorId}'/>
                                             <portlet:param name="mediaTypeId" value="${mediaTypeId}"/>
                                             <portlet:param name="tag" value="${hasTagFiltered ? \"0\" : tag}"/>
+                                            <portlet:param name="licenseId" value="${licenseId}"/>
                                             <portlet:param name="searchType" value="${searchType}"/>
                                             <portlet:param name="findVideos" value="${findVideos}"/>
                                         </portlet:renderURL>
@@ -459,6 +475,42 @@
                         <a class="load-more-link all-characters" data-character="*" data-entity="tag">
                             <liferay-ui:message key="more"/>
                         </a>
+                    </liferay-ui:panel>
+                </c:if>
+                
+                <!-- license filter -->
+                <c:if test="${presentLicenses.size()>0}">
+                    <liferay-ui:panel defaultState='${hasLicenseFiltered ? "open" : "collapsed"}' extended="true" title="licenses"
+                                      cssClass='${hasLicensesFiltered ? "filtered" : "notFiltered"}'>
+
+                        <div class="licenses">
+                            <ul class="colored-bullets">
+                                <c:forEach items="${presentLicenses}" var="license">
+                                    <portlet:renderURL var="filterByLicense">
+                                        <portlet:param name="mvcRenderCommandName" value="/view/render/list"/>
+                                        <portlet:param name="institutionId" value="${institutionId}"/>
+                                        <portlet:param name="parentInstitutionId" value="${parentInstitutionId}"/>
+                                        <portlet:param name="termId" value='${termId}'/>
+                                        <portlet:param name="categoryId" value="${categoryId}"/>
+                                        <portlet:param name="creatorId" value='${creatorId}'/>
+                                        <portlet:param name="mediaTypeId" value='${mediaTypeId}'/>
+                                        <portlet:param name="tag" value='${tag}'/>
+                                        <portlet:param name="licenseId" value='${hasLicenseFiltered ? "0" : license.licenseId}'/>
+                                        <portlet:param name="searchType" value="${searchType}"/>
+                                        <portlet:param name="findVideos" value="${findVideos}"/>
+                                    </portlet:renderURL>
+                                    <li class="videoIds">
+                                        <a href="${filterByLicense}" class="row">
+                                            <div class="filter-menu-link">
+                                                    ${license.shortIdentifier}
+                                            </div>
+                                            <div class="autofit-col-expand"></div>
+                                            <span ${hasLicenseFiltered ? 'class="icon-large icon-remove"' : ''}></span>
+                                        </a>
+                                    </li>
+                                </c:forEach>
+                            </ul>
+                        </div>
                     </liferay-ui:panel>
                 </c:if>
             </liferay-ui:panel-container>
@@ -511,7 +563,7 @@
                     <c:when test="${videoCount>0 && isSearched && lectser.videoIds.size() > 0}">
                         <!-- get videos by id list -->
                         <c:set var="vl"
-                               value="<%=VideoLocalServiceUtil.getVideos(lectser.getVideoIdsArray())%>"/>
+                               value="<%=VideoLocalServiceUtil.getByVideoIds(ConverterUtil.idListToArray(lectser.getVideoIds()))%>"/>
                     </c:when>
                     <c:otherwise>
                         <!-- get all videos of the lecture series -->

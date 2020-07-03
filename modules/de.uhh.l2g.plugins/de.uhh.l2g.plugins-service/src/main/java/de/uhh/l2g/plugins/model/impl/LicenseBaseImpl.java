@@ -17,8 +17,6 @@ package de.uhh.l2g.plugins.model.impl;
 import de.uhh.l2g.plugins.model.License;
 import de.uhh.l2g.plugins.service.LicenseLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the License service. Represents a row in the &quot;LG_License&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see License
  * @generated
  */
-@ProviderType
 public abstract class LicenseBaseImpl
 	extends LicenseModelImpl implements License {
 

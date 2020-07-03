@@ -27,28 +27,25 @@ import java.io.ObjectOutput;
 
 import java.util.Date;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The cache model class for representing Segment in entity cache.
  *
  * @author Iavor Sturm
  * @generated
  */
-@ProviderType
 public class SegmentCacheModel implements CacheModel<Segment>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof SegmentCacheModel)) {
+		if (!(object instanceof SegmentCacheModel)) {
 			return false;
 		}
 
-		SegmentCacheModel segmentCacheModel = (SegmentCacheModel)obj;
+		SegmentCacheModel segmentCacheModel = (SegmentCacheModel)object;
 
 		if (segmentId == segmentCacheModel.segmentId) {
 			return true;

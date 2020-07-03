@@ -17,8 +17,6 @@ package de.uhh.l2g.plugins.model.impl;
 import de.uhh.l2g.plugins.model.ScheduledThread;
 import de.uhh.l2g.plugins.service.ScheduledThreadLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the ScheduledThread service. Represents a row in the &quot;LG_ScheduledThread&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see ScheduledThread
  * @generated
  */
-@ProviderType
 public abstract class ScheduledThreadBaseImpl
 	extends ScheduledThreadModelImpl implements ScheduledThread {
 

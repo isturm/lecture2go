@@ -17,8 +17,6 @@ package de.uhh.l2g.plugins.model.impl;
 import de.uhh.l2g.plugins.model.MediaType;
 import de.uhh.l2g.plugins.service.MediaTypeLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the MediaType service. Represents a row in the &quot;LG_MediaType&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see MediaType
  * @generated
  */
-@ProviderType
 public abstract class MediaTypeBaseImpl
 	extends MediaTypeModelImpl implements MediaType {
 

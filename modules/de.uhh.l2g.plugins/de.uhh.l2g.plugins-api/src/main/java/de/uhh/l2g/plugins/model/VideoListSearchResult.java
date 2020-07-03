@@ -6,7 +6,7 @@ import java.util.List;
 public class VideoListSearchResult {
 
 	private long videoId = -1, lectureseriesId = -1, latestOpenAccessVideoId = -1, previewVideoId = -1, termId = -1,
-			categoryId = -1, mediaTypeId = -1, numberOfOpenAccessVideos = 0;
+			categoryId = -1, mediaTypeId = -1, licenseId = -1, numberOfOpenAccessVideos = 0;
 
 	private String tags;
 
@@ -78,6 +78,14 @@ public class VideoListSearchResult {
 		this.mediaTypeId = mediaTypeId;
 	}
 
+	public long getLicenseId() {
+		return licenseId;
+	}
+
+	public void setLicenseId(long licenseId) {
+		this.licenseId = licenseId;
+	}
+
 	public String getTags() {
 		return tags;
 	}
@@ -96,14 +104,6 @@ public class VideoListSearchResult {
 
 	public List<Long> getVideoIds() {
 		return videoIds;
-	}
-
-	public long[] getVideoIdsArray() {
-		long[] videoIdsArray = new long[videoIds.size()];
-		for (int i = 0; i < videoIds.size(); i++) {
-			videoIdsArray[i] = videoIds.get(i);
-		}
-		return videoIdsArray;
 	}
 
 	public void setVideoIds(List<Long> videoIds) {

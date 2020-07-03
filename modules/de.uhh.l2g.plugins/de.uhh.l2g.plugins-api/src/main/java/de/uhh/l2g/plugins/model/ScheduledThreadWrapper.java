@@ -21,8 +21,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * <p>
  * This class is a wrapper for {@link ScheduledThread}.
@@ -32,10 +30,9 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see ScheduledThread
  * @generated
  */
-@ProviderType
 public class ScheduledThreadWrapper
 	extends BaseModelWrapper<ScheduledThread>
-	implements ScheduledThread, ModelWrapper<ScheduledThread> {
+	implements ModelWrapper<ScheduledThread>, ScheduledThread {
 
 	public ScheduledThreadWrapper(ScheduledThread scheduledThread) {
 		super(scheduledThread);

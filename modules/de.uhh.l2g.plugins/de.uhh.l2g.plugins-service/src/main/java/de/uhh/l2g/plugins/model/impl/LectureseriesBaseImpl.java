@@ -17,8 +17,6 @@ package de.uhh.l2g.plugins.model.impl;
 import de.uhh.l2g.plugins.model.Lectureseries;
 import de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the Lectureseries service. Represents a row in the &quot;LG_Lectureseries&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see Lectureseries
  * @generated
  */
-@ProviderType
 public abstract class LectureseriesBaseImpl
 	extends LectureseriesModelImpl implements Lectureseries {
 

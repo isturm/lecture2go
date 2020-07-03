@@ -15,7 +15,6 @@
 package de.uhh.l2g.plugins.service.persistence;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.util.OrderByComparator;
 
 import de.uhh.l2g.plugins.exception.NoSuchLicenseException;
 import de.uhh.l2g.plugins.model.License;
@@ -54,7 +53,7 @@ public interface LicensePersistence extends BasePersistence<License> {
 	 * Returns a range of all the licenses where selectable = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LicenseModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LicenseModelImpl</code>.
 	 * </p>
 	 *
 	 * @param selectable the selectable
@@ -69,10 +68,27 @@ public interface LicensePersistence extends BasePersistence<License> {
 	 * Returns an ordered range of all the licenses where selectable = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LicenseModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LicenseModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findBySelectable(boolean, int, int, OrderByComparator)}
+	 * @param selectable the selectable
+	 * @param start the lower bound of the range of licenses
+	 * @param end the upper bound of the range of licenses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching licenses
+	 */
+	public java.util.List<License> findBySelectable(
+		boolean selectable, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<License>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the licenses where selectable = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LicenseModelImpl</code>.
+	 * </p>
+	 *
 	 * @param selectable the selectable
 	 * @param start the lower bound of the range of licenses
 	 * @param end the upper bound of the range of licenses (not inclusive)
@@ -80,27 +96,11 @@ public interface LicensePersistence extends BasePersistence<License> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching licenses
 	 */
-	@Deprecated
 	public java.util.List<License> findBySelectable(
 		boolean selectable, int start, int end,
-		OrderByComparator<License> orderByComparator, boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the licenses where selectable = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LicenseModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param selectable the selectable
-	 * @param start the lower bound of the range of licenses
-	 * @param end the upper bound of the range of licenses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching licenses
-	 */
-	public java.util.List<License> findBySelectable(
-		boolean selectable, int start, int end,
-		OrderByComparator<License> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<License>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first license in the ordered set where selectable = &#63;.
@@ -111,7 +111,9 @@ public interface LicensePersistence extends BasePersistence<License> {
 	 * @throws NoSuchLicenseException if a matching license could not be found
 	 */
 	public License findBySelectable_First(
-			boolean selectable, OrderByComparator<License> orderByComparator)
+			boolean selectable,
+			com.liferay.portal.kernel.util.OrderByComparator<License>
+				orderByComparator)
 		throws NoSuchLicenseException;
 
 	/**
@@ -122,7 +124,9 @@ public interface LicensePersistence extends BasePersistence<License> {
 	 * @return the first matching license, or <code>null</code> if a matching license could not be found
 	 */
 	public License fetchBySelectable_First(
-		boolean selectable, OrderByComparator<License> orderByComparator);
+		boolean selectable,
+		com.liferay.portal.kernel.util.OrderByComparator<License>
+			orderByComparator);
 
 	/**
 	 * Returns the last license in the ordered set where selectable = &#63;.
@@ -133,7 +137,9 @@ public interface LicensePersistence extends BasePersistence<License> {
 	 * @throws NoSuchLicenseException if a matching license could not be found
 	 */
 	public License findBySelectable_Last(
-			boolean selectable, OrderByComparator<License> orderByComparator)
+			boolean selectable,
+			com.liferay.portal.kernel.util.OrderByComparator<License>
+				orderByComparator)
 		throws NoSuchLicenseException;
 
 	/**
@@ -144,7 +150,9 @@ public interface LicensePersistence extends BasePersistence<License> {
 	 * @return the last matching license, or <code>null</code> if a matching license could not be found
 	 */
 	public License fetchBySelectable_Last(
-		boolean selectable, OrderByComparator<License> orderByComparator);
+		boolean selectable,
+		com.liferay.portal.kernel.util.OrderByComparator<License>
+			orderByComparator);
 
 	/**
 	 * Returns the licenses before and after the current license in the ordered set where selectable = &#63;.
@@ -157,7 +165,8 @@ public interface LicensePersistence extends BasePersistence<License> {
 	 */
 	public License[] findBySelectable_PrevAndNext(
 			long licenseId, boolean selectable,
-			OrderByComparator<License> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<License>
+				orderByComparator)
 		throws NoSuchLicenseException;
 
 	/**
@@ -237,7 +246,7 @@ public interface LicensePersistence extends BasePersistence<License> {
 	 * Returns a range of all the licenses.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LicenseModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LicenseModelImpl</code>.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of licenses
@@ -250,35 +259,37 @@ public interface LicensePersistence extends BasePersistence<License> {
 	 * Returns an ordered range of all the licenses.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LicenseModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LicenseModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
+	 * @param start the lower bound of the range of licenses
+	 * @param end the upper bound of the range of licenses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of licenses
+	 */
+	public java.util.List<License> findAll(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<License>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the licenses.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>LicenseModelImpl</code>.
+	 * </p>
+	 *
 	 * @param start the lower bound of the range of licenses
 	 * @param end the upper bound of the range of licenses (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of licenses
 	 */
-	@Deprecated
 	public java.util.List<License> findAll(
-		int start, int end, OrderByComparator<License> orderByComparator,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<License>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the licenses.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>LicenseModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of licenses
-	 * @param end the upper bound of the range of licenses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of licenses
-	 */
-	public java.util.List<License> findAll(
-		int start, int end, OrderByComparator<License> orderByComparator);
 
 	/**
 	 * Removes all the licenses from the database.

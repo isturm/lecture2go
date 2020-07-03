@@ -21,8 +21,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * <p>
  * This class is a wrapper for {@link Office}.
@@ -32,9 +30,8 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see Office
  * @generated
  */
-@ProviderType
 public class OfficeWrapper
-	extends BaseModelWrapper<Office> implements Office, ModelWrapper<Office> {
+	extends BaseModelWrapper<Office> implements ModelWrapper<Office>, Office {
 
 	public OfficeWrapper(Office office) {
 		super(office);

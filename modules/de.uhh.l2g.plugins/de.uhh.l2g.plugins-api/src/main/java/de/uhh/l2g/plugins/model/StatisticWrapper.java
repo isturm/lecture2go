@@ -21,8 +21,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * <p>
  * This class is a wrapper for {@link Statistic}.
@@ -32,10 +30,9 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see Statistic
  * @generated
  */
-@ProviderType
 public class StatisticWrapper
 	extends BaseModelWrapper<Statistic>
-	implements Statistic, ModelWrapper<Statistic> {
+	implements ModelWrapper<Statistic>, Statistic {
 
 	public StatisticWrapper(Statistic statistic) {
 		super(statistic);

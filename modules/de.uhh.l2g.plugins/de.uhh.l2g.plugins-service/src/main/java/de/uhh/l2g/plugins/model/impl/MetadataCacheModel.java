@@ -27,29 +27,26 @@ import java.io.ObjectOutput;
 
 import java.util.Date;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The cache model class for representing Metadata in entity cache.
  *
  * @author Iavor Sturm
  * @generated
  */
-@ProviderType
 public class MetadataCacheModel
 	implements CacheModel<Metadata>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof MetadataCacheModel)) {
+		if (!(object instanceof MetadataCacheModel)) {
 			return false;
 		}
 
-		MetadataCacheModel metadataCacheModel = (MetadataCacheModel)obj;
+		MetadataCacheModel metadataCacheModel = (MetadataCacheModel)object;
 
 		if (metadataId == metadataCacheModel.metadataId) {
 			return true;

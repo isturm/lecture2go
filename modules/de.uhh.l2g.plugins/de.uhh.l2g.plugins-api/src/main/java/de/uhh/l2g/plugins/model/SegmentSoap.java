@@ -20,15 +20,12 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * This class is used by SOAP remote services.
  *
  * @author Iavor Sturm
  * @generated
  */
-@ProviderType
 public class SegmentSoap implements Serializable {
 
 	public static SegmentSoap toSoapModel(Segment model) {

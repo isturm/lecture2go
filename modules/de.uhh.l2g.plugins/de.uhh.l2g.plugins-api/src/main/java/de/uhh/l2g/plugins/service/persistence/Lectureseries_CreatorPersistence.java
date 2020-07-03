@@ -15,7 +15,6 @@
 package de.uhh.l2g.plugins.service.persistence;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.util.OrderByComparator;
 
 import de.uhh.l2g.plugins.exception.NoSuchLectureseries_CreatorException;
 import de.uhh.l2g.plugins.model.Lectureseries_Creator;
@@ -56,7 +55,7 @@ public interface Lectureseries_CreatorPersistence
 	 * Returns a range of all the lectureseries_ creators where lectureseriesId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Lectureseries_CreatorModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Lectureseries_CreatorModelImpl</code>.
 	 * </p>
 	 *
 	 * @param lectureseriesId the lectureseries ID
@@ -71,10 +70,27 @@ public interface Lectureseries_CreatorPersistence
 	 * Returns an ordered range of all the lectureseries_ creators where lectureseriesId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Lectureseries_CreatorModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Lectureseries_CreatorModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByLectureseries(long, int, int, OrderByComparator)}
+	 * @param lectureseriesId the lectureseries ID
+	 * @param start the lower bound of the range of lectureseries_ creators
+	 * @param end the upper bound of the range of lectureseries_ creators (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching lectureseries_ creators
+	 */
+	public java.util.List<Lectureseries_Creator> findByLectureseries(
+		long lectureseriesId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries_Creator>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the lectureseries_ creators where lectureseriesId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Lectureseries_CreatorModelImpl</code>.
+	 * </p>
+	 *
 	 * @param lectureseriesId the lectureseries ID
 	 * @param start the lower bound of the range of lectureseries_ creators
 	 * @param end the upper bound of the range of lectureseries_ creators (not inclusive)
@@ -82,28 +98,11 @@ public interface Lectureseries_CreatorPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lectureseries_ creators
 	 */
-	@Deprecated
 	public java.util.List<Lectureseries_Creator> findByLectureseries(
 		long lectureseriesId, int start, int end,
-		OrderByComparator<Lectureseries_Creator> orderByComparator,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries_Creator>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the lectureseries_ creators where lectureseriesId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Lectureseries_CreatorModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param lectureseriesId the lectureseries ID
-	 * @param start the lower bound of the range of lectureseries_ creators
-	 * @param end the upper bound of the range of lectureseries_ creators (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching lectureseries_ creators
-	 */
-	public java.util.List<Lectureseries_Creator> findByLectureseries(
-		long lectureseriesId, int start, int end,
-		OrderByComparator<Lectureseries_Creator> orderByComparator);
 
 	/**
 	 * Returns the first lectureseries_ creator in the ordered set where lectureseriesId = &#63;.
@@ -115,7 +114,8 @@ public interface Lectureseries_CreatorPersistence
 	 */
 	public Lectureseries_Creator findByLectureseries_First(
 			long lectureseriesId,
-			OrderByComparator<Lectureseries_Creator> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<Lectureseries_Creator> orderByComparator)
 		throws NoSuchLectureseries_CreatorException;
 
 	/**
@@ -127,7 +127,8 @@ public interface Lectureseries_CreatorPersistence
 	 */
 	public Lectureseries_Creator fetchByLectureseries_First(
 		long lectureseriesId,
-		OrderByComparator<Lectureseries_Creator> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries_Creator>
+			orderByComparator);
 
 	/**
 	 * Returns the last lectureseries_ creator in the ordered set where lectureseriesId = &#63;.
@@ -139,7 +140,8 @@ public interface Lectureseries_CreatorPersistence
 	 */
 	public Lectureseries_Creator findByLectureseries_Last(
 			long lectureseriesId,
-			OrderByComparator<Lectureseries_Creator> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<Lectureseries_Creator> orderByComparator)
 		throws NoSuchLectureseries_CreatorException;
 
 	/**
@@ -151,7 +153,8 @@ public interface Lectureseries_CreatorPersistence
 	 */
 	public Lectureseries_Creator fetchByLectureseries_Last(
 		long lectureseriesId,
-		OrderByComparator<Lectureseries_Creator> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries_Creator>
+			orderByComparator);
 
 	/**
 	 * Returns the lectureseries_ creators before and after the current lectureseries_ creator in the ordered set where lectureseriesId = &#63;.
@@ -164,7 +167,8 @@ public interface Lectureseries_CreatorPersistence
 	 */
 	public Lectureseries_Creator[] findByLectureseries_PrevAndNext(
 			long lectureseriesCreatorId, long lectureseriesId,
-			OrderByComparator<Lectureseries_Creator> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<Lectureseries_Creator> orderByComparator)
 		throws NoSuchLectureseries_CreatorException;
 
 	/**
@@ -194,7 +198,7 @@ public interface Lectureseries_CreatorPersistence
 	 * Returns a range of all the lectureseries_ creators where creatorId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Lectureseries_CreatorModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Lectureseries_CreatorModelImpl</code>.
 	 * </p>
 	 *
 	 * @param creatorId the creator ID
@@ -209,10 +213,27 @@ public interface Lectureseries_CreatorPersistence
 	 * Returns an ordered range of all the lectureseries_ creators where creatorId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Lectureseries_CreatorModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Lectureseries_CreatorModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCreator(long, int, int, OrderByComparator)}
+	 * @param creatorId the creator ID
+	 * @param start the lower bound of the range of lectureseries_ creators
+	 * @param end the upper bound of the range of lectureseries_ creators (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching lectureseries_ creators
+	 */
+	public java.util.List<Lectureseries_Creator> findByCreator(
+		long creatorId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries_Creator>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the lectureseries_ creators where creatorId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Lectureseries_CreatorModelImpl</code>.
+	 * </p>
+	 *
 	 * @param creatorId the creator ID
 	 * @param start the lower bound of the range of lectureseries_ creators
 	 * @param end the upper bound of the range of lectureseries_ creators (not inclusive)
@@ -220,28 +241,11 @@ public interface Lectureseries_CreatorPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lectureseries_ creators
 	 */
-	@Deprecated
 	public java.util.List<Lectureseries_Creator> findByCreator(
 		long creatorId, int start, int end,
-		OrderByComparator<Lectureseries_Creator> orderByComparator,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries_Creator>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the lectureseries_ creators where creatorId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Lectureseries_CreatorModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param creatorId the creator ID
-	 * @param start the lower bound of the range of lectureseries_ creators
-	 * @param end the upper bound of the range of lectureseries_ creators (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching lectureseries_ creators
-	 */
-	public java.util.List<Lectureseries_Creator> findByCreator(
-		long creatorId, int start, int end,
-		OrderByComparator<Lectureseries_Creator> orderByComparator);
 
 	/**
 	 * Returns the first lectureseries_ creator in the ordered set where creatorId = &#63;.
@@ -253,7 +257,8 @@ public interface Lectureseries_CreatorPersistence
 	 */
 	public Lectureseries_Creator findByCreator_First(
 			long creatorId,
-			OrderByComparator<Lectureseries_Creator> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<Lectureseries_Creator> orderByComparator)
 		throws NoSuchLectureseries_CreatorException;
 
 	/**
@@ -265,7 +270,8 @@ public interface Lectureseries_CreatorPersistence
 	 */
 	public Lectureseries_Creator fetchByCreator_First(
 		long creatorId,
-		OrderByComparator<Lectureseries_Creator> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries_Creator>
+			orderByComparator);
 
 	/**
 	 * Returns the last lectureseries_ creator in the ordered set where creatorId = &#63;.
@@ -277,7 +283,8 @@ public interface Lectureseries_CreatorPersistence
 	 */
 	public Lectureseries_Creator findByCreator_Last(
 			long creatorId,
-			OrderByComparator<Lectureseries_Creator> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<Lectureseries_Creator> orderByComparator)
 		throws NoSuchLectureseries_CreatorException;
 
 	/**
@@ -289,7 +296,8 @@ public interface Lectureseries_CreatorPersistence
 	 */
 	public Lectureseries_Creator fetchByCreator_Last(
 		long creatorId,
-		OrderByComparator<Lectureseries_Creator> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries_Creator>
+			orderByComparator);
 
 	/**
 	 * Returns the lectureseries_ creators before and after the current lectureseries_ creator in the ordered set where creatorId = &#63;.
@@ -302,7 +310,8 @@ public interface Lectureseries_CreatorPersistence
 	 */
 	public Lectureseries_Creator[] findByCreator_PrevAndNext(
 			long lectureseriesCreatorId, long creatorId,
-			OrderByComparator<Lectureseries_Creator> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<Lectureseries_Creator> orderByComparator)
 		throws NoSuchLectureseries_CreatorException;
 
 	/**
@@ -334,7 +343,7 @@ public interface Lectureseries_CreatorPersistence
 	 * Returns a range of all the lectureseries_ creators where lectureseriesId = &#63; and creatorId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Lectureseries_CreatorModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Lectureseries_CreatorModelImpl</code>.
 	 * </p>
 	 *
 	 * @param lectureseriesId the lectureseries ID
@@ -350,10 +359,28 @@ public interface Lectureseries_CreatorPersistence
 	 * Returns an ordered range of all the lectureseries_ creators where lectureseriesId = &#63; and creatorId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Lectureseries_CreatorModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Lectureseries_CreatorModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByLectureseriesCreator(long,long, int, int, OrderByComparator)}
+	 * @param lectureseriesId the lectureseries ID
+	 * @param creatorId the creator ID
+	 * @param start the lower bound of the range of lectureseries_ creators
+	 * @param end the upper bound of the range of lectureseries_ creators (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching lectureseries_ creators
+	 */
+	public java.util.List<Lectureseries_Creator> findByLectureseriesCreator(
+		long lectureseriesId, long creatorId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries_Creator>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the lectureseries_ creators where lectureseriesId = &#63; and creatorId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Lectureseries_CreatorModelImpl</code>.
+	 * </p>
+	 *
 	 * @param lectureseriesId the lectureseries ID
 	 * @param creatorId the creator ID
 	 * @param start the lower bound of the range of lectureseries_ creators
@@ -362,29 +389,11 @@ public interface Lectureseries_CreatorPersistence
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching lectureseries_ creators
 	 */
-	@Deprecated
 	public java.util.List<Lectureseries_Creator> findByLectureseriesCreator(
 		long lectureseriesId, long creatorId, int start, int end,
-		OrderByComparator<Lectureseries_Creator> orderByComparator,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries_Creator>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the lectureseries_ creators where lectureseriesId = &#63; and creatorId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Lectureseries_CreatorModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param lectureseriesId the lectureseries ID
-	 * @param creatorId the creator ID
-	 * @param start the lower bound of the range of lectureseries_ creators
-	 * @param end the upper bound of the range of lectureseries_ creators (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching lectureseries_ creators
-	 */
-	public java.util.List<Lectureseries_Creator> findByLectureseriesCreator(
-		long lectureseriesId, long creatorId, int start, int end,
-		OrderByComparator<Lectureseries_Creator> orderByComparator);
 
 	/**
 	 * Returns the first lectureseries_ creator in the ordered set where lectureseriesId = &#63; and creatorId = &#63;.
@@ -397,7 +406,8 @@ public interface Lectureseries_CreatorPersistence
 	 */
 	public Lectureseries_Creator findByLectureseriesCreator_First(
 			long lectureseriesId, long creatorId,
-			OrderByComparator<Lectureseries_Creator> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<Lectureseries_Creator> orderByComparator)
 		throws NoSuchLectureseries_CreatorException;
 
 	/**
@@ -410,7 +420,8 @@ public interface Lectureseries_CreatorPersistence
 	 */
 	public Lectureseries_Creator fetchByLectureseriesCreator_First(
 		long lectureseriesId, long creatorId,
-		OrderByComparator<Lectureseries_Creator> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries_Creator>
+			orderByComparator);
 
 	/**
 	 * Returns the last lectureseries_ creator in the ordered set where lectureseriesId = &#63; and creatorId = &#63;.
@@ -423,7 +434,8 @@ public interface Lectureseries_CreatorPersistence
 	 */
 	public Lectureseries_Creator findByLectureseriesCreator_Last(
 			long lectureseriesId, long creatorId,
-			OrderByComparator<Lectureseries_Creator> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<Lectureseries_Creator> orderByComparator)
 		throws NoSuchLectureseries_CreatorException;
 
 	/**
@@ -436,7 +448,8 @@ public interface Lectureseries_CreatorPersistence
 	 */
 	public Lectureseries_Creator fetchByLectureseriesCreator_Last(
 		long lectureseriesId, long creatorId,
-		OrderByComparator<Lectureseries_Creator> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries_Creator>
+			orderByComparator);
 
 	/**
 	 * Returns the lectureseries_ creators before and after the current lectureseries_ creator in the ordered set where lectureseriesId = &#63; and creatorId = &#63;.
@@ -450,7 +463,8 @@ public interface Lectureseries_CreatorPersistence
 	 */
 	public Lectureseries_Creator[] findByLectureseriesCreator_PrevAndNext(
 			long lectureseriesCreatorId, long lectureseriesId, long creatorId,
-			OrderByComparator<Lectureseries_Creator> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator
+				<Lectureseries_Creator> orderByComparator)
 		throws NoSuchLectureseries_CreatorException;
 
 	/**
@@ -537,7 +551,7 @@ public interface Lectureseries_CreatorPersistence
 	 * Returns a range of all the lectureseries_ creators.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Lectureseries_CreatorModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Lectureseries_CreatorModelImpl</code>.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of lectureseries_ creators
@@ -550,37 +564,37 @@ public interface Lectureseries_CreatorPersistence
 	 * Returns an ordered range of all the lectureseries_ creators.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Lectureseries_CreatorModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Lectureseries_CreatorModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
+	 * @param start the lower bound of the range of lectureseries_ creators
+	 * @param end the upper bound of the range of lectureseries_ creators (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of lectureseries_ creators
+	 */
+	public java.util.List<Lectureseries_Creator> findAll(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries_Creator>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the lectureseries_ creators.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Lectureseries_CreatorModelImpl</code>.
+	 * </p>
+	 *
 	 * @param start the lower bound of the range of lectureseries_ creators
 	 * @param end the upper bound of the range of lectureseries_ creators (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of lectureseries_ creators
 	 */
-	@Deprecated
 	public java.util.List<Lectureseries_Creator> findAll(
 		int start, int end,
-		OrderByComparator<Lectureseries_Creator> orderByComparator,
+		com.liferay.portal.kernel.util.OrderByComparator<Lectureseries_Creator>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the lectureseries_ creators.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Lectureseries_CreatorModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of lectureseries_ creators
-	 * @param end the upper bound of the range of lectureseries_ creators (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of lectureseries_ creators
-	 */
-	public java.util.List<Lectureseries_Creator> findAll(
-		int start, int end,
-		OrderByComparator<Lectureseries_Creator> orderByComparator);
 
 	/**
 	 * Removes all the lectureseries_ creators from the database.

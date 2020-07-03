@@ -16,21 +16,24 @@ package de.uhh.l2g.plugins.service.impl;
 
 import com.liferay.portal.kernel.exception.SystemException;
 
+import java.util.ArrayList;
 import java.util.List;
 
-import de.uhh.l2g.plugins.exception.NoSuchLicenseException;
 import de.uhh.l2g.plugins.model.License;
 import de.uhh.l2g.plugins.service.base.LicenseLocalServiceBaseImpl;
-import de.uhh.l2g.plugins.service.persistence.LicenseUtil;
 
 /**
  * The implementation of the license local service.
  *
  * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link de.uhh.l2g.plugins.service.LicenseLocalService} interface.
+ * All custom service methods should be put in this class. Whenever methods are
+ * added, rerun ServiceBuilder to copy their definitions into the
+ * {@link de.uhh.l2g.plugins.service.LicenseLocalService} interface.
  *
  * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
+ * This is a local service. Methods of this service will not have security
+ * checks based on the propagated JAAS credentials because this service can only
+ * be accessed from within the same VM.
  * </p>
  *
  * @author Iavor Sturm
@@ -41,10 +44,16 @@ public class LicenseLocalServiceImpl extends LicenseLocalServiceBaseImpl {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.LicenseLocalServiceUtil} to access the license local service.
+	 * Never reference this interface directly. Always use {@link
+	 * de.uhh.l2g.plugins.service.LicenseLocalServiceUtil} to access the license
+	 * local service.
 	 */
-	
+
 	public List<License> getBySelectable(boolean isSelectable) throws SystemException {
 		return licensePersistence.findBySelectable(isSelectable);
+	}
+
+	public List<License> getLicensesFromVideoIds(ArrayList<Long> videoIds) {
+		return licenseFinder.findByVideoIds(videoIds);
 	}
 }

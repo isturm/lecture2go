@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * <p>
  * This class is a wrapper for {@link Video_Category}.
@@ -31,10 +29,9 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see Video_Category
  * @generated
  */
-@ProviderType
 public class Video_CategoryWrapper
 	extends BaseModelWrapper<Video_Category>
-	implements Video_Category, ModelWrapper<Video_Category> {
+	implements ModelWrapper<Video_Category>, Video_Category {
 
 	public Video_CategoryWrapper(Video_Category video_Category) {
 		super(video_Category);

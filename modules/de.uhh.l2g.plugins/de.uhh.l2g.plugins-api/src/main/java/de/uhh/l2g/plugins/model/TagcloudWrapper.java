@@ -21,8 +21,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * <p>
  * This class is a wrapper for {@link Tagcloud}.
@@ -32,10 +30,9 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see Tagcloud
  * @generated
  */
-@ProviderType
 public class TagcloudWrapper
 	extends BaseModelWrapper<Tagcloud>
-	implements Tagcloud, ModelWrapper<Tagcloud> {
+	implements ModelWrapper<Tagcloud>, Tagcloud {
 
 	public TagcloudWrapper(Tagcloud tagcloud) {
 		super(tagcloud);

@@ -17,8 +17,6 @@ package de.uhh.l2g.plugins.model.impl;
 import de.uhh.l2g.plugins.model.Institution_Host;
 import de.uhh.l2g.plugins.service.Institution_HostLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the Institution_Host service. Represents a row in the &quot;LG_Institution_Host&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see Institution_Host
  * @generated
  */
-@ProviderType
 public abstract class Institution_HostBaseImpl
 	extends Institution_HostModelImpl implements Institution_Host {
 

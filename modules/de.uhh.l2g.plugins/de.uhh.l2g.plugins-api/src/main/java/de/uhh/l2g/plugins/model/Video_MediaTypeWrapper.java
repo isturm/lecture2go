@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * <p>
  * This class is a wrapper for {@link Video_MediaType}.
@@ -31,10 +29,9 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see Video_MediaType
  * @generated
  */
-@ProviderType
 public class Video_MediaTypeWrapper
 	extends BaseModelWrapper<Video_MediaType>
-	implements Video_MediaType, ModelWrapper<Video_MediaType> {
+	implements ModelWrapper<Video_MediaType>, Video_MediaType {
 
 	public Video_MediaTypeWrapper(Video_MediaType video_MediaType) {
 		super(video_MediaType);

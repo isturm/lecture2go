@@ -20,8 +20,6 @@ import com.liferay.portal.kernel.model.wrapper.BaseModelWrapper;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * <p>
  * This class is a wrapper for {@link Sys}.
@@ -31,9 +29,8 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see Sys
  * @generated
  */
-@ProviderType
 public class SysWrapper
-	extends BaseModelWrapper<Sys> implements Sys, ModelWrapper<Sys> {
+	extends BaseModelWrapper<Sys> implements ModelWrapper<Sys>, Sys {
 
 	public SysWrapper(Sys sys) {
 		super(sys);

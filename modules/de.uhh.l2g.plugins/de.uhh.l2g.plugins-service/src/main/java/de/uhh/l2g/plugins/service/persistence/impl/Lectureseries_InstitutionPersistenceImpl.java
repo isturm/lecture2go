@@ -39,11 +39,9 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-
-import org.osgi.annotation.versioning.ProviderType;
+import java.util.Set;
 
 /**
  * The persistence implementation for the lectureseries_ institution service.
@@ -55,7 +53,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Iavor Sturm
  * @generated
  */
-@ProviderType
 public class Lectureseries_InstitutionPersistenceImpl
 	extends BasePersistenceImpl<Lectureseries_Institution>
 	implements Lectureseries_InstitutionPersistence {
@@ -99,7 +96,7 @@ public class Lectureseries_InstitutionPersistenceImpl
 	 * Returns a range of all the lectureseries_ institutions where lectureseriesId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Lectureseries_InstitutionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Lectureseries_InstitutionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param lectureseriesId the lectureseries ID
@@ -118,33 +115,7 @@ public class Lectureseries_InstitutionPersistenceImpl
 	 * Returns an ordered range of all the lectureseries_ institutions where lectureseriesId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Lectureseries_InstitutionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByLectureseriesId(long, int, int, OrderByComparator)}
-	 * @param lectureseriesId the lectureseries ID
-	 * @param start the lower bound of the range of lectureseries_ institutions
-	 * @param end the upper bound of the range of lectureseries_ institutions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching lectureseries_ institutions
-	 */
-	@Deprecated
-	@Override
-	public List<Lectureseries_Institution> findByLectureseriesId(
-		long lectureseriesId, int start, int end,
-		OrderByComparator<Lectureseries_Institution> orderByComparator,
-		boolean useFinderCache) {
-
-		return findByLectureseriesId(
-			lectureseriesId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the lectureseries_ institutions where lectureseriesId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Lectureseries_InstitutionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Lectureseries_InstitutionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param lectureseriesId the lectureseries ID
@@ -158,97 +129,120 @@ public class Lectureseries_InstitutionPersistenceImpl
 		long lectureseriesId, int start, int end,
 		OrderByComparator<Lectureseries_Institution> orderByComparator) {
 
-		boolean pagination = true;
+		return findByLectureseriesId(
+			lectureseriesId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the lectureseries_ institutions where lectureseriesId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Lectureseries_InstitutionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param lectureseriesId the lectureseries ID
+	 * @param start the lower bound of the range of lectureseries_ institutions
+	 * @param end the upper bound of the range of lectureseries_ institutions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching lectureseries_ institutions
+	 */
+	@Override
+	public List<Lectureseries_Institution> findByLectureseriesId(
+		long lectureseriesId, int start, int end,
+		OrderByComparator<Lectureseries_Institution> orderByComparator,
+		boolean useFinderCache) {
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByLectureseriesId;
-			finderArgs = new Object[] {lectureseriesId};
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByLectureseriesId;
+				finderArgs = new Object[] {lectureseriesId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByLectureseriesId;
 			finderArgs = new Object[] {
 				lectureseriesId, start, end, orderByComparator
 			};
 		}
 
-		List<Lectureseries_Institution> list =
-			(List<Lectureseries_Institution>)finderCache.getResult(
+		List<Lectureseries_Institution> list = null;
+
+		if (useFinderCache) {
+			list = (List<Lectureseries_Institution>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Lectureseries_Institution lectureseries_Institution : list) {
-				if ((lectureseriesId !=
-						lectureseries_Institution.getLectureseriesId())) {
+			if ((list != null) && !list.isEmpty()) {
+				for (Lectureseries_Institution lectureseries_Institution :
+						list) {
 
-					list = null;
+					if (lectureseriesId !=
+							lectureseries_Institution.getLectureseriesId()) {
 
-					break;
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
 
 		if (list == null) {
-			StringBundler query = null;
+			StringBundler sb = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(
+				sb = new StringBundler(
 					3 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
-				query = new StringBundler(3);
+				sb = new StringBundler(3);
 			}
 
-			query.append(_SQL_SELECT_LECTURESERIES_INSTITUTION_WHERE);
+			sb.append(_SQL_SELECT_LECTURESERIES_INSTITUTION_WHERE);
 
-			query.append(_FINDER_COLUMN_LECTURESERIESID_LECTURESERIESID_2);
+			sb.append(_FINDER_COLUMN_LECTURESERIESID_LECTURESERIESID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
-					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
-				query.append(Lectureseries_InstitutionModelImpl.ORDER_BY_JPQL);
+			else {
+				sb.append(Lectureseries_InstitutionModelImpl.ORDER_BY_JPQL);
 			}
 
-			String sql = query.toString();
+			String sql = sb.toString();
 
 			Session session = null;
 
 			try {
 				session = openSession();
 
-				Query q = session.createQuery(sql);
+				Query query = session.createQuery(sql);
 
-				QueryPos qPos = QueryPos.getInstance(q);
+				QueryPos queryPos = QueryPos.getInstance(query);
 
-				qPos.add(lectureseriesId);
+				queryPos.add(lectureseriesId);
 
-				if (!pagination) {
-					list = (List<Lectureseries_Institution>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<Lectureseries_Institution>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<Lectureseries_Institution>)QueryUtil.list(
+					query, getDialect(), start, end);
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
-			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+			catch (Exception exception) {
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
-				throw processException(e);
+				throw processException(exception);
 			}
 			finally {
 				closeSession(session);
@@ -279,16 +273,16 @@ public class Lectureseries_InstitutionPersistenceImpl
 			return lectureseries_Institution;
 		}
 
-		StringBundler msg = new StringBundler(4);
+		StringBundler sb = new StringBundler(4);
 
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("lectureseriesId=");
-		msg.append(lectureseriesId);
+		sb.append("lectureseriesId=");
+		sb.append(lectureseriesId);
 
-		msg.append("}");
+		sb.append("}");
 
-		throw new NoSuchLectureseries_InstitutionException(msg.toString());
+		throw new NoSuchLectureseries_InstitutionException(sb.toString());
 	}
 
 	/**
@@ -334,16 +328,16 @@ public class Lectureseries_InstitutionPersistenceImpl
 			return lectureseries_Institution;
 		}
 
-		StringBundler msg = new StringBundler(4);
+		StringBundler sb = new StringBundler(4);
 
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("lectureseriesId=");
-		msg.append(lectureseriesId);
+		sb.append("lectureseriesId=");
+		sb.append(lectureseriesId);
 
-		msg.append("}");
+		sb.append("}");
 
-		throw new NoSuchLectureseries_InstitutionException(msg.toString());
+		throw new NoSuchLectureseries_InstitutionException(sb.toString());
 	}
 
 	/**
@@ -412,8 +406,8 @@ public class Lectureseries_InstitutionPersistenceImpl
 
 			return array;
 		}
-		catch (Exception e) {
-			throw processException(e);
+		catch (Exception exception) {
+			throw processException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -426,102 +420,102 @@ public class Lectureseries_InstitutionPersistenceImpl
 		OrderByComparator<Lectureseries_Institution> orderByComparator,
 		boolean previous) {
 
-		StringBundler query = null;
+		StringBundler sb = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(
+			sb = new StringBundler(
 				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			query = new StringBundler(3);
+			sb = new StringBundler(3);
 		}
 
-		query.append(_SQL_SELECT_LECTURESERIES_INSTITUTION_WHERE);
+		sb.append(_SQL_SELECT_LECTURESERIES_INSTITUTION_WHERE);
 
-		query.append(_FINDER_COLUMN_LECTURESERIESID_LECTURESERIESID_2);
+		sb.append(_FINDER_COLUMN_LECTURESERIESID_LECTURESERIESID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields =
 				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
+				sb.append(WHERE_AND);
 			}
 
 			for (int i = 0; i < orderByConditionFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByConditionFields[i]);
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
 
 				if ((i + 1) < orderByConditionFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
 					}
 					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
 					}
 				}
 				else {
 					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
+						sb.append(WHERE_GREATER_THAN);
 					}
 					else {
-						query.append(WHERE_LESSER_THAN);
+						sb.append(WHERE_LESSER_THAN);
 					}
 				}
 			}
 
-			query.append(ORDER_BY_CLAUSE);
+			sb.append(ORDER_BY_CLAUSE);
 
 			String[] orderByFields = orderByComparator.getOrderByFields();
 
 			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
 
 				if ((i + 1) < orderByFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
 					}
 					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
 					}
 				}
 				else {
 					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
+						sb.append(ORDER_BY_ASC);
 					}
 					else {
-						query.append(ORDER_BY_DESC);
+						sb.append(ORDER_BY_DESC);
 					}
 				}
 			}
 		}
 		else {
-			query.append(Lectureseries_InstitutionModelImpl.ORDER_BY_JPQL);
+			sb.append(Lectureseries_InstitutionModelImpl.ORDER_BY_JPQL);
 		}
 
-		String sql = query.toString();
+		String sql = sb.toString();
 
-		Query q = session.createQuery(sql);
+		Query query = session.createQuery(sql);
 
-		q.setFirstResult(0);
-		q.setMaxResults(2);
+		query.setFirstResult(0);
+		query.setMaxResults(2);
 
-		QueryPos qPos = QueryPos.getInstance(q);
+		QueryPos queryPos = QueryPos.getInstance(query);
 
-		qPos.add(lectureseriesId);
+		queryPos.add(lectureseriesId);
 
 		if (orderByComparator != null) {
 			for (Object orderByConditionValue :
 					orderByComparator.getOrderByConditionValues(
 						lectureseries_Institution)) {
 
-				qPos.add(orderByConditionValue);
+				queryPos.add(orderByConditionValue);
 			}
 		}
 
-		List<Lectureseries_Institution> list = q.list();
+		List<Lectureseries_Institution> list = query.list();
 
 		if (list.size() == 2) {
 			return list.get(1);
@@ -562,33 +556,33 @@ public class Lectureseries_InstitutionPersistenceImpl
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler(2);
+			StringBundler sb = new StringBundler(2);
 
-			query.append(_SQL_COUNT_LECTURESERIES_INSTITUTION_WHERE);
+			sb.append(_SQL_COUNT_LECTURESERIES_INSTITUTION_WHERE);
 
-			query.append(_FINDER_COLUMN_LECTURESERIESID_LECTURESERIESID_2);
+			sb.append(_FINDER_COLUMN_LECTURESERIESID_LECTURESERIESID_2);
 
-			String sql = query.toString();
+			String sql = sb.toString();
 
 			Session session = null;
 
 			try {
 				session = openSession();
 
-				Query q = session.createQuery(sql);
+				Query query = session.createQuery(sql);
 
-				QueryPos qPos = QueryPos.getInstance(q);
+				QueryPos queryPos = QueryPos.getInstance(query);
 
-				qPos.add(lectureseriesId);
+				queryPos.add(lectureseriesId);
 
-				count = (Long)q.uniqueResult();
+				count = (Long)query.uniqueResult();
 
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				finderCache.removeResult(finderPath, finderArgs);
 
-				throw processException(e);
+				throw processException(exception);
 			}
 			finally {
 				closeSession(session);
@@ -624,7 +618,7 @@ public class Lectureseries_InstitutionPersistenceImpl
 	 * Returns a range of all the lectureseries_ institutions where institutionId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Lectureseries_InstitutionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Lectureseries_InstitutionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param institutionId the institution ID
@@ -643,33 +637,7 @@ public class Lectureseries_InstitutionPersistenceImpl
 	 * Returns an ordered range of all the lectureseries_ institutions where institutionId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Lectureseries_InstitutionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByInstitutionId(long, int, int, OrderByComparator)}
-	 * @param institutionId the institution ID
-	 * @param start the lower bound of the range of lectureseries_ institutions
-	 * @param end the upper bound of the range of lectureseries_ institutions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching lectureseries_ institutions
-	 */
-	@Deprecated
-	@Override
-	public List<Lectureseries_Institution> findByInstitutionId(
-		long institutionId, int start, int end,
-		OrderByComparator<Lectureseries_Institution> orderByComparator,
-		boolean useFinderCache) {
-
-		return findByInstitutionId(
-			institutionId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the lectureseries_ institutions where institutionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Lectureseries_InstitutionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Lectureseries_InstitutionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param institutionId the institution ID
@@ -683,97 +651,120 @@ public class Lectureseries_InstitutionPersistenceImpl
 		long institutionId, int start, int end,
 		OrderByComparator<Lectureseries_Institution> orderByComparator) {
 
-		boolean pagination = true;
+		return findByInstitutionId(
+			institutionId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the lectureseries_ institutions where institutionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Lectureseries_InstitutionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param institutionId the institution ID
+	 * @param start the lower bound of the range of lectureseries_ institutions
+	 * @param end the upper bound of the range of lectureseries_ institutions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching lectureseries_ institutions
+	 */
+	@Override
+	public List<Lectureseries_Institution> findByInstitutionId(
+		long institutionId, int start, int end,
+		OrderByComparator<Lectureseries_Institution> orderByComparator,
+		boolean useFinderCache) {
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByInstitutionId;
-			finderArgs = new Object[] {institutionId};
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByInstitutionId;
+				finderArgs = new Object[] {institutionId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByInstitutionId;
 			finderArgs = new Object[] {
 				institutionId, start, end, orderByComparator
 			};
 		}
 
-		List<Lectureseries_Institution> list =
-			(List<Lectureseries_Institution>)finderCache.getResult(
+		List<Lectureseries_Institution> list = null;
+
+		if (useFinderCache) {
+			list = (List<Lectureseries_Institution>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Lectureseries_Institution lectureseries_Institution : list) {
-				if ((institutionId !=
-						lectureseries_Institution.getInstitutionId())) {
+			if ((list != null) && !list.isEmpty()) {
+				for (Lectureseries_Institution lectureseries_Institution :
+						list) {
 
-					list = null;
+					if (institutionId !=
+							lectureseries_Institution.getInstitutionId()) {
 
-					break;
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
 
 		if (list == null) {
-			StringBundler query = null;
+			StringBundler sb = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(
+				sb = new StringBundler(
 					3 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
-				query = new StringBundler(3);
+				sb = new StringBundler(3);
 			}
 
-			query.append(_SQL_SELECT_LECTURESERIES_INSTITUTION_WHERE);
+			sb.append(_SQL_SELECT_LECTURESERIES_INSTITUTION_WHERE);
 
-			query.append(_FINDER_COLUMN_INSTITUTIONID_INSTITUTIONID_2);
+			sb.append(_FINDER_COLUMN_INSTITUTIONID_INSTITUTIONID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
-					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
-				query.append(Lectureseries_InstitutionModelImpl.ORDER_BY_JPQL);
+			else {
+				sb.append(Lectureseries_InstitutionModelImpl.ORDER_BY_JPQL);
 			}
 
-			String sql = query.toString();
+			String sql = sb.toString();
 
 			Session session = null;
 
 			try {
 				session = openSession();
 
-				Query q = session.createQuery(sql);
+				Query query = session.createQuery(sql);
 
-				QueryPos qPos = QueryPos.getInstance(q);
+				QueryPos queryPos = QueryPos.getInstance(query);
 
-				qPos.add(institutionId);
+				queryPos.add(institutionId);
 
-				if (!pagination) {
-					list = (List<Lectureseries_Institution>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<Lectureseries_Institution>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<Lectureseries_Institution>)QueryUtil.list(
+					query, getDialect(), start, end);
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
-			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+			catch (Exception exception) {
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
-				throw processException(e);
+				throw processException(exception);
 			}
 			finally {
 				closeSession(session);
@@ -804,16 +795,16 @@ public class Lectureseries_InstitutionPersistenceImpl
 			return lectureseries_Institution;
 		}
 
-		StringBundler msg = new StringBundler(4);
+		StringBundler sb = new StringBundler(4);
 
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("institutionId=");
-		msg.append(institutionId);
+		sb.append("institutionId=");
+		sb.append(institutionId);
 
-		msg.append("}");
+		sb.append("}");
 
-		throw new NoSuchLectureseries_InstitutionException(msg.toString());
+		throw new NoSuchLectureseries_InstitutionException(sb.toString());
 	}
 
 	/**
@@ -859,16 +850,16 @@ public class Lectureseries_InstitutionPersistenceImpl
 			return lectureseries_Institution;
 		}
 
-		StringBundler msg = new StringBundler(4);
+		StringBundler sb = new StringBundler(4);
 
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("institutionId=");
-		msg.append(institutionId);
+		sb.append("institutionId=");
+		sb.append(institutionId);
 
-		msg.append("}");
+		sb.append("}");
 
-		throw new NoSuchLectureseries_InstitutionException(msg.toString());
+		throw new NoSuchLectureseries_InstitutionException(sb.toString());
 	}
 
 	/**
@@ -937,8 +928,8 @@ public class Lectureseries_InstitutionPersistenceImpl
 
 			return array;
 		}
-		catch (Exception e) {
-			throw processException(e);
+		catch (Exception exception) {
+			throw processException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -951,102 +942,102 @@ public class Lectureseries_InstitutionPersistenceImpl
 		OrderByComparator<Lectureseries_Institution> orderByComparator,
 		boolean previous) {
 
-		StringBundler query = null;
+		StringBundler sb = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(
+			sb = new StringBundler(
 				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			query = new StringBundler(3);
+			sb = new StringBundler(3);
 		}
 
-		query.append(_SQL_SELECT_LECTURESERIES_INSTITUTION_WHERE);
+		sb.append(_SQL_SELECT_LECTURESERIES_INSTITUTION_WHERE);
 
-		query.append(_FINDER_COLUMN_INSTITUTIONID_INSTITUTIONID_2);
+		sb.append(_FINDER_COLUMN_INSTITUTIONID_INSTITUTIONID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields =
 				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
+				sb.append(WHERE_AND);
 			}
 
 			for (int i = 0; i < orderByConditionFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByConditionFields[i]);
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
 
 				if ((i + 1) < orderByConditionFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
 					}
 					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
 					}
 				}
 				else {
 					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
+						sb.append(WHERE_GREATER_THAN);
 					}
 					else {
-						query.append(WHERE_LESSER_THAN);
+						sb.append(WHERE_LESSER_THAN);
 					}
 				}
 			}
 
-			query.append(ORDER_BY_CLAUSE);
+			sb.append(ORDER_BY_CLAUSE);
 
 			String[] orderByFields = orderByComparator.getOrderByFields();
 
 			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
 
 				if ((i + 1) < orderByFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
 					}
 					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
 					}
 				}
 				else {
 					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
+						sb.append(ORDER_BY_ASC);
 					}
 					else {
-						query.append(ORDER_BY_DESC);
+						sb.append(ORDER_BY_DESC);
 					}
 				}
 			}
 		}
 		else {
-			query.append(Lectureseries_InstitutionModelImpl.ORDER_BY_JPQL);
+			sb.append(Lectureseries_InstitutionModelImpl.ORDER_BY_JPQL);
 		}
 
-		String sql = query.toString();
+		String sql = sb.toString();
 
-		Query q = session.createQuery(sql);
+		Query query = session.createQuery(sql);
 
-		q.setFirstResult(0);
-		q.setMaxResults(2);
+		query.setFirstResult(0);
+		query.setMaxResults(2);
 
-		QueryPos qPos = QueryPos.getInstance(q);
+		QueryPos queryPos = QueryPos.getInstance(query);
 
-		qPos.add(institutionId);
+		queryPos.add(institutionId);
 
 		if (orderByComparator != null) {
 			for (Object orderByConditionValue :
 					orderByComparator.getOrderByConditionValues(
 						lectureseries_Institution)) {
 
-				qPos.add(orderByConditionValue);
+				queryPos.add(orderByConditionValue);
 			}
 		}
 
-		List<Lectureseries_Institution> list = q.list();
+		List<Lectureseries_Institution> list = query.list();
 
 		if (list.size() == 2) {
 			return list.get(1);
@@ -1087,33 +1078,33 @@ public class Lectureseries_InstitutionPersistenceImpl
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler(2);
+			StringBundler sb = new StringBundler(2);
 
-			query.append(_SQL_COUNT_LECTURESERIES_INSTITUTION_WHERE);
+			sb.append(_SQL_COUNT_LECTURESERIES_INSTITUTION_WHERE);
 
-			query.append(_FINDER_COLUMN_INSTITUTIONID_INSTITUTIONID_2);
+			sb.append(_FINDER_COLUMN_INSTITUTIONID_INSTITUTIONID_2);
 
-			String sql = query.toString();
+			String sql = sb.toString();
 
 			Session session = null;
 
 			try {
 				session = openSession();
 
-				Query q = session.createQuery(sql);
+				Query query = session.createQuery(sql);
 
-				QueryPos qPos = QueryPos.getInstance(q);
+				QueryPos queryPos = QueryPos.getInstance(query);
 
-				qPos.add(institutionId);
+				queryPos.add(institutionId);
 
-				count = (Long)q.uniqueResult();
+				count = (Long)query.uniqueResult();
 
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				finderCache.removeResult(finderPath, finderArgs);
 
-				throw processException(e);
+				throw processException(exception);
 			}
 			finally {
 				closeSession(session);
@@ -1153,7 +1144,7 @@ public class Lectureseries_InstitutionPersistenceImpl
 	 * Returns a range of all the lectureseries_ institutions where lectureseriesId = &#63; and institutionId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Lectureseries_InstitutionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Lectureseries_InstitutionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param lectureseriesId the lectureseries ID
@@ -1175,35 +1166,7 @@ public class Lectureseries_InstitutionPersistenceImpl
 	 * Returns an ordered range of all the lectureseries_ institutions where lectureseriesId = &#63; and institutionId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Lectureseries_InstitutionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByLectureseriesIdAndInstitutionId(long,long, int, int, OrderByComparator)}
-	 * @param lectureseriesId the lectureseries ID
-	 * @param institutionId the institution ID
-	 * @param start the lower bound of the range of lectureseries_ institutions
-	 * @param end the upper bound of the range of lectureseries_ institutions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching lectureseries_ institutions
-	 */
-	@Deprecated
-	@Override
-	public List<Lectureseries_Institution>
-		findByLectureseriesIdAndInstitutionId(
-			long lectureseriesId, long institutionId, int start, int end,
-			OrderByComparator<Lectureseries_Institution> orderByComparator,
-			boolean useFinderCache) {
-
-		return findByLectureseriesIdAndInstitutionId(
-			lectureseriesId, institutionId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the lectureseries_ institutions where lectureseriesId = &#63; and institutionId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Lectureseries_InstitutionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Lectureseries_InstitutionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param lectureseriesId the lectureseries ID
@@ -1219,19 +1182,46 @@ public class Lectureseries_InstitutionPersistenceImpl
 			long lectureseriesId, long institutionId, int start, int end,
 			OrderByComparator<Lectureseries_Institution> orderByComparator) {
 
-		boolean pagination = true;
+		return findByLectureseriesIdAndInstitutionId(
+			lectureseriesId, institutionId, start, end, orderByComparator,
+			true);
+	}
+
+	/**
+	 * Returns an ordered range of all the lectureseries_ institutions where lectureseriesId = &#63; and institutionId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Lectureseries_InstitutionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param lectureseriesId the lectureseries ID
+	 * @param institutionId the institution ID
+	 * @param start the lower bound of the range of lectureseries_ institutions
+	 * @param end the upper bound of the range of lectureseries_ institutions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching lectureseries_ institutions
+	 */
+	@Override
+	public List<Lectureseries_Institution>
+		findByLectureseriesIdAndInstitutionId(
+			long lectureseriesId, long institutionId, int start, int end,
+			OrderByComparator<Lectureseries_Institution> orderByComparator,
+			boolean useFinderCache) {
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			pagination = false;
-			finderPath =
-				_finderPathWithoutPaginationFindByLectureseriesIdAndInstitutionId;
-			finderArgs = new Object[] {lectureseriesId, institutionId};
+			if (useFinderCache) {
+				finderPath =
+					_finderPathWithoutPaginationFindByLectureseriesIdAndInstitutionId;
+				finderArgs = new Object[] {lectureseriesId, institutionId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath =
 				_finderPathWithPaginationFindByLectureseriesIdAndInstitutionId;
 			finderArgs = new Object[] {
@@ -1239,87 +1229,86 @@ public class Lectureseries_InstitutionPersistenceImpl
 			};
 		}
 
-		List<Lectureseries_Institution> list =
-			(List<Lectureseries_Institution>)finderCache.getResult(
+		List<Lectureseries_Institution> list = null;
+
+		if (useFinderCache) {
+			list = (List<Lectureseries_Institution>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Lectureseries_Institution lectureseries_Institution : list) {
-				if ((lectureseriesId !=
-						lectureseries_Institution.getLectureseriesId()) ||
-					(institutionId !=
-						lectureseries_Institution.getInstitutionId())) {
+			if ((list != null) && !list.isEmpty()) {
+				for (Lectureseries_Institution lectureseries_Institution :
+						list) {
 
-					list = null;
+					if ((lectureseriesId !=
+							lectureseries_Institution.getLectureseriesId()) ||
+						(institutionId !=
+							lectureseries_Institution.getInstitutionId())) {
 
-					break;
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
 
 		if (list == null) {
-			StringBundler query = null;
+			StringBundler sb = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(
+				sb = new StringBundler(
 					4 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
-				query = new StringBundler(4);
+				sb = new StringBundler(4);
 			}
 
-			query.append(_SQL_SELECT_LECTURESERIES_INSTITUTION_WHERE);
+			sb.append(_SQL_SELECT_LECTURESERIES_INSTITUTION_WHERE);
 
-			query.append(
+			sb.append(
 				_FINDER_COLUMN_LECTURESERIESIDANDINSTITUTIONID_LECTURESERIESID_2);
 
-			query.append(
+			sb.append(
 				_FINDER_COLUMN_LECTURESERIESIDANDINSTITUTIONID_INSTITUTIONID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
-					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
-				query.append(Lectureseries_InstitutionModelImpl.ORDER_BY_JPQL);
+			else {
+				sb.append(Lectureseries_InstitutionModelImpl.ORDER_BY_JPQL);
 			}
 
-			String sql = query.toString();
+			String sql = sb.toString();
 
 			Session session = null;
 
 			try {
 				session = openSession();
 
-				Query q = session.createQuery(sql);
+				Query query = session.createQuery(sql);
 
-				QueryPos qPos = QueryPos.getInstance(q);
+				QueryPos queryPos = QueryPos.getInstance(query);
 
-				qPos.add(lectureseriesId);
+				queryPos.add(lectureseriesId);
 
-				qPos.add(institutionId);
+				queryPos.add(institutionId);
 
-				if (!pagination) {
-					list = (List<Lectureseries_Institution>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<Lectureseries_Institution>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<Lectureseries_Institution>)QueryUtil.list(
+					query, getDialect(), start, end);
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
-			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+			catch (Exception exception) {
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
-				throw processException(e);
+				throw processException(exception);
 			}
 			finally {
 				closeSession(session);
@@ -1353,19 +1342,19 @@ public class Lectureseries_InstitutionPersistenceImpl
 			return lectureseries_Institution;
 		}
 
-		StringBundler msg = new StringBundler(6);
+		StringBundler sb = new StringBundler(6);
 
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("lectureseriesId=");
-		msg.append(lectureseriesId);
+		sb.append("lectureseriesId=");
+		sb.append(lectureseriesId);
 
-		msg.append(", institutionId=");
-		msg.append(institutionId);
+		sb.append(", institutionId=");
+		sb.append(institutionId);
 
-		msg.append("}");
+		sb.append("}");
 
-		throw new NoSuchLectureseries_InstitutionException(msg.toString());
+		throw new NoSuchLectureseries_InstitutionException(sb.toString());
 	}
 
 	/**
@@ -1416,19 +1405,19 @@ public class Lectureseries_InstitutionPersistenceImpl
 			return lectureseries_Institution;
 		}
 
-		StringBundler msg = new StringBundler(6);
+		StringBundler sb = new StringBundler(6);
 
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("lectureseriesId=");
-		msg.append(lectureseriesId);
+		sb.append("lectureseriesId=");
+		sb.append(lectureseriesId);
 
-		msg.append(", institutionId=");
-		msg.append(institutionId);
+		sb.append(", institutionId=");
+		sb.append(institutionId);
 
-		msg.append("}");
+		sb.append("}");
 
-		throw new NoSuchLectureseries_InstitutionException(msg.toString());
+		throw new NoSuchLectureseries_InstitutionException(sb.toString());
 	}
 
 	/**
@@ -1505,8 +1494,8 @@ public class Lectureseries_InstitutionPersistenceImpl
 
 			return array;
 		}
-		catch (Exception e) {
-			throw processException(e);
+		catch (Exception exception) {
+			throw processException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -1521,23 +1510,23 @@ public class Lectureseries_InstitutionPersistenceImpl
 			OrderByComparator<Lectureseries_Institution> orderByComparator,
 			boolean previous) {
 
-		StringBundler query = null;
+		StringBundler sb = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(
+			sb = new StringBundler(
 				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			query = new StringBundler(4);
+			sb = new StringBundler(4);
 		}
 
-		query.append(_SQL_SELECT_LECTURESERIES_INSTITUTION_WHERE);
+		sb.append(_SQL_SELECT_LECTURESERIES_INSTITUTION_WHERE);
 
-		query.append(
+		sb.append(
 			_FINDER_COLUMN_LECTURESERIESIDANDINSTITUTIONID_LECTURESERIESID_2);
 
-		query.append(
+		sb.append(
 			_FINDER_COLUMN_LECTURESERIESIDANDINSTITUTIONID_INSTITUTIONID_2);
 
 		if (orderByComparator != null) {
@@ -1545,84 +1534,84 @@ public class Lectureseries_InstitutionPersistenceImpl
 				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
+				sb.append(WHERE_AND);
 			}
 
 			for (int i = 0; i < orderByConditionFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByConditionFields[i]);
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
 
 				if ((i + 1) < orderByConditionFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
 					}
 					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
 					}
 				}
 				else {
 					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
+						sb.append(WHERE_GREATER_THAN);
 					}
 					else {
-						query.append(WHERE_LESSER_THAN);
+						sb.append(WHERE_LESSER_THAN);
 					}
 				}
 			}
 
-			query.append(ORDER_BY_CLAUSE);
+			sb.append(ORDER_BY_CLAUSE);
 
 			String[] orderByFields = orderByComparator.getOrderByFields();
 
 			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
 
 				if ((i + 1) < orderByFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
 					}
 					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
 					}
 				}
 				else {
 					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
+						sb.append(ORDER_BY_ASC);
 					}
 					else {
-						query.append(ORDER_BY_DESC);
+						sb.append(ORDER_BY_DESC);
 					}
 				}
 			}
 		}
 		else {
-			query.append(Lectureseries_InstitutionModelImpl.ORDER_BY_JPQL);
+			sb.append(Lectureseries_InstitutionModelImpl.ORDER_BY_JPQL);
 		}
 
-		String sql = query.toString();
+		String sql = sb.toString();
 
-		Query q = session.createQuery(sql);
+		Query query = session.createQuery(sql);
 
-		q.setFirstResult(0);
-		q.setMaxResults(2);
+		query.setFirstResult(0);
+		query.setMaxResults(2);
 
-		QueryPos qPos = QueryPos.getInstance(q);
+		QueryPos queryPos = QueryPos.getInstance(query);
 
-		qPos.add(lectureseriesId);
+		queryPos.add(lectureseriesId);
 
-		qPos.add(institutionId);
+		queryPos.add(institutionId);
 
 		if (orderByComparator != null) {
 			for (Object orderByConditionValue :
 					orderByComparator.getOrderByConditionValues(
 						lectureseries_Institution)) {
 
-				qPos.add(orderByConditionValue);
+				queryPos.add(orderByConditionValue);
 			}
 		}
 
-		List<Lectureseries_Institution> list = q.list();
+		List<Lectureseries_Institution> list = query.list();
 
 		if (list.size() == 2) {
 			return list.get(1);
@@ -1670,39 +1659,39 @@ public class Lectureseries_InstitutionPersistenceImpl
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler(3);
+			StringBundler sb = new StringBundler(3);
 
-			query.append(_SQL_COUNT_LECTURESERIES_INSTITUTION_WHERE);
+			sb.append(_SQL_COUNT_LECTURESERIES_INSTITUTION_WHERE);
 
-			query.append(
+			sb.append(
 				_FINDER_COLUMN_LECTURESERIESIDANDINSTITUTIONID_LECTURESERIESID_2);
 
-			query.append(
+			sb.append(
 				_FINDER_COLUMN_LECTURESERIESIDANDINSTITUTIONID_INSTITUTIONID_2);
 
-			String sql = query.toString();
+			String sql = sb.toString();
 
 			Session session = null;
 
 			try {
 				session = openSession();
 
-				Query q = session.createQuery(sql);
+				Query query = session.createQuery(sql);
 
-				QueryPos qPos = QueryPos.getInstance(q);
+				QueryPos queryPos = QueryPos.getInstance(query);
 
-				qPos.add(lectureseriesId);
+				queryPos.add(lectureseriesId);
 
-				qPos.add(institutionId);
+				queryPos.add(institutionId);
 
-				count = (Long)q.uniqueResult();
+				count = (Long)query.uniqueResult();
 
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				finderCache.removeResult(finderPath, finderArgs);
 
-				throw processException(e);
+				throw processException(exception);
 			}
 			finally {
 				closeSession(session);
@@ -1742,7 +1731,7 @@ public class Lectureseries_InstitutionPersistenceImpl
 	 * Returns a range of all the lectureseries_ institutions where institutionParentId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Lectureseries_InstitutionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Lectureseries_InstitutionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param institutionParentId the institution parent ID
@@ -1761,33 +1750,7 @@ public class Lectureseries_InstitutionPersistenceImpl
 	 * Returns an ordered range of all the lectureseries_ institutions where institutionParentId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Lectureseries_InstitutionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByInstitutionParentId(long, int, int, OrderByComparator)}
-	 * @param institutionParentId the institution parent ID
-	 * @param start the lower bound of the range of lectureseries_ institutions
-	 * @param end the upper bound of the range of lectureseries_ institutions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching lectureseries_ institutions
-	 */
-	@Deprecated
-	@Override
-	public List<Lectureseries_Institution> findByInstitutionParentId(
-		long institutionParentId, int start, int end,
-		OrderByComparator<Lectureseries_Institution> orderByComparator,
-		boolean useFinderCache) {
-
-		return findByInstitutionParentId(
-			institutionParentId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the lectureseries_ institutions where institutionParentId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Lectureseries_InstitutionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Lectureseries_InstitutionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param institutionParentId the institution parent ID
@@ -1801,98 +1764,122 @@ public class Lectureseries_InstitutionPersistenceImpl
 		long institutionParentId, int start, int end,
 		OrderByComparator<Lectureseries_Institution> orderByComparator) {
 
-		boolean pagination = true;
+		return findByInstitutionParentId(
+			institutionParentId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the lectureseries_ institutions where institutionParentId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Lectureseries_InstitutionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param institutionParentId the institution parent ID
+	 * @param start the lower bound of the range of lectureseries_ institutions
+	 * @param end the upper bound of the range of lectureseries_ institutions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching lectureseries_ institutions
+	 */
+	@Override
+	public List<Lectureseries_Institution> findByInstitutionParentId(
+		long institutionParentId, int start, int end,
+		OrderByComparator<Lectureseries_Institution> orderByComparator,
+		boolean useFinderCache) {
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByInstitutionParentId;
-			finderArgs = new Object[] {institutionParentId};
+			if (useFinderCache) {
+				finderPath =
+					_finderPathWithoutPaginationFindByInstitutionParentId;
+				finderArgs = new Object[] {institutionParentId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByInstitutionParentId;
 			finderArgs = new Object[] {
 				institutionParentId, start, end, orderByComparator
 			};
 		}
 
-		List<Lectureseries_Institution> list =
-			(List<Lectureseries_Institution>)finderCache.getResult(
+		List<Lectureseries_Institution> list = null;
+
+		if (useFinderCache) {
+			list = (List<Lectureseries_Institution>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Lectureseries_Institution lectureseries_Institution : list) {
-				if ((institutionParentId !=
-						lectureseries_Institution.getInstitutionParentId())) {
+			if ((list != null) && !list.isEmpty()) {
+				for (Lectureseries_Institution lectureseries_Institution :
+						list) {
 
-					list = null;
+					if (institutionParentId !=
+							lectureseries_Institution.
+								getInstitutionParentId()) {
 
-					break;
+						list = null;
+
+						break;
+					}
 				}
 			}
 		}
 
 		if (list == null) {
-			StringBundler query = null;
+			StringBundler sb = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(
+				sb = new StringBundler(
 					3 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
-				query = new StringBundler(3);
+				sb = new StringBundler(3);
 			}
 
-			query.append(_SQL_SELECT_LECTURESERIES_INSTITUTION_WHERE);
+			sb.append(_SQL_SELECT_LECTURESERIES_INSTITUTION_WHERE);
 
-			query.append(
-				_FINDER_COLUMN_INSTITUTIONPARENTID_INSTITUTIONPARENTID_2);
+			sb.append(_FINDER_COLUMN_INSTITUTIONPARENTID_INSTITUTIONPARENTID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
-					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
-				query.append(Lectureseries_InstitutionModelImpl.ORDER_BY_JPQL);
+			else {
+				sb.append(Lectureseries_InstitutionModelImpl.ORDER_BY_JPQL);
 			}
 
-			String sql = query.toString();
+			String sql = sb.toString();
 
 			Session session = null;
 
 			try {
 				session = openSession();
 
-				Query q = session.createQuery(sql);
+				Query query = session.createQuery(sql);
 
-				QueryPos qPos = QueryPos.getInstance(q);
+				QueryPos queryPos = QueryPos.getInstance(query);
 
-				qPos.add(institutionParentId);
+				queryPos.add(institutionParentId);
 
-				if (!pagination) {
-					list = (List<Lectureseries_Institution>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<Lectureseries_Institution>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<Lectureseries_Institution>)QueryUtil.list(
+					query, getDialect(), start, end);
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
-			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+			catch (Exception exception) {
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
-				throw processException(e);
+				throw processException(exception);
 			}
 			finally {
 				closeSession(session);
@@ -1924,16 +1911,16 @@ public class Lectureseries_InstitutionPersistenceImpl
 			return lectureseries_Institution;
 		}
 
-		StringBundler msg = new StringBundler(4);
+		StringBundler sb = new StringBundler(4);
 
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("institutionParentId=");
-		msg.append(institutionParentId);
+		sb.append("institutionParentId=");
+		sb.append(institutionParentId);
 
-		msg.append("}");
+		sb.append("}");
 
-		throw new NoSuchLectureseries_InstitutionException(msg.toString());
+		throw new NoSuchLectureseries_InstitutionException(sb.toString());
 	}
 
 	/**
@@ -1980,16 +1967,16 @@ public class Lectureseries_InstitutionPersistenceImpl
 			return lectureseries_Institution;
 		}
 
-		StringBundler msg = new StringBundler(4);
+		StringBundler sb = new StringBundler(4);
 
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("institutionParentId=");
-		msg.append(institutionParentId);
+		sb.append("institutionParentId=");
+		sb.append(institutionParentId);
 
-		msg.append("}");
+		sb.append("}");
 
-		throw new NoSuchLectureseries_InstitutionException(msg.toString());
+		throw new NoSuchLectureseries_InstitutionException(sb.toString());
 	}
 
 	/**
@@ -2058,8 +2045,8 @@ public class Lectureseries_InstitutionPersistenceImpl
 
 			return array;
 		}
-		catch (Exception e) {
-			throw processException(e);
+		catch (Exception exception) {
+			throw processException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -2072,102 +2059,102 @@ public class Lectureseries_InstitutionPersistenceImpl
 		OrderByComparator<Lectureseries_Institution> orderByComparator,
 		boolean previous) {
 
-		StringBundler query = null;
+		StringBundler sb = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(
+			sb = new StringBundler(
 				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			query = new StringBundler(3);
+			sb = new StringBundler(3);
 		}
 
-		query.append(_SQL_SELECT_LECTURESERIES_INSTITUTION_WHERE);
+		sb.append(_SQL_SELECT_LECTURESERIES_INSTITUTION_WHERE);
 
-		query.append(_FINDER_COLUMN_INSTITUTIONPARENTID_INSTITUTIONPARENTID_2);
+		sb.append(_FINDER_COLUMN_INSTITUTIONPARENTID_INSTITUTIONPARENTID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields =
 				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
+				sb.append(WHERE_AND);
 			}
 
 			for (int i = 0; i < orderByConditionFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByConditionFields[i]);
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
 
 				if ((i + 1) < orderByConditionFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
 					}
 					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
 					}
 				}
 				else {
 					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
+						sb.append(WHERE_GREATER_THAN);
 					}
 					else {
-						query.append(WHERE_LESSER_THAN);
+						sb.append(WHERE_LESSER_THAN);
 					}
 				}
 			}
 
-			query.append(ORDER_BY_CLAUSE);
+			sb.append(ORDER_BY_CLAUSE);
 
 			String[] orderByFields = orderByComparator.getOrderByFields();
 
 			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
 
 				if ((i + 1) < orderByFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
 					}
 					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
 					}
 				}
 				else {
 					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
+						sb.append(ORDER_BY_ASC);
 					}
 					else {
-						query.append(ORDER_BY_DESC);
+						sb.append(ORDER_BY_DESC);
 					}
 				}
 			}
 		}
 		else {
-			query.append(Lectureseries_InstitutionModelImpl.ORDER_BY_JPQL);
+			sb.append(Lectureseries_InstitutionModelImpl.ORDER_BY_JPQL);
 		}
 
-		String sql = query.toString();
+		String sql = sb.toString();
 
-		Query q = session.createQuery(sql);
+		Query query = session.createQuery(sql);
 
-		q.setFirstResult(0);
-		q.setMaxResults(2);
+		query.setFirstResult(0);
+		query.setMaxResults(2);
 
-		QueryPos qPos = QueryPos.getInstance(q);
+		QueryPos queryPos = QueryPos.getInstance(query);
 
-		qPos.add(institutionParentId);
+		queryPos.add(institutionParentId);
 
 		if (orderByComparator != null) {
 			for (Object orderByConditionValue :
 					orderByComparator.getOrderByConditionValues(
 						lectureseries_Institution)) {
 
-				qPos.add(orderByConditionValue);
+				queryPos.add(orderByConditionValue);
 			}
 		}
 
-		List<Lectureseries_Institution> list = q.list();
+		List<Lectureseries_Institution> list = query.list();
 
 		if (list.size() == 2) {
 			return list.get(1);
@@ -2208,34 +2195,33 @@ public class Lectureseries_InstitutionPersistenceImpl
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler(2);
+			StringBundler sb = new StringBundler(2);
 
-			query.append(_SQL_COUNT_LECTURESERIES_INSTITUTION_WHERE);
+			sb.append(_SQL_COUNT_LECTURESERIES_INSTITUTION_WHERE);
 
-			query.append(
-				_FINDER_COLUMN_INSTITUTIONPARENTID_INSTITUTIONPARENTID_2);
+			sb.append(_FINDER_COLUMN_INSTITUTIONPARENTID_INSTITUTIONPARENTID_2);
 
-			String sql = query.toString();
+			String sql = sb.toString();
 
 			Session session = null;
 
 			try {
 				session = openSession();
 
-				Query q = session.createQuery(sql);
+				Query query = session.createQuery(sql);
 
-				QueryPos qPos = QueryPos.getInstance(q);
+				QueryPos queryPos = QueryPos.getInstance(query);
 
-				qPos.add(institutionParentId);
+				queryPos.add(institutionParentId);
 
-				count = (Long)q.uniqueResult();
+				count = (Long)query.uniqueResult();
 
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				finderCache.removeResult(finderPath, finderArgs);
 
-				throw processException(e);
+				throw processException(exception);
 			}
 			finally {
 				closeSession(session);
@@ -2354,6 +2340,18 @@ public class Lectureseries_InstitutionPersistenceImpl
 		}
 	}
 
+	public void clearCache(Set<Serializable> primaryKeys) {
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (Serializable primaryKey : primaryKeys) {
+			entityCache.removeResult(
+				Lectureseries_InstitutionModelImpl.ENTITY_CACHE_ENABLED,
+				Lectureseries_InstitutionImpl.class, primaryKey);
+		}
+	}
+
 	/**
 	 * Creates a new lectureseries_ institution with the primary key. Does not add the lectureseries_ institution to the database.
 	 *
@@ -2416,11 +2414,11 @@ public class Lectureseries_InstitutionPersistenceImpl
 
 			return remove(lectureseries_Institution);
 		}
-		catch (NoSuchLectureseries_InstitutionException nsee) {
-			throw nsee;
+		catch (NoSuchLectureseries_InstitutionException noSuchEntityException) {
+			throw noSuchEntityException;
 		}
-		catch (Exception e) {
-			throw processException(e);
+		catch (Exception exception) {
+			throw processException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -2447,8 +2445,8 @@ public class Lectureseries_InstitutionPersistenceImpl
 				session.delete(lectureseries_Institution);
 			}
 		}
-		catch (Exception e) {
-			throw processException(e);
+		catch (Exception exception) {
+			throw processException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -2505,8 +2503,8 @@ public class Lectureseries_InstitutionPersistenceImpl
 						lectureseries_Institution);
 			}
 		}
-		catch (Exception e) {
-			throw processException(e);
+		catch (Exception exception) {
+			throw processException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -2740,7 +2738,7 @@ public class Lectureseries_InstitutionPersistenceImpl
 	 * Returns a range of all the lectureseries_ institutions.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Lectureseries_InstitutionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Lectureseries_InstitutionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of lectureseries_ institutions
@@ -2756,31 +2754,7 @@ public class Lectureseries_InstitutionPersistenceImpl
 	 * Returns an ordered range of all the lectureseries_ institutions.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Lectureseries_InstitutionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
-	 * @param start the lower bound of the range of lectureseries_ institutions
-	 * @param end the upper bound of the range of lectureseries_ institutions (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of lectureseries_ institutions
-	 */
-	@Deprecated
-	@Override
-	public List<Lectureseries_Institution> findAll(
-		int start, int end,
-		OrderByComparator<Lectureseries_Institution> orderByComparator,
-		boolean useFinderCache) {
-
-		return findAll(start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the lectureseries_ institutions.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Lectureseries_InstitutionModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Lectureseries_InstitutionModelImpl</code>.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of lectureseries_ institutions
@@ -2793,48 +2767,71 @@ public class Lectureseries_InstitutionPersistenceImpl
 		int start, int end,
 		OrderByComparator<Lectureseries_Institution> orderByComparator) {
 
-		boolean pagination = true;
+		return findAll(start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the lectureseries_ institutions.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Lectureseries_InstitutionModelImpl</code>.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of lectureseries_ institutions
+	 * @param end the upper bound of the range of lectureseries_ institutions (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of lectureseries_ institutions
+	 */
+	@Override
+	public List<Lectureseries_Institution> findAll(
+		int start, int end,
+		OrderByComparator<Lectureseries_Institution> orderByComparator,
+		boolean useFinderCache) {
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<Lectureseries_Institution> list =
-			(List<Lectureseries_Institution>)finderCache.getResult(
+		List<Lectureseries_Institution> list = null;
+
+		if (useFinderCache) {
+			list = (List<Lectureseries_Institution>)finderCache.getResult(
 				finderPath, finderArgs, this);
+		}
 
 		if (list == null) {
-			StringBundler query = null;
+			StringBundler sb = null;
 			String sql = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(
+				sb = new StringBundler(
 					2 + (orderByComparator.getOrderByFields().length * 2));
 
-				query.append(_SQL_SELECT_LECTURESERIES_INSTITUTION);
+				sb.append(_SQL_SELECT_LECTURESERIES_INSTITUTION);
 
 				appendOrderByComparator(
-					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 
-				sql = query.toString();
+				sql = sb.toString();
 			}
 			else {
 				sql = _SQL_SELECT_LECTURESERIES_INSTITUTION;
 
-				if (pagination) {
-					sql = sql.concat(
-						Lectureseries_InstitutionModelImpl.ORDER_BY_JPQL);
-				}
+				sql = sql.concat(
+					Lectureseries_InstitutionModelImpl.ORDER_BY_JPQL);
 			}
 
 			Session session = null;
@@ -2842,29 +2839,23 @@ public class Lectureseries_InstitutionPersistenceImpl
 			try {
 				session = openSession();
 
-				Query q = session.createQuery(sql);
+				Query query = session.createQuery(sql);
 
-				if (!pagination) {
-					list = (List<Lectureseries_Institution>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<Lectureseries_Institution>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<Lectureseries_Institution>)QueryUtil.list(
+					query, getDialect(), start, end);
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
-			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+			catch (Exception exception) {
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
-				throw processException(e);
+				throw processException(exception);
 			}
 			finally {
 				closeSession(session);
@@ -2901,19 +2892,19 @@ public class Lectureseries_InstitutionPersistenceImpl
 			try {
 				session = openSession();
 
-				Query q = session.createQuery(
+				Query query = session.createQuery(
 					_SQL_COUNT_LECTURESERIES_INSTITUTION);
 
-				count = (Long)q.uniqueResult();
+				count = (Long)query.uniqueResult();
 
 				finderCache.putResult(
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				finderCache.removeResult(
 					_finderPathCountAll, FINDER_ARGS_EMPTY);
 
-				throw processException(e);
+				throw processException(exception);
 			}
 			finally {
 				closeSession(session);

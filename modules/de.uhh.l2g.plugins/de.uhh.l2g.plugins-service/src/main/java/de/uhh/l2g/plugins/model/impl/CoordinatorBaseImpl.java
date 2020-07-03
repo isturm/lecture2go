@@ -17,8 +17,6 @@ package de.uhh.l2g.plugins.model.impl;
 import de.uhh.l2g.plugins.model.Coordinator;
 import de.uhh.l2g.plugins.service.CoordinatorLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the Coordinator service. Represents a row in the &quot;LG_Coordinator&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see Coordinator
  * @generated
  */
-@ProviderType
 public abstract class CoordinatorBaseImpl
 	extends CoordinatorModelImpl implements Coordinator {
 

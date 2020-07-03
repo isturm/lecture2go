@@ -21,8 +21,6 @@ import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * <p>
  * This class is a wrapper for {@link Coordinator}.
@@ -32,7 +30,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see Coordinator
  * @generated
  */
-@ProviderType
 public class CoordinatorWrapper
 	extends BaseModelWrapper<Coordinator>
 	implements Coordinator, ModelWrapper<Coordinator> {

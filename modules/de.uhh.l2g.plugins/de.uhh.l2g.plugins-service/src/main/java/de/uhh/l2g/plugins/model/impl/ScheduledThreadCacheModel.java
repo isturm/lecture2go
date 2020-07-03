@@ -27,30 +27,27 @@ import java.io.ObjectOutput;
 
 import java.util.Date;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The cache model class for representing ScheduledThread in entity cache.
  *
  * @author Iavor Sturm
  * @generated
  */
-@ProviderType
 public class ScheduledThreadCacheModel
 	implements CacheModel<ScheduledThread>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof ScheduledThreadCacheModel)) {
+		if (!(object instanceof ScheduledThreadCacheModel)) {
 			return false;
 		}
 
 		ScheduledThreadCacheModel scheduledThreadCacheModel =
-			(ScheduledThreadCacheModel)obj;
+			(ScheduledThreadCacheModel)object;
 
 		if (scheduledThreadId == scheduledThreadCacheModel.scheduledThreadId) {
 			return true;

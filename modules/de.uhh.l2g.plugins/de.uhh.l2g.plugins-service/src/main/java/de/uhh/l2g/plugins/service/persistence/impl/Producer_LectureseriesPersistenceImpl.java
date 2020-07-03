@@ -39,11 +39,9 @@ import java.io.Serializable;
 
 import java.lang.reflect.InvocationHandler;
 
-import java.util.Collections;
 import java.util.List;
 import java.util.Map;
-
-import org.osgi.annotation.versioning.ProviderType;
+import java.util.Set;
 
 /**
  * The persistence implementation for the producer_ lectureseries service.
@@ -55,7 +53,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @author Iavor Sturm
  * @generated
  */
-@ProviderType
 public class Producer_LectureseriesPersistenceImpl
 	extends BasePersistenceImpl<Producer_Lectureseries>
 	implements Producer_LectureseriesPersistence {
@@ -99,7 +96,7 @@ public class Producer_LectureseriesPersistenceImpl
 	 * Returns a range of all the producer_ lectureserieses where lectureseriesId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Producer_LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Producer_LectureseriesModelImpl</code>.
 	 * </p>
 	 *
 	 * @param lectureseriesId the lectureseries ID
@@ -118,33 +115,7 @@ public class Producer_LectureseriesPersistenceImpl
 	 * Returns an ordered range of all the producer_ lectureserieses where lectureseriesId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Producer_LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByLectureseriesId(long, int, int, OrderByComparator)}
-	 * @param lectureseriesId the lectureseries ID
-	 * @param start the lower bound of the range of producer_ lectureserieses
-	 * @param end the upper bound of the range of producer_ lectureserieses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching producer_ lectureserieses
-	 */
-	@Deprecated
-	@Override
-	public List<Producer_Lectureseries> findByLectureseriesId(
-		long lectureseriesId, int start, int end,
-		OrderByComparator<Producer_Lectureseries> orderByComparator,
-		boolean useFinderCache) {
-
-		return findByLectureseriesId(
-			lectureseriesId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the producer_ lectureserieses where lectureseriesId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Producer_LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Producer_LectureseriesModelImpl</code>.
 	 * </p>
 	 *
 	 * @param lectureseriesId the lectureseries ID
@@ -158,97 +129,118 @@ public class Producer_LectureseriesPersistenceImpl
 		long lectureseriesId, int start, int end,
 		OrderByComparator<Producer_Lectureseries> orderByComparator) {
 
-		boolean pagination = true;
+		return findByLectureseriesId(
+			lectureseriesId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the producer_ lectureserieses where lectureseriesId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Producer_LectureseriesModelImpl</code>.
+	 * </p>
+	 *
+	 * @param lectureseriesId the lectureseries ID
+	 * @param start the lower bound of the range of producer_ lectureserieses
+	 * @param end the upper bound of the range of producer_ lectureserieses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching producer_ lectureserieses
+	 */
+	@Override
+	public List<Producer_Lectureseries> findByLectureseriesId(
+		long lectureseriesId, int start, int end,
+		OrderByComparator<Producer_Lectureseries> orderByComparator,
+		boolean useFinderCache) {
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByLectureseriesId;
-			finderArgs = new Object[] {lectureseriesId};
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByLectureseriesId;
+				finderArgs = new Object[] {lectureseriesId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByLectureseriesId;
 			finderArgs = new Object[] {
 				lectureseriesId, start, end, orderByComparator
 			};
 		}
 
-		List<Producer_Lectureseries> list =
-			(List<Producer_Lectureseries>)finderCache.getResult(
+		List<Producer_Lectureseries> list = null;
+
+		if (useFinderCache) {
+			list = (List<Producer_Lectureseries>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Producer_Lectureseries producer_Lectureseries : list) {
-				if ((lectureseriesId !=
-						producer_Lectureseries.getLectureseriesId())) {
+			if ((list != null) && !list.isEmpty()) {
+				for (Producer_Lectureseries producer_Lectureseries : list) {
+					if (lectureseriesId !=
+							producer_Lectureseries.getLectureseriesId()) {
 
-					list = null;
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
 
 		if (list == null) {
-			StringBundler query = null;
+			StringBundler sb = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(
+				sb = new StringBundler(
 					3 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
-				query = new StringBundler(3);
+				sb = new StringBundler(3);
 			}
 
-			query.append(_SQL_SELECT_PRODUCER_LECTURESERIES_WHERE);
+			sb.append(_SQL_SELECT_PRODUCER_LECTURESERIES_WHERE);
 
-			query.append(_FINDER_COLUMN_LECTURESERIESID_LECTURESERIESID_2);
+			sb.append(_FINDER_COLUMN_LECTURESERIESID_LECTURESERIESID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
-					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
-				query.append(Producer_LectureseriesModelImpl.ORDER_BY_JPQL);
+			else {
+				sb.append(Producer_LectureseriesModelImpl.ORDER_BY_JPQL);
 			}
 
-			String sql = query.toString();
+			String sql = sb.toString();
 
 			Session session = null;
 
 			try {
 				session = openSession();
 
-				Query q = session.createQuery(sql);
+				Query query = session.createQuery(sql);
 
-				QueryPos qPos = QueryPos.getInstance(q);
+				QueryPos queryPos = QueryPos.getInstance(query);
 
-				qPos.add(lectureseriesId);
+				queryPos.add(lectureseriesId);
 
-				if (!pagination) {
-					list = (List<Producer_Lectureseries>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<Producer_Lectureseries>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<Producer_Lectureseries>)QueryUtil.list(
+					query, getDialect(), start, end);
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
-			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+			catch (Exception exception) {
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
-				throw processException(e);
+				throw processException(exception);
 			}
 			finally {
 				closeSession(session);
@@ -279,16 +271,16 @@ public class Producer_LectureseriesPersistenceImpl
 			return producer_Lectureseries;
 		}
 
-		StringBundler msg = new StringBundler(4);
+		StringBundler sb = new StringBundler(4);
 
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("lectureseriesId=");
-		msg.append(lectureseriesId);
+		sb.append("lectureseriesId=");
+		sb.append(lectureseriesId);
 
-		msg.append("}");
+		sb.append("}");
 
-		throw new NoSuchProducer_LectureseriesException(msg.toString());
+		throw new NoSuchProducer_LectureseriesException(sb.toString());
 	}
 
 	/**
@@ -334,16 +326,16 @@ public class Producer_LectureseriesPersistenceImpl
 			return producer_Lectureseries;
 		}
 
-		StringBundler msg = new StringBundler(4);
+		StringBundler sb = new StringBundler(4);
 
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("lectureseriesId=");
-		msg.append(lectureseriesId);
+		sb.append("lectureseriesId=");
+		sb.append(lectureseriesId);
 
-		msg.append("}");
+		sb.append("}");
 
-		throw new NoSuchProducer_LectureseriesException(msg.toString());
+		throw new NoSuchProducer_LectureseriesException(sb.toString());
 	}
 
 	/**
@@ -411,8 +403,8 @@ public class Producer_LectureseriesPersistenceImpl
 
 			return array;
 		}
-		catch (Exception e) {
-			throw processException(e);
+		catch (Exception exception) {
+			throw processException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -425,102 +417,102 @@ public class Producer_LectureseriesPersistenceImpl
 		OrderByComparator<Producer_Lectureseries> orderByComparator,
 		boolean previous) {
 
-		StringBundler query = null;
+		StringBundler sb = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(
+			sb = new StringBundler(
 				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			query = new StringBundler(3);
+			sb = new StringBundler(3);
 		}
 
-		query.append(_SQL_SELECT_PRODUCER_LECTURESERIES_WHERE);
+		sb.append(_SQL_SELECT_PRODUCER_LECTURESERIES_WHERE);
 
-		query.append(_FINDER_COLUMN_LECTURESERIESID_LECTURESERIESID_2);
+		sb.append(_FINDER_COLUMN_LECTURESERIESID_LECTURESERIESID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields =
 				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
+				sb.append(WHERE_AND);
 			}
 
 			for (int i = 0; i < orderByConditionFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByConditionFields[i]);
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
 
 				if ((i + 1) < orderByConditionFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
 					}
 					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
 					}
 				}
 				else {
 					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
+						sb.append(WHERE_GREATER_THAN);
 					}
 					else {
-						query.append(WHERE_LESSER_THAN);
+						sb.append(WHERE_LESSER_THAN);
 					}
 				}
 			}
 
-			query.append(ORDER_BY_CLAUSE);
+			sb.append(ORDER_BY_CLAUSE);
 
 			String[] orderByFields = orderByComparator.getOrderByFields();
 
 			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
 
 				if ((i + 1) < orderByFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
 					}
 					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
 					}
 				}
 				else {
 					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
+						sb.append(ORDER_BY_ASC);
 					}
 					else {
-						query.append(ORDER_BY_DESC);
+						sb.append(ORDER_BY_DESC);
 					}
 				}
 			}
 		}
 		else {
-			query.append(Producer_LectureseriesModelImpl.ORDER_BY_JPQL);
+			sb.append(Producer_LectureseriesModelImpl.ORDER_BY_JPQL);
 		}
 
-		String sql = query.toString();
+		String sql = sb.toString();
 
-		Query q = session.createQuery(sql);
+		Query query = session.createQuery(sql);
 
-		q.setFirstResult(0);
-		q.setMaxResults(2);
+		query.setFirstResult(0);
+		query.setMaxResults(2);
 
-		QueryPos qPos = QueryPos.getInstance(q);
+		QueryPos queryPos = QueryPos.getInstance(query);
 
-		qPos.add(lectureseriesId);
+		queryPos.add(lectureseriesId);
 
 		if (orderByComparator != null) {
 			for (Object orderByConditionValue :
 					orderByComparator.getOrderByConditionValues(
 						producer_Lectureseries)) {
 
-				qPos.add(orderByConditionValue);
+				queryPos.add(orderByConditionValue);
 			}
 		}
 
-		List<Producer_Lectureseries> list = q.list();
+		List<Producer_Lectureseries> list = query.list();
 
 		if (list.size() == 2) {
 			return list.get(1);
@@ -561,33 +553,33 @@ public class Producer_LectureseriesPersistenceImpl
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler(2);
+			StringBundler sb = new StringBundler(2);
 
-			query.append(_SQL_COUNT_PRODUCER_LECTURESERIES_WHERE);
+			sb.append(_SQL_COUNT_PRODUCER_LECTURESERIES_WHERE);
 
-			query.append(_FINDER_COLUMN_LECTURESERIESID_LECTURESERIESID_2);
+			sb.append(_FINDER_COLUMN_LECTURESERIESID_LECTURESERIESID_2);
 
-			String sql = query.toString();
+			String sql = sb.toString();
 
 			Session session = null;
 
 			try {
 				session = openSession();
 
-				Query q = session.createQuery(sql);
+				Query query = session.createQuery(sql);
 
-				QueryPos qPos = QueryPos.getInstance(q);
+				QueryPos queryPos = QueryPos.getInstance(query);
 
-				qPos.add(lectureseriesId);
+				queryPos.add(lectureseriesId);
 
-				count = (Long)q.uniqueResult();
+				count = (Long)query.uniqueResult();
 
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				finderCache.removeResult(finderPath, finderArgs);
 
-				throw processException(e);
+				throw processException(exception);
 			}
 			finally {
 				closeSession(session);
@@ -621,7 +613,7 @@ public class Producer_LectureseriesPersistenceImpl
 	 * Returns a range of all the producer_ lectureserieses where producerId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Producer_LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Producer_LectureseriesModelImpl</code>.
 	 * </p>
 	 *
 	 * @param producerId the producer ID
@@ -640,32 +632,7 @@ public class Producer_LectureseriesPersistenceImpl
 	 * Returns an ordered range of all the producer_ lectureserieses where producerId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Producer_LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByProducerId(long, int, int, OrderByComparator)}
-	 * @param producerId the producer ID
-	 * @param start the lower bound of the range of producer_ lectureserieses
-	 * @param end the upper bound of the range of producer_ lectureserieses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching producer_ lectureserieses
-	 */
-	@Deprecated
-	@Override
-	public List<Producer_Lectureseries> findByProducerId(
-		long producerId, int start, int end,
-		OrderByComparator<Producer_Lectureseries> orderByComparator,
-		boolean useFinderCache) {
-
-		return findByProducerId(producerId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the producer_ lectureserieses where producerId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Producer_LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Producer_LectureseriesModelImpl</code>.
 	 * </p>
 	 *
 	 * @param producerId the producer ID
@@ -679,95 +646,116 @@ public class Producer_LectureseriesPersistenceImpl
 		long producerId, int start, int end,
 		OrderByComparator<Producer_Lectureseries> orderByComparator) {
 
-		boolean pagination = true;
+		return findByProducerId(
+			producerId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the producer_ lectureserieses where producerId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Producer_LectureseriesModelImpl</code>.
+	 * </p>
+	 *
+	 * @param producerId the producer ID
+	 * @param start the lower bound of the range of producer_ lectureserieses
+	 * @param end the upper bound of the range of producer_ lectureserieses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching producer_ lectureserieses
+	 */
+	@Override
+	public List<Producer_Lectureseries> findByProducerId(
+		long producerId, int start, int end,
+		OrderByComparator<Producer_Lectureseries> orderByComparator,
+		boolean useFinderCache) {
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindByProducerId;
-			finderArgs = new Object[] {producerId};
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindByProducerId;
+				finderArgs = new Object[] {producerId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindByProducerId;
 			finderArgs = new Object[] {
 				producerId, start, end, orderByComparator
 			};
 		}
 
-		List<Producer_Lectureseries> list =
-			(List<Producer_Lectureseries>)finderCache.getResult(
+		List<Producer_Lectureseries> list = null;
+
+		if (useFinderCache) {
+			list = (List<Producer_Lectureseries>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Producer_Lectureseries producer_Lectureseries : list) {
-				if ((producerId != producer_Lectureseries.getProducerId())) {
-					list = null;
+			if ((list != null) && !list.isEmpty()) {
+				for (Producer_Lectureseries producer_Lectureseries : list) {
+					if (producerId != producer_Lectureseries.getProducerId()) {
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
 
 		if (list == null) {
-			StringBundler query = null;
+			StringBundler sb = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(
+				sb = new StringBundler(
 					3 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
-				query = new StringBundler(3);
+				sb = new StringBundler(3);
 			}
 
-			query.append(_SQL_SELECT_PRODUCER_LECTURESERIES_WHERE);
+			sb.append(_SQL_SELECT_PRODUCER_LECTURESERIES_WHERE);
 
-			query.append(_FINDER_COLUMN_PRODUCERID_PRODUCERID_2);
+			sb.append(_FINDER_COLUMN_PRODUCERID_PRODUCERID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
-					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
-				query.append(Producer_LectureseriesModelImpl.ORDER_BY_JPQL);
+			else {
+				sb.append(Producer_LectureseriesModelImpl.ORDER_BY_JPQL);
 			}
 
-			String sql = query.toString();
+			String sql = sb.toString();
 
 			Session session = null;
 
 			try {
 				session = openSession();
 
-				Query q = session.createQuery(sql);
+				Query query = session.createQuery(sql);
 
-				QueryPos qPos = QueryPos.getInstance(q);
+				QueryPos queryPos = QueryPos.getInstance(query);
 
-				qPos.add(producerId);
+				queryPos.add(producerId);
 
-				if (!pagination) {
-					list = (List<Producer_Lectureseries>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<Producer_Lectureseries>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<Producer_Lectureseries>)QueryUtil.list(
+					query, getDialect(), start, end);
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
-			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+			catch (Exception exception) {
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
-				throw processException(e);
+				throw processException(exception);
 			}
 			finally {
 				closeSession(session);
@@ -798,16 +786,16 @@ public class Producer_LectureseriesPersistenceImpl
 			return producer_Lectureseries;
 		}
 
-		StringBundler msg = new StringBundler(4);
+		StringBundler sb = new StringBundler(4);
 
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("producerId=");
-		msg.append(producerId);
+		sb.append("producerId=");
+		sb.append(producerId);
 
-		msg.append("}");
+		sb.append("}");
 
-		throw new NoSuchProducer_LectureseriesException(msg.toString());
+		throw new NoSuchProducer_LectureseriesException(sb.toString());
 	}
 
 	/**
@@ -853,16 +841,16 @@ public class Producer_LectureseriesPersistenceImpl
 			return producer_Lectureseries;
 		}
 
-		StringBundler msg = new StringBundler(4);
+		StringBundler sb = new StringBundler(4);
 
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("producerId=");
-		msg.append(producerId);
+		sb.append("producerId=");
+		sb.append(producerId);
 
-		msg.append("}");
+		sb.append("}");
 
-		throw new NoSuchProducer_LectureseriesException(msg.toString());
+		throw new NoSuchProducer_LectureseriesException(sb.toString());
 	}
 
 	/**
@@ -930,8 +918,8 @@ public class Producer_LectureseriesPersistenceImpl
 
 			return array;
 		}
-		catch (Exception e) {
-			throw processException(e);
+		catch (Exception exception) {
+			throw processException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -944,102 +932,102 @@ public class Producer_LectureseriesPersistenceImpl
 		OrderByComparator<Producer_Lectureseries> orderByComparator,
 		boolean previous) {
 
-		StringBundler query = null;
+		StringBundler sb = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(
+			sb = new StringBundler(
 				4 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			query = new StringBundler(3);
+			sb = new StringBundler(3);
 		}
 
-		query.append(_SQL_SELECT_PRODUCER_LECTURESERIES_WHERE);
+		sb.append(_SQL_SELECT_PRODUCER_LECTURESERIES_WHERE);
 
-		query.append(_FINDER_COLUMN_PRODUCERID_PRODUCERID_2);
+		sb.append(_FINDER_COLUMN_PRODUCERID_PRODUCERID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields =
 				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
+				sb.append(WHERE_AND);
 			}
 
 			for (int i = 0; i < orderByConditionFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByConditionFields[i]);
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
 
 				if ((i + 1) < orderByConditionFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
 					}
 					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
 					}
 				}
 				else {
 					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
+						sb.append(WHERE_GREATER_THAN);
 					}
 					else {
-						query.append(WHERE_LESSER_THAN);
+						sb.append(WHERE_LESSER_THAN);
 					}
 				}
 			}
 
-			query.append(ORDER_BY_CLAUSE);
+			sb.append(ORDER_BY_CLAUSE);
 
 			String[] orderByFields = orderByComparator.getOrderByFields();
 
 			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
 
 				if ((i + 1) < orderByFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
 					}
 					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
 					}
 				}
 				else {
 					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
+						sb.append(ORDER_BY_ASC);
 					}
 					else {
-						query.append(ORDER_BY_DESC);
+						sb.append(ORDER_BY_DESC);
 					}
 				}
 			}
 		}
 		else {
-			query.append(Producer_LectureseriesModelImpl.ORDER_BY_JPQL);
+			sb.append(Producer_LectureseriesModelImpl.ORDER_BY_JPQL);
 		}
 
-		String sql = query.toString();
+		String sql = sb.toString();
 
-		Query q = session.createQuery(sql);
+		Query query = session.createQuery(sql);
 
-		q.setFirstResult(0);
-		q.setMaxResults(2);
+		query.setFirstResult(0);
+		query.setMaxResults(2);
 
-		QueryPos qPos = QueryPos.getInstance(q);
+		QueryPos queryPos = QueryPos.getInstance(query);
 
-		qPos.add(producerId);
+		queryPos.add(producerId);
 
 		if (orderByComparator != null) {
 			for (Object orderByConditionValue :
 					orderByComparator.getOrderByConditionValues(
 						producer_Lectureseries)) {
 
-				qPos.add(orderByConditionValue);
+				queryPos.add(orderByConditionValue);
 			}
 		}
 
-		List<Producer_Lectureseries> list = q.list();
+		List<Producer_Lectureseries> list = query.list();
 
 		if (list.size() == 2) {
 			return list.get(1);
@@ -1079,33 +1067,33 @@ public class Producer_LectureseriesPersistenceImpl
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler(2);
+			StringBundler sb = new StringBundler(2);
 
-			query.append(_SQL_COUNT_PRODUCER_LECTURESERIES_WHERE);
+			sb.append(_SQL_COUNT_PRODUCER_LECTURESERIES_WHERE);
 
-			query.append(_FINDER_COLUMN_PRODUCERID_PRODUCERID_2);
+			sb.append(_FINDER_COLUMN_PRODUCERID_PRODUCERID_2);
 
-			String sql = query.toString();
+			String sql = sb.toString();
 
 			Session session = null;
 
 			try {
 				session = openSession();
 
-				Query q = session.createQuery(sql);
+				Query query = session.createQuery(sql);
 
-				QueryPos qPos = QueryPos.getInstance(q);
+				QueryPos queryPos = QueryPos.getInstance(query);
 
-				qPos.add(producerId);
+				queryPos.add(producerId);
 
-				count = (Long)q.uniqueResult();
+				count = (Long)query.uniqueResult();
 
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				finderCache.removeResult(finderPath, finderArgs);
 
-				throw processException(e);
+				throw processException(exception);
 			}
 			finally {
 				closeSession(session);
@@ -1144,7 +1132,7 @@ public class Producer_LectureseriesPersistenceImpl
 	 * Returns a range of all the producer_ lectureserieses where lectureseriesId = &#63; and producerId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Producer_LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Producer_LectureseriesModelImpl</code>.
 	 * </p>
 	 *
 	 * @param lectureseriesId the lectureseries ID
@@ -1165,34 +1153,7 @@ public class Producer_LectureseriesPersistenceImpl
 	 * Returns an ordered range of all the producer_ lectureserieses where lectureseriesId = &#63; and producerId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Producer_LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByLectureseriesIdAndProducerId(long,long, int, int, OrderByComparator)}
-	 * @param lectureseriesId the lectureseries ID
-	 * @param producerId the producer ID
-	 * @param start the lower bound of the range of producer_ lectureserieses
-	 * @param end the upper bound of the range of producer_ lectureserieses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching producer_ lectureserieses
-	 */
-	@Deprecated
-	@Override
-	public List<Producer_Lectureseries> findByLectureseriesIdAndProducerId(
-		long lectureseriesId, long producerId, int start, int end,
-		OrderByComparator<Producer_Lectureseries> orderByComparator,
-		boolean useFinderCache) {
-
-		return findByLectureseriesIdAndProducerId(
-			lectureseriesId, producerId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the producer_ lectureserieses where lectureseriesId = &#63; and producerId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Producer_LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Producer_LectureseriesModelImpl</code>.
 	 * </p>
 	 *
 	 * @param lectureseriesId the lectureseries ID
@@ -1207,19 +1168,44 @@ public class Producer_LectureseriesPersistenceImpl
 		long lectureseriesId, long producerId, int start, int end,
 		OrderByComparator<Producer_Lectureseries> orderByComparator) {
 
-		boolean pagination = true;
+		return findByLectureseriesIdAndProducerId(
+			lectureseriesId, producerId, start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the producer_ lectureserieses where lectureseriesId = &#63; and producerId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Producer_LectureseriesModelImpl</code>.
+	 * </p>
+	 *
+	 * @param lectureseriesId the lectureseries ID
+	 * @param producerId the producer ID
+	 * @param start the lower bound of the range of producer_ lectureserieses
+	 * @param end the upper bound of the range of producer_ lectureserieses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of matching producer_ lectureserieses
+	 */
+	@Override
+	public List<Producer_Lectureseries> findByLectureseriesIdAndProducerId(
+		long lectureseriesId, long producerId, int start, int end,
+		OrderByComparator<Producer_Lectureseries> orderByComparator,
+		boolean useFinderCache) {
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			pagination = false;
-			finderPath =
-				_finderPathWithoutPaginationFindByLectureseriesIdAndProducerId;
-			finderArgs = new Object[] {lectureseriesId, producerId};
+			if (useFinderCache) {
+				finderPath =
+					_finderPathWithoutPaginationFindByLectureseriesIdAndProducerId;
+				finderArgs = new Object[] {lectureseriesId, producerId};
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath =
 				_finderPathWithPaginationFindByLectureseriesIdAndProducerId;
 			finderArgs = new Object[] {
@@ -1227,86 +1213,83 @@ public class Producer_LectureseriesPersistenceImpl
 			};
 		}
 
-		List<Producer_Lectureseries> list =
-			(List<Producer_Lectureseries>)finderCache.getResult(
+		List<Producer_Lectureseries> list = null;
+
+		if (useFinderCache) {
+			list = (List<Producer_Lectureseries>)finderCache.getResult(
 				finderPath, finderArgs, this);
 
-		if ((list != null) && !list.isEmpty()) {
-			for (Producer_Lectureseries producer_Lectureseries : list) {
-				if ((lectureseriesId !=
-						producer_Lectureseries.getLectureseriesId()) ||
-					(producerId != producer_Lectureseries.getProducerId())) {
+			if ((list != null) && !list.isEmpty()) {
+				for (Producer_Lectureseries producer_Lectureseries : list) {
+					if ((lectureseriesId !=
+							producer_Lectureseries.getLectureseriesId()) ||
+						(producerId !=
+							producer_Lectureseries.getProducerId())) {
 
-					list = null;
+						list = null;
 
-					break;
+						break;
+					}
 				}
 			}
 		}
 
 		if (list == null) {
-			StringBundler query = null;
+			StringBundler sb = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(
+				sb = new StringBundler(
 					4 + (orderByComparator.getOrderByFields().length * 2));
 			}
 			else {
-				query = new StringBundler(4);
+				sb = new StringBundler(4);
 			}
 
-			query.append(_SQL_SELECT_PRODUCER_LECTURESERIES_WHERE);
+			sb.append(_SQL_SELECT_PRODUCER_LECTURESERIES_WHERE);
 
-			query.append(
+			sb.append(
 				_FINDER_COLUMN_LECTURESERIESIDANDPRODUCERID_LECTURESERIESID_2);
 
-			query.append(
-				_FINDER_COLUMN_LECTURESERIESIDANDPRODUCERID_PRODUCERID_2);
+			sb.append(_FINDER_COLUMN_LECTURESERIESIDANDPRODUCERID_PRODUCERID_2);
 
 			if (orderByComparator != null) {
 				appendOrderByComparator(
-					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 			}
-			else if (pagination) {
-				query.append(Producer_LectureseriesModelImpl.ORDER_BY_JPQL);
+			else {
+				sb.append(Producer_LectureseriesModelImpl.ORDER_BY_JPQL);
 			}
 
-			String sql = query.toString();
+			String sql = sb.toString();
 
 			Session session = null;
 
 			try {
 				session = openSession();
 
-				Query q = session.createQuery(sql);
+				Query query = session.createQuery(sql);
 
-				QueryPos qPos = QueryPos.getInstance(q);
+				QueryPos queryPos = QueryPos.getInstance(query);
 
-				qPos.add(lectureseriesId);
+				queryPos.add(lectureseriesId);
 
-				qPos.add(producerId);
+				queryPos.add(producerId);
 
-				if (!pagination) {
-					list = (List<Producer_Lectureseries>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<Producer_Lectureseries>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<Producer_Lectureseries>)QueryUtil.list(
+					query, getDialect(), start, end);
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
-			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+			catch (Exception exception) {
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
-				throw processException(e);
+				throw processException(exception);
 			}
 			finally {
 				closeSession(session);
@@ -1339,19 +1322,19 @@ public class Producer_LectureseriesPersistenceImpl
 			return producer_Lectureseries;
 		}
 
-		StringBundler msg = new StringBundler(6);
+		StringBundler sb = new StringBundler(6);
 
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("lectureseriesId=");
-		msg.append(lectureseriesId);
+		sb.append("lectureseriesId=");
+		sb.append(lectureseriesId);
 
-		msg.append(", producerId=");
-		msg.append(producerId);
+		sb.append(", producerId=");
+		sb.append(producerId);
 
-		msg.append("}");
+		sb.append("}");
 
-		throw new NoSuchProducer_LectureseriesException(msg.toString());
+		throw new NoSuchProducer_LectureseriesException(sb.toString());
 	}
 
 	/**
@@ -1400,19 +1383,19 @@ public class Producer_LectureseriesPersistenceImpl
 			return producer_Lectureseries;
 		}
 
-		StringBundler msg = new StringBundler(6);
+		StringBundler sb = new StringBundler(6);
 
-		msg.append(_NO_SUCH_ENTITY_WITH_KEY);
+		sb.append(_NO_SUCH_ENTITY_WITH_KEY);
 
-		msg.append("lectureseriesId=");
-		msg.append(lectureseriesId);
+		sb.append("lectureseriesId=");
+		sb.append(lectureseriesId);
 
-		msg.append(", producerId=");
-		msg.append(producerId);
+		sb.append(", producerId=");
+		sb.append(producerId);
 
-		msg.append("}");
+		sb.append("}");
 
-		throw new NoSuchProducer_LectureseriesException(msg.toString());
+		throw new NoSuchProducer_LectureseriesException(sb.toString());
 	}
 
 	/**
@@ -1485,8 +1468,8 @@ public class Producer_LectureseriesPersistenceImpl
 
 			return array;
 		}
-		catch (Exception e) {
-			throw processException(e);
+		catch (Exception exception) {
+			throw processException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -1500,107 +1483,107 @@ public class Producer_LectureseriesPersistenceImpl
 			OrderByComparator<Producer_Lectureseries> orderByComparator,
 			boolean previous) {
 
-		StringBundler query = null;
+		StringBundler sb = null;
 
 		if (orderByComparator != null) {
-			query = new StringBundler(
+			sb = new StringBundler(
 				5 + (orderByComparator.getOrderByConditionFields().length * 3) +
 					(orderByComparator.getOrderByFields().length * 3));
 		}
 		else {
-			query = new StringBundler(4);
+			sb = new StringBundler(4);
 		}
 
-		query.append(_SQL_SELECT_PRODUCER_LECTURESERIES_WHERE);
+		sb.append(_SQL_SELECT_PRODUCER_LECTURESERIES_WHERE);
 
-		query.append(
+		sb.append(
 			_FINDER_COLUMN_LECTURESERIESIDANDPRODUCERID_LECTURESERIESID_2);
 
-		query.append(_FINDER_COLUMN_LECTURESERIESIDANDPRODUCERID_PRODUCERID_2);
+		sb.append(_FINDER_COLUMN_LECTURESERIESIDANDPRODUCERID_PRODUCERID_2);
 
 		if (orderByComparator != null) {
 			String[] orderByConditionFields =
 				orderByComparator.getOrderByConditionFields();
 
 			if (orderByConditionFields.length > 0) {
-				query.append(WHERE_AND);
+				sb.append(WHERE_AND);
 			}
 
 			for (int i = 0; i < orderByConditionFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByConditionFields[i]);
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByConditionFields[i]);
 
 				if ((i + 1) < orderByConditionFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN_HAS_NEXT);
+						sb.append(WHERE_GREATER_THAN_HAS_NEXT);
 					}
 					else {
-						query.append(WHERE_LESSER_THAN_HAS_NEXT);
+						sb.append(WHERE_LESSER_THAN_HAS_NEXT);
 					}
 				}
 				else {
 					if (orderByComparator.isAscending() ^ previous) {
-						query.append(WHERE_GREATER_THAN);
+						sb.append(WHERE_GREATER_THAN);
 					}
 					else {
-						query.append(WHERE_LESSER_THAN);
+						sb.append(WHERE_LESSER_THAN);
 					}
 				}
 			}
 
-			query.append(ORDER_BY_CLAUSE);
+			sb.append(ORDER_BY_CLAUSE);
 
 			String[] orderByFields = orderByComparator.getOrderByFields();
 
 			for (int i = 0; i < orderByFields.length; i++) {
-				query.append(_ORDER_BY_ENTITY_ALIAS);
-				query.append(orderByFields[i]);
+				sb.append(_ORDER_BY_ENTITY_ALIAS);
+				sb.append(orderByFields[i]);
 
 				if ((i + 1) < orderByFields.length) {
 					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC_HAS_NEXT);
+						sb.append(ORDER_BY_ASC_HAS_NEXT);
 					}
 					else {
-						query.append(ORDER_BY_DESC_HAS_NEXT);
+						sb.append(ORDER_BY_DESC_HAS_NEXT);
 					}
 				}
 				else {
 					if (orderByComparator.isAscending() ^ previous) {
-						query.append(ORDER_BY_ASC);
+						sb.append(ORDER_BY_ASC);
 					}
 					else {
-						query.append(ORDER_BY_DESC);
+						sb.append(ORDER_BY_DESC);
 					}
 				}
 			}
 		}
 		else {
-			query.append(Producer_LectureseriesModelImpl.ORDER_BY_JPQL);
+			sb.append(Producer_LectureseriesModelImpl.ORDER_BY_JPQL);
 		}
 
-		String sql = query.toString();
+		String sql = sb.toString();
 
-		Query q = session.createQuery(sql);
+		Query query = session.createQuery(sql);
 
-		q.setFirstResult(0);
-		q.setMaxResults(2);
+		query.setFirstResult(0);
+		query.setMaxResults(2);
 
-		QueryPos qPos = QueryPos.getInstance(q);
+		QueryPos queryPos = QueryPos.getInstance(query);
 
-		qPos.add(lectureseriesId);
+		queryPos.add(lectureseriesId);
 
-		qPos.add(producerId);
+		queryPos.add(producerId);
 
 		if (orderByComparator != null) {
 			for (Object orderByConditionValue :
 					orderByComparator.getOrderByConditionValues(
 						producer_Lectureseries)) {
 
-				qPos.add(orderByConditionValue);
+				queryPos.add(orderByConditionValue);
 			}
 		}
 
-		List<Producer_Lectureseries> list = q.list();
+		List<Producer_Lectureseries> list = query.list();
 
 		if (list.size() == 2) {
 			return list.get(1);
@@ -1647,39 +1630,38 @@ public class Producer_LectureseriesPersistenceImpl
 		Long count = (Long)finderCache.getResult(finderPath, finderArgs, this);
 
 		if (count == null) {
-			StringBundler query = new StringBundler(3);
+			StringBundler sb = new StringBundler(3);
 
-			query.append(_SQL_COUNT_PRODUCER_LECTURESERIES_WHERE);
+			sb.append(_SQL_COUNT_PRODUCER_LECTURESERIES_WHERE);
 
-			query.append(
+			sb.append(
 				_FINDER_COLUMN_LECTURESERIESIDANDPRODUCERID_LECTURESERIESID_2);
 
-			query.append(
-				_FINDER_COLUMN_LECTURESERIESIDANDPRODUCERID_PRODUCERID_2);
+			sb.append(_FINDER_COLUMN_LECTURESERIESIDANDPRODUCERID_PRODUCERID_2);
 
-			String sql = query.toString();
+			String sql = sb.toString();
 
 			Session session = null;
 
 			try {
 				session = openSession();
 
-				Query q = session.createQuery(sql);
+				Query query = session.createQuery(sql);
 
-				QueryPos qPos = QueryPos.getInstance(q);
+				QueryPos queryPos = QueryPos.getInstance(query);
 
-				qPos.add(lectureseriesId);
+				queryPos.add(lectureseriesId);
 
-				qPos.add(producerId);
+				queryPos.add(producerId);
 
-				count = (Long)q.uniqueResult();
+				count = (Long)query.uniqueResult();
 
 				finderCache.putResult(finderPath, finderArgs, count);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				finderCache.removeResult(finderPath, finderArgs);
 
-				throw processException(e);
+				throw processException(exception);
 			}
 			finally {
 				closeSession(session);
@@ -1797,6 +1779,18 @@ public class Producer_LectureseriesPersistenceImpl
 		}
 	}
 
+	public void clearCache(Set<Serializable> primaryKeys) {
+		finderCache.clearCache(FINDER_CLASS_NAME_ENTITY);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITH_PAGINATION);
+		finderCache.clearCache(FINDER_CLASS_NAME_LIST_WITHOUT_PAGINATION);
+
+		for (Serializable primaryKey : primaryKeys) {
+			entityCache.removeResult(
+				Producer_LectureseriesModelImpl.ENTITY_CACHE_ENABLED,
+				Producer_LectureseriesImpl.class, primaryKey);
+		}
+	}
+
 	/**
 	 * Creates a new producer_ lectureseries with the primary key. Does not add the producer_ lectureseries to the database.
 	 *
@@ -1859,11 +1853,11 @@ public class Producer_LectureseriesPersistenceImpl
 
 			return remove(producer_Lectureseries);
 		}
-		catch (NoSuchProducer_LectureseriesException nsee) {
-			throw nsee;
+		catch (NoSuchProducer_LectureseriesException noSuchEntityException) {
+			throw noSuchEntityException;
 		}
-		catch (Exception e) {
-			throw processException(e);
+		catch (Exception exception) {
+			throw processException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -1889,8 +1883,8 @@ public class Producer_LectureseriesPersistenceImpl
 				session.delete(producer_Lectureseries);
 			}
 		}
-		catch (Exception e) {
-			throw processException(e);
+		catch (Exception exception) {
+			throw processException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -1946,8 +1940,8 @@ public class Producer_LectureseriesPersistenceImpl
 					producer_Lectureseries);
 			}
 		}
-		catch (Exception e) {
-			throw processException(e);
+		catch (Exception exception) {
+			throw processException(exception);
 		}
 		finally {
 			closeSession(session);
@@ -2142,7 +2136,7 @@ public class Producer_LectureseriesPersistenceImpl
 	 * Returns a range of all the producer_ lectureserieses.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Producer_LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Producer_LectureseriesModelImpl</code>.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of producer_ lectureserieses
@@ -2158,31 +2152,7 @@ public class Producer_LectureseriesPersistenceImpl
 	 * Returns an ordered range of all the producer_ lectureserieses.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Producer_LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
-	 * @param start the lower bound of the range of producer_ lectureserieses
-	 * @param end the upper bound of the range of producer_ lectureserieses (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of producer_ lectureserieses
-	 */
-	@Deprecated
-	@Override
-	public List<Producer_Lectureseries> findAll(
-		int start, int end,
-		OrderByComparator<Producer_Lectureseries> orderByComparator,
-		boolean useFinderCache) {
-
-		return findAll(start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the producer_ lectureserieses.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>Producer_LectureseriesModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Producer_LectureseriesModelImpl</code>.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of producer_ lectureserieses
@@ -2195,48 +2165,70 @@ public class Producer_LectureseriesPersistenceImpl
 		int start, int end,
 		OrderByComparator<Producer_Lectureseries> orderByComparator) {
 
-		boolean pagination = true;
+		return findAll(start, end, orderByComparator, true);
+	}
+
+	/**
+	 * Returns an ordered range of all the producer_ lectureserieses.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>Producer_LectureseriesModelImpl</code>.
+	 * </p>
+	 *
+	 * @param start the lower bound of the range of producer_ lectureserieses
+	 * @param end the upper bound of the range of producer_ lectureserieses (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param useFinderCache whether to use the finder cache
+	 * @return the ordered range of producer_ lectureserieses
+	 */
+	@Override
+	public List<Producer_Lectureseries> findAll(
+		int start, int end,
+		OrderByComparator<Producer_Lectureseries> orderByComparator,
+		boolean useFinderCache) {
+
 		FinderPath finderPath = null;
 		Object[] finderArgs = null;
 
 		if ((start == QueryUtil.ALL_POS) && (end == QueryUtil.ALL_POS) &&
 			(orderByComparator == null)) {
 
-			pagination = false;
-			finderPath = _finderPathWithoutPaginationFindAll;
-			finderArgs = FINDER_ARGS_EMPTY;
+			if (useFinderCache) {
+				finderPath = _finderPathWithoutPaginationFindAll;
+				finderArgs = FINDER_ARGS_EMPTY;
+			}
 		}
-		else {
+		else if (useFinderCache) {
 			finderPath = _finderPathWithPaginationFindAll;
 			finderArgs = new Object[] {start, end, orderByComparator};
 		}
 
-		List<Producer_Lectureseries> list =
-			(List<Producer_Lectureseries>)finderCache.getResult(
+		List<Producer_Lectureseries> list = null;
+
+		if (useFinderCache) {
+			list = (List<Producer_Lectureseries>)finderCache.getResult(
 				finderPath, finderArgs, this);
+		}
 
 		if (list == null) {
-			StringBundler query = null;
+			StringBundler sb = null;
 			String sql = null;
 
 			if (orderByComparator != null) {
-				query = new StringBundler(
+				sb = new StringBundler(
 					2 + (orderByComparator.getOrderByFields().length * 2));
 
-				query.append(_SQL_SELECT_PRODUCER_LECTURESERIES);
+				sb.append(_SQL_SELECT_PRODUCER_LECTURESERIES);
 
 				appendOrderByComparator(
-					query, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
+					sb, _ORDER_BY_ENTITY_ALIAS, orderByComparator);
 
-				sql = query.toString();
+				sql = sb.toString();
 			}
 			else {
 				sql = _SQL_SELECT_PRODUCER_LECTURESERIES;
 
-				if (pagination) {
-					sql = sql.concat(
-						Producer_LectureseriesModelImpl.ORDER_BY_JPQL);
-				}
+				sql = sql.concat(Producer_LectureseriesModelImpl.ORDER_BY_JPQL);
 			}
 
 			Session session = null;
@@ -2244,29 +2236,23 @@ public class Producer_LectureseriesPersistenceImpl
 			try {
 				session = openSession();
 
-				Query q = session.createQuery(sql);
+				Query query = session.createQuery(sql);
 
-				if (!pagination) {
-					list = (List<Producer_Lectureseries>)QueryUtil.list(
-						q, getDialect(), start, end, false);
-
-					Collections.sort(list);
-
-					list = Collections.unmodifiableList(list);
-				}
-				else {
-					list = (List<Producer_Lectureseries>)QueryUtil.list(
-						q, getDialect(), start, end);
-				}
+				list = (List<Producer_Lectureseries>)QueryUtil.list(
+					query, getDialect(), start, end);
 
 				cacheResult(list);
 
-				finderCache.putResult(finderPath, finderArgs, list);
+				if (useFinderCache) {
+					finderCache.putResult(finderPath, finderArgs, list);
+				}
 			}
-			catch (Exception e) {
-				finderCache.removeResult(finderPath, finderArgs);
+			catch (Exception exception) {
+				if (useFinderCache) {
+					finderCache.removeResult(finderPath, finderArgs);
+				}
 
-				throw processException(e);
+				throw processException(exception);
 			}
 			finally {
 				closeSession(session);
@@ -2303,19 +2289,19 @@ public class Producer_LectureseriesPersistenceImpl
 			try {
 				session = openSession();
 
-				Query q = session.createQuery(
+				Query query = session.createQuery(
 					_SQL_COUNT_PRODUCER_LECTURESERIES);
 
-				count = (Long)q.uniqueResult();
+				count = (Long)query.uniqueResult();
 
 				finderCache.putResult(
 					_finderPathCountAll, FINDER_ARGS_EMPTY, count);
 			}
-			catch (Exception e) {
+			catch (Exception exception) {
 				finderCache.removeResult(
 					_finderPathCountAll, FINDER_ARGS_EMPTY);
 
-				throw processException(e);
+				throw processException(exception);
 			}
 			finally {
 				closeSession(session);

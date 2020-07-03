@@ -17,8 +17,6 @@ package de.uhh.l2g.plugins.model.impl;
 import de.uhh.l2g.plugins.model.Video_MediaType;
 import de.uhh.l2g.plugins.service.Video_MediaTypeLocalServiceUtil;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The extended model base implementation for the Video_MediaType service. Represents a row in the &quot;LG_Video_MediaType&quot; database table, with each column mapped to a property of this class.
  *
@@ -31,7 +29,6 @@ import org.osgi.annotation.versioning.ProviderType;
  * @see Video_MediaType
  * @generated
  */
-@ProviderType
 public abstract class Video_MediaTypeBaseImpl
 	extends Video_MediaTypeModelImpl implements Video_MediaType {
 

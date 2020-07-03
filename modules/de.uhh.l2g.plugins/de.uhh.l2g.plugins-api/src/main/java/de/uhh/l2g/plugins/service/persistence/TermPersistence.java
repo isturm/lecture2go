@@ -15,7 +15,6 @@
 package de.uhh.l2g.plugins.service.persistence;
 
 import com.liferay.portal.kernel.service.persistence.BasePersistence;
-import com.liferay.portal.kernel.util.OrderByComparator;
 
 import de.uhh.l2g.plugins.exception.NoSuchTermException;
 import de.uhh.l2g.plugins.model.Term;
@@ -54,7 +53,7 @@ public interface TermPersistence extends BasePersistence<Term> {
 	 * Returns a range of all the terms where prefix = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TermModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TermModelImpl</code>.
 	 * </p>
 	 *
 	 * @param prefix the prefix
@@ -68,10 +67,27 @@ public interface TermPersistence extends BasePersistence<Term> {
 	 * Returns an ordered range of all the terms where prefix = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TermModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TermModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByPrefix(String, int, int, OrderByComparator)}
+	 * @param prefix the prefix
+	 * @param start the lower bound of the range of terms
+	 * @param end the upper bound of the range of terms (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching terms
+	 */
+	public java.util.List<Term> findByPrefix(
+		String prefix, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Term>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the terms where prefix = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TermModelImpl</code>.
+	 * </p>
+	 *
 	 * @param prefix the prefix
 	 * @param start the lower bound of the range of terms
 	 * @param end the upper bound of the range of terms (not inclusive)
@@ -79,27 +95,11 @@ public interface TermPersistence extends BasePersistence<Term> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching terms
 	 */
-	@Deprecated
 	public java.util.List<Term> findByPrefix(
 		String prefix, int start, int end,
-		OrderByComparator<Term> orderByComparator, boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the terms where prefix = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TermModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param prefix the prefix
-	 * @param start the lower bound of the range of terms
-	 * @param end the upper bound of the range of terms (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching terms
-	 */
-	public java.util.List<Term> findByPrefix(
-		String prefix, int start, int end,
-		OrderByComparator<Term> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Term>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first term in the ordered set where prefix = &#63;.
@@ -110,7 +110,9 @@ public interface TermPersistence extends BasePersistence<Term> {
 	 * @throws NoSuchTermException if a matching term could not be found
 	 */
 	public Term findByPrefix_First(
-			String prefix, OrderByComparator<Term> orderByComparator)
+			String prefix,
+			com.liferay.portal.kernel.util.OrderByComparator<Term>
+				orderByComparator)
 		throws NoSuchTermException;
 
 	/**
@@ -121,7 +123,9 @@ public interface TermPersistence extends BasePersistence<Term> {
 	 * @return the first matching term, or <code>null</code> if a matching term could not be found
 	 */
 	public Term fetchByPrefix_First(
-		String prefix, OrderByComparator<Term> orderByComparator);
+		String prefix,
+		com.liferay.portal.kernel.util.OrderByComparator<Term>
+			orderByComparator);
 
 	/**
 	 * Returns the last term in the ordered set where prefix = &#63;.
@@ -132,7 +136,9 @@ public interface TermPersistence extends BasePersistence<Term> {
 	 * @throws NoSuchTermException if a matching term could not be found
 	 */
 	public Term findByPrefix_Last(
-			String prefix, OrderByComparator<Term> orderByComparator)
+			String prefix,
+			com.liferay.portal.kernel.util.OrderByComparator<Term>
+				orderByComparator)
 		throws NoSuchTermException;
 
 	/**
@@ -143,7 +149,9 @@ public interface TermPersistence extends BasePersistence<Term> {
 	 * @return the last matching term, or <code>null</code> if a matching term could not be found
 	 */
 	public Term fetchByPrefix_Last(
-		String prefix, OrderByComparator<Term> orderByComparator);
+		String prefix,
+		com.liferay.portal.kernel.util.OrderByComparator<Term>
+			orderByComparator);
 
 	/**
 	 * Returns the terms before and after the current term in the ordered set where prefix = &#63;.
@@ -156,7 +164,8 @@ public interface TermPersistence extends BasePersistence<Term> {
 	 */
 	public Term[] findByPrefix_PrevAndNext(
 			long termId, String prefix,
-			OrderByComparator<Term> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Term>
+				orderByComparator)
 		throws NoSuchTermException;
 
 	/**
@@ -186,7 +195,7 @@ public interface TermPersistence extends BasePersistence<Term> {
 	 * Returns a range of all the terms where year = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TermModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TermModelImpl</code>.
 	 * </p>
 	 *
 	 * @param year the year
@@ -200,10 +209,27 @@ public interface TermPersistence extends BasePersistence<Term> {
 	 * Returns an ordered range of all the terms where year = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TermModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TermModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByYear(String, int, int, OrderByComparator)}
+	 * @param year the year
+	 * @param start the lower bound of the range of terms
+	 * @param end the upper bound of the range of terms (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching terms
+	 */
+	public java.util.List<Term> findByYear(
+		String year, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Term>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the terms where year = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TermModelImpl</code>.
+	 * </p>
+	 *
 	 * @param year the year
 	 * @param start the lower bound of the range of terms
 	 * @param end the upper bound of the range of terms (not inclusive)
@@ -211,27 +237,11 @@ public interface TermPersistence extends BasePersistence<Term> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching terms
 	 */
-	@Deprecated
 	public java.util.List<Term> findByYear(
 		String year, int start, int end,
-		OrderByComparator<Term> orderByComparator, boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the terms where year = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TermModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param year the year
-	 * @param start the lower bound of the range of terms
-	 * @param end the upper bound of the range of terms (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching terms
-	 */
-	public java.util.List<Term> findByYear(
-		String year, int start, int end,
-		OrderByComparator<Term> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Term>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first term in the ordered set where year = &#63;.
@@ -242,7 +252,9 @@ public interface TermPersistence extends BasePersistence<Term> {
 	 * @throws NoSuchTermException if a matching term could not be found
 	 */
 	public Term findByYear_First(
-			String year, OrderByComparator<Term> orderByComparator)
+			String year,
+			com.liferay.portal.kernel.util.OrderByComparator<Term>
+				orderByComparator)
 		throws NoSuchTermException;
 
 	/**
@@ -253,7 +265,9 @@ public interface TermPersistence extends BasePersistence<Term> {
 	 * @return the first matching term, or <code>null</code> if a matching term could not be found
 	 */
 	public Term fetchByYear_First(
-		String year, OrderByComparator<Term> orderByComparator);
+		String year,
+		com.liferay.portal.kernel.util.OrderByComparator<Term>
+			orderByComparator);
 
 	/**
 	 * Returns the last term in the ordered set where year = &#63;.
@@ -264,7 +278,9 @@ public interface TermPersistence extends BasePersistence<Term> {
 	 * @throws NoSuchTermException if a matching term could not be found
 	 */
 	public Term findByYear_Last(
-			String year, OrderByComparator<Term> orderByComparator)
+			String year,
+			com.liferay.portal.kernel.util.OrderByComparator<Term>
+				orderByComparator)
 		throws NoSuchTermException;
 
 	/**
@@ -275,7 +291,9 @@ public interface TermPersistence extends BasePersistence<Term> {
 	 * @return the last matching term, or <code>null</code> if a matching term could not be found
 	 */
 	public Term fetchByYear_Last(
-		String year, OrderByComparator<Term> orderByComparator);
+		String year,
+		com.liferay.portal.kernel.util.OrderByComparator<Term>
+			orderByComparator);
 
 	/**
 	 * Returns the terms before and after the current term in the ordered set where year = &#63;.
@@ -287,7 +305,9 @@ public interface TermPersistence extends BasePersistence<Term> {
 	 * @throws NoSuchTermException if a term with the primary key could not be found
 	 */
 	public Term[] findByYear_PrevAndNext(
-			long termId, String year, OrderByComparator<Term> orderByComparator)
+			long termId, String year,
+			com.liferay.portal.kernel.util.OrderByComparator<Term>
+				orderByComparator)
 		throws NoSuchTermException;
 
 	/**
@@ -317,7 +337,7 @@ public interface TermPersistence extends BasePersistence<Term> {
 	 * Returns a range of all the terms where groupId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TermModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TermModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -331,10 +351,27 @@ public interface TermPersistence extends BasePersistence<Term> {
 	 * Returns an ordered range of all the terms where groupId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TermModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TermModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByGroup(long, int, int, OrderByComparator)}
+	 * @param groupId the group ID
+	 * @param start the lower bound of the range of terms
+	 * @param end the upper bound of the range of terms (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching terms
+	 */
+	public java.util.List<Term> findByGroup(
+		long groupId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Term>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the terms where groupId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TermModelImpl</code>.
+	 * </p>
+	 *
 	 * @param groupId the group ID
 	 * @param start the lower bound of the range of terms
 	 * @param end the upper bound of the range of terms (not inclusive)
@@ -342,27 +379,11 @@ public interface TermPersistence extends BasePersistence<Term> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching terms
 	 */
-	@Deprecated
 	public java.util.List<Term> findByGroup(
 		long groupId, int start, int end,
-		OrderByComparator<Term> orderByComparator, boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the terms where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TermModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of terms
-	 * @param end the upper bound of the range of terms (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching terms
-	 */
-	public java.util.List<Term> findByGroup(
-		long groupId, int start, int end,
-		OrderByComparator<Term> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Term>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first term in the ordered set where groupId = &#63;.
@@ -373,7 +394,9 @@ public interface TermPersistence extends BasePersistence<Term> {
 	 * @throws NoSuchTermException if a matching term could not be found
 	 */
 	public Term findByGroup_First(
-			long groupId, OrderByComparator<Term> orderByComparator)
+			long groupId,
+			com.liferay.portal.kernel.util.OrderByComparator<Term>
+				orderByComparator)
 		throws NoSuchTermException;
 
 	/**
@@ -384,7 +407,9 @@ public interface TermPersistence extends BasePersistence<Term> {
 	 * @return the first matching term, or <code>null</code> if a matching term could not be found
 	 */
 	public Term fetchByGroup_First(
-		long groupId, OrderByComparator<Term> orderByComparator);
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<Term>
+			orderByComparator);
 
 	/**
 	 * Returns the last term in the ordered set where groupId = &#63;.
@@ -395,7 +420,9 @@ public interface TermPersistence extends BasePersistence<Term> {
 	 * @throws NoSuchTermException if a matching term could not be found
 	 */
 	public Term findByGroup_Last(
-			long groupId, OrderByComparator<Term> orderByComparator)
+			long groupId,
+			com.liferay.portal.kernel.util.OrderByComparator<Term>
+				orderByComparator)
 		throws NoSuchTermException;
 
 	/**
@@ -406,7 +433,9 @@ public interface TermPersistence extends BasePersistence<Term> {
 	 * @return the last matching term, or <code>null</code> if a matching term could not be found
 	 */
 	public Term fetchByGroup_Last(
-		long groupId, OrderByComparator<Term> orderByComparator);
+		long groupId,
+		com.liferay.portal.kernel.util.OrderByComparator<Term>
+			orderByComparator);
 
 	/**
 	 * Returns the terms before and after the current term in the ordered set where groupId = &#63;.
@@ -419,7 +448,8 @@ public interface TermPersistence extends BasePersistence<Term> {
 	 */
 	public Term[] findByGroup_PrevAndNext(
 			long termId, long groupId,
-			OrderByComparator<Term> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Term>
+				orderByComparator)
 		throws NoSuchTermException;
 
 	/**
@@ -449,7 +479,7 @@ public interface TermPersistence extends BasePersistence<Term> {
 	 * Returns a range of all the terms where companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TermModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TermModelImpl</code>.
 	 * </p>
 	 *
 	 * @param companyId the company ID
@@ -464,10 +494,27 @@ public interface TermPersistence extends BasePersistence<Term> {
 	 * Returns an ordered range of all the terms where companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TermModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TermModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByCompany(long, int, int, OrderByComparator)}
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of terms
+	 * @param end the upper bound of the range of terms (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching terms
+	 */
+	public java.util.List<Term> findByCompany(
+		long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Term>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the terms where companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TermModelImpl</code>.
+	 * </p>
+	 *
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of terms
 	 * @param end the upper bound of the range of terms (not inclusive)
@@ -475,27 +522,11 @@ public interface TermPersistence extends BasePersistence<Term> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching terms
 	 */
-	@Deprecated
 	public java.util.List<Term> findByCompany(
 		long companyId, int start, int end,
-		OrderByComparator<Term> orderByComparator, boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the terms where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TermModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of terms
-	 * @param end the upper bound of the range of terms (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching terms
-	 */
-	public java.util.List<Term> findByCompany(
-		long companyId, int start, int end,
-		OrderByComparator<Term> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Term>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first term in the ordered set where companyId = &#63;.
@@ -506,7 +537,9 @@ public interface TermPersistence extends BasePersistence<Term> {
 	 * @throws NoSuchTermException if a matching term could not be found
 	 */
 	public Term findByCompany_First(
-			long companyId, OrderByComparator<Term> orderByComparator)
+			long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator<Term>
+				orderByComparator)
 		throws NoSuchTermException;
 
 	/**
@@ -517,7 +550,9 @@ public interface TermPersistence extends BasePersistence<Term> {
 	 * @return the first matching term, or <code>null</code> if a matching term could not be found
 	 */
 	public Term fetchByCompany_First(
-		long companyId, OrderByComparator<Term> orderByComparator);
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<Term>
+			orderByComparator);
 
 	/**
 	 * Returns the last term in the ordered set where companyId = &#63;.
@@ -528,7 +563,9 @@ public interface TermPersistence extends BasePersistence<Term> {
 	 * @throws NoSuchTermException if a matching term could not be found
 	 */
 	public Term findByCompany_Last(
-			long companyId, OrderByComparator<Term> orderByComparator)
+			long companyId,
+			com.liferay.portal.kernel.util.OrderByComparator<Term>
+				orderByComparator)
 		throws NoSuchTermException;
 
 	/**
@@ -539,7 +576,9 @@ public interface TermPersistence extends BasePersistence<Term> {
 	 * @return the last matching term, or <code>null</code> if a matching term could not be found
 	 */
 	public Term fetchByCompany_Last(
-		long companyId, OrderByComparator<Term> orderByComparator);
+		long companyId,
+		com.liferay.portal.kernel.util.OrderByComparator<Term>
+			orderByComparator);
 
 	/**
 	 * Returns the terms before and after the current term in the ordered set where companyId = &#63;.
@@ -552,7 +591,8 @@ public interface TermPersistence extends BasePersistence<Term> {
 	 */
 	public Term[] findByCompany_PrevAndNext(
 			long termId, long companyId,
-			OrderByComparator<Term> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Term>
+				orderByComparator)
 		throws NoSuchTermException;
 
 	/**
@@ -584,7 +624,7 @@ public interface TermPersistence extends BasePersistence<Term> {
 	 * Returns a range of all the terms where groupId = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TermModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TermModelImpl</code>.
 	 * </p>
 	 *
 	 * @param groupId the group ID
@@ -600,10 +640,28 @@ public interface TermPersistence extends BasePersistence<Term> {
 	 * Returns an ordered range of all the terms where groupId = &#63; and companyId = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TermModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TermModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByGroupAndCompany(long,long, int, int, OrderByComparator)}
+	 * @param groupId the group ID
+	 * @param companyId the company ID
+	 * @param start the lower bound of the range of terms
+	 * @param end the upper bound of the range of terms (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching terms
+	 */
+	public java.util.List<Term> findByGroupAndCompany(
+		long groupId, long companyId, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Term>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the terms where groupId = &#63; and companyId = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TermModelImpl</code>.
+	 * </p>
+	 *
 	 * @param groupId the group ID
 	 * @param companyId the company ID
 	 * @param start the lower bound of the range of terms
@@ -612,28 +670,11 @@ public interface TermPersistence extends BasePersistence<Term> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching terms
 	 */
-	@Deprecated
 	public java.util.List<Term> findByGroupAndCompany(
 		long groupId, long companyId, int start, int end,
-		OrderByComparator<Term> orderByComparator, boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the terms where groupId = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TermModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of terms
-	 * @param end the upper bound of the range of terms (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching terms
-	 */
-	public java.util.List<Term> findByGroupAndCompany(
-		long groupId, long companyId, int start, int end,
-		OrderByComparator<Term> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Term>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first term in the ordered set where groupId = &#63; and companyId = &#63;.
@@ -646,7 +687,8 @@ public interface TermPersistence extends BasePersistence<Term> {
 	 */
 	public Term findByGroupAndCompany_First(
 			long groupId, long companyId,
-			OrderByComparator<Term> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Term>
+				orderByComparator)
 		throws NoSuchTermException;
 
 	/**
@@ -659,7 +701,8 @@ public interface TermPersistence extends BasePersistence<Term> {
 	 */
 	public Term fetchByGroupAndCompany_First(
 		long groupId, long companyId,
-		OrderByComparator<Term> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Term>
+			orderByComparator);
 
 	/**
 	 * Returns the last term in the ordered set where groupId = &#63; and companyId = &#63;.
@@ -672,7 +715,8 @@ public interface TermPersistence extends BasePersistence<Term> {
 	 */
 	public Term findByGroupAndCompany_Last(
 			long groupId, long companyId,
-			OrderByComparator<Term> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Term>
+				orderByComparator)
 		throws NoSuchTermException;
 
 	/**
@@ -685,7 +729,8 @@ public interface TermPersistence extends BasePersistence<Term> {
 	 */
 	public Term fetchByGroupAndCompany_Last(
 		long groupId, long companyId,
-		OrderByComparator<Term> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Term>
+			orderByComparator);
 
 	/**
 	 * Returns the terms before and after the current term in the ordered set where groupId = &#63; and companyId = &#63;.
@@ -699,7 +744,8 @@ public interface TermPersistence extends BasePersistence<Term> {
 	 */
 	public Term[] findByGroupAndCompany_PrevAndNext(
 			long termId, long groupId, long companyId,
-			OrderByComparator<Term> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Term>
+				orderByComparator)
 		throws NoSuchTermException;
 
 	/**
@@ -732,7 +778,7 @@ public interface TermPersistence extends BasePersistence<Term> {
 	 * Returns a range of all the terms where prefix = &#63; and year = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TermModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TermModelImpl</code>.
 	 * </p>
 	 *
 	 * @param prefix the prefix
@@ -748,10 +794,28 @@ public interface TermPersistence extends BasePersistence<Term> {
 	 * Returns an ordered range of all the terms where prefix = &#63; and year = &#63;.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TermModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TermModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findByPrefixAndYear(String,String, int, int, OrderByComparator)}
+	 * @param prefix the prefix
+	 * @param year the year
+	 * @param start the lower bound of the range of terms
+	 * @param end the upper bound of the range of terms (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of matching terms
+	 */
+	public java.util.List<Term> findByPrefixAndYear(
+		String prefix, String year, int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Term>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the terms where prefix = &#63; and year = &#63;.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TermModelImpl</code>.
+	 * </p>
+	 *
 	 * @param prefix the prefix
 	 * @param year the year
 	 * @param start the lower bound of the range of terms
@@ -760,28 +824,11 @@ public interface TermPersistence extends BasePersistence<Term> {
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of matching terms
 	 */
-	@Deprecated
 	public java.util.List<Term> findByPrefixAndYear(
 		String prefix, String year, int start, int end,
-		OrderByComparator<Term> orderByComparator, boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the terms where prefix = &#63; and year = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TermModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param prefix the prefix
-	 * @param year the year
-	 * @param start the lower bound of the range of terms
-	 * @param end the upper bound of the range of terms (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching terms
-	 */
-	public java.util.List<Term> findByPrefixAndYear(
-		String prefix, String year, int start, int end,
-		OrderByComparator<Term> orderByComparator);
+		com.liferay.portal.kernel.util.OrderByComparator<Term>
+			orderByComparator,
+		boolean useFinderCache);
 
 	/**
 	 * Returns the first term in the ordered set where prefix = &#63; and year = &#63;.
@@ -794,7 +841,8 @@ public interface TermPersistence extends BasePersistence<Term> {
 	 */
 	public Term findByPrefixAndYear_First(
 			String prefix, String year,
-			OrderByComparator<Term> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Term>
+				orderByComparator)
 		throws NoSuchTermException;
 
 	/**
@@ -806,7 +854,9 @@ public interface TermPersistence extends BasePersistence<Term> {
 	 * @return the first matching term, or <code>null</code> if a matching term could not be found
 	 */
 	public Term fetchByPrefixAndYear_First(
-		String prefix, String year, OrderByComparator<Term> orderByComparator);
+		String prefix, String year,
+		com.liferay.portal.kernel.util.OrderByComparator<Term>
+			orderByComparator);
 
 	/**
 	 * Returns the last term in the ordered set where prefix = &#63; and year = &#63;.
@@ -819,7 +869,8 @@ public interface TermPersistence extends BasePersistence<Term> {
 	 */
 	public Term findByPrefixAndYear_Last(
 			String prefix, String year,
-			OrderByComparator<Term> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Term>
+				orderByComparator)
 		throws NoSuchTermException;
 
 	/**
@@ -831,7 +882,9 @@ public interface TermPersistence extends BasePersistence<Term> {
 	 * @return the last matching term, or <code>null</code> if a matching term could not be found
 	 */
 	public Term fetchByPrefixAndYear_Last(
-		String prefix, String year, OrderByComparator<Term> orderByComparator);
+		String prefix, String year,
+		com.liferay.portal.kernel.util.OrderByComparator<Term>
+			orderByComparator);
 
 	/**
 	 * Returns the terms before and after the current term in the ordered set where prefix = &#63; and year = &#63;.
@@ -845,7 +898,8 @@ public interface TermPersistence extends BasePersistence<Term> {
 	 */
 	public Term[] findByPrefixAndYear_PrevAndNext(
 			long termId, String prefix, String year,
-			OrderByComparator<Term> orderByComparator)
+			com.liferay.portal.kernel.util.OrderByComparator<Term>
+				orderByComparator)
 		throws NoSuchTermException;
 
 	/**
@@ -926,7 +980,7 @@ public interface TermPersistence extends BasePersistence<Term> {
 	 * Returns a range of all the terms.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TermModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TermModelImpl</code>.
 	 * </p>
 	 *
 	 * @param start the lower bound of the range of terms
@@ -939,35 +993,37 @@ public interface TermPersistence extends BasePersistence<Term> {
 	 * Returns an ordered range of all the terms.
 	 *
 	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TermModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TermModelImpl</code>.
 	 * </p>
 	 *
-	 * @deprecated As of Mueller (7.2.x), replaced by {@link #findAll(int, int, OrderByComparator)}
+	 * @param start the lower bound of the range of terms
+	 * @param end the upper bound of the range of terms (not inclusive)
+	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @return the ordered range of terms
+	 */
+	public java.util.List<Term> findAll(
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Term>
+			orderByComparator);
+
+	/**
+	 * Returns an ordered range of all the terms.
+	 *
+	 * <p>
+	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>TermModelImpl</code>.
+	 * </p>
+	 *
 	 * @param start the lower bound of the range of terms
 	 * @param end the upper bound of the range of terms (not inclusive)
 	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the ordered range of terms
 	 */
-	@Deprecated
 	public java.util.List<Term> findAll(
-		int start, int end, OrderByComparator<Term> orderByComparator,
+		int start, int end,
+		com.liferay.portal.kernel.util.OrderByComparator<Term>
+			orderByComparator,
 		boolean useFinderCache);
-
-	/**
-	 * Returns an ordered range of all the terms.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent and pagination is required (<code>start</code> and <code>end</code> are not <code>QueryUtil#ALL_POS</code>), then the query will include the default ORDER BY logic from <code>TermModelImpl</code>. If both <code>orderByComparator</code> and pagination are absent, for performance reasons, the query will not have an ORDER BY clause and the returned result set will be sorted on by the primary key in an ascending order.
-	 * </p>
-	 *
-	 * @param start the lower bound of the range of terms
-	 * @param end the upper bound of the range of terms (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of terms
-	 */
-	public java.util.List<Term> findAll(
-		int start, int end, OrderByComparator<Term> orderByComparator);
 
 	/**
 	 * Removes all the terms from the database.

@@ -27,30 +27,27 @@ import java.io.ObjectOutput;
 
 import java.util.Date;
 
-import org.osgi.annotation.versioning.ProviderType;
-
 /**
  * The cache model class for representing Videohitlist in entity cache.
  *
  * @author Iavor Sturm
  * @generated
  */
-@ProviderType
 public class VideohitlistCacheModel
 	implements CacheModel<Videohitlist>, Externalizable {
 
 	@Override
-	public boolean equals(Object obj) {
-		if (this == obj) {
+	public boolean equals(Object object) {
+		if (this == object) {
 			return true;
 		}
 
-		if (!(obj instanceof VideohitlistCacheModel)) {
+		if (!(object instanceof VideohitlistCacheModel)) {
 			return false;
 		}
 
 		VideohitlistCacheModel videohitlistCacheModel =
-			(VideohitlistCacheModel)obj;
+			(VideohitlistCacheModel)object;
 
 		if (videohitlistId == videohitlistCacheModel.videohitlistId) {
 			return true;
