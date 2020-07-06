@@ -322,11 +322,12 @@ public class VideoLocalServiceUtil {
 
 	public static java.util.List<de.uhh.l2g.plugins.model.Video>
 			getByLectureseriesAndOpenaccess(
-				Long lectureseriesId, int openAccess)
+				Long lectureseriesId, int openAccess,
+				boolean mustBeCurrentlyValid)
 		throws com.liferay.portal.kernel.exception.SystemException {
 
 		return getService().getByLectureseriesAndOpenaccess(
-			lectureseriesId, openAccess);
+			lectureseriesId, openAccess, mustBeCurrentlyValid);
 	}
 
 	public static java.util.List<de.uhh.l2g.plugins.model.Video>
@@ -387,11 +388,12 @@ public class VideoLocalServiceUtil {
 			word, lectureseriesId);
 	}
 
-	public static de.uhh.l2g.plugins.model.Video getBySecureUrl(String surl)
+	public static de.uhh.l2g.plugins.model.Video getBySecureUrl(
+			String surl, boolean mustBeCurrentlyValid)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			   de.uhh.l2g.plugins.exception.NoSuchVideoException {
 
-		return getService().getBySecureUrl(surl);
+		return getService().getBySecureUrl(surl, mustBeCurrentlyValid);
 	}
 
 	public static java.util.List<de.uhh.l2g.plugins.model.Video> getByTerm(
@@ -407,6 +409,13 @@ public class VideoLocalServiceUtil {
 		return getService().getByVideoIds(videoIds);
 	}
 
+	public static de.uhh.l2g.plugins.model.Video getCurrentlyValidVideo(
+			long videoId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().getCurrentlyValidVideo(videoId);
+	}
+
 	public static
 		com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 			getIndexableActionableDynamicQuery() {
@@ -420,8 +429,11 @@ public class VideoLocalServiceUtil {
 		return getService().getJSONVideo(videoId);
 	}
 
-	public static Long getLatestClosedAccessVideoId(Long lectureseriesId) {
-		return getService().getLatestClosedAccessVideoId(lectureseriesId);
+	public static Long getLatestClosedAccessVideoId(
+		Long lectureseriesId, boolean mustBeCurrentlyValid) {
+
+		return getService().getLatestClosedAccessVideoId(
+			lectureseriesId, mustBeCurrentlyValid);
 	}
 
 	public static de.uhh.l2g.plugins.model.Video

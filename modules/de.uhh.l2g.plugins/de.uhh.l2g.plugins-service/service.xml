@@ -538,7 +538,9 @@
     	<column name="userId" type="long"></column>
     	<column name="userName" type="String"></column>
     	<column name="createDate" type="Date"></column>
-    	<column name="modifiedDate" type="Date"></column>        
+    	<column name="modifiedDate" type="Date"></column>
+    	<column name="validFromDate" type="Date"></column>
+    	<column name="validToDate" type="Date"></column>
 		<order by="desc">
 			<order-column name="videoId" order-by="desc"></order-column>
 			<order-column name="uploadDate" order-by="desc"></order-column>

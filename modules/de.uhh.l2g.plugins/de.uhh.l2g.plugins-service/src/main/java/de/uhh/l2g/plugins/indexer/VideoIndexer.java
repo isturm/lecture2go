@@ -55,7 +55,8 @@ public class VideoIndexer extends BaseIndexer<Video> {
 		setDefaultSelectedFieldNames(Field.COMPANY_ID, "videoId", "tagCloud", "lectureSeriesId", "producerId",
 				"containerFormat", "resolution", "duration", "hostId", "generationDate", "openAccess", "metaDataId",
 				"hits", "uploadDate", "permittedToSegment", "rootInstitutionId", "citation2Go", "termId", "licenseId",
-				"createDate", "modifiedDate", "categoryId", "institutionId", "institutionParentId", "mediaTypeId");
+				"createDate", "modifiedDate", "validFromDate", "validToDate", "categoryId", "institutionId",
+				"institutionParentId", "mediaTypeId");
 	}
 
 	@Override
@@ -95,6 +96,8 @@ public class VideoIndexer extends BaseIndexer<Video> {
 		document.addKeyword("citation2Go", video.getCitation2go());
 		document.addDate("createDate", video.getCreateDate());
 		document.addDate("modifiedDate", video.getModifiedDate());
+		document.addDate("validFromDate", video.getValidFromDate());
+		document.addDate("validToDate", video.getValidToDate());
 
 		// ids for filtering
 		document.addKeyword("termId", video.getTermId());

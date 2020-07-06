@@ -44,10 +44,15 @@ public interface VideoFinder {
 
 	public int unlinkLectureseriesFromVideos(Long lectureseriesId);
 
-	public de.uhh.l2g.plugins.model.Video findVideoBySerureUrl(String surl);
+	public de.uhh.l2g.plugins.model.Video findVideoBySecureUrl(
+		String surl, boolean mustBeCurrentlyValid);
 
 	public de.uhh.l2g.plugins.model.Video
 		findLatestOpenAccessVideoForLectureseries(Long lectureseriesId);
+
+	public java.util.List<de.uhh.l2g.plugins.model.Video>
+		findByLectureseriesAndOpenaccessAndIsCurrentlyValid(
+			Long lectureseriesId, int openAccess);
 
 	public java.util.List<de.uhh.l2g.plugins.model.Video> findLatestVideos();
 

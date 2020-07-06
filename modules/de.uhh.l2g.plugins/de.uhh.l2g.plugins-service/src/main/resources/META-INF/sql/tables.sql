@@ -312,7 +312,9 @@ create table LG_Video (
 	userId LONG,
 	userName VARCHAR(75) null,
 	createDate DATE null,
-	modifiedDate DATE null
+	modifiedDate DATE null,
+	validFromDate DATE null,
+	validToDate DATE null
 );
 
 create table LG_VideoStatistic (

@@ -82,7 +82,8 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		{"password_", Types.VARCHAR}, {"licenseId", Types.BIGINT},
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
-		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP}
+		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP},
+		{"validFromDate", Types.TIMESTAMP}, {"validToDate", Types.TIMESTAMP}
 	};
 
 	public static final Map<String, Integer> TABLE_COLUMNS_MAP =
@@ -119,10 +120,12 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		TABLE_COLUMNS_MAP.put("userName", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("createDate", Types.TIMESTAMP);
 		TABLE_COLUMNS_MAP.put("modifiedDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("validFromDate", Types.TIMESTAMP);
+		TABLE_COLUMNS_MAP.put("validToDate", Types.TIMESTAMP);
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table LG_Video (videoId LONG not null primary key,title VARCHAR(75) null,lectureseriesId LONG,producerId LONG,containerFormat VARCHAR(75) null,filename VARCHAR(75) null,resolution VARCHAR(75) null,duration VARCHAR(75) null,hostId LONG,fileSize VARCHAR(75) null,generationDate VARCHAR(75) null,openAccess INTEGER,downloadLink INTEGER,metadataId LONG,secureFilename VARCHAR(75) null,hits LONG,uploadDate DATE null,permittedToSegment INTEGER,rootInstitutionId LONG,citation2go INTEGER,termId LONG,tags VARCHAR(75) null,password_ VARCHAR(75) null,licenseId LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null)";
+		"create table LG_Video (videoId LONG not null primary key,title VARCHAR(75) null,lectureseriesId LONG,producerId LONG,containerFormat VARCHAR(75) null,filename VARCHAR(75) null,resolution VARCHAR(75) null,duration VARCHAR(75) null,hostId LONG,fileSize VARCHAR(75) null,generationDate VARCHAR(75) null,openAccess INTEGER,downloadLink INTEGER,metadataId LONG,secureFilename VARCHAR(75) null,hits LONG,uploadDate DATE null,permittedToSegment INTEGER,rootInstitutionId LONG,citation2go INTEGER,termId LONG,tags VARCHAR(75) null,password_ VARCHAR(75) null,licenseId LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null,validFromDate DATE null,validToDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table LG_Video";
 
@@ -402,6 +405,12 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		attributeGetterFunctions.put("modifiedDate", Video::getModifiedDate);
 		attributeSetterBiConsumers.put(
 			"modifiedDate", (BiConsumer<Video, Date>)Video::setModifiedDate);
+		attributeGetterFunctions.put("validFromDate", Video::getValidFromDate);
+		attributeSetterBiConsumers.put(
+			"validFromDate", (BiConsumer<Video, Date>)Video::setValidFromDate);
+		attributeGetterFunctions.put("validToDate", Video::getValidToDate);
+		attributeSetterBiConsumers.put(
+			"validToDate", (BiConsumer<Video, Date>)Video::setValidToDate);
 
 		_attributeGetterFunctions = Collections.unmodifiableMap(
 			attributeGetterFunctions);
@@ -912,6 +921,26 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		_modifiedDate = modifiedDate;
 	}
 
+	@Override
+	public Date getValidFromDate() {
+		return _validFromDate;
+	}
+
+	@Override
+	public void setValidFromDate(Date validFromDate) {
+		_validFromDate = validFromDate;
+	}
+
+	@Override
+	public Date getValidToDate() {
+		return _validToDate;
+	}
+
+	@Override
+	public void setValidToDate(Date validToDate) {
+		_validToDate = validToDate;
+	}
+
 	public long getColumnBitmask() {
 		return _columnBitmask;
 	}
@@ -978,6 +1007,8 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		videoImpl.setUserName(getUserName());
 		videoImpl.setCreateDate(getCreateDate());
 		videoImpl.setModifiedDate(getModifiedDate());
+		videoImpl.setValidFromDate(getValidFromDate());
+		videoImpl.setValidToDate(getValidToDate());
 
 		videoImpl.resetOriginalValues();
 
@@ -1252,6 +1283,24 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 			videoCacheModel.modifiedDate = Long.MIN_VALUE;
 		}
 
+		Date validFromDate = getValidFromDate();
+
+		if (validFromDate != null) {
+			videoCacheModel.validFromDate = validFromDate.getTime();
+		}
+		else {
+			videoCacheModel.validFromDate = Long.MIN_VALUE;
+		}
+
+		Date validToDate = getValidToDate();
+
+		if (validToDate != null) {
+			videoCacheModel.validToDate = validToDate.getTime();
+		}
+		else {
+			videoCacheModel.validToDate = Long.MIN_VALUE;
+		}
+
 		return videoCacheModel;
 	}
 
@@ -1373,6 +1422,8 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 	private Date _createDate;
 	private Date _modifiedDate;
 	private boolean _setModifiedDate;
+	private Date _validFromDate;
+	private Date _validToDate;
 	private long _columnBitmask;
 	private Video _escapedModel;
 
