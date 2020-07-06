@@ -465,7 +465,7 @@ public class ViewRenderList implements MVCRenderCommand {
 			});
 
 			allVideoIds.addAll(videoIds);
-			licenses.addAll(LicenseLocalServiceUtil.getLicensesFromVideoIds(videoIds));
+			licenses.addAll(LicenseLocalServiceUtil.getLicensesFromVideoIds(allVideoIds));
 		}
 
 		return licenses;
