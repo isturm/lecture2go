@@ -23,7 +23,7 @@ public class LicenseFinderImpl extends LicenseFinderBaseImpl implements LicenseF
 
 		DynamicQuery licenseIdQuery = DynamicQueryFactoryUtil.forClass(Video.class, classLoader)
 				.add(RestrictionsFactoryUtil.in("videoId", videoIds))
-				.setProjection(ProjectionFactoryUtil.property("licenseId"));
+				.setProjection(ProjectionFactoryUtil.distinct(ProjectionFactoryUtil.property("licenseId")));
 
 		DynamicQuery licenseQuery = DynamicQueryFactoryUtil.forClass(License.class, classLoader)
 				.add(PropertyFactoryUtil.forName("licenseId").in(licenseIdQuery));
