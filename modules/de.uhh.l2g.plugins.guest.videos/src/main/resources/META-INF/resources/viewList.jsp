@@ -34,7 +34,7 @@
 <jsp:useBean id="presentCategories" type="java.util.List<Category>" scope="request"/>
 <jsp:useBean id="presentMediaTypes" type="java.util.Set<de.uhh.l2g.plugins.model.MediaType>" scope="request"/>
 <jsp:useBean id="presentTags" type="java.util.Set<java.lang.String>" scope="request"/>
-<jsp:useBean id="presentLicenses" type="java.util.List<de.uhh.l2g.plugins.model.License>" scope="request"/>
+<jsp:useBean id="presentLicenses" type="java.util.Set<de.uhh.l2g.plugins.model.License>" scope="request"/>
 
 <jsp:useBean id="portletURL" type="javax.portlet.PortletURL" scope="request"/>
 <jsp:useBean id="resultSetEmpty" type="java.lang.Boolean" scope="request"/>
