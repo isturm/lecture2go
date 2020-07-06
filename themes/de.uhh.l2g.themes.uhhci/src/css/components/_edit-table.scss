@@ -68,12 +68,11 @@
   margin: $global-margin-lg 0;
   display: flex;
 
-
   .progress {
     border-radius: 0;
     height: 100%;
 
-    #bar {
+    .bar {
       display: flex;
       justify-content: flex-end;
       align-items: center;
@@ -81,7 +80,7 @@
       width: 0;
     }
 
-    #percent {
+    .percent {
       font-size: $h4-font-size;
       color: $secondary-color;
       margin-right: $global-margin-sm;

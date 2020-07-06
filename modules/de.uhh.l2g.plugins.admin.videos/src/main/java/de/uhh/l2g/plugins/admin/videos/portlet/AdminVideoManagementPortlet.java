@@ -345,7 +345,8 @@ public class AdminVideoManagementPortlet extends MVCPortlet {
 		
 		//assign to render request and response finally
 		renderRequest.setAttribute("uploadRepository", uploadRepository);	
-		renderRequest.setAttribute("reqHost", host);	
+		renderRequest.setAttribute("imageRepository", PropsUtil.get("lecture2go.images.system.path"));
+		renderRequest.setAttribute("reqHost", host);
 		renderRequest.setAttribute("terms", terms);
 		renderRequest.setAttribute("mediaTypes", mediaTypes);
 		renderRequest.setAttribute("categories", categories);	
@@ -601,6 +602,22 @@ public class AdminVideoManagementPortlet extends MVCPortlet {
 					//e.printStackTrace();
 				}
 			}
+		}
+
+		if (resourceID.equals("updateThumbnailFromFile")) {
+			String fileName = ParamUtil.getString(resourceRequest, "thumbnailLocation");
+
+			boolean success = FFmpegManager.createThumbnailFromImageFile(
+					fileName,
+					PropsUtil.get("lecture2go.images.system.path") + "/" + video.getPreffix() + ".jpg"
+			);
+
+			JSONObject output = JSONFactoryUtil.createJSONObject();
+			output.put("success", success);
+			PrintWriter writer = resourceResponse.getWriter();
+			writer.print(output.toString());
+			writer.flush();
+			writer.close();
 		}
 		
 		if(resourceID.equals("updateAll")){

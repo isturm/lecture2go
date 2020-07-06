@@ -178,7 +178,6 @@
                     		
                     	}
                     	generateClipLink (Math.round(startFrameTime), Math.round(endFrameTime));
-                    	console.log("start: " + startFrameTime + ", end: " + endFrameTime);
                     }
             });
 
@@ -198,7 +197,6 @@
                 		
                 	}
                 	generateClipLink (Math.round(startFrameTime), Math.round(endFrameTime));
-                	console.log("start: " + startFrameTime + ", end: " + endFrameTime);
                 }
             });
             

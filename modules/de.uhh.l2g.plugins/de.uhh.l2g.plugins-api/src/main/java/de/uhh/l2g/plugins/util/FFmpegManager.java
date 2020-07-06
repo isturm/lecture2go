@@ -40,6 +40,8 @@ import java.io.InputStreamReader;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 
 import de.uhh.l2g.plugins.model.Host;
@@ -53,6 +55,8 @@ import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
  * The Class FFmpegManager.
  */
 public class FFmpegManager {
+	private static final Log _log = LogFactoryUtil.getLog(FFmpegManager.class);
+
 	/**
 	 * Instantiates a new f fmpeg manager.
 	 *
@@ -238,6 +242,66 @@ public class FFmpegManager {
 	}
 
 	/**
+	 * Creates the thumbnail from an image file.
+	 *
+	 * @param fileLocation
+	 *            the file location
+	 * @param thumbnailLocation
+	 *            the thumbnail location
+	 * @return true, if successful
+	 */
+	public static boolean createThumbnailFromImageFile(String fileLocation, String thumbnailLocation) {
+		Runtime runCmd = Runtime.getRuntime();
+		String thumbPreffLoc = thumbnailLocation.split(".jpg")[0];
+		String command = PropsUtil.get("lecture2go.ffmpeg.bin") + " -y -i " + fileLocation + " -vf scale=1920:1080:force_original_aspect_ratio=decrease,pad=1920:1080:(ow-iw)/2:(oh-ih)/2,setsar=1 " + thumbnailLocation;
+		String command1 = PropsUtil.get("lecture2go.ffmpeg.bin") + " -y -i " + thumbnailLocation + " -vf scale='160:-1' " + thumbPreffLoc + "_s.jpg";
+		String command2 = PropsUtil.get("lecture2go.ffmpeg.bin") + " -y -i " + thumbnailLocation + " -vf scale='320:-1' " + thumbPreffLoc + "_m.jpg";
+		boolean success = true;
+
+		if(!imageRepositoryFolderExists()) {
+			createImageRepositoryFolder();
+		} else {
+			try {
+				new File(thumbnailLocation);
+				int exitCode = runCmd.exec(command).waitFor();
+				if (exitCode != 0) {
+					_log.error("Large thumbnail creation failed with exit code " + exitCode);
+					success = false;
+				}
+			} catch (IOException | InterruptedException e) {
+				success = false;
+			}
+			try {
+				new File(thumbPreffLoc + "_s.jpg");
+				int exitCode = runCmd.exec(command1).waitFor();
+				if (exitCode != 0) {
+					_log.error("Small thumbnail creation failed with exit code " + exitCode);
+					success = false;
+				}
+			} catch (IOException | InterruptedException e) {
+				success = false;
+			}
+			try {
+				new File(thumbPreffLoc + "_m.jpg");
+				int exitCode = runCmd.exec(command2).waitFor();
+				if (exitCode != 0) {
+					_log.error("Medium thumbnail creation failed with exit code " + exitCode);
+					success = false;
+				}
+			} catch (IOException | InterruptedException e) {
+				success = false;
+			}
+		}
+
+		// delete source PNG file as it was converted to JPG
+		if (fileLocation.substring(fileLocation.lastIndexOf(".")).equals(".png")) {
+			new File(fileLocation).delete();
+		}
+
+		return success;
+	}
+
+	/**
 	 * Thumbnails exists.
 	 *
 	 * @param video
@@ -384,7 +448,6 @@ public class FFmpegManager {
 	 * Update ffmpeg metadata.
 	 *
 	 * @param video the video
-	 * @param model the model
 	 * @throws IOException Signals that an I/O exception has occurred.
 	 * @throws SystemException 
 	 * @throws PortalException 
