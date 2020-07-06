@@ -21,6 +21,7 @@
 <jsp:useBean id="mediaTypes" type="java.util.List<de.uhh.l2g.plugins.model.MediaType>" scope="request"/>
 <jsp:useBean id="categories" type="java.util.List<de.uhh.l2g.plugins.model.Category>" scope="request"/>
 <jsp:useBean id="uploadRepository" type="java.lang.String" scope="request"/>
+<jsp:useBean id="imageRepository" type="java.lang.String" scope="request"/>
 <jsp:useBean id="backURL" type="java.lang.String" scope="request"/>
 <jsp:useBean id="assignedCreators" type="com.liferay.portal.json.JSONArrayImpl" scope="request"/>
 
@@ -37,6 +38,7 @@
 <liferay-portlet:resourceURL id="getFileName" var="getFileNameURL"/>
 <liferay-portlet:resourceURL id="getShare" var="getShareURL"/>
 <liferay-portlet:resourceURL id="updateThumbnail" var="updateThumbnailURL"/>
+<liferay-portlet:resourceURL id="updateThumbnailFromFile" var="updateThumbnailFromFileURL"/>
 <liferay-portlet:resourceURL id="getJSONVideo" var="getJSONVideoURL"/>
 <liferay-portlet:resourceURL id="updateHtaccess" var="updateHtaccessURL"/>
 <liferay-portlet:resourceURL id="defaultContainer" var="defaultContainerURL"/>
@@ -99,8 +101,8 @@
                                 <input type="hidden" id="l2gDateTime" value=""/>
 
                                 <div id="progress" class="progress" style="width:0%;">
-                                    <div id="bar">
-                                        <span id="percent"></span>
+                                    <div id="bar" class="bar">
+                                        <span id="percent" class="percent"></span>
                                     </div>
                                 </div>
                                 <div id="uploaded-files"></div>
@@ -305,6 +307,22 @@
 	             <div class="sub-content" id="thumbnail-content">
 	                 <!-- thumbnail start -->
 	                 <liferay-ui:message key="video-thumbnail-about"/>
+					 <aui:fieldset column="true">
+						 <div class="upload-form">
+							 <label class="btn btn-primary btn-default btn-upload">
+								 <i id="upload-icon" class="icon-fb-file-upload"></i>
+								 <liferay-ui:message key="upload-file"/>
+								 <input id="upload-thumbnail" type="file" name="files[]"
+										data-url="/servlet-file-upload/upload"
+										multiple/>
+							 </label>
+							 <div id="progress-thumbnail" class="progress">
+								 <div class="bar">
+									 <span id="thumbnail-percent" class="percent"></span>
+								 </div>
+							 </div>
+						 </div>
+					 </aui:fieldset>
 	                 <%@include file="player/includeThumbnailPlayer.jsp" %>
 	                 <!-- thumbnail end -->
 	             </div>
@@ -637,6 +655,7 @@
             success: function (res) {
                 //update the thumb nail
                 updateThumbnail();
+
                 //json object
                 if (res.errorsCount == 0) {
                     alert("<liferay-ui:message key='changes-applied'/>");
@@ -718,6 +737,64 @@
         }
     }
 
+	$('#upload-thumbnail').fileupload({
+		dataType: 'json',
+		add: (event, data) => {
+			const acceptedFileTypes = /(jpg|png)$/i;
+
+			for (let file of data.originalFiles) {
+				const fileName = file.name;
+				const fileExtension = fileName.substr((fileName.lastIndexOf('.') + 1));
+				if (!acceptedFileTypes.test(fileExtension)) {
+					alert('<liferay-ui:message key="not-an-accepted-file-type"/>');
+					return;
+				}
+			}
+
+			data.submit();
+		},
+		progressall: (event, data) => {
+			const progress = parseInt(data.loaded / data.total * 100, 10);
+			$('#progress-thumbnail .bar').css(
+					'width',
+					progress + '%'
+			);
+			$('#thumbnail-percent').text(progress + '%');
+		},
+		done: (event, data) => {
+			if (data.jqXHR.status === 200) {
+				data.jqXHR.responseJSON.forEach(fileResponse => {
+					let fileName = '${imageRepository}/' + fileResponse.fileName;
+
+					$.ajax({
+						url: "${updateThumbnailFromFileURL}",
+						method: "POST",
+						dataType: "json",
+						data: {
+							"<portlet:namespace/>videoId": videoId,
+							"<portlet:namespace/>thumbnailLocation": fileName
+						},
+						success: result => {
+							if (result.success === true) {
+								player.pause();
+								initializePlayer();
+							} else {
+								console.error('Something went wrong.');
+							}
+						}
+					});
+				});
+			}
+		}
+	}).bind('fileuploadsubmit', function (e, data) {
+		let fileName = $("#" + nameSpace + "fileName").val();
+
+		data.formData = {
+			repository: "${imageRepository}",
+			fileName: fileName
+		};
+	});
+
     function lecture2goFileUpload() {
         //file upload
         $('#fileupload').fileupload({
@@ -739,7 +816,7 @@
                 //check for first upload
                 checkFirstUpload.done(function (dat) {
                     var isFirstUpload = dat.firstUpload;
-                    if (isFirstUpload == 1) {
+                    if (isFirstUpload === 1) {
                         if (!fileUploadAllowed(data.originalFiles)) {
                             uploadErrors.push('<liferay-ui:message key="first-upload-requirements"/>');
                         } else {
@@ -753,7 +830,9 @@
                                 },
                                 success: function (res) {
                                     var fileNameExistsInTheDataBase = res.exist;
-                                    if (fileNameExistsInTheDataBase == 1) uploadErrors.push('<liferay-ui:message key="file-exists-in-database"/>');
+                                    if (fileNameExistsInTheDataBase === 1) {
+                                    	uploadErrors.push('<liferay-ui:message key="file-exists-in-database"/>');
+									}
                                 }
                             });
                         }
@@ -811,7 +890,7 @@
                 // handle subtitle file if existing
                 handleVttUpload();
 
-                //htaccess update function for physical file protectiom
+                //htaccess update function for physical file protection
                 updateHtaccess();
 
                 //initialize and show player
