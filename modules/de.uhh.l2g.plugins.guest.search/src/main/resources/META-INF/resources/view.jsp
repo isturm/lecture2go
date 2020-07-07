@@ -24,7 +24,6 @@
 		    //call serverResource method with ajax which give in response.
 	        //create autocomplete object for findVideos input box
 	    	var inputField = '#<portlet:namespace/>findVideos';
-	    	console.log(inputField);
 	        autoCompleteList = new A.AutoCompleteList({
 	            inputNode: inputField,
 	            resultTextLocator: 'word',

@@ -263,17 +263,17 @@ public class SearchManager {
 
 		// valid from may be null or <= current date
 		BooleanQuery validFromQuery = queries.booleanQuery();
-		validFromQuery.addShouldQueryClauses(queries.dateRangeTerm("validFromDate", true, false, now, null));
+		validFromQuery.addShouldQueryClauses(queries.rangeTerm("validFromDate", false, true, null, now));
 		BooleanQuery validFromNullValue = queries.booleanQuery();
 		validFromNullValue.addMustNotQueryClauses(queries.exists("validFromDate"));
 		validFromQuery.addShouldQueryClauses(validFromNullValue);
 
 		// valid to may be null or >= current date
 		BooleanQuery validToQuery = queries.booleanQuery();
-		validToQuery.addShouldQueryClauses(queries.dateRangeTerm("validToDate", false, true, null, now));
+		validToQuery.addShouldQueryClauses(queries.rangeTerm("validToDate", true, false, now, null));
 		BooleanQuery validToNullValue = queries.booleanQuery();
 		validToNullValue.addMustNotQueryClauses(queries.exists("validToDate"));
-		validToQuery.addShouldQueryClauses(validFromNullValue);
+		validToQuery.addShouldQueryClauses(validToNullValue);
 
 		currentlyValidQuery.addMustQueryClauses(validFromQuery, validToQuery);
 
