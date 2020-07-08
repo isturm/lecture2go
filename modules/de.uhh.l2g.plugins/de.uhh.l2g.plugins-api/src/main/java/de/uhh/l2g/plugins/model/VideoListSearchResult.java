@@ -12,6 +12,8 @@ public class VideoListSearchResult {
 
 	private String name;
 
+	private boolean isDummy = false;
+
 	private List<Long> videoIds = new ArrayList<Long>();
 
 	public long getVideoId() {
@@ -100,6 +102,14 @@ public class VideoListSearchResult {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public boolean isDummy() {
+		return isDummy;
+	}
+
+	public void setDummy(boolean isDummy) {
+		this.isDummy = isDummy;
 	}
 
 	public List<Long> getVideoIds() {

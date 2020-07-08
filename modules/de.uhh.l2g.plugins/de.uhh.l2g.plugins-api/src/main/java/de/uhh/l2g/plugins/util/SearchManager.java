@@ -138,6 +138,7 @@ public class SearchManager {
 		if (searchResult.getLectureseriesId() > 0) {
 			if (searchResult.getVideoId() > 0) {
 				VideoListSearchResult dummyLectureSeries = new VideoListSearchResult();
+				dummyLectureSeries.setDummy(true);
 				dummyLectureSeries.setVideoId(-1);
 				dummyLectureSeries.setLectureseriesId(searchResult.getLectureseriesId());
 
@@ -146,9 +147,7 @@ public class SearchManager {
 				// series should be shown)
 				if (videoList.contains(dummyLectureSeries)) {
 					List<Long> videoIds = videoList.get(videoList.indexOf(dummyLectureSeries)).getVideoIds();
-					if (!videoIds.isEmpty()) {
-						videoIds.add(searchResult.getVideoId());
-					}
+					videoIds.add(searchResult.getVideoId());
 				} else {
 					// create lecture series item to contain the video
 					try {
@@ -169,8 +168,7 @@ public class SearchManager {
 				}
 			} else {
 				if (videoList.contains(searchResult)) {
-					List<Long> videoIds = videoList.get(videoList.indexOf(searchResult)).getVideoIds();
-					videoIds.clear();
+					videoList.get(videoList.indexOf(searchResult)).setDummy(false);
 				} else {
 					videoList.add(searchResult);
 				}
