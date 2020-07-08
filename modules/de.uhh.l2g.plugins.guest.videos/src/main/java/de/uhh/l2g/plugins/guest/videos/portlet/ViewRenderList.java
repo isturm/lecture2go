@@ -157,7 +157,7 @@ public class ViewRenderList implements MVCRenderCommand {
 		List<Term> presentTerms = new ArrayList<>();
 		List<Category> presentCategories = new ArrayList<>();
 		Set<MediaType> presentMediaTypes;
-		List<License> presentLicenses = new ArrayList<>();
+		Set<License> presentLicenses;
 
 		// if a filter is selected, only show the selected one else show all
 		if (hasParentInstitutionFiltered) {
@@ -219,15 +219,8 @@ public class ViewRenderList implements MVCRenderCommand {
 		/*
 		 * FILTER BY LICENSE
 		 */
-		if (hasLicenseFiltered) {
-			try {
-				presentLicenses.add(LicenseLocalServiceUtil.getLicense(licenseId));
-			} catch (Exception e) {
-				_log.error("can't add license with id" + licenseId);
-			}
-		} else {
-			presentLicenses = LicenseLocalServiceUtil.getLicensesFromVideoIds(videoIds);
-		}
+		presentLicenses = filterByLicenses(hasLicenseFiltered, licenseId, videoIds, lectureseriesIds);
+
 		//
 		PortletURL portletURL = renderResponse.createRenderURL();
 		// set parameter for search iterator or possible backURL
@@ -440,6 +433,43 @@ public class ViewRenderList implements MVCRenderCommand {
 		}
 
 		return mediaTypes;
+	}
+
+	/**
+	 * Accepts two lists with video IDs and lecture series IDs and creates a list of
+	 * licenses for those videos. If hasLicenseFiltered is set to true, only
+	 * licenses for licenseId are returned.
+	 * 
+	 * @param hasLicenseFiltered true, if filtering for only one license
+	 * @param licenseId          license ID you're filtering for. Only relevant if
+	 *                           hasLicenseFiltered is set to true
+	 * @param videoIds           list of video IDs
+	 * @param lectureseriesIds   list of lecture series IDs
+	 * @return list of licenses for videos and videos of lecture series.
+	 */
+	private Set<License> filterByLicenses(boolean hasLicenseFiltered, long licenseId, ArrayList<Long> videoIds,
+			ArrayList<Long> lectureseriesIds) {
+		Set<License> licenses = new TreeSet<>();
+		if (hasLicenseFiltered) {
+			try {
+				licenses.add(LicenseLocalServiceUtil.getLicense(licenseId));
+			} catch (Exception e) {
+				_log.error("can't add license id " + licenseId);
+			}
+		} else {
+			ArrayList<Long> allVideoIds = new ArrayList<>();
+
+			lectureseriesIds.forEach(lectureseriesId -> {
+				VideoLocalServiceUtil.getByLectureseries(lectureseriesId).forEach(video -> {
+					allVideoIds.add(video.getVideoId());
+				});
+			});
+
+			allVideoIds.addAll(videoIds);
+			licenses.addAll(LicenseLocalServiceUtil.getLicensesFromVideoIds(allVideoIds));
+		}
+
+		return licenses;
 	}
 
 	/**

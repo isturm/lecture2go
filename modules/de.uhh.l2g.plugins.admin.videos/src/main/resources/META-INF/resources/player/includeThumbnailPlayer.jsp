@@ -38,7 +38,7 @@
                         	var videoUrl = data.playerUris[i];
                         	videoUrls.push({type: getVideoMimeType(videoUrl.file), src: videoUrl.file});
                         }
-                        initVideoPlayer(player, videoUrls, data.thumbnail, null, is360Video);
+                        initVideoPlayer(player, videoUrls, data.thumbnail, null, is360Video, true);
                     }
                 }
             });

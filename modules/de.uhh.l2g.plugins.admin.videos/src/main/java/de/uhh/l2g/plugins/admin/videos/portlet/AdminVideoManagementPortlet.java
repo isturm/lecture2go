@@ -112,10 +112,12 @@ import de.uhh.l2g.plugins.util.VideoGenerationDateComparator;
 		"com.liferay.portlet.header-portlet-javascript=/js/jquery.loadTemplate.min.js",
 		"com.liferay.portlet.header-portlet-javascript=/js/jquery.datetimepicker.js",
 		"com.liferay.portlet.header-portlet-javascript=/js/de.uhh.l2g.plugins.creators.js",
-		"javax.portlet.display-name=Admin Videos", "javax.portlet.init-param.template-path=/",
+		"javax.portlet.display-name=Admin Videos",
+		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/viewList.jsp",
 		"javax.portlet.name=" + AdminVideoManagementPortletKeys.AdminVideoManagement,
-		"javax.portlet.resource-bundle=content.Language", "javax.portlet.security-role-ref=power-user,user",
+		"javax.portlet.resource-bundle=content.Language",
+		"javax.portlet.security-role-ref=power-user,user",
 		"com.liferay.portlet.header-portal-javascript=/o/de.uhh.l2g.plugins-api/player/videoPlayer.js",
 		"com.liferay.portlet.header-portal-javascript=/o/de.uhh.l2g.plugins-api/player/video-js-7.8.1/video.min.js",
 		"com.liferay.portlet.header-portal-javascript=/o/de.uhh.l2g.plugins-api/player/video-js-7.8.1/lang/de.js",
@@ -457,6 +459,7 @@ public class AdminVideoManagementPortlet extends MVCPortlet {
 
 		// assign to render request and response finally
 		renderRequest.setAttribute("uploadRepository", uploadRepository);
+		renderRequest.setAttribute("imageRepository", PropsUtil.get("lecture2go.images.system.path"));
 		renderRequest.setAttribute("reqHost", host);
 		renderRequest.setAttribute("terms", terms);
 		renderRequest.setAttribute("mediaTypes", mediaTypes);
@@ -729,6 +732,22 @@ public class AdminVideoManagementPortlet extends MVCPortlet {
 					// e.printStackTrace();
 				}
 			}
+		}
+
+		if (resourceID.equals("updateThumbnailFromFile")) {
+			String fileName = ParamUtil.getString(resourceRequest, "thumbnailLocation");
+
+			boolean success = FFmpegManager.createThumbnailFromImageFile(
+					fileName,
+					PropsUtil.get("lecture2go.images.system.path") + "/" + video.getPreffix() + ".jpg"
+			);
+
+			JSONObject output = JSONFactoryUtil.createJSONObject();
+			output.put("success", success);
+			PrintWriter writer = resourceResponse.getWriter();
+			writer.print(output.toString());
+			writer.flush();
+			writer.close();
 		}
 
 		if (resourceID.equals("updateAll")) {

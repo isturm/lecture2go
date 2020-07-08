@@ -1,8 +1,14 @@
-function initVideoPlayer(player, videoUrls, poster, textTracks = null, is360Video = false) {
+function initVideoPlayer(player, videoUrls, poster, textTracks = null, is360Video = false, forcePosterRefresh = false) {
     player.fluid(true);
     player.controls(true);
     player.aspectRatio("16:9");
 	player.src(videoUrls);
+
+	// when player gets re-initialized after poster update, URL parameter is attached to force browser to reload poster
+	if (forcePosterRefresh) {
+		poster = poster + '?v=' + new Date().getTime();
+	}
+
     player.poster(poster);
     if (textTracks != null) {
 		addTextTracks(textTracks, player);
