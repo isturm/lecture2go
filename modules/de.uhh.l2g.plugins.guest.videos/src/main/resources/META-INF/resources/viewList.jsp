@@ -687,7 +687,7 @@
 														<i class="icon-chevron-right"></i>
 													</span>
                             </button>
-                            <ul id="p${oId}">
+                            <ul id="p${oId}" class="${lectser.isDummy() ? 'showOnLoad' : 'hideOnLoad'}">
                                 <c:forEach items="${vl}" var="v">
                                     <portlet:renderURL var="vURL">
                                         <portlet:param name="mvcRenderCommandName" value="/view/render/details"/>
@@ -740,3 +740,16 @@
     </div>
     <!-- catalogue-container -->
 </div>
+
+<script type="text/javascript">
+	$(function() {
+		// decode the search query to plain text (via an in cache div)
+		var searchQuery = $('<div/>').html('<%= findVideos %>').text();
+		var markOptions = {
+		    "separateWordSearch": false
+		};
+		if (searchQuery) {
+		    $(".videotile").mark(searchQuery, markOptions);
+		}
+	});
+</script>

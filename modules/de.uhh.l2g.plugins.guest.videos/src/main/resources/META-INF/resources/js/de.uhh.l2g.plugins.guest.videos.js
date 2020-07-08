@@ -1,7 +1,7 @@
 
 $( function() {	
-	//hide all video sublists on load
-	$('ul[id^="p"]').hide();
+	//hide video sublist if lecture series was found
+	$('ul.hideOnLoad').hide();
 
 	//toggle functionality for video sublist 
 	$('div[id^="vt"]').click(function() {

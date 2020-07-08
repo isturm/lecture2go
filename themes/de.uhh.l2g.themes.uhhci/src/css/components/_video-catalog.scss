@@ -160,6 +160,12 @@
     &:hover {
     	background-color: $border-color;
     }
+    
+    mark {
+    	background-color: $primary-color;
+    	box-shadow: none;
+    	padding: 0;
+    }
   }
 
   .term-of-creation {
