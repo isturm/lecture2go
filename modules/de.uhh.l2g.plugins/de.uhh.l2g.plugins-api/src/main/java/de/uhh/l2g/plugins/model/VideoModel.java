@@ -517,4 +517,32 @@ public interface VideoModel
 	@Override
 	public void setModifiedDate(Date modifiedDate);
 
+	/**
+	 * Returns the valid from date of this video.
+	 *
+	 * @return the valid from date of this video
+	 */
+	public Date getValidFromDate();
+
+	/**
+	 * Sets the valid from date of this video.
+	 *
+	 * @param validFromDate the valid from date of this video
+	 */
+	public void setValidFromDate(Date validFromDate);
+
+	/**
+	 * Returns the valid to date of this video.
+	 *
+	 * @return the valid to date of this video
+	 */
+	public Date getValidToDate();
+
+	/**
+	 * Sets the valid to date of this video.
+	 *
+	 * @param validToDate the valid to date of this video
+	 */
+	public void setValidToDate(Date validToDate);
+
 }

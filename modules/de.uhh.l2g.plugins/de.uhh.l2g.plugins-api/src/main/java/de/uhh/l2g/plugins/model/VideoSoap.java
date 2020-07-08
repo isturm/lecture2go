@@ -61,6 +61,8 @@ public class VideoSoap implements Serializable {
 		soapModel.setUserName(model.getUserName());
 		soapModel.setCreateDate(model.getCreateDate());
 		soapModel.setModifiedDate(model.getModifiedDate());
+		soapModel.setValidFromDate(model.getValidFromDate());
+		soapModel.setValidToDate(model.getValidToDate());
 
 		return soapModel;
 	}
@@ -353,6 +355,22 @@ public class VideoSoap implements Serializable {
 		_modifiedDate = modifiedDate;
 	}
 
+	public Date getValidFromDate() {
+		return _validFromDate;
+	}
+
+	public void setValidFromDate(Date validFromDate) {
+		_validFromDate = validFromDate;
+	}
+
+	public Date getValidToDate() {
+		return _validToDate;
+	}
+
+	public void setValidToDate(Date validToDate) {
+		_validToDate = validToDate;
+	}
+
 	private long _videoId;
 	private String _title;
 	private long _lectureseriesId;
@@ -383,5 +401,7 @@ public class VideoSoap implements Serializable {
 	private String _userName;
 	private Date _createDate;
 	private Date _modifiedDate;
+	private Date _validFromDate;
+	private Date _validToDate;
 
 }

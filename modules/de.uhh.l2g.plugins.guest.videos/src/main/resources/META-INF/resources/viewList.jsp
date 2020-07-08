@@ -539,7 +539,7 @@
                     <c:when test="${lectser.videoId>0}">
                         <c:set var="isVideo" value="<%=true%>"/>
                         <%try {%><c:set var="vidDummy"
-                                        value="<%=VideoLocalServiceUtil.getVideo(lectser.getVideoId())%>"/><%
+                                        value="<%=VideoLocalServiceUtil.getCurrentlyValidVideo(lectser.getVideoId())%>"/><%
                         } catch (Exception e) {
                         }
                         ;
@@ -548,7 +548,7 @@
                     </c:when>
                     <c:otherwise>
                         <%try {%><c:set var="vidDummy"
-                                        value="<%=VideoLocalServiceUtil.getVideo(lectser.getPreviewVideoId())%>"/><%
+                                        value="<%=VideoLocalServiceUtil.getCurrentlyValidVideo(lectser.getPreviewVideoId())%>"/><%
                         } catch (Exception e) {
                         }
                         ;
@@ -568,7 +568,7 @@
                     <c:otherwise>
                         <!-- get all videos of the lecture series -->
                         <c:set var="vl"
-                               value="<%=VideoLocalServiceUtil.getByLectureseriesAndOpenaccess((Long)pageContext.getAttribute("oId"), 1)%>"/>
+                               value="<%=VideoLocalServiceUtil.getByLectureseriesAndOpenaccess((Long)pageContext.getAttribute("oId"), 1, true)%>"/>
                     </c:otherwise>
                 </c:choose>
 

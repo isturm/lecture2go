@@ -13,6 +13,7 @@ import com.liferay.portal.search.document.Field;
 import com.liferay.portal.search.query.BooleanQuery;
 import com.liferay.portal.search.query.MatchQuery;
 import com.liferay.portal.search.query.Queries;
+import com.liferay.portal.search.query.Query;
 import com.liferay.portal.search.query.TermQuery;
 import com.liferay.portal.search.query.WildcardQuery;
 import com.liferay.portal.search.searcher.SearchRequest;
@@ -27,7 +28,10 @@ import com.liferay.portal.search.sort.Sorts;
 import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.nio.charset.StandardCharsets;
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Stream;
@@ -212,6 +216,9 @@ public class SearchManager {
 		TermQuery openAccessQuery = queries.term("openAccess", 1);
 		completeQuery.addMustQueryClauses(openAccessQuery);
 
+		// restrict to currently valid videos
+		completeQuery.addMustQueryClauses(getIsCurrentlyValidQuery());
+
 		// apply filters
 		if (filters != null) {
 			for (String filter : filters.keySet()) {
@@ -247,6 +254,36 @@ public class SearchManager {
 		Stream<Document> documents = searchResponse.getDocumentsStream();
 
 		return documents;
+	}
+
+	private Query getIsCurrentlyValidQuery() {
+		DateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+		String now = dateFormat.format(new Date());
+		BooleanQuery currentlyValidQuery = queries.booleanQuery();
+
+		// valid from may be null or <= current date
+		BooleanQuery validFromQuery = queries.booleanQuery();
+		validFromQuery.addShouldQueryClauses(queries.rangeTerm("validFromDate", false, true, null, now));
+		BooleanQuery validFromNullValue = queries.booleanQuery();
+		validFromNullValue.addMustNotQueryClauses(queries.exists("validFromDate"));
+		validFromQuery.addShouldQueryClauses(validFromNullValue);
+
+		// valid to may be null or >= current date
+		BooleanQuery validToQuery = queries.booleanQuery();
+		validToQuery.addShouldQueryClauses(queries.rangeTerm("validToDate", true, false, now, null));
+		BooleanQuery validToNullValue = queries.booleanQuery();
+		validToNullValue.addMustNotQueryClauses(queries.exists("validToDate"));
+		validToQuery.addShouldQueryClauses(validToNullValue);
+
+		currentlyValidQuery.addMustQueryClauses(validFromQuery, validToQuery);
+
+		// if item has no videoId (i.e. lecture series) validity must not be checked
+		BooleanQuery combinedQuery = queries.booleanQuery();
+		BooleanQuery noVideoIdQuery = queries.booleanQuery();
+		noVideoIdQuery.addMustNotQueryClauses(queries.exists("videoId"));
+		combinedQuery.addShouldQueryClauses(currentlyValidQuery, noVideoIdQuery);
+
+		return combinedQuery;
 	}
 
 	private JSONArray createWordArray(List<String> wordList) {

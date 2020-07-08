@@ -257,7 +257,7 @@ public interface VideoLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Video> getByLectureseriesAndOpenaccess(
-			Long lectureseriesId, int openAccess)
+			Long lectureseriesId, int openAccess, boolean mustBeCurrentlyValid)
 		throws SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -293,7 +293,7 @@ public interface VideoLocalService
 		throws SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Video getBySecureUrl(String surl)
+	public Video getBySecureUrl(String surl, boolean mustBeCurrentlyValid)
 		throws NoSuchVideoException, SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -303,13 +303,17 @@ public interface VideoLocalService
 	public List<Video> getByVideoIds(long[] videoIds);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Video getCurrentlyValidVideo(long videoId) throws PortalException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public JSONArray getJSONVideo(Long videoId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Long getLatestClosedAccessVideoId(Long lectureseriesId);
+	public Long getLatestClosedAccessVideoId(
+		Long lectureseriesId, boolean mustBeCurrentlyValid);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Video getLatestOpenAccessVideoForLectureseries(Long lectureseriesId);

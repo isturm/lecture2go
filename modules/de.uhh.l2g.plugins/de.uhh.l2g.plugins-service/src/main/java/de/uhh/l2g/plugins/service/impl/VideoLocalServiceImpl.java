@@ -29,6 +29,7 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.Iterator;
 import java.util.List;
@@ -372,10 +373,26 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		return videoPersistence.countByLectureseriesAndOpenaccess(lectureseriesId, openAccess);
 	}
 
-	public List<Video> getByLectureseriesAndOpenaccess(Long lectureseriesId, int openAccess) throws SystemException {
+	public Video getCurrentlyValidVideo(long videoId) throws PortalException {
+		Video video = getVideo(videoId);
+		if ((video.getValidFromDate() == null || video.getValidFromDate().before(new Date()))
+				&& (video.getValidToDate() == null || video.getValidToDate().after(new Date()))) {
+			return video;
+		} else {
+			throw new NoSuchVideoException("No currently valid Video exists with the primary key " + videoId);
+		}
+	}
+
+	public List<Video> getByLectureseriesAndOpenaccess(Long lectureseriesId, int openAccess,
+			boolean mustBeCurrentlyValid) throws SystemException {
 		List<Video> vl = new ArrayList<Video>();
-		if (lectureseriesId != 0)
-			vl = videoPersistence.findByLectureseriesAndOpenaccess(lectureseriesId, openAccess);
+		if (lectureseriesId != 0) {
+			if (mustBeCurrentlyValid) {
+				vl = videoFinder.findByLectureseriesAndOpenaccessAndIsCurrentlyValid(lectureseriesId, openAccess);
+			} else {
+				vl = videoPersistence.findByLectureseriesAndOpenaccess(lectureseriesId, openAccess);
+			}
+		}
 		List<Video> rvl = getSortedVideoList(vl, lectureseriesId);
 		return rvl;
 	}
@@ -497,8 +514,9 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		video.setJsonPlayerUris(playerUrisSortedJSON);
 	}
 
-	public Video getBySecureUrl(String surl) throws NoSuchVideoException, SystemException {
-		return videoFinder.findVideoBySerureUrl(surl);
+	public Video getBySecureUrl(String surl, boolean mustBeCurrentlyValid)
+			throws NoSuchVideoException, SystemException {
+		return videoFinder.findVideoBySecureUrl(surl, mustBeCurrentlyValid);
 	}
 
 	public List<Video> getAll() throws SystemException {
@@ -583,10 +601,10 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		return sortedVideoList;
 	}
 
-	public Long getLatestClosedAccessVideoId(Long lectureseriesId) {
+	public Long getLatestClosedAccessVideoId(Long lectureseriesId, boolean mustBeCurrentlyValid) {
 		List<Video> vl = new ArrayList<Video>();
 		try {
-			vl = getByLectureseriesAndOpenaccess(lectureseriesId, 0);
+			vl = getByLectureseriesAndOpenaccess(lectureseriesId, 0, mustBeCurrentlyValid);
 		} catch (SystemException e) {
 			// e.printStackTrace();
 		}

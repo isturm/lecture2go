@@ -327,6 +327,18 @@
 	                 <!-- thumbnail end -->
 	             </div>
 	         </liferay-ui:panel>
+	         <liferay-ui:panel defaultState="collapsed" extended="true" title="validity">
+	             <div class="sub-content" id="validity-content">
+	                 <!-- validity start -->
+	                 <div id="validFromDate">
+	                 	<aui:input id="validFromDateTimePicker" name="validFromDateTimePicker" value=""/>
+	                 </div>
+	                 <div id="validToDate">
+	                 	<aui:input id="validToDateTimePicker" name="validToDateTimePicker" value=""/>
+	                 </div>
+	                 <!-- validity end -->
+	             </div>
+	         </liferay-ui:panel>
 	     </liferay-ui:panel-container>
 
              <span class="col-12  action-buttons">
@@ -368,7 +380,8 @@
     $(function () {
         var videoFilename = "${reqVideo.filename}";
         var videoGenerationDate = "${reqVideo.generationDate}";
-        //
+        var validFromDate = "${reqVideo.validFromDate}";
+        var validToDate = "${reqVideo.validToDate}";
 
         if (videoFilename.length == 0 && videoGenerationDate.length == 0) {
             $("#date-time-form").show();
@@ -399,7 +412,7 @@
             loadDateTimepickerToTheMetadataSkeleton();
         }
 
-        //load date time picker
+        //load date time pickers
         $('#<portlet:namespace/>datetimepicker').datetimepicker({
             format: 'Y-m-d_H-i',
             dayOfWeekStart: 1,
@@ -407,6 +420,36 @@
             startDate: new Date(),
             value: videoGenerationDate,
             maxDate: '+1970/01/30',
+            minDate: false,
+            step: 15
+        });
+        
+        var validFromValue;
+        if(validFromDate) {
+        	validFromValue = new Date(validFromDate);
+        }
+        $('#<portlet:namespace/>validFromDateTimePicker').datetimepicker({
+            format: 'Y-m-d_H-i',
+            dayOfWeekStart: 1,
+            lang: 'en',
+            defaultDate: '',
+            startDate: new Date(),
+            value: validFromValue,
+            minDate: false,
+            step: 15
+        });
+        
+        var validToValue;
+        if(validToDate) {
+        	validToValue = new Date(validToDate);
+        }
+        $('#<portlet:namespace/>validToDateTimePicker').datetimepicker({
+            format: 'Y-m-d_H-i',
+            dayOfWeekStart: 1,
+            lang: 'en',
+            defaultDate: '',
+            startDate: new Date(),
+            value: validToValue,
             minDate: false,
             step: 15
         });
@@ -617,7 +660,8 @@
         var termId = 0;
         var categoryId = 0;
         var mediaTypeId = 0;
-        var chebox;
+        var chebox;       
+        
         //
         $('#<portlet:namespace/>citationAllowedCheckbox').prop("checked") ? chebox = 1 : chebox = 0;
 
@@ -638,6 +682,9 @@
                 "<portlet:namespace/>creatorsJsonArray": creatorsJsonArray,
                 "<portlet:namespace/>subInstitutions": jsonSubInstitutionsArray,
                 "<portlet:namespace/>categories": jsonCategoriesArray,
+                "<portlet:namespace/>validFromDateTimePicker": $('#<portlet:namespace/>validFromDateTimePicker').val(),
+                "<portlet:namespace/>validToDateTimePicker": $('#<portlet:namespace/>validToDateTimePicker').val(),
+                "<portlet:namespace/>timezoneOffset": new Date().getTimezoneOffset(),
                 //metadata start
                 "<portlet:namespace/>lectureseriesId": $('#<portlet:namespace/>lectureseriesId').val(),
                 "<portlet:namespace/>language": $('#<portlet:namespace/>language').val(),

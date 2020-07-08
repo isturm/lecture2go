@@ -14,11 +14,6 @@
 
 package de.uhh.l2g.plugins.service.impl;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.ListIterator;
-
 import com.liferay.portal.kernel.dao.orm.Criterion;
 import com.liferay.portal.kernel.dao.orm.DynamicQuery;
 import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
@@ -33,6 +28,11 @@ import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringPool;
+
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+import java.util.ListIterator;
 
 import de.uhh.l2g.plugins.model.Creator;
 import de.uhh.l2g.plugins.model.Lectureseries;
@@ -49,10 +49,14 @@ import de.uhh.l2g.plugins.service.base.CreatorLocalServiceBaseImpl;
  * The implementation of the creator local service.
  *
  * <p>
- * All custom service methods should be put in this class. Whenever methods are added, rerun ServiceBuilder to copy their definitions into the {@link de.uhh.l2g.plugins.service.CreatorLocalService} interface.
+ * All custom service methods should be put in this class. Whenever methods are
+ * added, rerun ServiceBuilder to copy their definitions into the
+ * {@link de.uhh.l2g.plugins.service.CreatorLocalService} interface.
  *
  * <p>
- * This is a local service. Methods of this service will not have security checks based on the propagated JAAS credentials because this service can only be accessed from within the same VM.
+ * This is a local service. Methods of this service will not have security
+ * checks based on the propagated JAAS credentials because this service can only
+ * be accessed from within the same VM.
  * </p>
  *
  * @author Iavor Sturm
@@ -63,86 +67,93 @@ public class CreatorLocalServiceImpl extends CreatorLocalServiceBaseImpl {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.CreatorLocalServiceUtil} to access the creator local service.
+	 * Never reference this interface directly. Always use {@link
+	 * de.uhh.l2g.plugins.service.CreatorLocalServiceUtil} to access the creator
+	 * local service.
 	 */
 
-	public List<Creator> getAll() throws SystemException{
+	public List<Creator> getAll() throws SystemException {
 		List<Creator> cl = new ArrayList<Creator>();
 		cl = creatorPersistence.findAll();
 		return cl;
 	}
-	
-	public List<Creator> getAllByCompany(Long companyId) throws SystemException{
+
+	public List<Creator> getAllByCompany(Long companyId) throws SystemException {
 		List<Creator> cl = new ArrayList<Creator>();
 		cl = creatorPersistence.findByCompany(companyId);
 		return cl;
 	}
-	
-	public List<Creator> getAllByGroup(Long groupId) throws SystemException{
+
+	public List<Creator> getAllByGroup(Long groupId) throws SystemException {
 		List<Creator> cl = new ArrayList<Creator>();
 		cl = creatorPersistence.findByCompany(groupId);
 		return cl;
 	}
-	
-	public List<Creator> getCreatorsByLectureseriesId(Long lectureseriesId){
+
+	public List<Creator> getCreatorsByLectureseriesId(Long lectureseriesId) {
 		List<Creator> cl = creatorFinder.findCreatorsByLectureseries(lectureseriesId);
 		return cl;
 	}
 
-	public List<Creator> getCreatorsByLectureseriesIdForOpenAccessVideosOnly(Long lectureseriesId){
+	public List<Creator> getCreatorsByLectureseriesIdForOpenAccessVideosOnly(Long lectureseriesId) {
 		List<Video> vl = new ArrayList<Video>();
 		List<Creator> cl = new ArrayList<Creator>();
 		try {
-			vl = VideoLocalServiceUtil.getByLectureseriesAndOpenaccess(lectureseriesId, 1);
+			vl = VideoLocalServiceUtil.getByLectureseriesAndOpenaccess(lectureseriesId, 1, false);
 			ListIterator<Video> ivl = vl.listIterator();
-			while(ivl.hasNext()){
+			while (ivl.hasNext()) {
 				Video v = ivl.next();
 				List<Creator> currcreatlist = new ArrayList<Creator>();
-				currcreatlist= getCreatorsByVideoId(v.getVideoId());
+				currcreatlist = getCreatorsByVideoId(v.getVideoId());
 				ListIterator<Creator> it = currcreatlist.listIterator();
-				while(it.hasNext()){
+				while (it.hasNext()) {
 					Creator obj = it.next();
-					if(!cl.contains(obj))cl.add(obj);
+					if (!cl.contains(obj))
+						cl.add(obj);
 				}
 			}
-		} catch (Exception e) {}
+		} catch (Exception e) {
+		}
 		return cl;
 	}
-	
-	public String getCommaSeparatedCreatorsByLectureseriesIdAndMaxCreators(Long lectureseriesId, int maxCreators){
+
+	public String getCommaSeparatedCreatorsByLectureseriesIdAndMaxCreators(Long lectureseriesId, int maxCreators) {
 		List<Creator> creatorList = getCreatorsByLectureseriesIdForOpenAccessVideosOnly(lectureseriesId);
 		String creators = createCommaSeparatedStringFromCreatorList(creatorList, maxCreators);
 		return creators;
 	}
 
-	public String getCommaSeparatedLinkedCreatorsByLectureseriesIdAndMaxCreators(Long lectureseriesId, int maxCreators){
+	public String getCommaSeparatedLinkedCreatorsByLectureseriesIdAndMaxCreators(Long lectureseriesId,
+			int maxCreators) {
 		List<Creator> creatorList = getCreatorsByLectureseriesIdForOpenAccessVideosOnly(lectureseriesId);
 		String creators = createCommaSeparatedLinkedStringFromCreatorList(creatorList, maxCreators);
 		return creators;
 	}
-	
-	public List<Creator> getCreatorsByVideoId(Long videoId){
+
+	public List<Creator> getCreatorsByVideoId(Long videoId) {
 		List<Creator> cl = creatorFinder.findCreatorsByVideo(videoId);
 		return cl;
 	}
-	
-	public List<Creator> getCreatorsForLectureseriesOverTheAssigenedVideos(Long lectureseriesId){
+
+	public List<Creator> getCreatorsForLectureseriesOverTheAssigenedVideos(Long lectureseriesId) {
 		List<Creator> cl = creatorFinder.findCreatorsForLectureseriesOverTheAssigenedVideos(lectureseriesId);
 		return cl;
 	}
-	
-	public List<Creator> updateCreatorsForLectureseriesOverTheAssigenedVideosByLectureseriesId(Long lectureseriesId) throws SystemException{
-		//remove all creators
+
+	public List<Creator> updateCreatorsForLectureseriesOverTheAssigenedVideosByLectureseriesId(Long lectureseriesId)
+			throws SystemException {
+		// remove all creators
 		lectureseries_CreatorPersistence.removeByLectureseries(lectureseriesId);
-		//add new creators to database
+		// add new creators to database
 		List<Creator> cl = creatorFinder.findCreatorsForLectureseriesOverTheAssigenedVideos(lectureseriesId);
 		ListIterator<Creator> ic = cl.listIterator();
-		while (ic.hasNext()){
+		while (ic.hasNext()) {
 			Creator c = ic.next();
 			Lectureseries_Creator lc = new Lectureseries_CreatorImpl();
 			lc.setCreatorId(c.getCreatorId());
 			lc.setLectureseriesId(lectureseriesId);
-			if(!c.getFirstName().equals("N.") && !c.getLastName().equals("N."))Lectureseries_CreatorLocalServiceUtil.addLectureseries_Creator(lc);
+			if (!c.getFirstName().equals("N.") && !c.getLastName().equals("N."))
+				Lectureseries_CreatorLocalServiceUtil.addLectureseries_Creator(lc);
 		}
 		return cl;
 	}
@@ -152,78 +163,85 @@ public class CreatorLocalServiceImpl extends CreatorLocalServiceBaseImpl {
 		try {
 			all = LectureseriesLocalServiceUtil.getAll();
 		} catch (SystemException e) {
-			//e.printStackTrace();
+			// e.printStackTrace();
 		}
-		
-		for (Lectureseries lectureseries: all) {
+
+		for (Lectureseries lectureseries : all) {
 			try {
-				updateCreatorsForLectureseriesOverTheAssigenedVideosByLectureseriesId(lectureseries.getLectureseriesId());
+				updateCreatorsForLectureseriesOverTheAssigenedVideosByLectureseriesId(
+						lectureseries.getLectureseriesId());
 			} catch (SystemException e) {
 				e.printStackTrace();
 			}
 		}
 	}
 
-	public String getCommaSeparatedCreatorsByVideoIdAndMaxCreators(Long videoId, int maxCreators){
+	public String getCommaSeparatedCreatorsByVideoIdAndMaxCreators(Long videoId, int maxCreators) {
 		List<Creator> creatorList = getCreatorsByVideoId(videoId);
 		String creators = createCommaSeparatedStringFromCreatorList(creatorList, maxCreators);
 		return creators;
 	}
 
-	public String getCommaSeparatedLinkedCreatorsByVideoIdAndMaxCreators(Long videoId, int maxCreators){
+	public String getCommaSeparatedLinkedCreatorsByVideoIdAndMaxCreators(Long videoId, int maxCreators) {
 		List<Creator> creatorList = getCreatorsByVideoId(videoId);
 		String creators = createCommaSeparatedLinkedStringFromCreatorList(creatorList, maxCreators);
 		return creators;
 	}
-	
+
 	private String createCommaSeparatedStringFromCreatorList(List<Creator> creatorList, int maxCreators) {
-		String ret ="";
+		String ret = "";
 		try {
 			List<String> creatorFullnameList = new ArrayList<String>();
-			int i=0;
-			for (Creator creator: creatorList) { 
+			int i = 0;
+			for (Creator creator : creatorList) {
 				creatorFullnameList.add(creator.getFullName());
 				i++;
-				if(i==maxCreators)break;
+				if (i == maxCreators)
+					break;
 			}
-			
-			String creators = com.liferay.portal.kernel.util.StringUtil.merge(creatorFullnameList,", ");
+
+			String creators = com.liferay.portal.kernel.util.StringUtil.merge(creatorFullnameList, ", ");
 			if (creatorList.size() > maxCreators) {
 				creators += " et al.";
 			}
 			ret = creators;
-		}catch(Exception e) {}
+		} catch (Exception e) {
+		}
 		return ret;
 	}
-	
+
 	private String createCommaSeparatedLinkedStringFromCreatorList(List<Creator> creatorList, int maxCreators) {
-		String ret ="";
+		String ret = "";
 		try {
 			List<String> creatorFullnameList = new ArrayList<String>();
-			int i=0;
-			for (Creator creator: creatorList) { 
+			int i = 0;
+			for (Creator creator : creatorList) {
 				String fn = creator.getFullName();
-				//?_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery=Prof. Dr. Marc Frey
-				String fnLink = "<a href='/l2go/-/get/0/0/0/0/0/0/?_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery="+fn+"'>"+fn+"</a>";;
+				// ?_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery=Prof. Dr. Marc Frey
+				String fnLink = "<a href='/l2go/-/get/0/0/0/0/0/0/?_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery="
+						+ fn + "'>" + fn + "</a>";
+				;
 				creatorFullnameList.add(fnLink);
 				i++;
-				if(i==maxCreators)break;
+				if (i == maxCreators)
+					break;
 			}
-			
-			String creators = com.liferay.portal.kernel.util.StringUtil.merge(creatorFullnameList,", ");
+
+			String creators = com.liferay.portal.kernel.util.StringUtil.merge(creatorFullnameList, ", ");
 			if (creatorList.size() > maxCreators) {
 				creators += " et al.";
 			}
-			ret= creators;
-		}catch (Exception e) {}
+			ret = creators;
+		} catch (Exception e) {
+		}
 		return ret;
 	}
-	
-	public  com.liferay.portal.kernel.json.JSONArray getJSONCreatorsByVideoId(Long videoId){
+
+	public com.liferay.portal.kernel.json.JSONArray getJSONCreatorsByVideoId(Long videoId) {
 		List<Creator> cl = getCreatorsByVideoId(videoId);
 		ListIterator<Creator> i = cl.listIterator();
 		JSONArray json = JSONFactoryUtil.createJSONArray();
-		while(i.hasNext()){
+		while (i.hasNext()) {
 			Creator cr = i.next();
 			JSONObject c = JSONFactoryUtil.createJSONObject();
 			c.put("creatorId", cr.getCreatorId());
@@ -237,12 +255,12 @@ public class CreatorLocalServiceImpl extends CreatorLocalServiceBaseImpl {
 		}
 		return json;
 	}
-	
-	public com.liferay.portal.kernel.json.JSONArray getJSONCreatorsByLectureseriesId(Long lectureseriesId){
+
+	public com.liferay.portal.kernel.json.JSONArray getJSONCreatorsByLectureseriesId(Long lectureseriesId) {
 		List<Creator> cl = getCreatorsByLectureseriesId(lectureseriesId);
 		ListIterator<Creator> i = cl.listIterator();
 		JSONArray json = JSONFactoryUtil.createJSONArray();
-		while(i.hasNext()){
+		while (i.hasNext()) {
 			Creator cr = i.next();
 			JSONObject c = JSONFactoryUtil.createJSONObject();
 			c.put("creatorId", cr.getCreatorId());
@@ -256,8 +274,9 @@ public class CreatorLocalServiceImpl extends CreatorLocalServiceBaseImpl {
 		}
 		return json;
 	}
-	
-	public com.liferay.portal.kernel.json.JSONArray getJSONCreatorArray(Long creatorId) throws PortalException, SystemException{
+
+	public com.liferay.portal.kernel.json.JSONArray getJSONCreatorArray(Long creatorId)
+			throws PortalException, SystemException {
 		Creator cr = getCreator(creatorId);
 		JSONArray json = JSONFactoryUtil.createJSONArray();
 		JSONObject c = JSONFactoryUtil.createJSONObject();
@@ -271,8 +290,9 @@ public class CreatorLocalServiceImpl extends CreatorLocalServiceBaseImpl {
 		json.put(c);
 		return json;
 	}
-	
-	public com.liferay.portal.kernel.json.JSONObject getJSONCreatorObject(Long creatorId) throws PortalException, SystemException{
+
+	public com.liferay.portal.kernel.json.JSONObject getJSONCreatorObject(Long creatorId)
+			throws PortalException, SystemException {
 		Creator cr = getCreator(creatorId);
 		JSONObject c = JSONFactoryUtil.createJSONObject();
 		c.put("creatorId", cr.getCreatorId());
@@ -284,8 +304,8 @@ public class CreatorLocalServiceImpl extends CreatorLocalServiceBaseImpl {
 		c.put("fullName", cr.getFullName());
 		return c;
 	}
-	
-	public List<Creator> getByFullName(String fullName) throws SystemException{
+
+	public List<Creator> getByFullName(String fullName) throws SystemException {
 		return creatorPersistence.findByFullName(fullName);
 	}
 
@@ -294,44 +314,62 @@ public class CreatorLocalServiceImpl extends CreatorLocalServiceBaseImpl {
 		return creatorPersistence.findByPrimaryKey(creatorId);
 	}
 
-	public List<Creator> getCreatorsFromLectureseriesIdsAndVideoIds(ArrayList<Long> lectureseriesIds, ArrayList<Long> videoIds) {
+	public List<Creator> getCreatorsFromLectureseriesIdsAndVideoIds(ArrayList<Long> lectureseriesIds,
+			ArrayList<Long> videoIds) {
 		return creatorFinder.findCreatorsByLectureseriesIdsAndVideoIds(lectureseriesIds, videoIds);
 	}
-	
-	public void deleteById(Long id) throws NoSuchModelException, SystemException{
+
+	public void deleteById(Long id) throws NoSuchModelException, SystemException {
 		video_CreatorPersistence.removeByCreator(id);
 		lectureseries_CreatorPersistence.removeByCreator(id);
 		creatorPersistence.remove(id);
 	}
 
-	public List<Creator> getByJobTitleFirstNameMiddleNameLastNameFullName(String jobTitle, String firstName, String middleName, String lastName, String fullName, boolean isAndOperator) throws SystemException {
-		return getByJobTitleFirstNameMiddleNameLastNameFullNameAndCompanyId( jobTitle,  firstName,  middleName,  lastName,  fullName,  new Long(0),  isAndOperator);
+	public List<Creator> getByJobTitleFirstNameMiddleNameLastNameFullName(String jobTitle, String firstName,
+			String middleName, String lastName, String fullName, boolean isAndOperator) throws SystemException {
+		return getByJobTitleFirstNameMiddleNameLastNameFullNameAndCompanyId(jobTitle, firstName, middleName, lastName,
+				fullName, new Long(0), isAndOperator);
 	}
 
-	public List<Creator> getByJobTitleFirstNameMiddleNameLastNameFullNameAndCompanyId(String jobTitle, String firstName, String middleName, String lastName, String fullName, Long companyId, boolean isAndOperator) throws SystemException {
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(de.uhh.l2g.plugins.model.impl.CreatorImpl.class, "creat");
+	public List<Creator> getByJobTitleFirstNameMiddleNameLastNameFullNameAndCompanyId(String jobTitle, String firstName,
+			String middleName, String lastName, String fullName, Long companyId, boolean isAndOperator)
+			throws SystemException {
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(de.uhh.l2g.plugins.model.impl.CreatorImpl.class,
+				"creat");
 		Junction junction = null;
 		List<Creator> creatorList = Collections.emptyList();
 
-		// OR or AND junction 
-		if (isAndOperator) junction = RestrictionsFactoryUtil.conjunction();
-		else junction = RestrictionsFactoryUtil.disjunction();
-		//title search
-		if (!jobTitle.isEmpty()) junction.add(PropertyFactoryUtil.forName("creat.jobTitle").like(StringPool.PERCENT + HtmlUtil.escape(jobTitle) + StringPool.PERCENT));
-		//firstName search
-		if (!firstName.isEmpty()) junction.add(PropertyFactoryUtil.forName("creat.firstName").like(StringPool.PERCENT + HtmlUtil.escape(firstName) + StringPool.PERCENT));
-		//middleName search
-		if (!middleName.isEmpty()) junction.add(PropertyFactoryUtil.forName("creat.middleName").like(StringPool.PERCENT + HtmlUtil.escape(middleName) + StringPool.PERCENT));
-		//familyName search
-		if (!lastName.isEmpty()) junction.add(PropertyFactoryUtil.forName("creat.lastName").like(StringPool.PERCENT + HtmlUtil.escape(lastName) + StringPool.PERCENT));
-		//fullName search
-		if (!fullName.isEmpty()) junction.add(PropertyFactoryUtil.forName("creat.fullName").like(StringPool.PERCENT + HtmlUtil.escape(fullName) + StringPool.PERCENT));
+		// OR or AND junction
+		if (isAndOperator)
+			junction = RestrictionsFactoryUtil.conjunction();
+		else
+			junction = RestrictionsFactoryUtil.disjunction();
+		// title search
+		if (!jobTitle.isEmpty())
+			junction.add(PropertyFactoryUtil.forName("creat.jobTitle")
+					.like(StringPool.PERCENT + HtmlUtil.escape(jobTitle) + StringPool.PERCENT));
+		// firstName search
+		if (!firstName.isEmpty())
+			junction.add(PropertyFactoryUtil.forName("creat.firstName")
+					.like(StringPool.PERCENT + HtmlUtil.escape(firstName) + StringPool.PERCENT));
+		// middleName search
+		if (!middleName.isEmpty())
+			junction.add(PropertyFactoryUtil.forName("creat.middleName")
+					.like(StringPool.PERCENT + HtmlUtil.escape(middleName) + StringPool.PERCENT));
+		// familyName search
+		if (!lastName.isEmpty())
+			junction.add(PropertyFactoryUtil.forName("creat.lastName")
+					.like(StringPool.PERCENT + HtmlUtil.escape(lastName) + StringPool.PERCENT));
+		// fullName search
+		if (!fullName.isEmpty())
+			junction.add(PropertyFactoryUtil.forName("creat.fullName")
+					.like(StringPool.PERCENT + HtmlUtil.escape(fullName) + StringPool.PERCENT));
 		//
 		dynamicQuery.add(junction);
-		
+
 		// AND junction
 		// for companyId
-		if (companyId>0){
+		if (companyId > 0) {
 			Junction conjunction = RestrictionsFactoryUtil.conjunction();
 			conjunction.add(PropertyFactoryUtil.forName("creat.companyId").eq(companyId));
 			dynamicQuery.add(conjunction);
@@ -339,44 +377,52 @@ public class CreatorLocalServiceImpl extends CreatorLocalServiceBaseImpl {
 		//
 		try {
 			creatorList = CategoryLocalServiceUtil.dynamicQuery(dynamicQuery);
-		} catch (final SystemException e) {}
+		} catch (final SystemException e) {
+		}
 		//
 		return creatorList;
 	}
-	
+
 	public List<Creator> getByKeyWordsAnd(String keywords) throws SystemException {
 		return getByKeyWordsAndCompanyId(keywords, new Long(0));
 	}
-	
+
 	public List<Creator> getByKeyWordsAndCompanyId(String keywords, Long companyId) throws SystemException {
 		List<Creator> creatorList = Collections.emptyList();
 		final Junction junction = RestrictionsFactoryUtil.disjunction();
-		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(de.uhh.l2g.plugins.model.impl.CreatorImpl.class, "creat");
+		DynamicQuery dynamicQuery = DynamicQueryFactoryUtil.forClass(de.uhh.l2g.plugins.model.impl.CreatorImpl.class,
+				"creat");
 		Criterion criterion = null;
-		//title search
-		junction.add(PropertyFactoryUtil.forName("creat.jobTitle").like(StringPool.PERCENT + HtmlUtil.escape(keywords) + StringPool.PERCENT));
-		//firstName search
-		junction.add(PropertyFactoryUtil.forName("creat.firstName").like(StringPool.PERCENT + HtmlUtil.escape(keywords) + StringPool.PERCENT));
-		//middleName search
-		junction.add(PropertyFactoryUtil.forName("creat.middleName").like(StringPool.PERCENT + HtmlUtil.escape(keywords) + StringPool.PERCENT));
-		//lastName search
-		junction.add(PropertyFactoryUtil.forName("creat.lastName").like(StringPool.PERCENT + HtmlUtil.escape(keywords) + StringPool.PERCENT));
-		//fullName search
-		junction.add(PropertyFactoryUtil.forName("creat.fullName").like(StringPool.PERCENT + HtmlUtil.escape(keywords) + StringPool.PERCENT));
+		// title search
+		junction.add(PropertyFactoryUtil.forName("creat.jobTitle")
+				.like(StringPool.PERCENT + HtmlUtil.escape(keywords) + StringPool.PERCENT));
+		// firstName search
+		junction.add(PropertyFactoryUtil.forName("creat.firstName")
+				.like(StringPool.PERCENT + HtmlUtil.escape(keywords) + StringPool.PERCENT));
+		// middleName search
+		junction.add(PropertyFactoryUtil.forName("creat.middleName")
+				.like(StringPool.PERCENT + HtmlUtil.escape(keywords) + StringPool.PERCENT));
+		// lastName search
+		junction.add(PropertyFactoryUtil.forName("creat.lastName")
+				.like(StringPool.PERCENT + HtmlUtil.escape(keywords) + StringPool.PERCENT));
+		// fullName search
+		junction.add(PropertyFactoryUtil.forName("creat.fullName")
+				.like(StringPool.PERCENT + HtmlUtil.escape(keywords) + StringPool.PERCENT));
 		//
 		dynamicQuery.add(junction);
-		
+
 		// AND junction
 		// for companyId
-		if (companyId>0){
+		if (companyId > 0) {
 			Junction conjunction = RestrictionsFactoryUtil.conjunction();
 			conjunction.add(PropertyFactoryUtil.forName("creat.companyId").eq(companyId));
 			dynamicQuery.add(conjunction);
 		}
-		//		
+		//
 		try {
 			creatorList = CategoryLocalServiceUtil.dynamicQuery(dynamicQuery);
-		} catch (final SystemException e) {}
+		} catch (final SystemException e) {
+		}
 		//
 		return creatorList;
 	}

@@ -335,11 +335,12 @@ public class VideoLocalServiceWrapper
 	@Override
 	public java.util.List<de.uhh.l2g.plugins.model.Video>
 			getByLectureseriesAndOpenaccess(
-				Long lectureseriesId, int openAccess)
+				Long lectureseriesId, int openAccess,
+				boolean mustBeCurrentlyValid)
 		throws com.liferay.portal.kernel.exception.SystemException {
 
 		return _videoLocalService.getByLectureseriesAndOpenaccess(
-			lectureseriesId, openAccess);
+			lectureseriesId, openAccess, mustBeCurrentlyValid);
 	}
 
 	@Override
@@ -409,11 +410,12 @@ public class VideoLocalServiceWrapper
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.model.Video getBySecureUrl(String surl)
+	public de.uhh.l2g.plugins.model.Video getBySecureUrl(
+			String surl, boolean mustBeCurrentlyValid)
 		throws com.liferay.portal.kernel.exception.SystemException,
 			   de.uhh.l2g.plugins.exception.NoSuchVideoException {
 
-		return _videoLocalService.getBySecureUrl(surl);
+		return _videoLocalService.getBySecureUrl(surl, mustBeCurrentlyValid);
 	}
 
 	@Override
@@ -431,6 +433,13 @@ public class VideoLocalServiceWrapper
 	}
 
 	@Override
+	public de.uhh.l2g.plugins.model.Video getCurrentlyValidVideo(long videoId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return _videoLocalService.getCurrentlyValidVideo(videoId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 
@@ -443,8 +452,11 @@ public class VideoLocalServiceWrapper
 	}
 
 	@Override
-	public Long getLatestClosedAccessVideoId(Long lectureseriesId) {
-		return _videoLocalService.getLatestClosedAccessVideoId(lectureseriesId);
+	public Long getLatestClosedAccessVideoId(
+		Long lectureseriesId, boolean mustBeCurrentlyValid) {
+
+		return _videoLocalService.getLatestClosedAccessVideoId(
+			lectureseriesId, mustBeCurrentlyValid);
 	}
 
 	@Override

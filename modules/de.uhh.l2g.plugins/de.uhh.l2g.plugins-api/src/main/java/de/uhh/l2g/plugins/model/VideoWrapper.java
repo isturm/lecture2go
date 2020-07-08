@@ -71,6 +71,8 @@ public class VideoWrapper
 		attributes.put("userName", getUserName());
 		attributes.put("createDate", getCreateDate());
 		attributes.put("modifiedDate", getModifiedDate());
+		attributes.put("validFromDate", getValidFromDate());
+		attributes.put("validToDate", getValidToDate());
 
 		return attributes;
 	}
@@ -256,6 +258,18 @@ public class VideoWrapper
 
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
+		}
+
+		Date validFromDate = (Date)attributes.get("validFromDate");
+
+		if (validFromDate != null) {
+			setValidFromDate(validFromDate);
+		}
+
+		Date validToDate = (Date)attributes.get("validToDate");
+
+		if (validToDate != null) {
+			setValidToDate(validToDate);
 		}
 	}
 
@@ -942,6 +956,26 @@ public class VideoWrapper
 	}
 
 	/**
+	 * Returns the valid from date of this video.
+	 *
+	 * @return the valid from date of this video
+	 */
+	@Override
+	public Date getValidFromDate() {
+		return model.getValidFromDate();
+	}
+
+	/**
+	 * Returns the valid to date of this video.
+	 *
+	 * @return the valid to date of this video
+	 */
+	@Override
+	public Date getValidToDate() {
+		return model.getValidToDate();
+	}
+
+	/**
 	 * Returns the video ID of this video.
 	 *
 	 * @return the video ID of this video
@@ -1551,6 +1585,26 @@ public class VideoWrapper
 	@Override
 	public void setUserUuid(String userUuid) {
 		model.setUserUuid(userUuid);
+	}
+
+	/**
+	 * Sets the valid from date of this video.
+	 *
+	 * @param validFromDate the valid from date of this video
+	 */
+	@Override
+	public void setValidFromDate(Date validFromDate) {
+		model.setValidFromDate(validFromDate);
+	}
+
+	/**
+	 * Sets the valid to date of this video.
+	 *
+	 * @param validToDate the valid to date of this video
+	 */
+	@Override
+	public void setValidToDate(Date validToDate) {
+		model.setValidToDate(validToDate);
 	}
 
 	/**

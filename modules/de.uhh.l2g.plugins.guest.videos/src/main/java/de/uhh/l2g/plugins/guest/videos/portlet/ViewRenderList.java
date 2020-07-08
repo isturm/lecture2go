@@ -328,7 +328,8 @@ public class ViewRenderList implements MVCRenderCommand {
 		} else {
 			videoIds.forEach(videoId -> {
 				try {
-					tags.addAll(Arrays.asList(getTagsForString(VideoLocalServiceUtil.getVideo(videoId).getTags())));
+					tags.addAll(Arrays
+							.asList(getTagsForString(VideoLocalServiceUtil.getCurrentlyValidVideo(videoId).getTags())));
 				} catch (PortalException portalException) {
 					portalException.printStackTrace();
 				}

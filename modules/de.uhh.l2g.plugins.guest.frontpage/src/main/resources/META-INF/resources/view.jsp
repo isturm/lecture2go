@@ -70,7 +70,7 @@
 								<c:set var="isVideo" value="true" />
 								<c:set var="itemLectureseriesId" value="${item.lectureseriesId}" />
 								<c:set var="vid"
-									value="<%=VideoLocalServiceUtil.getVideo((Long) pageContext.getAttribute("itemLectureseriesId"))%>" />
+									value="<%=VideoLocalServiceUtil.getCurrentlyValidVideo((Long) pageContext.getAttribute("itemLectureseriesId"))%>" />
 								<c:set var="oId" value="${vid.videoId}" />
 							</c:when>
 							<c:otherwise>
