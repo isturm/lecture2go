@@ -155,6 +155,229 @@
 </div>
 
 <div class="catalogue-container row">
+    <!-- catalogue-container -->
+    <div class="col-md-8 col-12">
+
+        <liferay-ui:search-container emptyResultsMessage="no-lectureseries-or-videos-found" delta="20"
+                                     iteratorURL="${portletURL}" displayTerms="${displayTerms}">
+
+            <liferay-ui:search-container-results>
+                <%
+                    searchContainer.setTotal(videoList.size());
+                    searchContainer.setResults(ListUtil.subList(videoList, searchContainer.getStart(), searchContainer.getEnd()));
+                %>
+            </liferay-ui:search-container-results>
+
+            <liferay-ui:search-container-row className="de.uhh.l2g.plugins.model.VideoListSearchResult"
+                                             keyProperty="lectureseriesId" modelVar="lectser">
+                <c:set var="oId" value=""/>
+                <c:set var="isVideo" value="<%=false%>"/>
+                <c:set var="vidDummy" value="<%=VideoLocalServiceUtil.createVideo(0)%>"/>
+                <c:choose>
+                    <c:when test="${lectser.videoId>0}">
+                        <c:set var="isVideo" value="<%=true%>"/>
+                        <%try {%><c:set var="vidDummy"
+                                        value="<%=VideoLocalServiceUtil.getCurrentlyValidVideo(lectser.getVideoId())%>"/><%
+                        } catch (Exception e) {
+                        }
+                        ;
+                    %>
+                        <c:set var="oId" value="${vidDummy.videoId}"/>
+                    </c:when>
+                    <c:otherwise>
+                        <%try {%><c:set var="vidDummy"
+                                        value="<%=VideoLocalServiceUtil.getCurrentlyValidVideo(lectser.getPreviewVideoId())%>"/><%
+                        } catch (Exception e) {
+                        }
+                        ;
+                    %>
+                        <c:set var="oId" value="${lectser.lectureseriesId}"/>
+                    </c:otherwise>
+                </c:choose>
+                <c:set var="videoCount" value="${lectser.numberOfOpenAccessVideos}"/>
+                <c:set var="vl" value="<%=new ArrayList<Video>()%>"/>
+
+                <c:choose>
+                    <c:when test="${videoCount>0 && isSearched && lectser.videoIds.size() > 0}">
+                        <!-- get videos by id list -->
+                        <c:set var="vl"
+                               value="<%=VideoLocalServiceUtil.getByVideoIds(ConverterUtil.idListToArray(lectser.getVideoIds()))%>"/>
+                    </c:when>
+                    <c:otherwise>
+                        <!-- get all videos of the lecture series -->
+                        <c:set var="vl"
+                               value="<%=VideoLocalServiceUtil.getByLectureseriesAndOpenaccess((Long)pageContext.getAttribute("oId"), 1, true)%>"/>
+                    </c:otherwise>
+                </c:choose>
+
+                <liferay-ui:search-container-column-text>
+                    <portlet:renderURL var="view1URL">
+                        <portlet:param name="mvcRenderCommandName" value="/view/render/details"/>
+                        <portlet:param name="objectId" value="${oId}"/>
+                        <c:if test="${isVideo}"><portlet:param name="objectType" value="v"/></c:if>
+                        <c:if test="${!isVideo}"><portlet:param name="objectType" value="l"/></c:if>
+                    </portlet:renderURL>
+
+                    <div id="vt${oId}" class="row videotile" <c:if test="${videoCount==0}">onClick="window.location='${view1URL}'"</c:if>>
+                        <c:choose>
+                            <c:when test="${videoCount==0 && isVideo}">
+                                <div class="video-image-wrapper col-md-4">
+                                    <img class="video-image" src="${vidDummy.getImageMedium()}"/>
+                                </div>
+                                <div class="video-content-wrapper col-md-8">
+                                    <div class="video-content">
+                                        <div class="video-label">
+                                            <c:set var="cat" value=""/>
+                                            <c:set var="vId" value="${vidDummy.videoId}"/>
+                                            <c:set var="vi"
+                                                   value="<%=Video_InstitutionLocalServiceUtil.getByVideo((Long)pageContext.getAttribute("vId"))%>"/>
+                                            <%try {%>
+                                            <c:set var="cId"
+                                                   value="<%=Video_CategoryLocalServiceUtil.getByVideo(lectser.getLectureseriesId()).get(0).getCategoryId()%>"/>
+                                            <c:set var="cat"><a
+                                                    href='/l2go/-/get/0/0/${cId}/0/0/0/'><%=CategoryLocalServiceUtil.getById((Long) pageContext.getAttribute("cId")).getName()%>
+                                            </a></c:set>
+                                                ${cat}
+                                            <c:set var="iId" value="${vi.get(0).institutionId}"/>
+                                            <c:set var="inst"
+                                                   value="<%=InstitutionLocalServiceUtil.getById((Long)pageContext.getAttribute("iId"))%>"/>
+                                            <c:set var="instLink"><a
+                                                    href='/l2go/-/get/${inst.institutionId}/${inst.parentId}/0/0/0/0/'>${inst.name}</a></a></c:set>
+                                            <%
+                                                } catch (Exception e) {
+                                                }
+                                            %>
+                                            <%try {%>
+                                            <c:set var="term"
+                                                   value="<%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName()%>"/>
+                                            <span class="term-of-creation col-3">${term}</span>
+                                            <%
+                                                } catch (Exception e) {
+                                                }
+                                            %>
+                                        </div>
+                                        <div class="video-title dot-ellipsis dot-resize-update">
+                                            <a href="${view1URL}">${lectser.name}</a>
+                                        </div>
+
+                                        <div class="allcreators">
+                                                ${vidDummy.linkedCreators}
+                                        </div>
+                                    </div>
+                                </div>
+                            </c:when>
+                            <c:otherwise>
+                                <!-- multiple videos in lecture series -->
+                                <div class="video-image-wrapper col-md-4">
+                                    <div class="badge mr-3">${videoCount}</div>
+                                    <img class="video-image-big layered-paper darker" src="${vidDummy.imageMedium}"/>
+                                    <span class="tri"></span>
+                                    <span class="overlay"></span>
+                                </div>
+
+                                <div class="video-content-wrapper col-md-8">
+                                    <div class="video-content">
+                                        <div class="video-label">
+                                            <c:set var="cat">
+                                                <a href='/l2go/-/get/0/0/${lectser.categoryId}/0/0/0/'><%=CategoryLocalServiceUtil.getById(lectser.getCategoryId()).getName()%>
+                                                </a>
+                                            </c:set>
+                                            <c:set var="li"
+                                                   value="<%=Lectureseries_InstitutionLocalServiceUtil.getByLectureseries(lectser.getLectureseriesId())%>"/>
+                                                ${cat}
+                                            <c:set var="iId" value="${li.get(0).institutionId}"/>
+                                            <c:set var="inst"
+                                                   value="<%=InstitutionLocalServiceUtil.getById((Long)pageContext.getAttribute("iId"))%>"/>
+                                            <span class="separator">|</span>
+                                            <c:set var="instLink"><a
+                                                    href='/l2go/-/get/${inst.institutionId}/${inst.parentId}/0/0/0/0/'>${inst.name}</a></c:set>
+                                                ${instLink}
+                                            <%try {%>
+                                            <c:set var="term"
+                                                   value="<%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName()%>"/>
+                                            <span class="term-of-creation col-3">${term}</span>
+                                        </div>
+                                        <%
+                                            } catch (Exception e) {
+                                            }
+                                        %>
+                                        <div class="video-title dot-ellipsis dot-resize-update dot-height-40">
+                                            <a href="${view1URL}">${lectser.name}</a>
+                                        </div>
+                                        <c:set var="lId" value="${vidDummy.lectureseriesId}"/>
+                                        <c:set var="allcreators"
+                                               value="<%=CreatorLocalServiceUtil.getCommaSeparatedLinkedCreatorsByLectureseriesIdAndMaxCreators((Long)pageContext.getAttribute("lId"), 3)%>"/>
+                                        <div class="allcreators">
+                                                ${allcreators}
+                                        </div>
+                                    </div>
+                                </div>
+                            </c:otherwise>
+                        </c:choose>
+                        <!-- videotile end-->
+                    </div>
+                    <!-- sublist for videos -->
+                    <c:set var="videoDivTitle" value=""/>
+                    <c:if test="${videoCount>0}">
+                        <div class='videolist'>
+                            <button id="b${oId}">
+													<span class="lfr-icon-menu-text">
+														<i class="icon-chevron-right"></i>
+													</span>
+                            </button>
+                            <ul id="p${oId}" class="${lectser.isDummy() ? 'showOnLoad' : 'hideOnLoad'}">
+                                <c:forEach items="${vl}" var="v">
+                                    <portlet:renderURL var="vURL">
+                                        <portlet:param name="mvcRenderCommandName" value="/view/render/details"/>
+                                        <portlet:param name="objectType" value="v"/>
+                                        <portlet:param name="objectId" value="${v.videoId}"/>
+                                    </portlet:renderURL>
+
+                                    <li class="videotile small" onClick="window.location='${vURL}'">
+                                            <%--                                        <div class="col-md-3 videotile metainfolist small">--%>
+                                        <c:set var="date" value="${v.simpleDate.trim()}"/>
+                                        <div class="col-md-3 video-image-wrapper">
+                                            <img class="video-image" src="${v.imageSmall}">
+                                            <div class="term-of-creation-mobile">${date}</div>
+                                        </div>
+                                            <%--                                        </div>--%>
+                                        <%try {%>
+                                        <c:set var="dur" value="${v.duration.trim().substring(0, 8)}"/>
+                                        <%
+                                            } catch (Exception e) {
+                                            }
+                                        %>
+                                        <div class="col-md-9 metainfo-small">
+                                            <div class="row">
+                                                <div class="title-small col-8">${v.title}</div>
+                                                <div class="term-of-creation col-4">${date}</div>
+                                            </div>
+                                            <div class="allcreators">
+                                                    ${v.linkedCreators}
+                                            </div>
+                                        </div>
+                                    </li>
+                                </c:forEach>
+                                <c:if test="${isSearched && (videoCount>1)}">
+                                    <li class="videotile small show-all" onClick="window.location='${view1URL}'">
+                                        <liferay-ui:message key="all-videos"/>
+                                    </li>
+                                </c:if>
+                            </ul>
+                        </div>
+                    </c:if>
+                    <!-- sublist for videos end-->
+
+                </liferay-ui:search-container-column-text>
+            </liferay-ui:search-container-row>
+
+            <liferay-ui:search-iterator/>
+
+        </liferay-ui:search-container>
+        <!-- span9 -->
+    </div>
+
+    <!-- filter -->
     <c:if test="${!resultSetEmpty}">
         <div class="col-md-4 col-12">
             <liferay-ui:panel-container>
@@ -477,7 +700,7 @@
                         </a>
                     </liferay-ui:panel>
                 </c:if>
-                
+
                 <!-- license filter -->
                 <c:if test="${presentLicenses.size()>0}">
                     <liferay-ui:panel defaultState='${hasLicenseFiltered ? "open" : "collapsed"}' extended="true" title="licenses"
@@ -517,228 +740,6 @@
             <!-- span3 -->
         </div>
     </c:if>
-
-    <div class="col-md-8  col-12">
-
-        <liferay-ui:search-container emptyResultsMessage="no-lectureseries-or-videos-found" delta="20"
-                                     iteratorURL="${portletURL}" displayTerms="${displayTerms}">
-
-            <liferay-ui:search-container-results>
-                <%
-                    searchContainer.setTotal(videoList.size());
-                    searchContainer.setResults(ListUtil.subList(videoList, searchContainer.getStart(), searchContainer.getEnd()));
-                %>
-            </liferay-ui:search-container-results>
-
-            <liferay-ui:search-container-row className="de.uhh.l2g.plugins.model.VideoListSearchResult"
-                                             keyProperty="lectureseriesId" modelVar="lectser">
-                <c:set var="oId" value=""/>
-                <c:set var="isVideo" value="<%=false%>"/>
-                <c:set var="vidDummy" value="<%=VideoLocalServiceUtil.createVideo(0)%>"/>
-                <c:choose>
-                    <c:when test="${lectser.videoId>0}">
-                        <c:set var="isVideo" value="<%=true%>"/>
-                        <%try {%><c:set var="vidDummy"
-                                        value="<%=VideoLocalServiceUtil.getCurrentlyValidVideo(lectser.getVideoId())%>"/><%
-                        } catch (Exception e) {
-                        }
-                        ;
-                    %>
-                        <c:set var="oId" value="${vidDummy.videoId}"/>
-                    </c:when>
-                    <c:otherwise>
-                        <%try {%><c:set var="vidDummy"
-                                        value="<%=VideoLocalServiceUtil.getCurrentlyValidVideo(lectser.getPreviewVideoId())%>"/><%
-                        } catch (Exception e) {
-                        }
-                        ;
-                    %>
-                        <c:set var="oId" value="${lectser.lectureseriesId}"/>
-                    </c:otherwise>
-                </c:choose>
-                <c:set var="videoCount" value="${lectser.numberOfOpenAccessVideos}"/>
-                <c:set var="vl" value="<%=new ArrayList<Video>()%>"/>
-
-                <c:choose>
-                    <c:when test="${videoCount>0 && isSearched && lectser.videoIds.size() > 0}">
-                        <!-- get videos by id list -->
-                        <c:set var="vl"
-                               value="<%=VideoLocalServiceUtil.getByVideoIds(ConverterUtil.idListToArray(lectser.getVideoIds()))%>"/>
-                    </c:when>
-                    <c:otherwise>
-                        <!-- get all videos of the lecture series -->
-                        <c:set var="vl"
-                               value="<%=VideoLocalServiceUtil.getByLectureseriesAndOpenaccess((Long)pageContext.getAttribute("oId"), 1, true)%>"/>
-                    </c:otherwise>
-                </c:choose>
-
-                <liferay-ui:search-container-column-text>
-                    <portlet:renderURL var="view1URL">
-                        <portlet:param name="mvcRenderCommandName" value="/view/render/details"/>
-                        <portlet:param name="objectId" value="${oId}"/>
-                        <c:if test="${isVideo}"><portlet:param name="objectType" value="v"/></c:if>
-                        <c:if test="${!isVideo}"><portlet:param name="objectType" value="l"/></c:if>
-                    </portlet:renderURL>
-
-                    <div id="vt${oId}" class="row videotile" <c:if test="${videoCount==0}">onClick="window.location='${view1URL}'"</c:if>>
-                        <c:choose>
-                            <c:when test="${videoCount==0 && isVideo}">
-                                <div class="video-image-wrapper col-md-4">
-                                    <img class="video-image" src="${vidDummy.getImageMedium()}"/>
-                                </div>
-                                <div class="video-content-wrapper col-md-8">
-                                    <div class="video-content">
-                                        <div class="video-label">
-                                            <c:set var="cat" value=""/>
-                                            <c:set var="vId" value="${vidDummy.videoId}"/>
-                                            <c:set var="vi"
-                                                   value="<%=Video_InstitutionLocalServiceUtil.getByVideo((Long)pageContext.getAttribute("vId"))%>"/>
-                                            <%try {%>
-                                            <c:set var="cId"
-                                                   value="<%=Video_CategoryLocalServiceUtil.getByVideo(lectser.getLectureseriesId()).get(0).getCategoryId()%>"/>
-                                            <c:set var="cat"><a
-                                                    href='/l2go/-/get/0/0/${cId}/0/0/0/'><%=CategoryLocalServiceUtil.getById((Long) pageContext.getAttribute("cId")).getName()%>
-                                            </a></c:set>
-                                                ${cat}
-                                            <c:set var="iId" value="${vi.get(0).institutionId}"/>
-                                            <c:set var="inst"
-                                                   value="<%=InstitutionLocalServiceUtil.getById((Long)pageContext.getAttribute("iId"))%>"/>
-                                            <c:set var="instLink"><a
-                                                    href='/l2go/-/get/${inst.institutionId}/${inst.parentId}/0/0/0/0/'>${inst.name}</a></a></c:set>
-                                            <%
-                                                } catch (Exception e) {
-                                                }
-                                            %>
-                                            <%try {%>
-                                            <c:set var="term"
-                                                   value="<%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName()%>"/>
-                                            <span class="term-of-creation col-3">${term}</span>
-                                            <%
-                                                } catch (Exception e) {
-                                                }
-                                            %>
-                                        </div>
-                                        <div class="video-title dot-ellipsis dot-resize-update">
-                                            <a href="${view1URL}">${lectser.name}</a>
-                                        </div>
-
-                                        <div class="allcreators">
-                                                ${vidDummy.linkedCreators}
-                                        </div>
-                                    </div>
-                                </div>
-                            </c:when>
-                            <c:otherwise>
-                                <!-- multiple videos in lecture series -->
-                                <div class="video-image-wrapper col-md-4">
-                                    <div class="badge mr-3">${videoCount}</div>
-                                    <img class="video-image-big layered-paper darker" src="${vidDummy.imageMedium}"/>
-                                    <span class="tri"></span>
-                                    <span class="overlay"></span>
-                                </div>
-
-                                <div class="video-content-wrapper col-md-8">
-                                    <div class="video-content">
-                                        <div class="video-label">
-                                            <c:set var="cat">
-                                                <a href='/l2go/-/get/0/0/${lectser.categoryId}/0/0/0/'><%=CategoryLocalServiceUtil.getById(lectser.getCategoryId()).getName()%>
-                                                </a>
-                                            </c:set>
-                                            <c:set var="li"
-                                                   value="<%=Lectureseries_InstitutionLocalServiceUtil.getByLectureseries(lectser.getLectureseriesId())%>"/>
-                                                ${cat}
-                                            <c:set var="iId" value="${li.get(0).institutionId}"/>
-                                            <c:set var="inst"
-                                                   value="<%=InstitutionLocalServiceUtil.getById((Long)pageContext.getAttribute("iId"))%>"/>
-                                            <span class="separator">|</span>
-                                            <c:set var="instLink"><a
-                                                    href='/l2go/-/get/${inst.institutionId}/${inst.parentId}/0/0/0/0/'>${inst.name}</a></c:set>
-                                                ${instLink}
-                                            <%try {%>
-                                            <c:set var="term"
-                                                   value="<%=TermLocalServiceUtil.getTerm(lectser.getTermId()).getTermName()%>"/>
-                                            <span class="term-of-creation col-3">${term}</span>
-                                        </div>
-                                        <%
-                                            } catch (Exception e) {
-                                            }
-                                        %>
-                                        <div class="video-title dot-ellipsis dot-resize-update dot-height-40">
-                                            <a href="${view1URL}">${lectser.name}</a>
-                                        </div>
-                                        <c:set var="lId" value="${vidDummy.lectureseriesId}"/>
-                                        <c:set var="allcreators"
-                                               value="<%=CreatorLocalServiceUtil.getCommaSeparatedLinkedCreatorsByLectureseriesIdAndMaxCreators((Long)pageContext.getAttribute("lId"), 3)%>"/>
-                                        <div class="allcreators">
-                                                ${allcreators}
-                                        </div>
-                                    </div>
-                                </div>
-                            </c:otherwise>
-                        </c:choose>
-                        <!-- videotile end-->
-                    </div>
-                    <!-- sublist for videos -->
-                    <c:set var="videoDivTitle" value=""/>
-                    <c:if test="${videoCount>0}">
-                        <div class='videolist'>
-                            <button id="b${oId}">
-													<span class="lfr-icon-menu-text">
-														<i class="icon-chevron-right"></i>
-													</span>
-                            </button>
-                            <ul id="p${oId}" class="${lectser.isDummy() ? 'showOnLoad' : 'hideOnLoad'}">
-                                <c:forEach items="${vl}" var="v">
-                                    <portlet:renderURL var="vURL">
-                                        <portlet:param name="mvcRenderCommandName" value="/view/render/details"/>
-                                        <portlet:param name="objectType" value="v"/>
-                                        <portlet:param name="objectId" value="${v.videoId}"/>
-                                    </portlet:renderURL>
-
-                                    <li class="videotile small" onClick="window.location='${vURL}'">
-                                            <%--                                        <div class="col-md-3 videotile metainfolist small">--%>
-                                        <c:set var="date" value="${v.simpleDate.trim()}"/>
-                                        <div class="col-md-3 video-image-wrapper">
-                                            <img class="video-image" src="${v.imageSmall}">
-                                            <div class="term-of-creation-mobile">${date}</div>
-                                        </div>
-                                            <%--                                        </div>--%>
-                                        <%try {%>
-                                        <c:set var="dur" value="${v.duration.trim().substring(0, 8)}"/>
-                                        <%
-                                            } catch (Exception e) {
-                                            }
-                                        %>
-                                        <div class="col-md-9 metainfo-small">
-                                            <div class="row">
-                                                <div class="title-small col-8">${v.title}</div>
-                                                <div class="term-of-creation col-4">${date}</div>
-                                            </div>
-                                            <div class="allcreators">
-                                                    ${v.linkedCreators}
-                                            </div>
-                                        </div>
-                                    </li>
-                                </c:forEach>
-                                <c:if test="${isSearched && (videoCount>1)}">
-                                    <li class="videotile small show-all" onClick="window.location='${view1URL}'">
-                                        <liferay-ui:message key="all-videos"/>
-                                    </li>
-                                </c:if>
-                            </ul>
-                        </div>
-                    </c:if>
-                    <!-- sublist for videos end-->
-
-                </liferay-ui:search-container-column-text>
-            </liferay-ui:search-container-row>
-
-            <liferay-ui:search-iterator/>
-
-        </liferay-ui:search-container>
-        <!-- span9 -->
-    </div>
-    <!-- catalogue-container -->
 </div>
 
 <script type="text/javascript">
