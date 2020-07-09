@@ -19,6 +19,7 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
@@ -30,6 +31,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import de.uhh.l2g.plugins.model.Lectureseries;
 import de.uhh.l2g.plugins.model.LectureseriesModel;
+import de.uhh.l2g.plugins.model.LectureseriesSoap;
 
 import java.io.Serializable;
 
@@ -38,10 +40,12 @@ import java.lang.reflect.InvocationHandler;
 
 import java.sql.Types;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
@@ -57,6 +61,7 @@ import java.util.function.Function;
  * @see LectureseriesImpl
  * @generated
  */
+@JSON(strict = true)
 public class LectureseriesModelImpl
 	extends BaseModelImpl<Lectureseries> implements LectureseriesModel {
 
@@ -175,6 +180,70 @@ public class LectureseriesModelImpl
 	public static final long PASSWORD_COLUMN_BITMASK = 8192L;
 
 	public static final long TERMID_COLUMN_BITMASK = 16384L;
+
+	/**
+	 * Converts the soap model instance into a normal model instance.
+	 *
+	 * @param soapModel the soap model instance to convert
+	 * @return the normal model instance
+	 */
+	public static Lectureseries toModel(LectureseriesSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
+		Lectureseries model = new LectureseriesImpl();
+
+		model.setNumber(soapModel.getNumber());
+		model.setEventType(soapModel.getEventType());
+		model.setCategoryId(soapModel.getCategoryId());
+		model.setName(soapModel.getName());
+		model.setShortDesc(soapModel.getShortDesc());
+		model.setTermId(soapModel.getTermId());
+		model.setLanguage(soapModel.getLanguage());
+		model.setFacultyName(soapModel.getFacultyName());
+		model.setLectureseriesId(soapModel.getLectureseriesId());
+		model.setPassword(soapModel.getPassword());
+		model.setApproved(soapModel.getApproved());
+		model.setLongDesc(soapModel.getLongDesc());
+		model.setLatestOpenAccessVideoId(
+			soapModel.getLatestOpenAccessVideoId());
+		model.setLatestVideoUploadDate(soapModel.getLatestVideoUploadDate());
+		model.setLatestVideoGenerationDate(
+			soapModel.getLatestVideoGenerationDate());
+		model.setVideoSort(soapModel.getVideoSort());
+		model.setUSID(soapModel.getUSID());
+		model.setPreviewVideoId(soapModel.getPreviewVideoId());
+		model.setGroupId(soapModel.getGroupId());
+		model.setCompanyId(soapModel.getCompanyId());
+		model.setUserId(soapModel.getUserId());
+		model.setUserName(soapModel.getUserName());
+		model.setCreateDate(soapModel.getCreateDate());
+		model.setModifiedDate(soapModel.getModifiedDate());
+
+		return model;
+	}
+
+	/**
+	 * Converts the soap model instances into normal model instances.
+	 *
+	 * @param soapModels the soap model instances to convert
+	 * @return the normal model instances
+	 */
+	public static List<Lectureseries> toModels(LectureseriesSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
+		List<Lectureseries> models = new ArrayList<Lectureseries>(
+			soapModels.length);
+
+		for (LectureseriesSoap soapModel : soapModels) {
+			models.add(toModel(soapModel));
+		}
+
+		return models;
+	}
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		de.uhh.l2g.plugins.service.util.ServiceProps.get(
@@ -422,6 +491,7 @@ public class LectureseriesModelImpl
 			(Map)attributeSetterBiConsumers);
 	}
 
+	@JSON
 	@Override
 	public String getNumber() {
 		if (_number == null) {
@@ -447,6 +517,7 @@ public class LectureseriesModelImpl
 		return GetterUtil.getString(_originalNumber);
 	}
 
+	@JSON
 	@Override
 	public String getEventType() {
 		if (_eventType == null) {
@@ -472,6 +543,7 @@ public class LectureseriesModelImpl
 		return GetterUtil.getString(_originalEventType);
 	}
 
+	@JSON
 	@Override
 	public long getCategoryId() {
 		return _categoryId;
@@ -494,6 +566,7 @@ public class LectureseriesModelImpl
 		return _originalCategoryId;
 	}
 
+	@JSON
 	@Override
 	public String getName() {
 		if (_name == null) {
@@ -519,6 +592,7 @@ public class LectureseriesModelImpl
 		return GetterUtil.getString(_originalName);
 	}
 
+	@JSON
 	@Override
 	public String getShortDesc() {
 		if (_shortDesc == null) {
@@ -534,6 +608,7 @@ public class LectureseriesModelImpl
 		_shortDesc = shortDesc;
 	}
 
+	@JSON
 	@Override
 	public long getTermId() {
 		return _termId;
@@ -556,6 +631,7 @@ public class LectureseriesModelImpl
 		return _originalTermId;
 	}
 
+	@JSON
 	@Override
 	public String getLanguage() {
 		if (_language == null) {
@@ -581,6 +657,7 @@ public class LectureseriesModelImpl
 		return GetterUtil.getString(_originalLanguage);
 	}
 
+	@JSON
 	@Override
 	public String getFacultyName() {
 		if (_facultyName == null) {
@@ -606,6 +683,7 @@ public class LectureseriesModelImpl
 		return GetterUtil.getString(_originalFacultyName);
 	}
 
+	@JSON
 	@Override
 	public long getLectureseriesId() {
 		return _lectureseriesId;
@@ -616,6 +694,7 @@ public class LectureseriesModelImpl
 		_lectureseriesId = lectureseriesId;
 	}
 
+	@JSON
 	@Override
 	public String getPassword() {
 		if (_password == null) {
@@ -641,6 +720,7 @@ public class LectureseriesModelImpl
 		return GetterUtil.getString(_originalPassword);
 	}
 
+	@JSON
 	@Override
 	public int getApproved() {
 		return _approved;
@@ -663,6 +743,7 @@ public class LectureseriesModelImpl
 		return _originalApproved;
 	}
 
+	@JSON
 	@Override
 	public String getLongDesc() {
 		if (_longDesc == null) {
@@ -678,6 +759,7 @@ public class LectureseriesModelImpl
 		_longDesc = longDesc;
 	}
 
+	@JSON
 	@Override
 	public long getLatestOpenAccessVideoId() {
 		return _latestOpenAccessVideoId;
@@ -700,6 +782,7 @@ public class LectureseriesModelImpl
 		return _originalLatestOpenAccessVideoId;
 	}
 
+	@JSON
 	@Override
 	public Date getLatestVideoUploadDate() {
 		return _latestVideoUploadDate;
@@ -720,6 +803,7 @@ public class LectureseriesModelImpl
 		return _originalLatestVideoUploadDate;
 	}
 
+	@JSON
 	@Override
 	public String getLatestVideoGenerationDate() {
 		if (_latestVideoGenerationDate == null) {
@@ -745,6 +829,7 @@ public class LectureseriesModelImpl
 		return GetterUtil.getString(_originalLatestVideoGenerationDate);
 	}
 
+	@JSON
 	@Override
 	public int getVideoSort() {
 		return _videoSort;
@@ -755,6 +840,7 @@ public class LectureseriesModelImpl
 		_videoSort = videoSort;
 	}
 
+	@JSON
 	@Override
 	public String getUSID() {
 		if (_USID == null) {
@@ -780,6 +866,7 @@ public class LectureseriesModelImpl
 		return GetterUtil.getString(_originalUSID);
 	}
 
+	@JSON
 	@Override
 	public long getPreviewVideoId() {
 		return _previewVideoId;
@@ -790,6 +877,7 @@ public class LectureseriesModelImpl
 		_previewVideoId = previewVideoId;
 	}
 
+	@JSON
 	@Override
 	public long getGroupId() {
 		return _groupId;
@@ -812,6 +900,7 @@ public class LectureseriesModelImpl
 		return _originalGroupId;
 	}
 
+	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -834,6 +923,7 @@ public class LectureseriesModelImpl
 		return _originalCompanyId;
 	}
 
+	@JSON
 	@Override
 	public long getUserId() {
 		return _userId;
@@ -860,6 +950,7 @@ public class LectureseriesModelImpl
 	public void setUserUuid(String userUuid) {
 	}
 
+	@JSON
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
@@ -875,6 +966,7 @@ public class LectureseriesModelImpl
 		_userName = userName;
 	}
 
+	@JSON
 	@Override
 	public Date getCreateDate() {
 		return _createDate;
@@ -885,6 +977,7 @@ public class LectureseriesModelImpl
 		_createDate = createDate;
 	}
 
+	@JSON
 	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
