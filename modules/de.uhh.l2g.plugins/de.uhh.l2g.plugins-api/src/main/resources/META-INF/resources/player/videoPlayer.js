@@ -15,7 +15,6 @@ function initVideoPlayer(player, videoUrls, poster, textTracks = null, is360Vide
 	}
     player.hlsQualitySelector();
     videojs.registerPlugin('chapterMarkersPlugin', ChapterMarkersPlugin);
-    player.chromecast({preloadWebComponents: true});
 
     if (is360Video) {
 		player.vr({projection: '360'});
