@@ -25,6 +25,7 @@
 	<bean class="de.uhh.l2g.plugins.service.impl.LastvideolistLocalServiceImpl" id="de.uhh.l2g.plugins.service.LastvideolistLocalService" />
 	<bean class="de.uhh.l2g.plugins.service.persistence.impl.LastvideolistPersistenceImpl" id="de.uhh.l2g.plugins.service.persistence.LastvideolistPersistence" />
 	<bean class="de.uhh.l2g.plugins.service.impl.LectureseriesLocalServiceImpl" id="de.uhh.l2g.plugins.service.LectureseriesLocalService" />
+	<bean class="de.uhh.l2g.plugins.service.impl.LectureseriesServiceImpl" id="de.uhh.l2g.plugins.service.LectureseriesService" />
 	<bean class="de.uhh.l2g.plugins.service.persistence.impl.LectureseriesPersistenceImpl" id="de.uhh.l2g.plugins.service.persistence.LectureseriesPersistence" />
 	<bean class="de.uhh.l2g.plugins.service.persistence.impl.LectureseriesFinderImpl" id="de.uhh.l2g.plugins.service.persistence.LectureseriesFinder" />
 	<bean class="de.uhh.l2g.plugins.service.impl.Lectureseries_CategoryLocalServiceImpl" id="de.uhh.l2g.plugins.service.Lectureseries_CategoryLocalService" />
