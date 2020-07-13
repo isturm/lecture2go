@@ -111,6 +111,12 @@ public interface VideoLocalService
 			Long lectureseriesId, int openAccess)
 		throws SystemException;
 
+	public long countByLectureseriesAndOpenaccess(
+			Long lectureseriesId, int openAccess, boolean mustBeCurrentlyValid)
+		throws SystemException;
+
+	public long countByOpenAccess(int openAccess, boolean mustBeCurrentlyValid);
+
 	public void createLastVideoList() throws SystemException;
 
 	/**
@@ -261,7 +267,17 @@ public interface VideoLocalService
 		throws SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Video> getByLectureseriesAndOpenaccess(
+			Long lectureseriesId, int openAccess, boolean mustBeCurrentlyValid,
+			int start, int end)
+		throws SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Video> getByOpenAccess(int bool) throws SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Video> getByOpenAccess(
+		int openAccess, boolean mustBeCurrentlyValid, int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getByOpenAccessAndUploadedFile(int bool) throws SystemException;

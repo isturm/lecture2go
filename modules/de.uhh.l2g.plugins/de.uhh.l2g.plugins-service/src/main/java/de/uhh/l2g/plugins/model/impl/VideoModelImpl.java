@@ -19,6 +19,7 @@ import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.json.JSON;
 import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
@@ -31,6 +32,7 @@ import com.liferay.portal.kernel.util.ProxyUtil;
 
 import de.uhh.l2g.plugins.model.Video;
 import de.uhh.l2g.plugins.model.VideoModel;
+import de.uhh.l2g.plugins.model.VideoSoap;
 
 import java.io.Serializable;
 
@@ -39,10 +41,12 @@ import java.lang.reflect.InvocationHandler;
 
 import java.sql.Types;
 
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.LinkedHashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.function.BiConsumer;
 import java.util.function.Function;
@@ -58,6 +62,7 @@ import java.util.function.Function;
  * @see VideoImpl
  * @generated
  */
+@JSON(strict = true)
 public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 
 	/*
@@ -177,6 +182,75 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 	public static final long UPLOADDATE_COLUMN_BITMASK = 512L;
 
 	public static final long VIDEOID_COLUMN_BITMASK = 1024L;
+
+	/**
+	 * Converts the soap model instance into a normal model instance.
+	 *
+	 * @param soapModel the soap model instance to convert
+	 * @return the normal model instance
+	 */
+	public static Video toModel(VideoSoap soapModel) {
+		if (soapModel == null) {
+			return null;
+		}
+
+		Video model = new VideoImpl();
+
+		model.setVideoId(soapModel.getVideoId());
+		model.setTitle(soapModel.getTitle());
+		model.setLectureseriesId(soapModel.getLectureseriesId());
+		model.setProducerId(soapModel.getProducerId());
+		model.setContainerFormat(soapModel.getContainerFormat());
+		model.setFilename(soapModel.getFilename());
+		model.setResolution(soapModel.getResolution());
+		model.setDuration(soapModel.getDuration());
+		model.setHostId(soapModel.getHostId());
+		model.setFileSize(soapModel.getFileSize());
+		model.setGenerationDate(soapModel.getGenerationDate());
+		model.setOpenAccess(soapModel.getOpenAccess());
+		model.setDownloadLink(soapModel.getDownloadLink());
+		model.setMetadataId(soapModel.getMetadataId());
+		model.setSecureFilename(soapModel.getSecureFilename());
+		model.setHits(soapModel.getHits());
+		model.setUploadDate(soapModel.getUploadDate());
+		model.setPermittedToSegment(soapModel.getPermittedToSegment());
+		model.setRootInstitutionId(soapModel.getRootInstitutionId());
+		model.setCitation2go(soapModel.getCitation2go());
+		model.setTermId(soapModel.getTermId());
+		model.setTags(soapModel.getTags());
+		model.setPassword(soapModel.getPassword());
+		model.setLicenseId(soapModel.getLicenseId());
+		model.setGroupId(soapModel.getGroupId());
+		model.setCompanyId(soapModel.getCompanyId());
+		model.setUserId(soapModel.getUserId());
+		model.setUserName(soapModel.getUserName());
+		model.setCreateDate(soapModel.getCreateDate());
+		model.setModifiedDate(soapModel.getModifiedDate());
+		model.setValidFromDate(soapModel.getValidFromDate());
+		model.setValidToDate(soapModel.getValidToDate());
+
+		return model;
+	}
+
+	/**
+	 * Converts the soap model instances into normal model instances.
+	 *
+	 * @param soapModels the soap model instances to convert
+	 * @return the normal model instances
+	 */
+	public static List<Video> toModels(VideoSoap[] soapModels) {
+		if (soapModels == null) {
+			return null;
+		}
+
+		List<Video> models = new ArrayList<Video>(soapModels.length);
+
+		for (VideoSoap soapModel : soapModels) {
+			models.add(toModel(soapModel));
+		}
+
+		return models;
+	}
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		de.uhh.l2g.plugins.service.util.ServiceProps.get(
@@ -418,6 +492,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 			(Map)attributeSetterBiConsumers);
 	}
 
+	@JSON
 	@Override
 	public long getVideoId() {
 		return _videoId;
@@ -440,6 +515,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		return _originalVideoId;
 	}
 
+	@JSON
 	@Override
 	public String getTitle() {
 		if (_title == null) {
@@ -455,6 +531,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		_title = title;
 	}
 
+	@JSON
 	@Override
 	public long getLectureseriesId() {
 		return _lectureseriesId;
@@ -477,6 +554,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		return _originalLectureseriesId;
 	}
 
+	@JSON
 	@Override
 	public long getProducerId() {
 		return _producerId;
@@ -499,6 +577,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		return _originalProducerId;
 	}
 
+	@JSON
 	@Override
 	public String getContainerFormat() {
 		if (_containerFormat == null) {
@@ -514,6 +593,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		_containerFormat = containerFormat;
 	}
 
+	@JSON
 	@Override
 	public String getFilename() {
 		if (_filename == null) {
@@ -539,6 +619,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		return GetterUtil.getString(_originalFilename);
 	}
 
+	@JSON
 	@Override
 	public String getResolution() {
 		if (_resolution == null) {
@@ -554,6 +635,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		_resolution = resolution;
 	}
 
+	@JSON
 	@Override
 	public String getDuration() {
 		if (_duration == null) {
@@ -569,6 +651,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		_duration = duration;
 	}
 
+	@JSON
 	@Override
 	public long getHostId() {
 		return _hostId;
@@ -579,6 +662,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		_hostId = hostId;
 	}
 
+	@JSON
 	@Override
 	public String getFileSize() {
 		if (_fileSize == null) {
@@ -594,6 +678,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		_fileSize = fileSize;
 	}
 
+	@JSON
 	@Override
 	public String getGenerationDate() {
 		if (_generationDate == null) {
@@ -609,6 +694,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		_generationDate = generationDate;
 	}
 
+	@JSON
 	@Override
 	public int getOpenAccess() {
 		return _openAccess;
@@ -631,6 +717,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		return _originalOpenAccess;
 	}
 
+	@JSON
 	@Override
 	public int getDownloadLink() {
 		return _downloadLink;
@@ -653,6 +740,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		return _originalDownloadLink;
 	}
 
+	@JSON
 	@Override
 	public long getMetadataId() {
 		return _metadataId;
@@ -663,6 +751,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		_metadataId = metadataId;
 	}
 
+	@JSON
 	@Override
 	public String getSecureFilename() {
 		if (_secureFilename == null) {
@@ -678,6 +767,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		_secureFilename = secureFilename;
 	}
 
+	@JSON
 	@Override
 	public long getHits() {
 		return _hits;
@@ -688,6 +778,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		_hits = hits;
 	}
 
+	@JSON
 	@Override
 	public Date getUploadDate() {
 		return _uploadDate;
@@ -708,6 +799,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		return _originalUploadDate;
 	}
 
+	@JSON
 	@Override
 	public int getPermittedToSegment() {
 		return _permittedToSegment;
@@ -718,6 +810,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		_permittedToSegment = permittedToSegment;
 	}
 
+	@JSON
 	@Override
 	public long getRootInstitutionId() {
 		return _rootInstitutionId;
@@ -740,6 +833,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		return _originalRootInstitutionId;
 	}
 
+	@JSON
 	@Override
 	public int getCitation2go() {
 		return _citation2go;
@@ -750,6 +844,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		_citation2go = citation2go;
 	}
 
+	@JSON
 	@Override
 	public long getTermId() {
 		return _termId;
@@ -772,6 +867,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		return _originalTermId;
 	}
 
+	@JSON
 	@Override
 	public String getTags() {
 		if (_tags == null) {
@@ -787,6 +883,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		_tags = tags;
 	}
 
+	@JSON
 	@Override
 	public String getPassword() {
 		if (_password == null) {
@@ -812,6 +909,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		return GetterUtil.getString(_originalPassword);
 	}
 
+	@JSON
 	@Override
 	public long getLicenseId() {
 		return _licenseId;
@@ -834,6 +932,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		return _originalLicenseId;
 	}
 
+	@JSON
 	@Override
 	public long getGroupId() {
 		return _groupId;
@@ -844,6 +943,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		_groupId = groupId;
 	}
 
+	@JSON
 	@Override
 	public long getCompanyId() {
 		return _companyId;
@@ -854,6 +954,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		_companyId = companyId;
 	}
 
+	@JSON
 	@Override
 	public long getUserId() {
 		return _userId;
@@ -880,6 +981,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 	public void setUserUuid(String userUuid) {
 	}
 
+	@JSON
 	@Override
 	public String getUserName() {
 		if (_userName == null) {
@@ -895,6 +997,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		_userName = userName;
 	}
 
+	@JSON
 	@Override
 	public Date getCreateDate() {
 		return _createDate;
@@ -905,6 +1008,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		_createDate = createDate;
 	}
 
+	@JSON
 	@Override
 	public Date getModifiedDate() {
 		return _modifiedDate;
@@ -921,6 +1025,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		_modifiedDate = modifiedDate;
 	}
 
+	@JSON
 	@Override
 	public Date getValidFromDate() {
 		return _validFromDate;
@@ -931,6 +1036,7 @@ public class VideoModelImpl extends BaseModelImpl<Video> implements VideoModel {
 		_validFromDate = validFromDate;
 	}
 
+	@JSON
 	@Override
 	public Date getValidToDate() {
 		return _validToDate;

@@ -16,11 +16,7 @@ package de.uhh.l2g.plugins.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
 
-import java.util.List;
-
 import de.uhh.l2g.plugins.model.Lectureseries;
-import de.uhh.l2g.plugins.model.LectureseriesWithVideos;
-import de.uhh.l2g.plugins.model.Video;
 import de.uhh.l2g.plugins.service.base.LectureseriesServiceBaseImpl;
 
 /**
@@ -42,15 +38,17 @@ import de.uhh.l2g.plugins.service.base.LectureseriesServiceBaseImpl;
  */
 public class LectureseriesServiceImpl extends LectureseriesServiceBaseImpl {
 
-	public LectureseriesWithVideos getLectureSeriesWithVideos(long lectureseriesId) throws PortalException {
+	/*
+	 * NOTE FOR DEVELOPERS:
+	 *
+	 * Never reference this class directly. Always use
+	 * <code>de.uhh.l2g.plugins.service.VideoServiceUtil</code> to access the video
+	 * remote service.
+	 */
+
+	public Lectureseries getLectureSeries(long lectureseriesId) throws PortalException {
 		Lectureseries lectureSeries = lectureseriesLocalService.getLectureseries(lectureseriesId);
-		List<Video> videos = videoLocalService.getByLectureseriesAndOpenaccess(lectureseriesId, 1, true);
-
-		LectureseriesWithVideos result = new LectureseriesWithVideos();
-		result.setLectureseries(lectureSeries);
-		result.setVideos(videos);
-
-		return result;
+		return lectureSeries;
 	}
 
 }

@@ -33,12 +33,11 @@ public class LectureseriesServiceWrapper
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.model.LectureseriesWithVideos
-			getLectureSeriesWithVideos(long lectureseriesId)
+	public de.uhh.l2g.plugins.model.Lectureseries getLectureSeries(
+			long lectureseriesId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _lectureseriesService.getLectureSeriesWithVideos(
-			lectureseriesId);
+		return _lectureseriesService.getLectureSeries(lectureseriesId);
 	}
 
 	/**

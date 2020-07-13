@@ -63,6 +63,7 @@
 	<bean class="de.uhh.l2g.plugins.service.persistence.impl.TermPersistenceImpl" id="de.uhh.l2g.plugins.service.persistence.TermPersistence" />
 	<bean class="de.uhh.l2g.plugins.service.persistence.impl.TermFinderImpl" id="de.uhh.l2g.plugins.service.persistence.TermFinder" />
 	<bean class="de.uhh.l2g.plugins.service.impl.VideoLocalServiceImpl" id="de.uhh.l2g.plugins.service.VideoLocalService" />
+	<bean class="de.uhh.l2g.plugins.service.impl.VideoServiceImpl" id="de.uhh.l2g.plugins.service.VideoService" />
 	<bean class="de.uhh.l2g.plugins.service.persistence.impl.VideoPersistenceImpl" id="de.uhh.l2g.plugins.service.persistence.VideoPersistence" />
 	<bean class="de.uhh.l2g.plugins.service.persistence.impl.VideoFinderImpl" id="de.uhh.l2g.plugins.service.persistence.VideoFinder" />
 	<bean class="de.uhh.l2g.plugins.service.impl.Video_CategoryLocalServiceImpl" id="de.uhh.l2g.plugins.service.Video_CategoryLocalService" />

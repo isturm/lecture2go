@@ -1,0 +1,6 @@
+Bundle-Name: de.uhh.l2g.rest-api
+Bundle-SymbolicName: de.uhh.l2g.rest.api
+Bundle-Version: 1.0.0
+
+Export-Package: de.uhh.l2g.rest.dto.v1_0, \
+    de.uhh.l2g.rest.resource.v1_0

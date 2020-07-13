@@ -50,6 +50,13 @@ public interface VideoFinder {
 	public de.uhh.l2g.plugins.model.Video
 		findLatestOpenAccessVideoForLectureseries(Long lectureseriesId);
 
+	public long countByLectureseriesAndOpenaccessAndIsCurrentlyValid(
+		Long lectureseriesId, int openAccess);
+
+	public java.util.List<de.uhh.l2g.plugins.model.Video>
+		findByLectureseriesAndOpenaccessAndIsCurrentlyValid(
+			Long lectureseriesId, int openAccess, int start, int end);
+
 	public java.util.List<de.uhh.l2g.plugins.model.Video>
 		findByLectureseriesAndOpenaccessAndIsCurrentlyValid(
 			Long lectureseriesId, int openAccess);
