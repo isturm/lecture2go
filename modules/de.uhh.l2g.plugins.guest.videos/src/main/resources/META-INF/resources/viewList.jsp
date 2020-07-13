@@ -195,20 +195,10 @@
                     </c:otherwise>
                 </c:choose>
                 <c:set var="videoCount" value="${lectser.numberOfOpenAccessVideos}"/>
-                <c:set var="vl" value="<%=new ArrayList<Video>()%>"/>
-
-                <c:choose>
-                    <c:when test="${videoCount>0 && isSearched && lectser.videoIds.size() > 0}">
-                        <!-- get videos by id list -->
-                        <c:set var="vl"
-                               value="<%=VideoLocalServiceUtil.getByVideoIds(ConverterUtil.idListToArray(lectser.getVideoIds()))%>"/>
-                    </c:when>
-                    <c:otherwise>
-                        <!-- get all videos of the lecture series -->
-                        <c:set var="vl"
-                               value="<%=VideoLocalServiceUtil.getByLectureseriesAndOpenaccess((Long)pageContext.getAttribute("oId"), 1, true)%>"/>
-                    </c:otherwise>
-                </c:choose>
+                <c:if test="${videoCount>0 && isSearched && lectser.videoIds.size() > 0}">
+                    <!-- get videos by id list -->
+                    <c:set var="vl" value="${lectser.getVideoIds()}"/>
+                </c:if>
 
                 <liferay-ui:search-container-column-text>
                     <portlet:renderURL var="view1URL">
@@ -218,7 +208,9 @@
                         <c:if test="${!isVideo}"><portlet:param name="objectType" value="l"/></c:if>
                     </portlet:renderURL>
 
-                    <div id="vt${oId}" class="row videotile" <c:if test="${videoCount==0}">onClick="window.location='${view1URL}'"</c:if>>
+                    <div id="vt${oId}" data-vl="${vl}" class="row videotile load-video-sublist" <c:if test="${videoCount==0}">
+                        onClick="window.location='${view1URL}'"
+                    </c:if>>
                         <c:choose>
                             <c:when test="${videoCount==0 && isVideo}">
                                 <div class="video-image-wrapper col-md-4">
@@ -317,47 +309,15 @@
                         <!-- videotile end-->
                     </div>
                     <!-- sublist for videos -->
-                    <c:set var="videoDivTitle" value=""/>
                     <c:if test="${videoCount>0}">
                         <div class='videolist'>
                             <button id="b${oId}">
-													<span class="lfr-icon-menu-text">
-														<i class="icon-chevron-right"></i>
-													</span>
+								<span class="lfr-icon-menu-text">
+									<i class="icon-chevron-right"></i>
+								</span>
                             </button>
                             <ul id="p${oId}" class="${lectser.isDummy() ? 'showOnLoad' : 'hideOnLoad'}">
-                                <c:forEach items="${vl}" var="v">
-                                    <portlet:renderURL var="vURL">
-                                        <portlet:param name="mvcRenderCommandName" value="/view/render/details"/>
-                                        <portlet:param name="objectType" value="v"/>
-                                        <portlet:param name="objectId" value="${v.videoId}"/>
-                                    </portlet:renderURL>
-
-                                    <li class="videotile small" onClick="window.location='${vURL}'">
-                                            <%--                                        <div class="col-md-3 videotile metainfolist small">--%>
-                                        <c:set var="date" value="${v.simpleDate.trim()}"/>
-                                        <div class="col-md-3 video-image-wrapper">
-                                            <img class="video-image" src="${v.imageSmall}">
-                                            <div class="term-of-creation-mobile">${date}</div>
-                                        </div>
-                                            <%--                                        </div>--%>
-                                        <%try {%>
-                                        <c:set var="dur" value="${v.duration.trim().substring(0, 8)}"/>
-                                        <%
-                                            } catch (Exception e) {
-                                            }
-                                        %>
-                                        <div class="col-md-9 metainfo-small">
-                                            <div class="row">
-                                                <div class="title-small col-8">${v.title}</div>
-                                                <div class="term-of-creation col-4">${date}</div>
-                                            </div>
-                                            <div class="allcreators">
-                                                    ${v.linkedCreators}
-                                            </div>
-                                        </div>
-                                    </li>
-                                </c:forEach>
+                                <div class="sublist-container"></div>
                                 <c:if test="${isSearched && (videoCount>1)}">
                                     <li class="videotile small show-all" onClick="window.location='${view1URL}'">
                                         <liferay-ui:message key="all-videos"/>
@@ -742,15 +702,73 @@
     </c:if>
 </div>
 
+<liferay-portlet:resourceURL id="getVideosForLectureSeries" var="getVideosForLectureSeriesURL" />
+
 <script type="text/javascript">
 	$(function() {
 		// decode the search query to plain text (via an in cache div)
-		var searchQuery = $('<div/>').html('<%= findVideos %>').text();
-		var markOptions = {
-		    "separateWordSearch": false
-		};
-		if (searchQuery) {
-		    $(".videotile").mark(searchQuery, markOptions);
-		}
+		highlightSearchWord();
+
+        // click handler for loading video sublist
+        $('div[id^="vt"]').click(function() {
+            loadVideoSublist(this.id.substring(2));
+        });
+
+        $('button[id^="b"]').click(function() {
+            loadVideoSublist(this.id.substring(1));
+        });
 	});
+
+	function highlightSearchWord() {
+        var searchQuery = $('<div/>').html('<%= findVideos %>').text();
+        var markOptions = {
+            "separateWordSearch": false
+        };
+        if (searchQuery) {
+            $(".videotile").mark(searchQuery, markOptions);
+        }
+    }
+
+    function loadVideoSublist(lectureSeriesId) {
+        if (lectureSeriesId > 0) {
+            const sublistDom = $('ul#p' + lectureSeriesId + '> .sublist-container');
+            const sublistDomLength = sublistDom[0].children.length;
+            const videoIds = $('div#vt' + lectureSeriesId)[0].dataset.vl;
+
+            if (sublistDomLength === 0 || (videoIds.length > 0 && sublistDomLength === 1)) {
+                sublistDom.append('<div class="loading-spinner"><i class="icon-spinner"></i></div>');
+
+                $.ajax({
+                    type: "GET",
+                    url: "${getVideosForLectureSeriesURL}",
+                    dataType: 'json',
+                    async: true,
+                    data: {
+                        "<portlet:namespace/>objectId": lectureSeriesId,
+                        "<portlet:namespace/>videoIds": videoIds
+                    },
+                    success: function(data) {
+                        $('.loading-spinner').remove();
+                        data.forEach(sublist => {
+                            sublist.forEach(video => {
+                                sublistDom.append('<li class="videotile small" ' +
+                                    'onClick="window.location=\'' + video.url + '\'">' +
+                                    '<div class="col-md-3 video-image-wrapper">' +
+                                    '<img class="video-image" src="' + video.imageSmall + '">' +
+                                    '<div class="term-of-creation-mobile">' + video.simpleDate + '</div>' +
+                                    '</div><div class="col-md-9 metainfo-small"><div class="row">' +
+                                    '<div class="title-small col-8">' + video.title + '</div>' +
+                                    '<div class="term-of-creation col-4">' + video.simpleDate + '</div></div>' +
+                                    '<div class="allcreators">' + video.linkedCreators + '</div></div></li>');
+                            })
+                        });
+                        highlightSearchWord();
+                    },
+                    error: error => {
+                        console.error(error);
+                    }
+                });
+            }
+        }
+    }
 </script>
