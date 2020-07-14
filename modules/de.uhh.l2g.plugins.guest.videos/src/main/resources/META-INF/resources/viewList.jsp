@@ -315,9 +315,44 @@
 								<span class="lfr-icon-menu-text">
 									<i class="icon-chevron-right"></i>
 								</span>
-                            </button>
+                            </button>     
                             <ul id="p${oId}" class="${lectser.isDummy() ? 'showOnLoad' : 'hideOnLoad'}">
-                                <div class="sublist-container"></div>
+                                <div class="sublist-container">
+	                                <!-- show video list for dummy lecture series (i.e. from search) -->
+		                            <c:if test="${lectser.isDummy()}">
+		                            	<c:set var="videoList" value="<%=VideoLocalServiceUtil.getByVideoIds(ConverterUtil.idListToArray(lectser.getVideoIds()))%>"/>
+		                                <c:forEach items="${videoList}" var="v">
+		                                    <portlet:renderURL var="vURL">
+		                                        <portlet:param name="mvcRenderCommandName" value="/view/render/details"/>
+		                                        <portlet:param name="objectType" value="v"/>
+		                                        <portlet:param name="objectId" value="${v.videoId}"/>
+		                                    </portlet:renderURL>
+		
+		                                    <li class="videotile small" onClick="window.location='${vURL}'">
+		                                        <c:set var="date" value="${v.simpleDate.trim()}"/>
+		                                        <div class="col-md-3 video-image-wrapper">
+		                                            <img class="video-image" src="${v.imageSmall}">
+		                                            <div class="term-of-creation-mobile">${date}</div>
+		                                        </div>
+		                                        <%try {%>
+		                                        <c:set var="dur" value="${v.duration.trim().substring(0, 8)}"/>
+		                                        <%
+		                                            } catch (Exception e) {
+		                                            }
+		                                        %>
+		                                        <div class="col-md-9 metainfo-small">
+		                                            <div class="row">
+		                                                <div class="title-small col-8">${v.title}</div>
+		                                                <div class="term-of-creation col-4">${date}</div>
+		                                            </div>
+		                                            <div class="allcreators">
+		                                                    ${v.linkedCreators}
+		                                            </div>
+		                                        </div>
+		                                    </li>
+		                                </c:forEach>
+		                            </c:if>
+	                            </div>
                                 <c:if test="${isSearched && (videoCount>1)}">
                                     <li class="videotile small show-all" onClick="window.location='${view1URL}'">
                                         <liferay-ui:message key="all-videos"/>
@@ -732,10 +767,10 @@
     function loadVideoSublist(lectureSeriesId) {
         if (lectureSeriesId > 0) {
             const sublistDom = $('ul#p' + lectureSeriesId + '> .sublist-container');
-            const sublistDomLength = sublistDom[0].children.length;
+            const sublistDomLength = sublistDom.children('li').length;
             const videoIds = $('div#vt' + lectureSeriesId)[0].dataset.vl;
 
-            if (sublistDomLength === 0 || (videoIds.length > 0 && sublistDomLength === 1)) {
+            if (sublistDomLength === 0) {
                 sublistDom.append('<div class="loading-spinner"><i class="icon-spinner"></i></div>');
 
                 $.ajax({
