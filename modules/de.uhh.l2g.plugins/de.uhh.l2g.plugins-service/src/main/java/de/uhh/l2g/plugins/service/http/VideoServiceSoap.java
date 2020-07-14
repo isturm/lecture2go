@@ -63,12 +63,14 @@ import java.rmi.RemoteException;
 public class VideoServiceSoap {
 
 	public static de.uhh.l2g.plugins.model.VideoSoap[] getVideos(
-			Long lectureseriesId, int start, int end)
+			Long lectureseriesId, Boolean producerRestricted, int start,
+			int end)
 		throws RemoteException {
 
 		try {
 			java.util.List<de.uhh.l2g.plugins.model.Video> returnValue =
-				VideoServiceUtil.getVideos(lectureseriesId, start, end);
+				VideoServiceUtil.getVideos(
+					lectureseriesId, producerRestricted, start, end);
 
 			return de.uhh.l2g.plugins.model.VideoSoap.toSoapModels(returnValue);
 		}
@@ -79,11 +81,13 @@ public class VideoServiceSoap {
 		}
 	}
 
-	public static long getVideoCount(Long lectureseriesId)
+	public static long getVideoCount(
+			Long lectureseriesId, Boolean producerRestricted)
 		throws RemoteException {
 
 		try {
-			long returnValue = VideoServiceUtil.getVideoCount(lectureseriesId);
+			long returnValue = VideoServiceUtil.getVideoCount(
+				lectureseriesId, producerRestricted);
 
 			return returnValue;
 		}

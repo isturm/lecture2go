@@ -42,6 +42,7 @@ public abstract class BaseVideoResourceImpl implements VideoResource {
 	@Parameters(
 		value = {
 			@Parameter(in = ParameterIn.QUERY, name = "lectureseriesId"),
+			@Parameter(in = ParameterIn.QUERY, name = "producerRestricted"),
 			@Parameter(in = ParameterIn.QUERY, name = "page"),
 			@Parameter(in = ParameterIn.QUERY, name = "pageSize")
 		}
@@ -52,6 +53,8 @@ public abstract class BaseVideoResourceImpl implements VideoResource {
 	public Page<Video> getVideosPage(
 			@Parameter(hidden = true) @QueryParam("lectureseriesId") Long
 				lectureseriesId,
+			@Parameter(hidden = true) @QueryParam("producerRestricted") Boolean
+				producerRestricted,
 			@Context Pagination pagination)
 		throws Exception {
 

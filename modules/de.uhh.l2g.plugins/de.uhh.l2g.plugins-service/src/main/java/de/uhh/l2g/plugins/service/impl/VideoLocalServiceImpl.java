@@ -128,8 +128,17 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		return vl;
 	}
 
+	public long countByProducer(Long producerId) throws SystemException {
+		return videoPersistence.countByProducer(producerId);
+	}
+
 	public List<Video> getByProducer(Long producerId) throws SystemException {
 		List<Video> vl = videoPersistence.findByProducer(producerId);
+		return vl;
+	}
+
+	public List<Video> getByProducer(Long producerId, int start, int end) throws SystemException {
+		List<Video> vl = videoPersistence.findByProducer(producerId, start, end);
 		return vl;
 	}
 
@@ -143,8 +152,18 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 		return videoPersistence.countByLectureseries(lectureseriesId);
 	}
 
+	public long countByProducerAndLectureseries(Long producerId, Long lectureseriesId) throws SystemException {
+		return videoPersistence.countByProducerAndLectureseries(producerId, lectureseriesId);
+	}
+
 	public List<Video> getByProducerAndLectureseries(Long producerId, Long lectureseriesId) throws SystemException {
 		List<Video> vl = videoPersistence.findByProducerAndLectureseries(producerId, lectureseriesId);
+		return vl;
+	}
+
+	public List<Video> getByProducerAndLectureseries(Long producerId, Long lectureseriesId, int start, int end)
+			throws SystemException {
+		List<Video> vl = videoPersistence.findByProducerAndLectureseries(producerId, lectureseriesId, start, end);
 		return vl;
 	}
 

@@ -41,18 +41,20 @@ public class VideoServiceWrapper
 	}
 
 	@Override
-	public long getVideoCount(Long lectureseriesId)
+	public long getVideoCount(Long lectureseriesId, Boolean producerRestricted)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _videoService.getVideoCount(lectureseriesId);
+		return _videoService.getVideoCount(lectureseriesId, producerRestricted);
 	}
 
 	@Override
 	public java.util.List<de.uhh.l2g.plugins.model.Video> getVideos(
-			Long lectureseriesId, int start, int end)
+			Long lectureseriesId, Boolean producerRestricted, int start,
+			int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return _videoService.getVideos(lectureseriesId, start, end);
+		return _videoService.getVideos(
+			lectureseriesId, producerRestricted, start, end);
 	}
 
 	@Override

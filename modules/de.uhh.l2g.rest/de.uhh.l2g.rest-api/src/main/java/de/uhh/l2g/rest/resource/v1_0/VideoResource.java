@@ -20,7 +20,8 @@ import javax.annotation.Generated;
 public interface VideoResource {
 
 	public Page<Video> getVideosPage(
-			Long lectureseriesId, Pagination pagination)
+			Long lectureseriesId, Boolean producerRestricted,
+			Pagination pagination)
 		throws Exception;
 
 	public void setContextCompany(Company contextCompany);

@@ -62,6 +62,7 @@ public class Query {
 	@GraphQLInvokeDetached
 	public Collection<Video> getVideosPage(
 			@GraphQLName("lectureseriesId") Long lectureseriesId,
+			@GraphQLName("producerRestricted") Boolean producerRestricted,
 			@GraphQLName("pageSize") int pageSize,
 			@GraphQLName("page") int page)
 		throws Exception {
@@ -71,7 +72,8 @@ public class Query {
 			this::_populateResourceContext,
 			videoResource -> {
 				Page paginationPage = videoResource.getVideosPage(
-					lectureseriesId, Pagination.of(pageSize, page));
+					lectureseriesId, producerRestricted,
+					Pagination.of(pageSize, page));
 
 				return paginationPage.getItems();
 			});

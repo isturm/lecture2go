@@ -53,8 +53,8 @@ import de.uhh.l2g.plugins.service.VideoServiceUtil;
 public class VideoServiceHttp {
 
 	public static java.util.List<de.uhh.l2g.plugins.model.Video> getVideos(
-			HttpPrincipal httpPrincipal, Long lectureseriesId, int start,
-			int end)
+			HttpPrincipal httpPrincipal, Long lectureseriesId,
+			Boolean producerRestricted, int start, int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -62,7 +62,7 @@ public class VideoServiceHttp {
 				VideoServiceUtil.class, "getVideos", _getVideosParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, lectureseriesId, start, end);
+				methodKey, lectureseriesId, producerRestricted, start, end);
 
 			Object returnObj = null;
 
@@ -93,7 +93,8 @@ public class VideoServiceHttp {
 	}
 
 	public static long getVideoCount(
-			HttpPrincipal httpPrincipal, Long lectureseriesId)
+			HttpPrincipal httpPrincipal, Long lectureseriesId,
+			Boolean producerRestricted)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
@@ -102,7 +103,7 @@ public class VideoServiceHttp {
 				_getVideoCountParameterTypes1);
 
 			MethodHandler methodHandler = new MethodHandler(
-				methodKey, lectureseriesId);
+				methodKey, lectureseriesId, producerRestricted);
 
 			Object returnObj = null;
 
@@ -135,9 +136,9 @@ public class VideoServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(VideoServiceHttp.class);
 
 	private static final Class<?>[] _getVideosParameterTypes0 = new Class[] {
-		Long.class, int.class, int.class
+		Long.class, Boolean.class, int.class, int.class
 	};
 	private static final Class<?>[] _getVideoCountParameterTypes1 =
-		new Class[] {Long.class};
+		new Class[] {Long.class, Boolean.class};
 
 }
