@@ -329,13 +329,11 @@
 		                                    </portlet:renderURL>
 		
 		                                    <li class="videotile small" onClick="window.location='${vURL}'">
-		                                            <%--                                        <div class="col-md-3 videotile metainfolist small">--%>
 		                                        <c:set var="date" value="${v.simpleDate.trim()}"/>
 		                                        <div class="col-md-3 video-image-wrapper">
 		                                            <img class="video-image" src="${v.imageSmall}">
 		                                            <div class="term-of-creation-mobile">${date}</div>
 		                                        </div>
-		                                            <%--                                        </div>--%>
 		                                        <%try {%>
 		                                        <c:set var="dur" value="${v.duration.trim().substring(0, 8)}"/>
 		                                        <%
