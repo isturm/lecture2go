@@ -48,19 +48,36 @@ public class VideoServiceImpl extends VideoServiceBaseImpl {
 	 * remote service.
 	 */
 
-	public List<Video> getVideos(Long lectureseriesId, int start, int end) throws PortalException {
-		if (lectureseriesId != null && lectureseriesId > 0) {
-			return videoLocalService.getByLectureseriesAndOpenaccess(lectureseriesId, 1, true, start, end);
+	public List<Video> getVideos(Long lectureseriesId, Boolean producerRestricted, int start, int end)
+			throws PortalException {
+		if (Boolean.TRUE.equals(producerRestricted)) {
+			if (lectureseriesId != null && lectureseriesId > 0) {
+				return videoLocalService.getByProducerAndLectureseries(getUserId(), lectureseriesId, start, end);
+			} else {
+				return videoLocalService.getByProducer(getUserId(), start, end);
+			}
 		} else {
-			return videoLocalService.getByOpenAccess(1, true, start, end);
+			if (lectureseriesId != null && lectureseriesId > 0) {
+				return videoLocalService.getByLectureseriesAndOpenaccess(lectureseriesId, 1, true, start, end);
+			} else {
+				return videoLocalService.getByOpenAccess(1, true, start, end);
+			}
 		}
 	}
 
-	public long getVideoCount(Long lectureseriesId) throws PortalException {
-		if (lectureseriesId != null && lectureseriesId > 0) {
-			return videoLocalService.countByLectureseriesAndOpenaccess(lectureseriesId, 1, true);
+	public long getVideoCount(Long lectureseriesId, Boolean producerRestricted) throws PortalException {
+		if (Boolean.TRUE.equals(producerRestricted)) {
+			if (lectureseriesId != null && lectureseriesId > 0) {
+				return videoLocalService.countByProducerAndLectureseries(getUserId(), lectureseriesId);
+			} else {
+				return videoLocalService.countByProducer(getUserId());
+			}
 		} else {
-			return videoLocalService.countByOpenAccess(1, true);
+			if (lectureseriesId != null && lectureseriesId > 0) {
+				return videoLocalService.countByLectureseriesAndOpenaccess(lectureseriesId, 1, true);
+			} else {
+				return videoLocalService.countByOpenAccess(1, true);
+			}
 		}
 	}
 }

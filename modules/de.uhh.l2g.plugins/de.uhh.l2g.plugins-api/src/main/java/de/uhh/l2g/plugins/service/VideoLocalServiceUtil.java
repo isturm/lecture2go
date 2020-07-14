@@ -118,6 +118,20 @@ public class VideoLocalServiceUtil {
 		return getService().countByOpenAccess(openAccess, mustBeCurrentlyValid);
 	}
 
+	public static long countByProducer(Long producerId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+
+		return getService().countByProducer(producerId);
+	}
+
+	public static long countByProducerAndLectureseries(
+			Long producerId, Long lectureseriesId)
+		throws com.liferay.portal.kernel.exception.SystemException {
+
+		return getService().countByProducerAndLectureseries(
+			producerId, lectureseriesId);
+	}
+
 	public static void createLastVideoList()
 		throws com.liferay.portal.kernel.exception.SystemException {
 
@@ -382,6 +396,13 @@ public class VideoLocalServiceUtil {
 		return getService().getByProducer(producerId);
 	}
 
+	public static java.util.List<de.uhh.l2g.plugins.model.Video> getByProducer(
+			Long producerId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+
+		return getService().getByProducer(producerId, start, end);
+	}
+
 	public static java.util.List<de.uhh.l2g.plugins.model.Video>
 			getByProducerAndDownloadLink(Long producerId, int downloadLink)
 		throws com.liferay.portal.kernel.exception.SystemException {
@@ -396,6 +417,15 @@ public class VideoLocalServiceUtil {
 
 		return getService().getByProducerAndLectureseries(
 			producerId, lectureseriesId);
+	}
+
+	public static java.util.List<de.uhh.l2g.plugins.model.Video>
+			getByProducerAndLectureseries(
+				Long producerId, Long lectureseriesId, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+
+		return getService().getByProducerAndLectureseries(
+			producerId, lectureseriesId, start, end);
 	}
 
 	public static java.util.List<de.uhh.l2g.plugins.model.Video>

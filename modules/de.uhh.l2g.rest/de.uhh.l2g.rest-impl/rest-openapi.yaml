@@ -205,6 +205,10 @@ paths:
           name: pageSize
           schema:
             type: integer
+        - in: query
+          name: producerRestricted
+          schema:
+            type: boolean
         responses:
           200:
             content:

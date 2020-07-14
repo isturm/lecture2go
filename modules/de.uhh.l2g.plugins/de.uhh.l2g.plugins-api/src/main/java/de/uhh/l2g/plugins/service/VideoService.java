@@ -69,10 +69,13 @@ public interface VideoService extends BaseService {
 	public String getOSGiServiceIdentifier();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getVideoCount(Long lectureseriesId) throws PortalException;
+	public long getVideoCount(Long lectureseriesId, Boolean producerRestricted)
+		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Video> getVideos(Long lectureseriesId, int start, int end)
+	public List<Video> getVideos(
+			Long lectureseriesId, Boolean producerRestricted, int start,
+			int end)
 		throws PortalException;
 
 }

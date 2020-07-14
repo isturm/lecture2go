@@ -24,10 +24,11 @@ public class VideoResourceImpl extends BaseVideoResourceImpl {
 	private VideoService videoService;
 
 	@Override
-	public Page<Video> getVideosPage(Long lectureseriesId, Pagination pagination) throws Exception {
-		List<de.uhh.l2g.plugins.model.Video> videos = videoService.getVideos(lectureseriesId,
+	public Page<Video> getVideosPage(Long lectureseriesId, Boolean producerRestricted, Pagination pagination)
+			throws Exception {
+		List<de.uhh.l2g.plugins.model.Video> videos = videoService.getVideos(lectureseriesId, producerRestricted,
 				pagination.getStartPosition(), pagination.getEndPosition());
 		return Page.of(videos.stream().map(video -> DTOMapper.toVideoDTO(video)).collect(Collectors.toList()),
-				pagination, videoService.getVideoCount(lectureseriesId));
+				pagination, videoService.getVideoCount(lectureseriesId, producerRestricted));
 	}
 }

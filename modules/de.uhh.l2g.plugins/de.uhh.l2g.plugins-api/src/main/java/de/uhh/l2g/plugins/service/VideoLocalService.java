@@ -117,6 +117,12 @@ public interface VideoLocalService
 
 	public long countByOpenAccess(int openAccess, boolean mustBeCurrentlyValid);
 
+	public long countByProducer(Long producerId) throws SystemException;
+
+	public long countByProducerAndLectureseries(
+			Long producerId, Long lectureseriesId)
+		throws SystemException;
+
 	public void createLastVideoList() throws SystemException;
 
 	/**
@@ -286,6 +292,10 @@ public interface VideoLocalService
 	public List<Video> getByProducer(Long producerId) throws SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Video> getByProducer(Long producerId, int start, int end)
+		throws SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Video> getByProducerAndDownloadLink(
 			Long producerId, int downloadLink)
 		throws SystemException;
@@ -293,6 +303,11 @@ public interface VideoLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Video> getByProducerAndLectureseries(
 			Long producerId, Long lectureseriesId)
+		throws SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Video> getByProducerAndLectureseries(
+			Long producerId, Long lectureseriesId, int start, int end)
 		throws SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

@@ -47,17 +47,20 @@ public class VideoServiceUtil {
 		return getService().getOSGiServiceIdentifier();
 	}
 
-	public static long getVideoCount(Long lectureseriesId)
+	public static long getVideoCount(
+			Long lectureseriesId, Boolean producerRestricted)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return getService().getVideoCount(lectureseriesId);
+		return getService().getVideoCount(lectureseriesId, producerRestricted);
 	}
 
 	public static java.util.List<de.uhh.l2g.plugins.model.Video> getVideos(
-			Long lectureseriesId, int start, int end)
+			Long lectureseriesId, Boolean producerRestricted, int start,
+			int end)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return getService().getVideos(lectureseriesId, start, end);
+		return getService().getVideos(
+			lectureseriesId, producerRestricted, start, end);
 	}
 
 	public static VideoService getService() {
