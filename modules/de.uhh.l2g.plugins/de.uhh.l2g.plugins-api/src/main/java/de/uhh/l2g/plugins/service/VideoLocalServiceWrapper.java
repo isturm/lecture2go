@@ -99,6 +99,23 @@ public class VideoLocalServiceWrapper
 	}
 
 	@Override
+	public long countByLectureseriesAndOpenaccess(
+			Long lectureseriesId, int openAccess, boolean mustBeCurrentlyValid)
+		throws com.liferay.portal.kernel.exception.SystemException {
+
+		return _videoLocalService.countByLectureseriesAndOpenaccess(
+			lectureseriesId, openAccess, mustBeCurrentlyValid);
+	}
+
+	@Override
+	public long countByOpenAccess(
+		int openAccess, boolean mustBeCurrentlyValid) {
+
+		return _videoLocalService.countByOpenAccess(
+			openAccess, mustBeCurrentlyValid);
+	}
+
+	@Override
 	public void createLastVideoList()
 		throws com.liferay.portal.kernel.exception.SystemException {
 
@@ -344,11 +361,30 @@ public class VideoLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Video>
+			getByLectureseriesAndOpenaccess(
+				Long lectureseriesId, int openAccess,
+				boolean mustBeCurrentlyValid, int start, int end)
+		throws com.liferay.portal.kernel.exception.SystemException {
+
+		return _videoLocalService.getByLectureseriesAndOpenaccess(
+			lectureseriesId, openAccess, mustBeCurrentlyValid, start, end);
+	}
+
+	@Override
 	public java.util.List<de.uhh.l2g.plugins.model.Video> getByOpenAccess(
 			int bool)
 		throws com.liferay.portal.kernel.exception.SystemException {
 
 		return _videoLocalService.getByOpenAccess(bool);
+	}
+
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Video> getByOpenAccess(
+		int openAccess, boolean mustBeCurrentlyValid, int start, int end) {
+
+		return _videoLocalService.getByOpenAccess(
+			openAccess, mustBeCurrentlyValid, start, end);
 	}
 
 	@Override

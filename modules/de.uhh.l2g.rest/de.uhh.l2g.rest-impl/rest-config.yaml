@@ -1,0 +1,7 @@
+apiDir: "../de.uhh.l2g.rest-api/src/main/java"
+apiPackagePath: "de.uhh.l2g.rest"
+application:
+    baseURI: "/lecture2go"
+    className: "Lecture2GoApplication"
+    name: "UHH.Lecture2Go"
+author: "Jonas Laacke"

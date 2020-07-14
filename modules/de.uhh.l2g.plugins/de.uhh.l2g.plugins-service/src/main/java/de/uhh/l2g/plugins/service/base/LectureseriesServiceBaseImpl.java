@@ -1253,6 +1253,26 @@ public abstract class LectureseriesServiceBaseImpl
 	}
 
 	/**
+	 * Returns the video remote service.
+	 *
+	 * @return the video remote service
+	 */
+	public de.uhh.l2g.plugins.service.VideoService getVideoService() {
+		return videoService;
+	}
+
+	/**
+	 * Sets the video remote service.
+	 *
+	 * @param videoService the video remote service
+	 */
+	public void setVideoService(
+		de.uhh.l2g.plugins.service.VideoService videoService) {
+
+		this.videoService = videoService;
+	}
+
+	/**
 	 * Returns the video persistence.
 	 *
 	 * @return the video persistence
@@ -1935,6 +1955,9 @@ public abstract class LectureseriesServiceBaseImpl
 
 	@BeanReference(type = de.uhh.l2g.plugins.service.VideoLocalService.class)
 	protected de.uhh.l2g.plugins.service.VideoLocalService videoLocalService;
+
+	@BeanReference(type = de.uhh.l2g.plugins.service.VideoService.class)
+	protected de.uhh.l2g.plugins.service.VideoService videoService;
 
 	@BeanReference(type = VideoPersistence.class)
 	protected VideoPersistence videoPersistence;

@@ -24,7 +24,7 @@ import com.liferay.portal.kernel.transaction.Isolation;
 import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 
-import de.uhh.l2g.plugins.model.LectureseriesWithVideos;
+import de.uhh.l2g.plugins.model.Lectureseries;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -59,8 +59,7 @@ public interface LectureseriesService extends BaseService {
 	 * Never modify or reference this interface directly. Always use {@link LectureseriesServiceUtil} to access the lectureseries remote service. Add custom service methods to <code>de.uhh.l2g.plugins.service.impl.LectureseriesServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public LectureseriesWithVideos getLectureSeriesWithVideos(
-			long lectureseriesId)
+	public Lectureseries getLectureSeries(long lectureseriesId)
 		throws PortalException;
 
 	/**

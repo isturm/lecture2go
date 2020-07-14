@@ -453,20 +453,40 @@ public class VideoFinderImpl extends VideoFinderBaseImpl implements VideoFinder 
 		return video;
 	}
 
-	public List<Video> findByLectureseriesAndOpenaccessAndIsCurrentlyValid(Long lectureseriesId, int openAccess) {
+	public long countByLectureseriesAndOpenaccessAndIsCurrentlyValid(Long lectureseriesId, int openAccess) {
+		DynamicQuery videoQuery = queryByLectureseriesAndOpenaccessAndIsCurrentlyValid(lectureseriesId, openAccess);
+
+		return videoPersistence.countWithDynamicQuery(videoQuery);
+	}
+
+	public List<Video> findByLectureseriesAndOpenaccessAndIsCurrentlyValid(Long lectureseriesId, int openAccess,
+			int start, int end) {
+		DynamicQuery videoQuery = queryByLectureseriesAndOpenaccessAndIsCurrentlyValid(lectureseriesId, openAccess);
+
+		List<Video> videos = videoPersistence.findWithDynamicQuery(videoQuery, start, end);
+		return videos;
+	}
+
+	private DynamicQuery queryByLectureseriesAndOpenaccessAndIsCurrentlyValid(Long lectureseriesId, int openAccess) {
 		ClassLoader classLoader = getClass().getClassLoader();
 
 		DynamicQuery videoQuery = DynamicQueryFactoryUtil.forClass(Video.class, classLoader)
-				.add(RestrictionsFactoryUtil.eq("lectureseriesId", lectureseriesId))
 				.add(RestrictionsFactoryUtil.eq("openAccess", openAccess))
 				.add(RestrictionsFactoryUtil.or(RestrictionsFactoryUtil.isNull("validFromDate"),
 						RestrictionsFactoryUtil.le("validFromDate", new Date())))
 				.add(RestrictionsFactoryUtil.or(RestrictionsFactoryUtil.isNull("validToDate"),
 						RestrictionsFactoryUtil.ge("validToDate", new Date())));
 
-		List<Video> videos = videoPersistence.findWithDynamicQuery(videoQuery);
+		if (lectureseriesId > 0) {
+			videoQuery = videoQuery.add(RestrictionsFactoryUtil.eq("lectureseriesId", lectureseriesId));
+		}
 
-		return videos;
+		return videoQuery;
+	}
+
+	public List<Video> findByLectureseriesAndOpenaccessAndIsCurrentlyValid(Long lectureseriesId, int openAccess) {
+		return findByLectureseriesAndOpenaccessAndIsCurrentlyValid(lectureseriesId, openAccess, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
 	}
 
 	private List<Video> assembleVideos(List<Object[]> objectList) {

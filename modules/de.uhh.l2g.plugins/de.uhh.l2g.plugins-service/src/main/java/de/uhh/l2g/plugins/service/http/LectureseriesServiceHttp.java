@@ -52,15 +52,14 @@ import de.uhh.l2g.plugins.service.LectureseriesServiceUtil;
  */
 public class LectureseriesServiceHttp {
 
-	public static de.uhh.l2g.plugins.model.LectureseriesWithVideos
-			getLectureSeriesWithVideos(
-				HttpPrincipal httpPrincipal, long lectureseriesId)
+	public static de.uhh.l2g.plugins.model.Lectureseries getLectureSeries(
+			HttpPrincipal httpPrincipal, long lectureseriesId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		try {
 			MethodKey methodKey = new MethodKey(
-				LectureseriesServiceUtil.class, "getLectureSeriesWithVideos",
-				_getLectureSeriesWithVideosParameterTypes0);
+				LectureseriesServiceUtil.class, "getLectureSeries",
+				_getLectureSeriesParameterTypes0);
 
 			MethodHandler methodHandler = new MethodHandler(
 				methodKey, lectureseriesId);
@@ -82,7 +81,7 @@ public class LectureseriesServiceHttp {
 					exception);
 			}
 
-			return (de.uhh.l2g.plugins.model.LectureseriesWithVideos)returnObj;
+			return (de.uhh.l2g.plugins.model.Lectureseries)returnObj;
 		}
 		catch (com.liferay.portal.kernel.exception.SystemException
 					systemException) {
@@ -96,7 +95,7 @@ public class LectureseriesServiceHttp {
 	private static Log _log = LogFactoryUtil.getLog(
 		LectureseriesServiceHttp.class);
 
-	private static final Class<?>[] _getLectureSeriesWithVideosParameterTypes0 =
+	private static final Class<?>[] _getLectureSeriesParameterTypes0 =
 		new Class[] {long.class};
 
 }

@@ -37,11 +37,11 @@ public class LectureseriesServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>de.uhh.l2g.plugins.service.impl.LectureseriesServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
-	public static de.uhh.l2g.plugins.model.LectureseriesWithVideos
-			getLectureSeriesWithVideos(long lectureseriesId)
+	public static de.uhh.l2g.plugins.model.Lectureseries getLectureSeries(
+			long lectureseriesId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
-		return getService().getLectureSeriesWithVideos(lectureseriesId);
+		return getService().getLectureSeries(lectureseriesId);
 	}
 
 	/**

@@ -62,16 +62,16 @@ import java.rmi.RemoteException;
  */
 public class LectureseriesServiceSoap {
 
-	public static de.uhh.l2g.plugins.model.LectureseriesWithVideos
-			getLectureSeriesWithVideos(long lectureseriesId)
+	public static de.uhh.l2g.plugins.model.LectureseriesSoap getLectureSeries(
+			long lectureseriesId)
 		throws RemoteException {
 
 		try {
-			de.uhh.l2g.plugins.model.LectureseriesWithVideos returnValue =
-				LectureseriesServiceUtil.getLectureSeriesWithVideos(
-					lectureseriesId);
+			de.uhh.l2g.plugins.model.Lectureseries returnValue =
+				LectureseriesServiceUtil.getLectureSeries(lectureseriesId);
 
-			return returnValue;
+			return de.uhh.l2g.plugins.model.LectureseriesSoap.toSoapModel(
+				returnValue);
 		}
 		catch (Exception exception) {
 			_log.error(exception, exception);

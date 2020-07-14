@@ -508,7 +508,7 @@
             <finder-column name="companyId"></finder-column>
         </finder>
     </entity>
-    <entity name="Video" local-service="true" remote-service="false">
+    <entity name="Video" local-service="true" remote-service="true">
 		<column name="videoId" type="long" primary="true" id-type="increment"></column>
 		<column name="title" type="String"></column>
 		<column name="lectureseriesId" type="long"></column>

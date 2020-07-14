@@ -14,6 +14,7 @@
 
 package de.uhh.l2g.plugins.service.impl;
 
+import com.liferay.portal.kernel.dao.orm.QueryUtil;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
@@ -80,6 +81,24 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 
 	public List<Video> getByOpenAccess(int bool) throws SystemException {
 		return videoPersistence.findByOpenAccess(bool);
+	}
+
+	public List<Video> getByOpenAccess(int openAccess, boolean mustBeCurrentlyValid, int start, int end) {
+		List<Video> vl = new ArrayList<Video>();
+		if (mustBeCurrentlyValid) {
+			vl = videoFinder.findByLectureseriesAndOpenaccessAndIsCurrentlyValid(-1L, openAccess, start, end);
+		} else {
+			vl = videoPersistence.findByOpenAccess(openAccess, start, end);
+		}
+		return vl;
+	}
+
+	public long countByOpenAccess(int openAccess, boolean mustBeCurrentlyValid) {
+		if (mustBeCurrentlyValid) {
+			return videoFinder.countByLectureseriesAndOpenaccessAndIsCurrentlyValid(-1L, openAccess);
+		} else {
+			return videoPersistence.countByOpenAccess(openAccess);
+		}
 	}
 
 	public int getByOpenAccessAndUploadedFile(int bool) throws SystemException {
@@ -385,12 +404,32 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 
 	public List<Video> getByLectureseriesAndOpenaccess(Long lectureseriesId, int openAccess,
 			boolean mustBeCurrentlyValid) throws SystemException {
+		return getByLectureseriesAndOpenaccess(lectureseriesId, openAccess, mustBeCurrentlyValid, QueryUtil.ALL_POS,
+				QueryUtil.ALL_POS);
+	}
+
+	public long countByLectureseriesAndOpenaccess(Long lectureseriesId, int openAccess, boolean mustBeCurrentlyValid)
+			throws SystemException {
+		if (lectureseriesId != 0) {
+			if (mustBeCurrentlyValid) {
+				return videoFinder.countByLectureseriesAndOpenaccessAndIsCurrentlyValid(lectureseriesId, openAccess);
+			} else {
+				return videoPersistence.countByLectureseriesAndOpenaccess(lectureseriesId, openAccess);
+			}
+		}
+
+		return 0;
+	}
+
+	public List<Video> getByLectureseriesAndOpenaccess(Long lectureseriesId, int openAccess,
+			boolean mustBeCurrentlyValid, int start, int end) throws SystemException {
 		List<Video> vl = new ArrayList<Video>();
 		if (lectureseriesId != 0) {
 			if (mustBeCurrentlyValid) {
-				vl = videoFinder.findByLectureseriesAndOpenaccessAndIsCurrentlyValid(lectureseriesId, openAccess);
+				vl = videoFinder.findByLectureseriesAndOpenaccessAndIsCurrentlyValid(lectureseriesId, openAccess, start,
+						end);
 			} else {
-				vl = videoPersistence.findByLectureseriesAndOpenaccess(lectureseriesId, openAccess);
+				vl = videoPersistence.findByLectureseriesAndOpenaccess(lectureseriesId, openAccess, start, end);
 			}
 		}
 		List<Video> rvl = getSortedVideoList(vl, lectureseriesId);
