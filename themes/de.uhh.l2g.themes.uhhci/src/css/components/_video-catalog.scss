@@ -127,11 +127,14 @@
     }
 
     ul {
-      display: none;
       width: 100%;
       padding-inline-start: $global-padding-lg;
       @include media-breakpoint-down(md) {
         padding-inline-start: $global-padding-sm;
+      }
+      
+      &.hideOnLoad {
+      	display: none;
       }
     }
   }
