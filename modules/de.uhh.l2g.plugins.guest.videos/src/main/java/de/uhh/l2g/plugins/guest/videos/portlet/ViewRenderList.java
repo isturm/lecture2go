@@ -48,7 +48,6 @@ import de.uhh.l2g.plugins.util.SearchManager.SearchType;
 		"mvc.command.name=/view/render/list", "mvc.command.name=/" }, service = MVCRenderCommand.class)
 public class ViewRenderList implements MVCRenderCommand {
 	private static final Log _log = LogFactoryUtil.getLog(OpenAccessVideosPortlet.class);
-	private final String alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ+";
 
 	@Reference
 	protected SearchManager searchManager;
@@ -190,19 +189,6 @@ public class ViewRenderList implements MVCRenderCommand {
 		presentMediaTypes = filterByMediaTypes(hasMediaTypeFiltered, mediaTypeId, videoIds, lectureseriesIds);
 
 		/*
-		 * FILTER BY TAGS
-		 */
-		Map<Character, Set<String>> tagsSplitAlphabetically = splitTagsAlphabetically(
-				filterByTags(hasTagFiltered, tag, videoIds, lectureseriesIds));
-		Set<String> presentTags = filterByTags(hasTagFiltered, tag, videoIds, lectureseriesIds);
-
-		/*
-		 * FILTER BY CREATOR
-		 */
-		Map<Character, List<Creator>> creatorsSplitAlphabetically = splitCreatorsAlphabetically(
-				filterCreators(hasCreatorFiltered, creatorId, lectureseriesIds, videoIds));
-
-		/*
 		 * FILTER BY CATEGORY
 		 */
 		if (hasCategoryFiltered) {
@@ -294,11 +280,8 @@ public class ViewRenderList implements MVCRenderCommand {
 		renderRequest.setAttribute("presentParentInstitutions", presentParentInstitutions);
 		renderRequest.setAttribute("presentInstitutions", presentInstitutions);
 		renderRequest.setAttribute("presentTerms", presentTerms);
-		renderRequest.setAttribute("creatorsSplitAlphabetically", creatorsSplitAlphabetically);
-		renderRequest.setAttribute("tagsSplitAlphabetically", tagsSplitAlphabetically);
 		renderRequest.setAttribute("presentCategories", presentCategories);
 		renderRequest.setAttribute("presentMediaTypes", presentMediaTypes);
-		renderRequest.setAttribute("presentTags", presentTags);
 		renderRequest.setAttribute("presentLicenses", presentLicenses);
 		renderRequest.setAttribute("portletURL", portletURL);
 		renderRequest.setAttribute("resultSetEmpty", resultSetEmpty);
@@ -309,93 +292,6 @@ public class ViewRenderList implements MVCRenderCommand {
 		//
 
 		return "/viewList.jsp";
-	}
-
-	/**
-	 *
-	 * @param hasTagFiltered
-	 * @param tag
-	 * @param videoIds
-	 * @param lectureseriesIds
-	 * @return
-	 */
-	private Set<String> filterByTags(boolean hasTagFiltered, String tag, List<Long> videoIds,
-			List<Long> lectureseriesIds) {
-		Set<String> tags = new TreeSet<>();
-
-		if (hasTagFiltered) {
-			tags.add(tag);
-		} else {
-			videoIds.forEach(videoId -> {
-				try {
-					tags.addAll(Arrays
-							.asList(getTagsForString(VideoLocalServiceUtil.getCurrentlyValidVideo(videoId).getTags())));
-				} catch (PortalException portalException) {
-					portalException.printStackTrace();
-				}
-			});
-
-			lectureseriesIds.forEach(lectureseriesId -> {
-				VideoLocalServiceUtil.getByLectureseries(lectureseriesId).forEach(video -> {
-					tags.addAll(Arrays.asList(getTagsForString(video.getTags())));
-				});
-			});
-		}
-
-		return tags;
-	}
-
-	/**
-	 * Takes a flat list of tags and sorts it to an alphabetical map
-	 *
-	 * @param tagList {Apple; Bee; Anaconda; ...}
-	 * @return A={Anaconda; Apple; ...}, B={Bee; ...}
-	 */
-	private Map<Character, Set<String>> splitTagsAlphabetically(Set<String> tagList) {
-		Map<Character, Set<String>> presentTagsAlphabetMap = new HashMap<>();
-
-		for (int i = 0; i < alphabet.length(); i++) {
-			presentTagsAlphabetMap.put(alphabet.charAt(i), new TreeSet<>());
-		}
-
-		tagList.forEach(tag -> {
-			if (!tag.trim().isEmpty()) {
-				char firstChar = mapSpecialCharacters(tag);
-
-				Set<String> tagsForChar = presentTagsAlphabetMap.get(firstChar);
-
-				if (tagsForChar != null) {
-					tagsForChar.add(tag.trim());
-				} else {
-					presentTagsAlphabetMap.get('+').add(tag.trim());
-				}
-			}
-		});
-
-		return presentTagsAlphabetMap;
-	}
-
-	/**
-	 *
-	 * @param string
-	 * @return
-	 */
-	private char mapSpecialCharacters(String string) {
-		char firstChar = string.trim().toUpperCase().charAt(0);
-
-		// Umlauts/accents are mapped to "base" character
-		if (firstChar == 'Š' || firstChar == 'Ş')
-			firstChar = 'S';
-		if (firstChar == 'Ö')
-			firstChar = 'O';
-		if (firstChar == 'Ü')
-			firstChar = 'U';
-		if (firstChar == 'Ä')
-			firstChar = 'A';
-		if (firstChar == 'İ')
-			firstChar = 'I';
-
-		return firstChar;
 	}
 
 	/**
@@ -471,85 +367,4 @@ public class ViewRenderList implements MVCRenderCommand {
 
 		return licenses;
 	}
-
-	/**
-	 * Constructs a list of creators from given video and lecture series IDs, and
-	 * returns a one-item list of the creator with id creatorId. If the filter is
-	 * not active, the entire list is returned.
-	 * 
-	 * @param filterIsActive   if true, list is filtered for creatorId
-	 * @param creatorId        ID of creator to filter for. Can be null if
-	 *                         filterIsActive is false
-	 * @param lectureseriesIds IDs of the lecture series whose creators the list
-	 *                         will contain
-	 * @param videoIds         IDs of the videos whose creators the list will
-	 *                         contain
-	 * @return list of creators of given video/lectureSeries IDs. Single-item list
-	 *         if filter is active and creator ID is given.
-	 */
-	private List<Creator> filterCreators(Boolean filterIsActive, long creatorId, ArrayList<Long> lectureseriesIds,
-			ArrayList<Long> videoIds) {
-		List<Creator> filteredCreators = new ArrayList<>();
-		if (filterIsActive) {
-			try {
-				filteredCreators.add(CreatorLocalServiceUtil.getById(creatorId));
-			} catch (Exception e) {
-				_log.error("can't add creator id " + creatorId);
-			}
-		} else {
-			filteredCreators = CreatorLocalServiceUtil.getCreatorsFromLectureseriesIdsAndVideoIds(lectureseriesIds,
-					videoIds);
-		}
-
-		return filteredCreators;
-	}
-
-	/**
-	 * Takes a flat list of creators and sorts it to an alphabetical map
-	 * 
-	 * @param creatorList {Biene, Maja; Aaronson, John; ...}
-	 * @return A={Aaronson, John; ...}, B={Biene, Maja; ...}
-	 */
-	private Map<Character, List<Creator>> splitCreatorsAlphabetically(List<Creator> creatorList) {
-		Map<Character, List<Creator>> presentCreatorsAlphabetMap = new HashMap<>();
-
-		for (int i = 0; i < alphabet.length(); i++) {
-			presentCreatorsAlphabetMap.put(alphabet.charAt(i), new ArrayList<>());
-		}
-
-		creatorList.forEach(creator -> {
-			char firstChar = mapSpecialCharacters(creator.getLastName());
-			List<Creator> creatorsForChar = presentCreatorsAlphabetMap.get(firstChar);
-
-			if (creatorsForChar != null) {
-				creatorsForChar.add(creator);
-			} else {
-				presentCreatorsAlphabetMap.get('+').add(creator);
-			}
-		});
-
-		return presentCreatorsAlphabetMap;
-	}
-
-	/**
-	 * Accepts a string with arbitrarily formatted tags and tries to make sense of
-	 * it.
-	 * 
-	 * @param tagsString String with tags.
-	 * @return Tags as array; split by semicolon, comma, or not at all (in that
-	 *         order).
-	 */
-	private String[] getTagsForString(String tagsString) {
-		if (tagsString.isEmpty()) {
-			return new String[0];
-		}
-
-		String[] splitBySemicolon = tagsString.split(";");
-		if (splitBySemicolon.length > 1) {
-			return splitBySemicolon;
-		} else {
-			return tagsString.split(",");
-		}
-	}
-
 }
