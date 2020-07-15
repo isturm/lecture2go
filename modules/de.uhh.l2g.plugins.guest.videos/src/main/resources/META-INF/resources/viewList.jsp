@@ -29,11 +29,8 @@
 <jsp:useBean id="presentParentInstitutions" type="java.util.List<Institution>" scope="request"/>
 <jsp:useBean id="presentInstitutions" type="java.util.List<Institution>" scope="request"/>
 <jsp:useBean id="presentTerms" type="java.util.List<Term>" scope="request"/>
-<jsp:useBean id="creatorsSplitAlphabetically" type="java.util.Map<java.lang.Character, java.util.Set<Creator>>" scope="request"/>
-<jsp:useBean id="tagsSplitAlphabetically" type="java.util.Map<java.lang.Character, java.util.Set<java.lang.String>>" scope="request"/>
 <jsp:useBean id="presentCategories" type="java.util.List<Category>" scope="request"/>
 <jsp:useBean id="presentMediaTypes" type="java.util.Set<de.uhh.l2g.plugins.model.MediaType>" scope="request"/>
-<jsp:useBean id="presentTags" type="java.util.Set<java.lang.String>" scope="request"/>
 <jsp:useBean id="presentLicenses" type="java.util.Set<de.uhh.l2g.plugins.model.License>" scope="request"/>
 
 <jsp:useBean id="portletURL" type="javax.portlet.PortletURL" scope="request"/>
@@ -315,7 +312,7 @@
 								<span class="lfr-icon-menu-text">
 									<i class="icon-chevron-right"></i>
 								</span>
-                            </button>     
+                            </button>
                             <ul id="p${oId}" class="${lectser.isDummy() ? 'showOnLoad' : 'hideOnLoad'}">
                                 <div class="sublist-container">
 	                                <!-- show video list for dummy lecture series (i.e. from search) -->
@@ -526,76 +523,9 @@
                 <!-- creator filter -->
                 <liferay-ui:panel defaultState='${hasCreatorFiltered ? "open" : "collapsed"}' extended="true" title="creator"
                                   cssClass='${hasCreatorFiltered ? "filtered" : "notFiltered"}'>
-                    <div class="firstCharacterSelector">
-                        <c:forEach items="${creatorsSplitAlphabetically.keySet()}" var="character">
-                            <c:if test="${creatorsSplitAlphabetically.get(character).size() == 0}">
-                                <span>${character}</span>
-                            </c:if>
-                            <c:if test="${creatorsSplitAlphabetically.get(character).size() > 0}">
-                                <a class="select-character" data-character="${character}" data-entity="creator">
-                                        ${character}
-                                </a>
-                            </c:if>
-                        </c:forEach>
-                        <a class="select-character selected" data-character="*" data-entity="creator">
-                            Alle
-                        </a>
-                    </div>
+                    <div class="firstCharacterSelector" id="firstCharacterSelector"></div>
 
-                    <c:forEach items="${creatorsSplitAlphabetically.keySet()}" var="creatorKey">
-                        <div class="alphabet-list" data-character="${creatorKey}" data-entity="creator">
-                            <ul class="colored-bullets">
-                                <c:forEach items="${creatorsSplitAlphabetically.get(creatorKey)}" var="creator">
-                                    <portlet:renderURL var="filterByCreator">
-                                        <portlet:param name="mvcRenderCommandName" value="/view/render/list"/>
-                                        <portlet:param name="institutionId" value="${institutionId}"/>
-                                        <portlet:param name="parentInstitutionId" value="${parentInstitutionId}"/>
-                                        <portlet:param name="termId" value='${termId}'/>
-                                        <portlet:param name="categoryId" value="${categoryId}"/>
-                                        <portlet:param name="creatorId" value='${hasCreatorFiltered ? "0" : creator.creatorId}'/>
-                                        <portlet:param name="mediaTypeId" value="${mediaTypeId}"/>
-                                        <portlet:param name="tag" value="${tag}"/>
-                                        <portlet:param name="licenseId" value="${licenseId}"/>
-                                        <portlet:param name="searchType" value="${searchType}"/>
-                                        <portlet:param name="findVideos" value="${findVideos}"/>
-                                    </portlet:renderURL>
-                                    <li class="videoIds">
-                                        <a href="${filterByCreator}" class="row">
-                                            <div class="filter-menu-link">
-                                                    ${creator.lastName},
-                                                <c:choose>
-                                                    <c:when test="${creator.middleName != '' && creator.jobTitle != ''}">
-                                                        ${creator.firstName} ${creator.middleName}, ${creator.jobTitle}
-                                                    </c:when>
-                                                    <c:when test="${creator.middleName == '' && creator.jobTitle != ''}">
-                                                        ${creator.firstName}, ${creator.jobTitle}
-                                                    </c:when>
-                                                    <c:when test="${creator.middleName != '' && creator.jobTitle == ''}">
-                                                        ${creator.firstName} ${creator.middleName}
-                                                    </c:when>
-                                                    <c:when test="${creator.middleName == '' && creator.jobTitle == ''}">
-                                                        ${creator.firstName}
-                                                    </c:when>
-                                                </c:choose>
-                                            </div>
-                                            <div class="autofit-col-expand"></div>
-                                            <span ${hasCreatorFiltered ? 'class="icon-large icon-remove"' : ''}></span>
-                                        </a>
-                                        <c:choose>
-                                            <c:when test="${creator.creatorName==''}">
-                                                <liferay-ui:message key="no-creator"/>
-                                            </c:when>
-                                            <c:otherwise>
-                                            </c:otherwise>
-                                        </c:choose>
-                                    </li>
-                                </c:forEach>
-                            </ul>
-                            <a class="load-more-link" data-character="${creatorKey}" data-entity="creator">
-                                <liferay-ui:message key="more"/>
-                            </a>
-                        </div>
-                    </c:forEach>
+                    <div id="creator-list"></div>
                     <a class="load-more-link all-characters" data-character="*" data-entity="creator">
                         <liferay-ui:message key="more"/>
                     </a>
@@ -638,63 +568,14 @@
                 </c:if>
 
                 <!-- tag filter -->
-                <c:if test="${presentTags.size() > 0}">
-                    <liferay-ui:panel defaultState='${hasTagFiltered ? "open" : "collapsed"}' extended="true" title="tags"
-                                      cssClass='${hasTagFiltered ? "filtered" : "notFiltered"}'>
-                        <div class="firstCharacterSelector">
-                            <c:forEach items="${tagsSplitAlphabetically.keySet()}" var="character">
-                                <c:if test="${tagsSplitAlphabetically.get(character).size() == 0}">
-                                    <span>${character}</span>
-                                </c:if>
-                                <c:if test="${tagsSplitAlphabetically.get(character).size() > 0}">
-                                    <a class="select-character" data-character="${character}" data-entity="tag">
-                                            ${character}
-                                    </a>
-                                </c:if>
-                            </c:forEach>
-                            <a class="select-character selected" data-character="*" data-entity="tag">
-                                Alle
-                            </a>
-                        </div>
-
-                        <c:forEach items="${tagsSplitAlphabetically.keySet()}" var="tagKey">
-                            <div class="alphabet-list" data-character="${tagKey}" data-entity="tag">
-                                <ul class="colored-bullets">
-                                    <c:forEach items="${tagsSplitAlphabetically.get(tagKey)}" var="tag">
-                                        <portlet:renderURL var="filterByTag">
-                                            <portlet:param name="mvcRenderCommandName" value="/view/render/list"/>
-                                            <portlet:param name="institutionId" value="${institutionId}"/>
-                                            <portlet:param name="parentInstitutionId" value="${parentInstitutionId}"/>
-                                            <portlet:param name="termId" value='${termId}'/>
-                                            <portlet:param name="categoryId" value="${categoryId}"/>
-                                            <portlet:param name="creatorId" value='${creatorId}'/>
-                                            <portlet:param name="mediaTypeId" value="${mediaTypeId}"/>
-                                            <portlet:param name="tag" value="${hasTagFiltered ? \"0\" : tag}"/>
-                                            <portlet:param name="licenseId" value="${licenseId}"/>
-                                            <portlet:param name="searchType" value="${searchType}"/>
-                                            <portlet:param name="findVideos" value="${findVideos}"/>
-                                        </portlet:renderURL>
-                                        <li class="videoIds">
-                                            <a href="${filterByTag}" class="row">
-                                                <div class="filter-menu-link">
-                                                        ${tag}
-                                                </div>
-                                                <div class="autofit-col-expand"></div>
-                                                <span ${hasTagFiltered ? 'class="icon-large icon-remove"' : ''}></span>
-                                            </a>
-                                        </li>
-                                    </c:forEach>
-                                </ul>
-                                <a class="load-more-link" data-character="${tagKey}" data-entity="tag">
-                                    <liferay-ui:message key="more"/>
-                                </a>
-                            </div>
-                        </c:forEach>
-                        <a class="load-more-link all-characters" data-character="*" data-entity="tag">
-                            <liferay-ui:message key="more"/>
-                        </a>
-                    </liferay-ui:panel>
-                </c:if>
+                <liferay-ui:panel defaultState='${hasTagFiltered ? "open" : "collapsed"}' extended="true" title="tags"
+                                  cssClass='${hasTagFiltered ? "filtered" : "notFiltered"}'>
+                    <div class="firstCharacterSelector" id="firstCharacterSelectorTags"></div>
+                    <div id="tag-list"></div>
+                    <a class="load-more-link all-characters" data-character="*" data-entity="tag">
+                        <liferay-ui:message key="more"/>
+                    </a>
+                </liferay-ui:panel>
 
                 <!-- license filter -->
                 <c:if test="${presentLicenses.size()>0}">
@@ -738,9 +619,40 @@
 </div>
 
 <liferay-portlet:resourceURL id="getVideosForLectureSeries" var="getVideosForLectureSeriesURL" />
+<liferay-portlet:resourceURL id="getCreators" var="getCreatorsURL" />
+<liferay-portlet:resourceURL id="getTags" var="getTagsURL" />
+
+<portlet:renderURL var="filterByCreator">
+    <portlet:param name="mvcRenderCommandName" value="/view/render/list"/>
+    <portlet:param name="institutionId" value="${institutionId}"/>
+    <portlet:param name="parentInstitutionId" value="${parentInstitutionId}"/>
+    <portlet:param name="termId" value='${termId}'/>
+    <portlet:param name="categoryId" value="${categoryId}"/>
+    <portlet:param name="mediaTypeId" value="${mediaTypeId}"/>
+    <portlet:param name="tag" value="${tag}"/>
+    <portlet:param name="licenseId" value="${licenseId}"/>
+    <portlet:param name="searchType" value="${searchType}"/>
+    <portlet:param name="findVideos" value="${findVideos}"/>
+</portlet:renderURL>
+
+<portlet:renderURL var="filterByTag">
+    <portlet:param name="mvcRenderCommandName" value="/view/render/list"/>
+    <portlet:param name="institutionId" value="${institutionId}"/>
+    <portlet:param name="parentInstitutionId" value="${parentInstitutionId}"/>
+    <portlet:param name="termId" value='${termId}'/>
+    <portlet:param name="categoryId" value="${categoryId}"/>
+    <portlet:param name="mediaTypeId" value="${mediaTypeId}"/>
+    <portlet:param name="creatorId" value="${creatorId}"/>
+    <portlet:param name="licenseId" value="${licenseId}"/>
+    <portlet:param name="searchType" value="${searchType}"/>
+    <portlet:param name="findVideos" value="${findVideos}"/>
+</portlet:renderURL>
 
 <script type="text/javascript">
 	$(function() {
+	    loadCreatorList();
+	    loadTagList();
+
 		// decode the search query to plain text (via an in cache div)
 		highlightSearchWord();
 
@@ -764,6 +676,157 @@
         }
     }
 
+    function loadCreatorList(){
+	    const hasCreatorFiltered = "${hasCreatorFiltered}";
+	    const creatorId = "${creatorId}";
+	    const lectureSeriesIds = "${lectureseriesIds}";
+	    const videoIds = "${videoIds}";
+        const firstCharacterSelector = $('#firstCharacterSelector');
+
+        firstCharacterSelector.append('<div id="loading-spinner-creators" class="loading-spinner"><i class="icon-spinner"></i></div>');
+
+        $.ajax({
+            type: "POST",
+            url: "${getCreatorsURL}",
+            dataType: 'json',
+            async: true,
+            data: {
+                "<portlet:namespace/>hasCreatorFiltered": hasCreatorFiltered,
+                "<portlet:namespace/>creatorId": creatorId,
+                "<portlet:namespace/>lectureSeriesIds": lectureSeriesIds,
+                "<portlet:namespace/>videoIds": videoIds
+            },
+            success: function(data) {
+                data.forEach(result => {
+                    for (const [key, value] of Object.entries(result)) {
+                        if (value.length > 0) {
+                            firstCharacterSelector.append('<a class="select-character" ' +
+                                'data-character="'+ key +'" data-entity="creator">' + key + '</a>');
+                            $('#creator-list').append('<div class="alphabet-list" data-character="'+key+'" ' +
+                                'data-entity="creator"><ul class="colored-bullets" data-character="'+key+'" ' +
+                                'data-entity="creator"></ul></div>');
+                            value.forEach(creator => {
+                                let creatorName = creator.lastName;
+                                if (creator.middleName !== '' && creator.jobTitle !== '') {
+                                    creatorName = creatorName + ', ' + creator.firstName + ' ' + creator.middleName +
+                                        ', ' + creator.jobTitle;
+                                } else if (creator.middleName === '' && creator.jobTitle !== '') {
+                                    creatorName = creatorName + ', ' + creator.firstName + ', ' + creator.jobTitle;
+                                } else if (creator.middleName !== '' && creator.jobTitle === '') {
+                                    creatorName = creatorName + ', ' + creator.firstName + ' ' + creator.middleName;
+                                } else {
+                                    creatorName = creatorName + ', ' + creator.firstName;
+                                }
+
+                                let creatorURL = '${filterByCreator}&<portlet:namespace/>creatorId=';
+                                if ("${hasCreatorFiltered}" === "true") {
+                                    creatorURL = creatorURL + 0;
+                                } else {
+                                    creatorURL = creatorURL + creator.creatorId;
+                                }
+
+                                $('.colored-bullets[data-entity="creator"][data-character="'+key+'"')
+                                    .append('<li class="videoIds"><a href="'+creatorURL+'" class="row">' +
+                                        '<div class="filter-menu-link">'+ creatorName + '</div>' +
+                                        '<div class="autofit-col-expand"></div>\n' +
+                                        '<span ${hasCreatorFiltered ? 'class="icon-large icon-remove"' : ''}></span>' +
+                                        '</a></li>');
+                            });
+                            $('.alphabet-list[data-character="' + key +'"][data-entity="creator"]')
+                                .append('<a class="load-more-link all-characters" data-character="'+key+'" ' +
+                                    'data-entity="creator"><liferay-ui:message key="more"/></a>');
+                        } else {
+                            firstCharacterSelector.append('<span>' + key + '</span>');
+                        }
+                    }
+                    firstCharacterSelector
+                        .append('<a class="select-character selected" data-character="*" data-entity="creator">Alle</a>');
+                });
+
+                toggleEntriesForCharacter('*', 'creator');
+                updateClickHandlers();
+                $('#loading-spinner-creators').remove();
+            }
+        });
+    }
+
+    function loadTagList(){
+	    const hasTagFiltered = "${hasTagFiltered}";
+	    const tag = "${tag}";
+	    const lectureSeriesIds = "${lectureseriesIds}";
+	    const videoIds = "${videoIds}";
+        const firstCharacterSelector = $('#firstCharacterSelectorTags');
+
+        firstCharacterSelector.append('<div id="loading-spinner-tags"><i class="icon-spinner"></i></div>');
+
+        $.ajax({
+            type: "POST",
+            url: "${getTagsURL}",
+            dataType: 'json',
+            async: true,
+            data: {
+                "<portlet:namespace/>hasTagFiltered": hasTagFiltered,
+                "<portlet:namespace/>tag": tag,
+                "<portlet:namespace/>lectureSeriesIds": lectureSeriesIds,
+                "<portlet:namespace/>videoIds": videoIds
+            },
+            success: function(data) {
+                data.forEach(result => {
+                    for (const [key, value] of Object.entries(result)) {
+                        if (value.length > 0) {
+                            firstCharacterSelector.append('<a class="select-character" ' +
+                                'data-character="'+ key +'" data-entity="tag">' + key + '</a>');
+                            $('#tag-list').append('<div class="alphabet-list" data-character="'+key+'" ' +
+                                'data-entity="tag"><ul class="colored-bullets" data-character="'+key+'" ' +
+                                'data-entity="tag"></ul></div>');
+                            value.forEach(tag => {
+                                let tagURL = '${filterByTag}&<portlet:namespace/>tag=';
+                                if ("${hasTagFiltered}" === "true") {
+                                    tagURL = tagURL + 0;
+                                } else {
+                                    tagURL = tagURL + tag;
+                                }
+
+                                $('.colored-bullets[data-entity="tag"][data-character="'+key+'"')
+                                    .append('<li class="videoIds"><a href="'+tagURL+'" class="row">' +
+                                        '<div class="filter-menu-link">'+ tag + '</div>' +
+                                        '<div class="autofit-col-expand"></div>\n' +
+                                        '<span ${hasTagFiltered ? 'class="icon-large icon-remove"' : ''}></span>' +
+                                        '</a></li>');
+                            });
+                            $('.alphabet-list[data-character="' + key +'"][data-entity="tag"]')
+                                .append('<a class="load-more-link all-characters" data-character="'+key+'" ' +
+                                    'data-entity="tag"><liferay-ui:message key="more"/></a>');
+                        } else {
+                            firstCharacterSelector.append('<span>' + key + '</span>');
+                        }
+                    }
+                    firstCharacterSelector
+                        .append('<a class="select-character selected" data-character="*" data-entity="tag">Alle</a>');
+                });
+
+                toggleEntriesForCharacter('*', 'tag');
+                updateClickHandlers();
+                $('#loading-spinner-tags').remove();
+            }
+        });
+    }
+
+    function updateClickHandlers() {
+        $('.load-more-link').click(function (event) {
+            expandEntries(event.target.dataset.character, event.target.dataset.entity);
+        });
+
+        $('.select-character').click(function(event) {
+            const target = event.target;
+            $('a.select-character.selected[data-entity="' + target.dataset.entity + '"]').removeClass('selected');
+            target.classList.add('selected');
+            const character = target.dataset.character.toString();
+            const entity = target.dataset.entity.toString();
+            toggleEntriesForCharacter(character, entity);
+        });
+    }
+
     function loadVideoSublist(lectureSeriesId) {
         if (lectureSeriesId > 0) {
             const sublistDom = $('ul#p' + lectureSeriesId + '> .sublist-container');
@@ -771,7 +834,7 @@
             const videoIds = $('div#vt' + lectureSeriesId)[0].dataset.vl;
 
             if (sublistDomLength === 0) {
-                sublistDom.append('<div class="loading-spinner"><i class="icon-spinner"></i></div>');
+                sublistDom.append('<div class="loading-spinner" id="loading-spinner-sublist"><i class="icon-spinner"></i></div>');
 
                 $.ajax({
                     type: "GET",
@@ -783,7 +846,7 @@
                         "<portlet:namespace/>videoIds": videoIds
                     },
                     success: function(data) {
-                        $('.loading-spinner').remove();
+                        $('#loading-spinner-sublist').remove();
                         data.forEach(sublist => {
                             sublist.forEach(video => {
                                 sublistDom.append('<li class="videotile small" ' +
@@ -803,6 +866,53 @@
                         console.error(error);
                     }
                 });
+            }
+        }
+    }
+
+    function toggleEntriesForCharacter(character, entity) {
+        const maxEntries = 4;
+        let hiddenEntries;
+
+        if (character === '*') {
+            $('div.alphabet-list[data-entity="' + entity + '"]').show();
+            $('div.alphabet-list[data-entity="' + entity + '"] > ul > li').slice(maxEntries).hide();
+            hiddenEntries = $('div.alphabet-list[data-entity="' + entity + '"] > ul > li:hidden');
+        } else {
+            $('div.alphabet-list[data-entity="' + entity + '"]').hide();
+            $('div.alphabet-list[data-entity="' + entity + '"][data-character="' + character + '"]').show();
+            const listEntries = $('div.alphabet-list[data-entity="' + entity + '"][data-character="' + character + '"] > ul > li');
+            listEntries.slice(0, maxEntries).show();
+            listEntries.slice(maxEntries).hide();
+            hiddenEntries = $('div.alphabet-list[data-entity="' + entity + '"][data-character="' + character + '"] > ul > li:hidden');
+        }
+
+        $('a.load-more-link[data-entity="' + entity + '"]').hide();
+        if (hiddenEntries.length > maxEntries) {
+            $('.load-more-link[data-entity="' + entity + '"][data-character="' + character + '"]').show();
+        }
+    }
+
+    function expandEntries(character, entity) {
+        let hiddenEntries = $('div.alphabet-list[data-entity="' + entity + '"] > ul > li:hidden');
+        if (character === '*') {
+            if (hiddenEntries.length <= 50) {
+                hiddenEntries.show();
+                $('.load-more-link[data-entity="' + entity + '"]').hide();
+            } else {
+                for (let i=0; i<50; i++) {
+                    hiddenEntries.eq(i).show();
+                }
+            }
+        } else {
+            hiddenEntries = $('div.alphabet-list[data-entity="' + entity + '"][data-character="' + character + '"] > ul > li:hidden');
+            if (hiddenEntries.length <= 50) {
+                hiddenEntries.show();
+                $('.load-more-link[data-character="' + character + '"][data-entity="' + entity + '"]').hide();
+            } else {
+                for (let i=0; i<50; i++) {
+                    hiddenEntries.eq(i).show();
+                }
             }
         }
     }
