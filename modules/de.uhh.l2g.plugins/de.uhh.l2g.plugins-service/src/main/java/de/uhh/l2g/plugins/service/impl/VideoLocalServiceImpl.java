@@ -486,11 +486,12 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 	 * required properties for jwplayer in portal-ext.properties file
 	 * 
 	 * [host]=configured host in database (automatically e.g. streaming.server.com)
-	 * [ext]=file extension (automatically e.g mp3) [l2go_path]=generated lecture2go
-	 * file path (automatically e.g. 3l2gproducer1) [filename]=video file name
-	 * (automatically e.g 00.000_video_2015-06-08_08-06.mp4) [protocol]=host
-	 * protocol (automatically e.g rtmpt) [port]=host port (automatically e.g 80)
-	 * [smilfile]=adaptive streaming file
+	 * [ext]=file extension (automatically e.g mp3)
+	 * [l2go_path]=generated lecture2go file path (automatically e.g. 3l2gproducer1)
+	 * [filename]=video file name (automatically e.g 00.000_video_2015-06-08_08-06.mp4)
+	 * [protocol]=host protocol (automatically e.g rtmpt)
+	 * [port]=host port (automatically e.g 80)
+	 * [smilfile]=adaptive streaming file 
 	 * 
 	 * example for lecture2go configuration
 	 * lecture2go.uri1.player.template=https://[host]/vod/_definst/smil:[l2go_path]/[smilfile]/playlist.m3u8
@@ -526,14 +527,18 @@ public class VideoLocalServiceImpl extends VideoLocalServiceBaseImpl {
 			String playerUri = "";
 			playerUri += uris.get(i);
 			/*
-			 * if(video.getOpenAccess()==1){ if (checkSmilFile(video)) { playerUri =
-			 * playerUri.replace("[smilfile]", video.getPreffix()+".smil"); } playerUri =
-			 * playerUri.replace("[filename]", video.getFilename()); }else{ if
-			 * (checkSmilFile(video)) { playerUri = playerUri.replace("[smilfile]",
-			 * video.getSPreffix()+".smil"); } playerUri = playerUri.replace("[filename]",
-			 * video.getSecureFilename()); }
-			 */
-
+			if(video.getOpenAccess()==1){
+				if (checkSmilFile(video)) {
+					playerUri = playerUri.replace("[smilfile]", video.getPreffix()+".smil");
+				}
+				playerUri = playerUri.replace("[filename]", video.getFilename());
+			}else{
+				if (checkSmilFile(video)) {
+					playerUri = playerUri.replace("[smilfile]", video.getSPreffix()+".smil");
+				}
+				playerUri = playerUri.replace("[filename]", video.getSecureFilename());
+			}*/
+			
 			if (checkSmilFile(video)) {
 				playerUri = playerUri.replace("[smilfile]", video.getCurrentPrefix() + ".smil");
 			}
