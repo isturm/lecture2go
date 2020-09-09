@@ -64,12 +64,6 @@ public interface HostLocalService
 	 */
 
 	/**
-	 * Special handling for default entries (no update)
-	 */
-	public Host addDefaultHost(ServiceContext serviceContext)
-		throws PortalException, SystemException;
-
-	/**
 	 * Adds the host to the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param host the host
@@ -77,6 +71,11 @@ public interface HostLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public Host addHost(Host host);
+
+	public Host addHost(String name, String prefix)
+		throws PortalException, SystemException;
+
+	public int countAll();
 
 	/**
 	 * Creates a new host with the primary key. Does not add the host to the database.
@@ -197,29 +196,7 @@ public interface HostLocalService
 	public List<Host> getAll();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Host> getByCompanyId(long companyId) throws SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Host> getByCompanyIdAndGroupId(long companyId, long groupId)
-		throws SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Host getByDefault(long companyId, long groupId)
-		throws SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Host> getByGroupId(long groupId) throws SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Host> getByGroupId(long groupId, int start, int end)
-		throws SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Host getByGroupIdAndHostId(long groupId, long hostId)
-		throws SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getByGroupIdCount(long groupId) throws SystemException;
+	public List<Host> getAll(int start, int end);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Host getByHostId(long hostId) throws SystemException;
@@ -228,8 +205,7 @@ public interface HostLocalService
 	public Host getByInstitution(long institutionId) throws SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getDefaultHostId(long companyId, long groupId)
-		throws SystemException;
+	public Host getDefaultHost();
 
 	/**
 	 * Returns the host with the primary key.
@@ -270,8 +246,7 @@ public interface HostLocalService
 	 * Host is locked if it is linked to an institution
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getLockingElements(long companyId, long hostId)
-		throws SystemException;
+	public int getLockingElements(long hostId) throws SystemException;
 
 	/**
 	 * Returns the OSGi service identifier.
@@ -296,5 +271,8 @@ public interface HostLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public Host updateHost(Host host);
+
+	public Host updateHost(long hostId, String name, String prefix)
+		throws PortalException, SystemException;
 
 }

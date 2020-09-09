@@ -38,6 +38,7 @@ import java.io.File;
 import java.io.Serializable;
 
 import java.util.List;
+import java.util.Locale;
 
 import org.osgi.annotation.versioning.ProviderType;
 
@@ -83,6 +84,18 @@ public interface VideoLocalService
 	 * lecture2go.uri5.player.template=rtsp://[host]:[port]/vod/_definst/[ext]:[l2go_path]/[filename]
 	 */
 	public void addPlayerUris2Video(Video video);
+
+	/**
+	 * This adds the "tracks" section for the video player json if there are any captions or chapters
+	 */
+	public void addTextTracks2Video(Video video);
+
+	/**
+	 * This adds the "tracks" section for the video player json if there are any captions or chapters and sets the label to
+	 * language of the caption file (translated to the userLocale)
+	 */
+	public void addTextTracks2VideoWithLanguageLabel(
+		Video video, Locale userLocale);
 
 	/**
 	 * This adds the "tracks" section for the video player json if there are any
@@ -241,6 +254,12 @@ public interface VideoLocalService
 
 	public boolean fileStringSegmentFoundInArray(
 		String file, JSONArray jsonArray);
+
+	/**
+	 * This method is only used to fix missing database entries
+	 * Uses the lectureseries information for filling the missing data
+	 */
+	public void fixMissingMetadataForVideosFromRelatedLectureseries();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -402,6 +421,14 @@ public interface VideoLocalService
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public int getVideosCount();
 
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Video> getVideosWithMissingMetadata();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public boolean hasMissingMetadata(Long videoId);
+
+	public Video incrementHitCounter(Video video) throws SystemException;
+
 	/**
 	 * Checks if file is a symoblic link
 	 *
@@ -410,6 +437,21 @@ public interface VideoLocalService
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public boolean isSymlink(File file);
+
+	/**
+	 * Tries to retrieve the language from the caption file and returns a translated language display name
+	 *
+	 * Reads first lines of the file (specs of webvtt define headers must be before first blank line) and looks for a language property
+	 *
+	 * @param captionFile the caption file from which the language will be extracted
+	 * @param userLocale the locale which is used to return the translated language display name
+	 * @return the language display name in the language of the locale property or "Default" if none found
+	 */
+	public String retrieveLanguageDisplayNameOfCaptionFile(
+		File captionFile, Locale userLocale);
+
+	public List<Video> stripVideosWithMissingMetadataFromList(
+		List<Video> videos);
 
 	public int unlinkLectureseriesFromVideos(Long lectureseriesId);
 

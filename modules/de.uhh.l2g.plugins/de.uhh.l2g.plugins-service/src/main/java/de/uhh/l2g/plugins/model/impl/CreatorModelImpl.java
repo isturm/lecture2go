@@ -71,7 +71,8 @@ public class CreatorModelImpl
 		{"creatorId", Types.BIGINT}, {"firstName", Types.VARCHAR},
 		{"lastName", Types.VARCHAR}, {"middleName", Types.VARCHAR},
 		{"jobTitle", Types.VARCHAR}, {"gender", Types.VARCHAR},
-		{"fullName", Types.VARCHAR}, {"groupId", Types.BIGINT},
+		{"fullName", Types.VARCHAR}, {"affiliation", Types.VARCHAR},
+		{"orcidId", Types.VARCHAR}, {"groupId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP}
@@ -88,6 +89,8 @@ public class CreatorModelImpl
 		TABLE_COLUMNS_MAP.put("jobTitle", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("gender", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("fullName", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("affiliation", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("orcidId", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -97,7 +100,7 @@ public class CreatorModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table LG_Creator (creatorId LONG not null primary key,firstName VARCHAR(75) null,lastName VARCHAR(75) null,middleName VARCHAR(75) null,jobTitle VARCHAR(75) null,gender VARCHAR(75) null,fullName VARCHAR(75) null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null)";
+		"create table LG_Creator (creatorId LONG not null primary key,firstName VARCHAR(75) null,lastName VARCHAR(75) null,middleName VARCHAR(75) null,jobTitle VARCHAR(75) null,gender VARCHAR(75) null,fullName VARCHAR(75) null,affiliation VARCHAR(75) null,orcidId VARCHAR(75) null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table LG_Creator";
 
@@ -289,6 +292,13 @@ public class CreatorModelImpl
 		attributeGetterFunctions.put("fullName", Creator::getFullName);
 		attributeSetterBiConsumers.put(
 			"fullName", (BiConsumer<Creator, String>)Creator::setFullName);
+		attributeGetterFunctions.put("affiliation", Creator::getAffiliation);
+		attributeSetterBiConsumers.put(
+			"affiliation",
+			(BiConsumer<Creator, String>)Creator::setAffiliation);
+		attributeGetterFunctions.put("orcidId", Creator::getOrcidId);
+		attributeSetterBiConsumers.put(
+			"orcidId", (BiConsumer<Creator, String>)Creator::setOrcidId);
 		attributeGetterFunctions.put("groupId", Creator::getGroupId);
 		attributeSetterBiConsumers.put(
 			"groupId", (BiConsumer<Creator, Long>)Creator::setGroupId);
@@ -456,6 +466,36 @@ public class CreatorModelImpl
 	}
 
 	@Override
+	public String getAffiliation() {
+		if (_affiliation == null) {
+			return "";
+		}
+		else {
+			return _affiliation;
+		}
+	}
+
+	@Override
+	public void setAffiliation(String affiliation) {
+		_affiliation = affiliation;
+	}
+
+	@Override
+	public String getOrcidId() {
+		if (_orcidId == null) {
+			return "";
+		}
+		else {
+			return _orcidId;
+		}
+	}
+
+	@Override
+	public void setOrcidId(String orcidId) {
+		_orcidId = orcidId;
+	}
+
+	@Override
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -609,6 +649,8 @@ public class CreatorModelImpl
 		creatorImpl.setJobTitle(getJobTitle());
 		creatorImpl.setGender(getGender());
 		creatorImpl.setFullName(getFullName());
+		creatorImpl.setAffiliation(getAffiliation());
+		creatorImpl.setOrcidId(getOrcidId());
 		creatorImpl.setGroupId(getGroupId());
 		creatorImpl.setCompanyId(getCompanyId());
 		creatorImpl.setUserId(getUserId());
@@ -750,6 +792,22 @@ public class CreatorModelImpl
 			creatorCacheModel.fullName = null;
 		}
 
+		creatorCacheModel.affiliation = getAffiliation();
+
+		String affiliation = creatorCacheModel.affiliation;
+
+		if ((affiliation != null) && (affiliation.length() == 0)) {
+			creatorCacheModel.affiliation = null;
+		}
+
+		creatorCacheModel.orcidId = getOrcidId();
+
+		String orcidId = creatorCacheModel.orcidId;
+
+		if ((orcidId != null) && (orcidId.length() == 0)) {
+			creatorCacheModel.orcidId = null;
+		}
+
 		creatorCacheModel.groupId = getGroupId();
 
 		creatorCacheModel.companyId = getCompanyId();
@@ -866,6 +924,8 @@ public class CreatorModelImpl
 	private String _gender;
 	private String _fullName;
 	private String _originalFullName;
+	private String _affiliation;
+	private String _orcidId;
 	private long _groupId;
 	private long _originalGroupId;
 	private boolean _setOriginalGroupId;

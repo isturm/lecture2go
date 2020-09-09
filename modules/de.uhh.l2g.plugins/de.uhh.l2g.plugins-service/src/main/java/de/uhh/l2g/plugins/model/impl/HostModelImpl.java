@@ -67,10 +67,9 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 	public static final String TABLE_NAME = "LG_Host";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"hostId", Types.BIGINT}, {"protocol", Types.VARCHAR},
-		{"streamer", Types.VARCHAR}, {"port", Types.INTEGER},
-		{"serverRoot", Types.VARCHAR}, {"name", Types.VARCHAR},
-		{"defaultHost", Types.INTEGER}, {"groupId", Types.BIGINT},
+		{"hostId", Types.BIGINT}, {"directory", Types.VARCHAR},
+		{"name", Types.VARCHAR}, {"defaultHost", Types.INTEGER},
+		{"prefix", Types.VARCHAR}, {"groupId", Types.BIGINT},
 		{"companyId", Types.BIGINT}, {"userId", Types.BIGINT},
 		{"userName", Types.VARCHAR}, {"createDate", Types.TIMESTAMP},
 		{"modifiedDate", Types.TIMESTAMP}
@@ -81,12 +80,10 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 
 	static {
 		TABLE_COLUMNS_MAP.put("hostId", Types.BIGINT);
-		TABLE_COLUMNS_MAP.put("protocol", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("streamer", Types.VARCHAR);
-		TABLE_COLUMNS_MAP.put("port", Types.INTEGER);
-		TABLE_COLUMNS_MAP.put("serverRoot", Types.VARCHAR);
+		TABLE_COLUMNS_MAP.put("directory", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("name", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("defaultHost", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("prefix", Types.VARCHAR);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("userId", Types.BIGINT);
@@ -96,14 +93,13 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table LG_Host (hostId LONG not null primary key,protocol VARCHAR(75) null,streamer VARCHAR(75) null,port INTEGER,serverRoot VARCHAR(75) null,name VARCHAR(75) null,defaultHost INTEGER,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null)";
+		"create table LG_Host (hostId LONG not null primary key,directory VARCHAR(75) null,name VARCHAR(75) null,defaultHost INTEGER,prefix VARCHAR(75) null,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table LG_Host";
 
-	public static final String ORDER_BY_JPQL = " ORDER BY host.serverRoot ASC";
+	public static final String ORDER_BY_JPQL = " ORDER BY host.directory ASC";
 
-	public static final String ORDER_BY_SQL =
-		" ORDER BY LG_Host.serverRoot ASC";
+	public static final String ORDER_BY_SQL = " ORDER BY LG_Host.directory ASC";
 
 	public static final String DATA_SOURCE = "liferayDataSource";
 
@@ -128,11 +124,11 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 
 	public static final long COMPANYID_COLUMN_BITMASK = 1L;
 
-	public static final long GROUPID_COLUMN_BITMASK = 2L;
+	public static final long DEFAULTHOST_COLUMN_BITMASK = 2L;
 
-	public static final long HOSTID_COLUMN_BITMASK = 4L;
+	public static final long DIRECTORY_COLUMN_BITMASK = 4L;
 
-	public static final long SERVERROOT_COLUMN_BITMASK = 8L;
+	public static final long NAME_COLUMN_BITMASK = 8L;
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		de.uhh.l2g.plugins.service.util.ServiceProps.get(
@@ -262,24 +258,18 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 		attributeGetterFunctions.put("hostId", Host::getHostId);
 		attributeSetterBiConsumers.put(
 			"hostId", (BiConsumer<Host, Long>)Host::setHostId);
-		attributeGetterFunctions.put("protocol", Host::getProtocol);
+		attributeGetterFunctions.put("directory", Host::getDirectory);
 		attributeSetterBiConsumers.put(
-			"protocol", (BiConsumer<Host, String>)Host::setProtocol);
-		attributeGetterFunctions.put("streamer", Host::getStreamer);
-		attributeSetterBiConsumers.put(
-			"streamer", (BiConsumer<Host, String>)Host::setStreamer);
-		attributeGetterFunctions.put("port", Host::getPort);
-		attributeSetterBiConsumers.put(
-			"port", (BiConsumer<Host, Integer>)Host::setPort);
-		attributeGetterFunctions.put("serverRoot", Host::getServerRoot);
-		attributeSetterBiConsumers.put(
-			"serverRoot", (BiConsumer<Host, String>)Host::setServerRoot);
+			"directory", (BiConsumer<Host, String>)Host::setDirectory);
 		attributeGetterFunctions.put("name", Host::getName);
 		attributeSetterBiConsumers.put(
 			"name", (BiConsumer<Host, String>)Host::setName);
 		attributeGetterFunctions.put("defaultHost", Host::getDefaultHost);
 		attributeSetterBiConsumers.put(
 			"defaultHost", (BiConsumer<Host, Integer>)Host::setDefaultHost);
+		attributeGetterFunctions.put("prefix", Host::getPrefix);
+		attributeSetterBiConsumers.put(
+			"prefix", (BiConsumer<Host, String>)Host::setPrefix);
 		attributeGetterFunctions.put("groupId", Host::getGroupId);
 		attributeSetterBiConsumers.put(
 			"groupId", (BiConsumer<Host, Long>)Host::setGroupId);
@@ -312,76 +302,32 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 
 	@Override
 	public void setHostId(long hostId) {
-		_columnBitmask |= HOSTID_COLUMN_BITMASK;
-
-		if (!_setOriginalHostId) {
-			_setOriginalHostId = true;
-
-			_originalHostId = _hostId;
-		}
-
 		_hostId = hostId;
 	}
 
-	public long getOriginalHostId() {
-		return _originalHostId;
-	}
-
 	@Override
-	public String getProtocol() {
-		if (_protocol == null) {
+	public String getDirectory() {
+		if (_directory == null) {
 			return "";
 		}
 		else {
-			return _protocol;
+			return _directory;
 		}
 	}
 
 	@Override
-	public void setProtocol(String protocol) {
-		_protocol = protocol;
-	}
-
-	@Override
-	public String getStreamer() {
-		if (_streamer == null) {
-			return "";
-		}
-		else {
-			return _streamer;
-		}
-	}
-
-	@Override
-	public void setStreamer(String streamer) {
-		_streamer = streamer;
-	}
-
-	@Override
-	public int getPort() {
-		return _port;
-	}
-
-	@Override
-	public void setPort(int port) {
-		_port = port;
-	}
-
-	@Override
-	public String getServerRoot() {
-		if (_serverRoot == null) {
-			return "";
-		}
-		else {
-			return _serverRoot;
-		}
-	}
-
-	@Override
-	public void setServerRoot(String serverRoot) {
+	public void setDirectory(String directory) {
 		_columnBitmask = -1L;
 
-		_serverRoot = serverRoot;
+		if (_originalDirectory == null) {
+			_originalDirectory = _directory;
+		}
+
+		_directory = directory;
+	}
+
+	public String getOriginalDirectory() {
+		return GetterUtil.getString(_originalDirectory);
 	}
 
 	@Override
@@ -396,7 +342,17 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 
 	@Override
 	public void setName(String name) {
+		_columnBitmask |= NAME_COLUMN_BITMASK;
+
+		if (_originalName == null) {
+			_originalName = _name;
+		}
+
 		_name = name;
+	}
+
+	public String getOriginalName() {
+		return GetterUtil.getString(_originalName);
 	}
 
 	@Override
@@ -406,7 +362,34 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 
 	@Override
 	public void setDefaultHost(int defaultHost) {
+		_columnBitmask |= DEFAULTHOST_COLUMN_BITMASK;
+
+		if (!_setOriginalDefaultHost) {
+			_setOriginalDefaultHost = true;
+
+			_originalDefaultHost = _defaultHost;
+		}
+
 		_defaultHost = defaultHost;
+	}
+
+	public int getOriginalDefaultHost() {
+		return _originalDefaultHost;
+	}
+
+	@Override
+	public String getPrefix() {
+		if (_prefix == null) {
+			return "";
+		}
+		else {
+			return _prefix;
+		}
+	}
+
+	@Override
+	public void setPrefix(String prefix) {
+		_prefix = prefix;
 	}
 
 	@Override
@@ -416,19 +399,7 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
-		}
-
 		_groupId = groupId;
-	}
-
-	public long getOriginalGroupId() {
-		return _originalGroupId;
 	}
 
 	@Override
@@ -557,12 +528,10 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 		HostImpl hostImpl = new HostImpl();
 
 		hostImpl.setHostId(getHostId());
-		hostImpl.setProtocol(getProtocol());
-		hostImpl.setStreamer(getStreamer());
-		hostImpl.setPort(getPort());
-		hostImpl.setServerRoot(getServerRoot());
+		hostImpl.setDirectory(getDirectory());
 		hostImpl.setName(getName());
 		hostImpl.setDefaultHost(getDefaultHost());
+		hostImpl.setPrefix(getPrefix());
 		hostImpl.setGroupId(getGroupId());
 		hostImpl.setCompanyId(getCompanyId());
 		hostImpl.setUserId(getUserId());
@@ -579,7 +548,7 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 	public int compareTo(Host host) {
 		int value = 0;
 
-		value = getServerRoot().compareTo(host.getServerRoot());
+		value = getDirectory().compareTo(host.getDirectory());
 
 		if (value != 0) {
 			return value;
@@ -629,13 +598,13 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 	public void resetOriginalValues() {
 		HostModelImpl hostModelImpl = this;
 
-		hostModelImpl._originalHostId = hostModelImpl._hostId;
+		hostModelImpl._originalDirectory = hostModelImpl._directory;
 
-		hostModelImpl._setOriginalHostId = false;
+		hostModelImpl._originalName = hostModelImpl._name;
 
-		hostModelImpl._originalGroupId = hostModelImpl._groupId;
+		hostModelImpl._originalDefaultHost = hostModelImpl._defaultHost;
 
-		hostModelImpl._setOriginalGroupId = false;
+		hostModelImpl._setOriginalDefaultHost = false;
 
 		hostModelImpl._originalCompanyId = hostModelImpl._companyId;
 
@@ -652,30 +621,12 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 
 		hostCacheModel.hostId = getHostId();
 
-		hostCacheModel.protocol = getProtocol();
+		hostCacheModel.directory = getDirectory();
 
-		String protocol = hostCacheModel.protocol;
+		String directory = hostCacheModel.directory;
 
-		if ((protocol != null) && (protocol.length() == 0)) {
-			hostCacheModel.protocol = null;
-		}
-
-		hostCacheModel.streamer = getStreamer();
-
-		String streamer = hostCacheModel.streamer;
-
-		if ((streamer != null) && (streamer.length() == 0)) {
-			hostCacheModel.streamer = null;
-		}
-
-		hostCacheModel.port = getPort();
-
-		hostCacheModel.serverRoot = getServerRoot();
-
-		String serverRoot = hostCacheModel.serverRoot;
-
-		if ((serverRoot != null) && (serverRoot.length() == 0)) {
-			hostCacheModel.serverRoot = null;
+		if ((directory != null) && (directory.length() == 0)) {
+			hostCacheModel.directory = null;
 		}
 
 		hostCacheModel.name = getName();
@@ -687,6 +638,14 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 		}
 
 		hostCacheModel.defaultHost = getDefaultHost();
+
+		hostCacheModel.prefix = getPrefix();
+
+		String prefix = hostCacheModel.prefix;
+
+		if ((prefix != null) && (prefix.length() == 0)) {
+			hostCacheModel.prefix = null;
+		}
 
 		hostCacheModel.groupId = getGroupId();
 
@@ -792,17 +751,15 @@ public class HostModelImpl extends BaseModelImpl<Host> implements HostModel {
 	}
 
 	private long _hostId;
-	private long _originalHostId;
-	private boolean _setOriginalHostId;
-	private String _protocol;
-	private String _streamer;
-	private int _port;
-	private String _serverRoot;
+	private String _directory;
+	private String _originalDirectory;
 	private String _name;
+	private String _originalName;
 	private int _defaultHost;
+	private int _originalDefaultHost;
+	private boolean _setOriginalDefaultHost;
+	private String _prefix;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
 	private long _originalCompanyId;
 	private boolean _setOriginalCompanyId;

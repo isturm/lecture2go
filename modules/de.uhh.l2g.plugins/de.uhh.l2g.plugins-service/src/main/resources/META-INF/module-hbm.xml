@@ -16,6 +16,9 @@
 	<import class="de.uhh.l2g.plugins.model.License" />
 	<import class="de.uhh.l2g.plugins.model.MediaType" />
 	<import class="de.uhh.l2g.plugins.model.Metadata" />
+	<import class="de.uhh.l2g.plugins.model.OaiRecord" />
+	<import class="de.uhh.l2g.plugins.model.OaiRecord_OaiSet" />
+	<import class="de.uhh.l2g.plugins.model.OaiSet" />
 	<import class="de.uhh.l2g.plugins.model.Office" />
 	<import class="de.uhh.l2g.plugins.model.Producer" />
 	<import class="de.uhh.l2g.plugins.model.Producer_Lectureseries" />
@@ -33,7 +36,7 @@
 	<import class="de.uhh.l2g.plugins.model.Videohitlist" />
 	<class name="de.uhh.l2g.plugins.model.impl.CategoryImpl" table="LG_Category">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="categoryId" type="long">
-			<generator class="increment" />
+			<generator class="assigned" />
 		</id>
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="parentId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="languageId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -61,7 +64,7 @@
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.CreatorImpl" table="LG_Creator">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="creatorId" type="long">
-			<generator class="increment" />
+			<generator class="assigned" />
 		</id>
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="firstName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="lastName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -69,6 +72,8 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="jobTitle" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="gender" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="fullName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="affiliation" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="orcidId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -78,14 +83,12 @@
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.HostImpl" table="LG_Host">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="hostId" type="long">
-			<generator class="increment" />
+			<generator class="assigned" />
 		</id>
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="protocol" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="streamer" type="com.liferay.portal.dao.orm.hibernate.StringType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="port" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
-		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="serverRoot" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="directory" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="defaultHost" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="prefix" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="userId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -95,7 +98,7 @@
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.InstitutionImpl" table="LG_Institution">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="institutionId" type="long">
-			<generator class="increment" />
+			<generator class="assigned" />
 		</id>
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="parentId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -108,7 +111,7 @@
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.Institution_HostImpl" table="LG_Institution_Host">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="institutionHostId" type="long">
-			<generator class="increment" />
+			<generator class="assigned" />
 		</id>
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="institutionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="hostId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -117,7 +120,7 @@
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.LastvideolistImpl" table="LG_Lastvideolist">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="lastvideolistId" type="int">
-			<generator class="increment" />
+			<generator class="assigned" />
 		</id>
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="videoId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -129,7 +132,7 @@
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.LectureseriesImpl" table="LG_Lectureseries">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="lectureseriesId" type="long">
-			<generator class="increment" />
+			<generator class="assigned" />
 		</id>
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="number_" name="number" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="eventType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -157,21 +160,21 @@
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.Lectureseries_CategoryImpl" table="LG_Lectureseries_Category">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="lectureseriesCategoryId" type="long">
-			<generator class="increment" />
+			<generator class="assigned" />
 		</id>
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="categoryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="lectureseriesId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.Lectureseries_CreatorImpl" table="LG_Lectureseries_Creator">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="lectureseriesCreatorId" type="long">
-			<generator class="increment" />
+			<generator class="assigned" />
 		</id>
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="lectureseriesId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="creatorId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.Lectureseries_InstitutionImpl" table="LG_Lectureseries_Institution">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="lectureseriesInstitutionId" type="long">
-			<generator class="increment" />
+			<generator class="assigned" />
 		</id>
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="lectureseriesId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="institutionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -179,7 +182,7 @@
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.LicenseImpl" table="LG_License">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="licenseId" type="long">
-			<generator class="increment" />
+			<generator class="assigned" />
 		</id>
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="fullName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="shortIdentifier" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -191,7 +194,7 @@
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.MediaTypeImpl" table="LG_MediaType">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="mediaTypeId" type="long">
-			<generator class="increment" />
+			<generator class="assigned" />
 		</id>
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="mediaTypeName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="groupId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -203,7 +206,7 @@
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.MetadataImpl" table="LG_Metadata">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="metadataId" type="long">
-			<generator class="increment" />
+			<generator class="assigned" />
 		</id>
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="type_" name="type" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="language" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -218,9 +221,33 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="modifiedDate" type="org.hibernate.type.TimestampType" />
 	</class>
+	<class name="de.uhh.l2g.plugins.model.impl.OaiRecordImpl" table="LG_OaiRecord">
+		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="oaiRecordId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="videoId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="identifier" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="datestamp" type="org.hibernate.type.TimestampType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="deleted" type="com.liferay.portal.dao.orm.hibernate.BooleanType" />
+	</class>
+	<class name="de.uhh.l2g.plugins.model.impl.OaiRecord_OaiSetImpl" table="LG_OaiRecord_OaiSet">
+		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="oaiRecordOaiSetId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="oaiRecordId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="oaiSetId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
+	</class>
+	<class name="de.uhh.l2g.plugins.model.impl.OaiSetImpl" table="LG_OaiSet">
+		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="oaiSetId" type="long">
+			<generator class="assigned" />
+		</id>
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="setSpec" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="setName" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="setDescription" type="com.liferay.portal.dao.orm.hibernate.StringType" />
+	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.OfficeImpl" table="LG_Office">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="officeId" type="long">
-			<generator class="increment" />
+			<generator class="assigned" />
 		</id>
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="name" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="www" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -252,7 +279,7 @@
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.Producer_LectureseriesImpl" table="LG_Producer_Lectureseries">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="producerLectureseriesId" type="long">
-			<generator class="increment" />
+			<generator class="assigned" />
 		</id>
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="lectureseriesId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="producerId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -272,7 +299,7 @@
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.SegmentImpl" table="LG_Segment">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="segmentId" type="long">
-			<generator class="increment" />
+			<generator class="assigned" />
 		</id>
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="videoId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" column="start_" name="start" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -289,7 +316,7 @@
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.StatisticImpl" table="LG_Statistic">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="statisticId" type="long">
-			<generator class="increment" />
+			<generator class="assigned" />
 		</id>
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="createDate" type="org.hibernate.type.TimestampType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="publicVideos" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
@@ -303,14 +330,14 @@
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.SysImpl" table="LG_Sys">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="sysId" type="int">
-			<generator class="increment" />
+			<generator class="assigned" />
 		</id>
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="version" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="setupWizard" type="com.liferay.portal.dao.orm.hibernate.IntegerType" />
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.TagcloudImpl" table="LG_Tagcloud">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="tagcloudId" type="long">
-			<generator class="increment" />
+			<generator class="assigned" />
 		</id>
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="objectClassType" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="objectId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -324,7 +351,7 @@
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.TermImpl" table="LG_Term">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="termId" type="long">
-			<generator class="increment" />
+			<generator class="assigned" />
 		</id>
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="parentId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="languageId" type="com.liferay.portal.dao.orm.hibernate.StringType" />
@@ -340,7 +367,7 @@
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.VideoImpl" table="LG_Video">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="videoId" type="long">
-			<generator class="increment" />
+			<generator class="assigned" />
 		</id>
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="title" type="com.liferay.portal.dao.orm.hibernate.StringType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="lectureseriesId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -376,21 +403,21 @@
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.Video_CategoryImpl" table="LG_Video_Category">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="videoCategoryId" type="long">
-			<generator class="increment" />
+			<generator class="assigned" />
 		</id>
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="videoId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="categoryId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.Video_CreatorImpl" table="LG_Video_Creator">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="videoCreatorId" type="long">
-			<generator class="increment" />
+			<generator class="assigned" />
 		</id>
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="creatorId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="videoId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.Video_InstitutionImpl" table="LG_Video_Institution">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="videoInstitutionId" type="long">
-			<generator class="increment" />
+			<generator class="assigned" />
 		</id>
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="videoId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="institutionId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
@@ -398,14 +425,14 @@
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.Video_MediaTypeImpl" table="LG_Video_MediaType">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="videoMediaTypeId" type="long">
-			<generator class="increment" />
+			<generator class="assigned" />
 		</id>
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="videoId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="MediaTypeId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.VideohitlistImpl" table="LG_Videohitlist">
 		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="videohitlistId" type="long">
-			<generator class="increment" />
+			<generator class="assigned" />
 		</id>
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="hitsPerDay" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="hitsPerWeek" type="com.liferay.portal.dao.orm.hibernate.LongType" />

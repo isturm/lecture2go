@@ -49,6 +49,8 @@ public class CreatorWrapper
 		attributes.put("jobTitle", getJobTitle());
 		attributes.put("gender", getGender());
 		attributes.put("fullName", getFullName());
+		attributes.put("affiliation", getAffiliation());
+		attributes.put("orcidId", getOrcidId());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -103,6 +105,18 @@ public class CreatorWrapper
 			setFullName(fullName);
 		}
 
+		String affiliation = (String)attributes.get("affiliation");
+
+		if (affiliation != null) {
+			setAffiliation(affiliation);
+		}
+
+		String orcidId = (String)attributes.get("orcidId");
+
+		if (orcidId != null) {
+			setOrcidId(orcidId);
+		}
+
 		Long groupId = (Long)attributes.get("groupId");
 
 		if (groupId != null) {
@@ -138,6 +152,16 @@ public class CreatorWrapper
 		if (modifiedDate != null) {
 			setModifiedDate(modifiedDate);
 		}
+	}
+
+	/**
+	 * Returns the affiliation of this creator.
+	 *
+	 * @return the affiliation of this creator
+	 */
+	@Override
+	public String getAffiliation() {
+		return model.getAffiliation();
 	}
 
 	/**
@@ -256,6 +280,16 @@ public class CreatorWrapper
 	}
 
 	/**
+	 * Returns the orcid ID of this creator.
+	 *
+	 * @return the orcid ID of this creator
+	 */
+	@Override
+	public String getOrcidId() {
+		return model.getOrcidId();
+	}
+
+	/**
 	 * Returns the primary key of this creator.
 	 *
 	 * @return the primary key of this creator
@@ -298,6 +332,16 @@ public class CreatorWrapper
 	@Override
 	public void persist() {
 		model.persist();
+	}
+
+	/**
+	 * Sets the affiliation of this creator.
+	 *
+	 * @param affiliation the affiliation of this creator
+	 */
+	@Override
+	public void setAffiliation(String affiliation) {
+		model.setAffiliation(affiliation);
 	}
 
 	/**
@@ -408,6 +452,16 @@ public class CreatorWrapper
 	@Override
 	public void setModifiedDate(Date modifiedDate) {
 		model.setModifiedDate(modifiedDate);
+	}
+
+	/**
+	 * Sets the orcid ID of this creator.
+	 *
+	 * @param orcidId the orcid ID of this creator
+	 */
+	@Override
+	public void setOrcidId(String orcidId) {
+		model.setOrcidId(orcidId);
 	}
 
 	/**

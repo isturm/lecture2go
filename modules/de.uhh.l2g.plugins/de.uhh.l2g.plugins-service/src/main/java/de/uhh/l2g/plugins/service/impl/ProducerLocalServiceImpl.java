@@ -22,6 +22,8 @@ import java.util.List;
 
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.ListUtil;
@@ -53,6 +55,20 @@ public class ProducerLocalServiceImpl extends ProducerLocalServiceBaseImpl {
 	 *
 	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.ProducerLocalServiceUtil} to access the producer local service.
 	 */	
+	
+	protected static Log LOG = LogFactoryUtil.getLog(Producer.class.getName());
+
+	public Producer addProducer(Producer object){
+		Long id;
+		try {
+			id = counterLocalService.increment(Producer.class.getName());
+			object.setPrimaryKey(id);
+			super.addProducer(object);
+		} catch (SystemException e) {
+			LOG.error("can't add new object with id " + object.getPrimaryKey() + "!");
+		}
+		return object;
+	}
 	
 	private List<Producer> fillProps(List<Producer> pl) throws SystemException{
 		Iterator<Producer> it = pl.iterator();
@@ -130,7 +146,7 @@ public class ProducerLocalServiceImpl extends ProducerLocalServiceBaseImpl {
 		p.setLastName(u.getLastName());
 		p.setLastLoginDate(u.getLastLoginDate());
 		p.setEmailAddress(u.getEmailAddress());
-		p.setHomeDir(PropsUtil.get("lecture2go.media.repository")+"/"+HostLocalServiceUtil.getByHostId(p.getHostId()).getServerRoot()+"/"+p.getHomeDir());
+		p.setHomeDir(PropsUtil.get("lecture2go.media.repository")+"/"+HostLocalServiceUtil.getByHostId(p.getHostId()).getDirectory()+"/"+p.getHomeDir());
 		return p;
 	}
 	

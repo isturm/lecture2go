@@ -123,10 +123,6 @@ public interface Institution_HostLocalService
 	public Institution_Host deleteLinkById(long institutionHostId)
 		throws PortalException, SystemException;
 
-	public Institution_Host deleteLinkById(
-			long institutionHostId, ServiceContext serviceContext)
-		throws PortalException, SystemException;
-
 	public Institution_Host deleteLinkByInstitution(
 			Institution institution, long groupId, long companyId)
 		throws PortalException, SystemException;
@@ -211,24 +207,11 @@ public interface Institution_HostLocalService
 	public ActionableDynamicQuery getActionableDynamicQuery();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getByCompanyIdAndHostIdCount(long companyId, long hostId)
+	public List<Institution> getByHostId(long hostId)
 		throws PortalException, SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Institution_Host> getByGroupId(long groupId)
-		throws PortalException, SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Institution> getByGroupIdAndHostId(long groupId, long hostId)
-		throws PortalException, SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getByGroupIdAndHostIdCount(long groupId, long hostId)
-		throws PortalException, SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Host getByGroupIdAndInstitutionId(
-			long companyId, long groupId, long institutionId)
+	public int getByHostIdCount(long hostId)
 		throws PortalException, SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -243,7 +226,7 @@ public interface Institution_HostLocalService
 	 * Assume one Institution has at most one Host that remains constant
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public long getDefaultInstitutionHostId(long companyId, long groupId);
+	public long getDefaultInstitutionHostId();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -282,21 +265,11 @@ public interface Institution_HostLocalService
 	public int getInstitution_HostsCount();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Institution_Host getLinkByGroupIdAndInstitutionId(
-			long groupId, long institutionId)
+	public Institution_Host getLinkByInstitutionId(long institutionId)
 		throws PortalException, SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Institution_Host> getListByGroupIdAndHostId(
-			long groupId, long hostId)
-		throws PortalException, SystemException;
-
-	/**
-	 * Actually this should never give a list because, there can be only one host per isntitution
-	 */
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Institution_Host> getListByGroupIdAndInstitutionId(
-			long companyId, long groupId, long institutionId)
+	public List<Institution_Host> getListByHostId(long hostId)
 		throws PortalException, SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)

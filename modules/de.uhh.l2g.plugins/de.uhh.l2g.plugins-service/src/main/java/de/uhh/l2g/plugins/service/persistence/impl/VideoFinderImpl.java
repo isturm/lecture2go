@@ -50,6 +50,8 @@ public class VideoFinderImpl extends VideoFinderBaseImpl implements VideoFinder 
 	public static final String FIND_VIDEOS_BY_HITS_AND_OPEN_ACCESS = VideoFinder.class.getName()
 			+ ".findVideosByHitsAndOpenAccess";
 	public static final String FIND_POPULAR_VIDEOS = VideoFinder.class.getName() + ".findPopularVideos";
+	public static final String CHECK_VIDEO_HAS_MISSING_METADATA = VideoFinder.class.getName() + ".checkVideoHasMissingMetadata";
+	public static final String FIND_VIDEOS_WITH_MISSING_METADATA = VideoFinder.class.getName() + ".findWithMissingMetadata";
 
 	@ServiceReference(type = CustomSQL.class)
 	private CustomSQL _customSQL;
@@ -263,7 +265,8 @@ public class VideoFinderImpl extends VideoFinderBaseImpl implements VideoFinder 
 	}
 
 	public List<Video> findVideosBySearchWord(String word, int limit) {
-		word = word.replace("&amp;", "&");// get from entity &amp; only the character & for this specific search
+		word = word.replace("&amp;", "&");//get from entity &amp; only the character & for this specific search
+		word="%"+word+"%";
 		Session session = null;
 		try {
 			session = openSession();
@@ -284,11 +287,11 @@ public class VideoFinderImpl extends VideoFinderBaseImpl implements VideoFinder 
 			q.setCacheable(false);
 
 			QueryPos qPos = QueryPos.getInstance(q);
-			qPos.add("%" + word + "%");
-			qPos.add("%" + word + "%");
-			qPos.add("%" + word + "%");
-			qPos.add("%" + word + "%");
-			qPos.add("%" + word + "%");
+			qPos.add(word);
+			qPos.add(word);
+			qPos.add(word);
+			qPos.add(word);
+			qPos.add(word);
 
 			@SuppressWarnings("unchecked")
 			List<Object[]> l = (List<Object[]>) QueryUtil.list(q, getDialect(), 0, limit);
@@ -639,5 +642,48 @@ public class VideoFinderImpl extends VideoFinderBaseImpl implements VideoFinder 
 		Comparator<Video> comparator = new VideoGenerationDateComparator();
 		java.util.Collections.sort(vl, comparator);
 		return vl;
+	}
+	
+	public boolean checkVideoHasMissingMetadata(Long videoId) {
+		Session session = null;
+		try {
+			session = openSession();
+			String sql = _customSQL.get(getClass(), CHECK_VIDEO_HAS_MISSING_METADATA);
+			SQLQuery q = session.createSQLQuery(sql);
+			q.setCacheable(false);
+			QueryPos qPos = QueryPos.getInstance(q);
+			qPos.add(videoId);
+			Object o = q.uniqueResult();
+			if (o == null) {
+				return false;
+			} else {
+				return true;
+			}
+		} catch (Exception e) {
+			
+		} finally {
+			closeSession(session);
+		}
+		return false;
+	}
+	
+	public List<Video> findVideosWithMissingMetadata() {
+		List<Video> ret = new ArrayList<Video>();
+		Session session = null;
+		try {
+			session = openSession();
+			String sql = _customSQL.get(getClass(), FIND_VIDEOS_WITH_MISSING_METADATA);
+			SQLQuery q = session.createSQLQuery(sql);
+			q.addEntity("Video", VideoImpl.class);
+			q.setCacheable(false);
+			QueryPos qPos = QueryPos.getInstance(q);
+			ret = (List<Video>) QueryUtil.list(q, getDialect(), com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
+			
+		} catch (Exception e) {
+			
+		} finally {
+			closeSession(session);
+		}
+		return ret;
 	}
 }

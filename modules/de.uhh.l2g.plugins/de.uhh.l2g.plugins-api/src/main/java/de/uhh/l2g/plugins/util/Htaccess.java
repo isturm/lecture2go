@@ -39,6 +39,7 @@ import java.io.FileNotFoundException;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.List;
+import java.util.regex.Pattern;
 
 import com.liferay.portal.kernel.util.PropsUtil;
 
@@ -70,7 +71,7 @@ public class Htaccess {
 				secFileDir.mkdirs();
 				new File(HTUSERS_FILE).createNewFile(); 
 			} catch (IOException e) {
-//				//e.printStackTrace();
+				////e.printStackTrace();
 			}
 		
 		try {
@@ -142,29 +143,25 @@ public class Htaccess {
 					Long lectureseriesId = video.getLectureseriesId();
 
 					if (video.getFilename().length() > 10) {
-						for (String extention : fileExtentions) {
-							bw.write("<Files " + video.getPreffix() + extention + ">");
-							bw.newLine();
-							bw.write("Require user " + lectureseriesId);
-							bw.newLine();
-							bw.write("</Files>");
-							bw.newLine();
-
-							bw.write("<Files " + video.getSPreffix() + extention + ">");
-							bw.newLine();
-							bw.write("Require user " + lectureseriesId);
-							bw.newLine();
-							bw.write("</Files>");
-							bw.newLine();
-						}
+						// all files starting with the file prefix will get added to the htaccess list 
+						// (this includes file extensions as well as potential suffixes)
+						bw.write("<FilesMatch \"^" + Pattern.quote(video.getCurrentPrefix()) + ".*\">");
+						bw.newLine();
+						bw.write("Require user " + lectureseriesId);
+						bw.newLine();
+						bw.write("</FilesMatch>");
+						bw.newLine();
 					}
 				}
 
 			}
 			bw.flush();
 			bw.close();
+			
+			// make the file readable to be used by the Apache Server
+			file.setReadable(true,false);
 		} catch (IOException e) {
-//			//e.printStackTrace();
+			////e.printStackTrace();
 		}
 
 	}

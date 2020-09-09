@@ -38,6 +38,8 @@ public class CreatorSoap implements Serializable {
 		soapModel.setJobTitle(model.getJobTitle());
 		soapModel.setGender(model.getGender());
 		soapModel.setFullName(model.getFullName());
+		soapModel.setAffiliation(model.getAffiliation());
+		soapModel.setOrcidId(model.getOrcidId());
 		soapModel.setGroupId(model.getGroupId());
 		soapModel.setCompanyId(model.getCompanyId());
 		soapModel.setUserId(model.getUserId());
@@ -153,6 +155,22 @@ public class CreatorSoap implements Serializable {
 		_fullName = fullName;
 	}
 
+	public String getAffiliation() {
+		return _affiliation;
+	}
+
+	public void setAffiliation(String affiliation) {
+		_affiliation = affiliation;
+	}
+
+	public String getOrcidId() {
+		return _orcidId;
+	}
+
+	public void setOrcidId(String orcidId) {
+		_orcidId = orcidId;
+	}
+
 	public long getGroupId() {
 		return _groupId;
 	}
@@ -208,6 +226,8 @@ public class CreatorSoap implements Serializable {
 	private String _jobTitle;
 	private String _gender;
 	private String _fullName;
+	private String _affiliation;
+	private String _orcidId;
 	private long _groupId;
 	private long _companyId;
 	private long _userId;

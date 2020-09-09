@@ -163,6 +163,36 @@ public interface CreatorModel
 	public void setFullName(String fullName);
 
 	/**
+	 * Returns the affiliation of this creator.
+	 *
+	 * @return the affiliation of this creator
+	 */
+	@AutoEscape
+	public String getAffiliation();
+
+	/**
+	 * Sets the affiliation of this creator.
+	 *
+	 * @param affiliation the affiliation of this creator
+	 */
+	public void setAffiliation(String affiliation);
+
+	/**
+	 * Returns the orcid ID of this creator.
+	 *
+	 * @return the orcid ID of this creator
+	 */
+	@AutoEscape
+	public String getOrcidId();
+
+	/**
+	 * Sets the orcid ID of this creator.
+	 *
+	 * @param orcidId the orcid ID of this creator
+	 */
+	public void setOrcidId(String orcidId);
+
+	/**
 	 * Returns the group ID of this creator.
 	 *
 	 * @return the group ID of this creator

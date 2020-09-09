@@ -23,6 +23,8 @@ import com.liferay.portal.kernel.dao.orm.RestrictionsFactoryUtil;
 import com.liferay.portal.kernel.exception.NoSuchModelException;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringPool;
 import com.liferay.portal.kernel.util.Validator;
@@ -77,15 +79,28 @@ public class LectureseriesLocalServiceImpl extends LectureseriesLocalServiceBase
 	 * de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil} to access the
 	 * lectureseries local service.
 	 */
+	protected static Log LOG = LogFactoryUtil.getLog(Lectureseries.class.getName());
 
+	public Lectureseries addLectureseries(Lectureseries lectureseries){
+		Long id;
+		try {
+			id = counterLocalService.increment(Lectureseries.class.getName());
+			lectureseries.setLectureseriesId(id);
+			super.addLectureseries(lectureseries);
+		} catch (SystemException e) {
+			LOG.error("can't add new lecture series " + lectureseries.getName() + "!");
+		}
+		return lectureseries;
+	}
+	
 	@Override
-	public Lectureseries updateLectureseries(Lectureseries lectureseries) {
+	public Lectureseries updateLectureseries(Lectureseries lectureseries){
 		Lectureseries l = new LectureseriesImpl();
-		if (lectureseries.getLectureseriesId() > 0)
+		if(lectureseries.getLectureseriesId()>0)
 			try {
-				l = super.updateLectureseries(lectureseries);
+				l=super.updateLectureseries(lectureseries);
 			} catch (SystemException e) {
-				// e.printStackTrace();
+				//e.printStackTrace();
 			}
 		return l;
 	}

@@ -65,6 +65,8 @@ public interface InstitutionLocalService
 	 *
 	 * Never modify or reference this interface directly. Always use {@link InstitutionLocalServiceUtil} to access the institution local service. Add custom service methods to <code>de.uhh.l2g.plugins.service.impl.InstitutionLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public Institution addDefaultInstitution(ServiceContext serviceContext)
+		throws PortalException, SystemException;
 
 	/**
 	 * Adds the institution to the database. Also notifies the appropriate model listeners.
@@ -74,6 +76,10 @@ public interface InstitutionLocalService
 	 */
 	@Indexable(type = IndexableType.REINDEX)
 	public Institution addInstitution(Institution institution);
+
+	public Institution addInstitution(
+			String name, long hostId, long parentId, int sort)
+		throws PortalException, SystemException;
 
 	/**
 	 * Creates a new institution with the primary key. Does not add the institution to the database.
@@ -99,10 +105,11 @@ public interface InstitutionLocalService
 	 * @param institutionId the primary key of the institution
 	 * @return the institution that was removed
 	 * @throws PortalException if a institution with the primary key could not be found
+	 * @throws SystemException
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	public Institution deleteInstitution(long institutionId)
-		throws PortalException;
+		throws PortalException, SystemException;
 
 	/**
 	 * @throws PortalException
@@ -188,26 +195,6 @@ public interface InstitutionLocalService
 		throws SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Institution> getByGroupId(long groupId) throws SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Institution getByGroupIdAndId(long groupId, long institutionId)
-		throws SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Institution> getByGroupIdAndParent(long groupId, long parentId)
-		throws SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Institution> getByGroupIdAndParent(
-			long groupId, long parentId, int start, int end)
-		throws SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public int getByGroupIdAndParentCount(long groupId, long parentId)
-		throws SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public Institution getById(long institutionId) throws SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
@@ -219,16 +206,32 @@ public interface InstitutionLocalService
 	public List<Institution> getByLevel(int level) throws SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Map<String, String> getByParent(long parentId)
-		throws SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Institution> getByParentId(long parentId)
 		throws SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public List<Institution> getByParentId(long parentId, String type)
+	public int getByParentIdCount(long parentId) throws SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Institution> getByParentIdList(long parentId)
 		throws SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Map<String, String> getByParentIdMap(long parentId)
+		throws SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public long getDefaultInstitutionId() throws SystemException;
+
+	/**
+	 * Prepares the list of institutions for pending producers selection
+	 * (institutions which should not be selected can be defined via properties file)
+	 *
+	 * @return the list of institutions for the producer to select
+	 * @throws SystemException
+	 */
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<Institution> getForProducerPending() throws SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();
@@ -297,21 +300,14 @@ public interface InstitutionLocalService
 		throws PortalException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Institution getRoot(long companyId, long groupId)
-		throws NoSuchInstitutionException, SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Institution getRootByGroupId(long companyId, long groupId)
-		throws SystemException;
-
-	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Institution getRootByParentAndCompanyAndGroup(
-			long parentId, long companyId, long groupId)
+	public Institution getRoot()
 		throws NoSuchInstitutionException, SystemException;
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public List<Institution> getRootInstitutionsByOpenAccessVideos()
 		throws SystemException;
+
+	public Institution removeByInstitutionId(Long institutionId);
 
 	/**
 	 * Updates the institution in the database or adds it if it does not yet exist. Also notifies the appropriate model listeners.
@@ -323,8 +319,7 @@ public interface InstitutionLocalService
 	public Institution updateInstitution(Institution institution);
 
 	public Institution updateInstitution(
-			long institutionId, String name, int sort,
-			ServiceContext serviceContext)
+			long institutionId, String name, int sort)
 		throws PortalException, SystemException;
 
 }

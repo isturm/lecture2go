@@ -15,8 +15,11 @@ create index IX_8BEDCA83 on LG_Creator (lastName[$COLUMN_LENGTH:75$]);
 create index IX_2CE50242 on LG_Creator (middleName[$COLUMN_LENGTH:75$]);
 
 create index IX_24BB7F54 on LG_Host (companyId, groupId);
+create index IX_95D61FE7 on LG_Host (defaultHost);
+create index IX_97BA48CB on LG_Host (directory[$COLUMN_LENGTH:75$]);
 create index IX_5EDC310 on LG_Host (groupId, companyId);
 create index IX_35EC15AF on LG_Host (groupId, hostId);
+create index IX_7AC3E911 on LG_Host (name[$COLUMN_LENGTH:75$]);
 
 create unique index IX_7142401C on LG_Institution (companyId, groupId);
 create index IX_527483D8 on LG_Institution (groupId, companyId);
@@ -72,6 +75,12 @@ create index IX_6B458DDE on LG_MediaType (groupId, companyId);
 
 create index IX_5613EDEF on LG_Metadata (companyId);
 create index IX_614F0757 on LG_Metadata (groupId, companyId);
+
+create unique index IX_44262C7 on LG_OaiRecord (identifier[$COLUMN_LENGTH:75$]);
+create unique index IX_DE1F02FC on LG_OaiRecord (videoId);
+
+create index IX_7B3E5947 on LG_OaiRecord_OaiSet (oaiRecordId);
+create index IX_8F9F11E6 on LG_OaiRecord_OaiSet (oaiSetId);
 
 create index IX_978F6E82 on LG_Office (companyId);
 create index IX_98EF7C24 on LG_Office (groupId, companyId);

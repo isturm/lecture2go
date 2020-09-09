@@ -42,12 +42,10 @@ public class HostWrapper
 		Map<String, Object> attributes = new HashMap<String, Object>();
 
 		attributes.put("hostId", getHostId());
-		attributes.put("protocol", getProtocol());
-		attributes.put("streamer", getStreamer());
-		attributes.put("port", getPort());
-		attributes.put("serverRoot", getServerRoot());
+		attributes.put("directory", getDirectory());
 		attributes.put("name", getName());
 		attributes.put("defaultHost", getDefaultHost());
+		attributes.put("prefix", getPrefix());
 		attributes.put("groupId", getGroupId());
 		attributes.put("companyId", getCompanyId());
 		attributes.put("userId", getUserId());
@@ -66,28 +64,10 @@ public class HostWrapper
 			setHostId(hostId);
 		}
 
-		String protocol = (String)attributes.get("protocol");
+		String directory = (String)attributes.get("directory");
 
-		if (protocol != null) {
-			setProtocol(protocol);
-		}
-
-		String streamer = (String)attributes.get("streamer");
-
-		if (streamer != null) {
-			setStreamer(streamer);
-		}
-
-		Integer port = (Integer)attributes.get("port");
-
-		if (port != null) {
-			setPort(port);
-		}
-
-		String serverRoot = (String)attributes.get("serverRoot");
-
-		if (serverRoot != null) {
-			setServerRoot(serverRoot);
+		if (directory != null) {
+			setDirectory(directory);
 		}
 
 		String name = (String)attributes.get("name");
@@ -100,6 +80,12 @@ public class HostWrapper
 
 		if (defaultHost != null) {
 			setDefaultHost(defaultHost);
+		}
+
+		String prefix = (String)attributes.get("prefix");
+
+		if (prefix != null) {
+			setPrefix(prefix);
 		}
 
 		Long groupId = (Long)attributes.get("groupId");
@@ -170,6 +156,16 @@ public class HostWrapper
 	}
 
 	/**
+	 * Returns the directory of this host.
+	 *
+	 * @return the directory of this host
+	 */
+	@Override
+	public String getDirectory() {
+		return model.getDirectory();
+	}
+
+	/**
 	 * Returns the group ID of this host.
 	 *
 	 * @return the group ID of this host
@@ -210,13 +206,13 @@ public class HostWrapper
 	}
 
 	/**
-	 * Returns the port of this host.
+	 * Returns the prefix of this host.
 	 *
-	 * @return the port of this host
+	 * @return the prefix of this host
 	 */
 	@Override
-	public int getPort() {
-		return model.getPort();
+	public String getPrefix() {
+		return model.getPrefix();
 	}
 
 	/**
@@ -227,36 +223,6 @@ public class HostWrapper
 	@Override
 	public long getPrimaryKey() {
 		return model.getPrimaryKey();
-	}
-
-	/**
-	 * Returns the protocol of this host.
-	 *
-	 * @return the protocol of this host
-	 */
-	@Override
-	public String getProtocol() {
-		return model.getProtocol();
-	}
-
-	/**
-	 * Returns the server root of this host.
-	 *
-	 * @return the server root of this host
-	 */
-	@Override
-	public String getServerRoot() {
-		return model.getServerRoot();
-	}
-
-	/**
-	 * Returns the streamer of this host.
-	 *
-	 * @return the streamer of this host
-	 */
-	@Override
-	public String getStreamer() {
-		return model.getStreamer();
 	}
 
 	/**
@@ -325,6 +291,16 @@ public class HostWrapper
 	}
 
 	/**
+	 * Sets the directory of this host.
+	 *
+	 * @param directory the directory of this host
+	 */
+	@Override
+	public void setDirectory(String directory) {
+		model.setDirectory(directory);
+	}
+
+	/**
 	 * Sets the group ID of this host.
 	 *
 	 * @param groupId the group ID of this host
@@ -365,13 +341,13 @@ public class HostWrapper
 	}
 
 	/**
-	 * Sets the port of this host.
+	 * Sets the prefix of this host.
 	 *
-	 * @param port the port of this host
+	 * @param prefix the prefix of this host
 	 */
 	@Override
-	public void setPort(int port) {
-		model.setPort(port);
+	public void setPrefix(String prefix) {
+		model.setPrefix(prefix);
 	}
 
 	/**
@@ -382,36 +358,6 @@ public class HostWrapper
 	@Override
 	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
-	}
-
-	/**
-	 * Sets the protocol of this host.
-	 *
-	 * @param protocol the protocol of this host
-	 */
-	@Override
-	public void setProtocol(String protocol) {
-		model.setProtocol(protocol);
-	}
-
-	/**
-	 * Sets the server root of this host.
-	 *
-	 * @param serverRoot the server root of this host
-	 */
-	@Override
-	public void setServerRoot(String serverRoot) {
-		model.setServerRoot(serverRoot);
-	}
-
-	/**
-	 * Sets the streamer of this host.
-	 *
-	 * @param streamer the streamer of this host
-	 */
-	@Override
-	public void setStreamer(String streamer) {
-		model.setStreamer(streamer);
 	}
 
 	/**

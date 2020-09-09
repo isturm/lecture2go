@@ -2,6 +2,8 @@ package de.uhh.l2g.plugins.util;
 
 import java.io.UnsupportedEncodingException;
 
+import com.josephoconnell.html.HTMLInputFilter;
+
 /**
  * The Class HtmlManager.
  */
@@ -59,7 +61,7 @@ public class HtmlManager {
 		// retrieve input from user
 		String clean = "";
 		try {
-			//clean = new HTMLInputFilter().filter( html );
+			clean = new HTMLInputFilter().filter( html );
 		}catch (Exception e){
 			clean = "Error!";
 		}

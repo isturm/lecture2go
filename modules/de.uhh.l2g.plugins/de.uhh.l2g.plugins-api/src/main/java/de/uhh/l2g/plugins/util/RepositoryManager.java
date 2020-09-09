@@ -1,12 +1,5 @@
 package de.uhh.l2g.plugins.util;
 
-import com.liferay.portal.kernel.exception.PortalException;
-import com.liferay.portal.kernel.exception.SystemException;
-import com.liferay.portal.kernel.log.Log;
-import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.util.GetterUtil;
-import com.liferay.portal.kernel.util.PropsUtil;
-
 /***************************************************************************
  * The Lecture2Go software is based on the liferay portal 6.1.1
  * <http://www.liferay.com>
@@ -44,6 +37,13 @@ import java.io.File;
 import java.io.IOException;
 import java.util.List;
 import java.util.regex.Pattern;
+
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.util.GetterUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.model.Producer;
@@ -235,7 +235,7 @@ public class RepositoryManager {
 	 */
 	public static boolean symlinkToUserHome(Host host, Producer producer){
 		boolean ret = false;
-		File folder = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/" + producer.getHomeDir() + "/");
+		File folder = new File(PropsUtil.get("lecture2go.media.repository") + "/" + host.getDirectory() + "/" + producer.getHomeDir() + "/");
 		File httpFolder = new File(PropsUtil.get("lecture2go.httpstreaming.video.repository") + "/" + producer.getInstitutionId() + "l2g" + producer.getHomeDir());
 		if (!httpFolder.exists()) {
 			String cmd = "ln -s " + folder.getAbsolutePath() + " " + httpFolder.getAbsolutePath();
@@ -267,10 +267,10 @@ public class RepositoryManager {
 					
 					List<Producer> producers = ProducerLocalServiceUtil.getProducersByHostId(h.getHostId());
 					//create host
-					createFolder(PropsUtil.get("lecture2go.media.repository")+"/"+h.getServerRoot());
+					createFolder(PropsUtil.get("lecture2go.media.repository")+"/"+h.getDirectory());
 					//and user directories 
 					for (Producer p : producers) {
-						createFolder(PropsUtil.get("lecture2go.media.repository")+"/"+h.getServerRoot()+"/"+p.getHomeDir());
+						createFolder(PropsUtil.get("lecture2go.media.repository")+"/"+h.getDirectory()+"/"+p.getHomeDir());
 						//create symbolic link to required directory
 						symlinkToUserHome(h, p);
 					}

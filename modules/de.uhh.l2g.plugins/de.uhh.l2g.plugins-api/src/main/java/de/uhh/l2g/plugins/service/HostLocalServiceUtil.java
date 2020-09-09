@@ -39,17 +39,6 @@ public class HostLocalServiceUtil {
 	 */
 
 	/**
-	 * Special handling for default entries (no update)
-	 */
-	public static de.uhh.l2g.plugins.model.Host addDefaultHost(
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			   com.liferay.portal.kernel.exception.SystemException {
-
-		return getService().addDefaultHost(serviceContext);
-	}
-
-	/**
 	 * Adds the host to the database. Also notifies the appropriate model listeners.
 	 *
 	 * @param host the host
@@ -59,6 +48,18 @@ public class HostLocalServiceUtil {
 		de.uhh.l2g.plugins.model.Host host) {
 
 		return getService().addHost(host);
+	}
+
+	public static de.uhh.l2g.plugins.model.Host addHost(
+			String name, String prefix)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		return getService().addHost(name, prefix);
+	}
+
+	public static int countAll() {
+		return getService().countAll();
 	}
 
 	/**
@@ -220,52 +221,10 @@ public class HostLocalServiceUtil {
 		return getService().getAll();
 	}
 
-	public static java.util.List<de.uhh.l2g.plugins.model.Host> getByCompanyId(
-			long companyId)
-		throws com.liferay.portal.kernel.exception.SystemException {
+	public static java.util.List<de.uhh.l2g.plugins.model.Host> getAll(
+		int start, int end) {
 
-		return getService().getByCompanyId(companyId);
-	}
-
-	public static java.util.List<de.uhh.l2g.plugins.model.Host>
-			getByCompanyIdAndGroupId(long companyId, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-
-		return getService().getByCompanyIdAndGroupId(companyId, groupId);
-	}
-
-	public static de.uhh.l2g.plugins.model.Host getByDefault(
-			long companyId, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-
-		return getService().getByDefault(companyId, groupId);
-	}
-
-	public static java.util.List<de.uhh.l2g.plugins.model.Host> getByGroupId(
-			long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-
-		return getService().getByGroupId(groupId);
-	}
-
-	public static java.util.List<de.uhh.l2g.plugins.model.Host> getByGroupId(
-			long groupId, int start, int end)
-		throws com.liferay.portal.kernel.exception.SystemException {
-
-		return getService().getByGroupId(groupId, start, end);
-	}
-
-	public static de.uhh.l2g.plugins.model.Host getByGroupIdAndHostId(
-			long groupId, long hostId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-
-		return getService().getByGroupIdAndHostId(groupId, hostId);
-	}
-
-	public static int getByGroupIdCount(long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-
-		return getService().getByGroupIdCount(groupId);
+		return getService().getAll(start, end);
 	}
 
 	public static de.uhh.l2g.plugins.model.Host getByHostId(long hostId)
@@ -281,10 +240,8 @@ public class HostLocalServiceUtil {
 		return getService().getByInstitution(institutionId);
 	}
 
-	public static long getDefaultHostId(long companyId, long groupId)
-		throws com.liferay.portal.kernel.exception.SystemException {
-
-		return getService().getDefaultHostId(companyId, groupId);
+	public static de.uhh.l2g.plugins.model.Host getDefaultHost() {
+		return getService().getDefaultHost();
 	}
 
 	/**
@@ -336,10 +293,10 @@ public class HostLocalServiceUtil {
 	/**
 	 * Host is locked if it is linked to an institution
 	 */
-	public static int getLockingElements(long companyId, long hostId)
+	public static int getLockingElements(long hostId)
 		throws com.liferay.portal.kernel.exception.SystemException {
 
-		return getService().getLockingElements(companyId, hostId);
+		return getService().getLockingElements(hostId);
 	}
 
 	/**
@@ -371,6 +328,14 @@ public class HostLocalServiceUtil {
 		de.uhh.l2g.plugins.model.Host host) {
 
 		return getService().updateHost(host);
+	}
+
+	public static de.uhh.l2g.plugins.model.Host updateHost(
+			long hostId, String name, String prefix)
+		throws com.liferay.portal.kernel.exception.PortalException,
+			   com.liferay.portal.kernel.exception.SystemException {
+
+		return getService().updateHost(hostId, name, prefix);
 	}
 
 	public static HostLocalService getService() {

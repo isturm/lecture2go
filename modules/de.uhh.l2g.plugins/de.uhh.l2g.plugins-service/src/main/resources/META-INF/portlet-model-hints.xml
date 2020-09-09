@@ -33,6 +33,8 @@
 		<field name="jobTitle" type="String" />
 		<field name="gender" type="String" />
 		<field name="fullName" type="String" />
+		<field name="affiliation" type="String" />
+		<field name="orcidId" type="String" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
@@ -42,12 +44,10 @@
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Host">
 		<field name="hostId" type="long" />
-		<field name="protocol" type="String" />
-		<field name="streamer" type="String" />
-		<field name="port" type="int" />
-		<field name="serverRoot" type="String" />
+		<field name="directory" type="String" />
 		<field name="name" type="String" />
 		<field name="defaultHost" type="int" />
+		<field name="prefix" type="String" />
 		<field name="groupId" type="long" />
 		<field name="companyId" type="long" />
 		<field name="userId" type="long" />
@@ -159,6 +159,24 @@
 		<field name="userName" type="String" />
 		<field name="createDate" type="Date" />
 		<field name="modifiedDate" type="Date" />
+	</model>
+	<model name="de.uhh.l2g.plugins.model.OaiRecord">
+		<field name="oaiRecordId" type="long" />
+		<field name="videoId" type="long" />
+		<field name="identifier" type="String" />
+		<field name="datestamp" type="Date" />
+		<field name="deleted" type="boolean" />
+	</model>
+	<model name="de.uhh.l2g.plugins.model.OaiRecord_OaiSet">
+		<field name="oaiRecordOaiSetId" type="long" />
+		<field name="oaiRecordId" type="long" />
+		<field name="oaiSetId" type="long" />
+	</model>
+	<model name="de.uhh.l2g.plugins.model.OaiSet">
+		<field name="oaiSetId" type="long" />
+		<field name="setSpec" type="String" />
+		<field name="setName" type="String" />
+		<field name="setDescription" type="String" />
 	</model>
 	<model name="de.uhh.l2g.plugins.model.Office">
 		<field name="officeId" type="long" />

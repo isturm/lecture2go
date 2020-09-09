@@ -61,22 +61,18 @@ public class HostCacheModel implements CacheModel<Host>, Externalizable {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(23);
 
 		sb.append("{hostId=");
 		sb.append(hostId);
-		sb.append(", protocol=");
-		sb.append(protocol);
-		sb.append(", streamer=");
-		sb.append(streamer);
-		sb.append(", port=");
-		sb.append(port);
-		sb.append(", serverRoot=");
-		sb.append(serverRoot);
+		sb.append(", directory=");
+		sb.append(directory);
 		sb.append(", name=");
 		sb.append(name);
 		sb.append(", defaultHost=");
 		sb.append(defaultHost);
+		sb.append(", prefix=");
+		sb.append(prefix);
 		sb.append(", groupId=");
 		sb.append(groupId);
 		sb.append(", companyId=");
@@ -100,27 +96,11 @@ public class HostCacheModel implements CacheModel<Host>, Externalizable {
 
 		hostImpl.setHostId(hostId);
 
-		if (protocol == null) {
-			hostImpl.setProtocol("");
+		if (directory == null) {
+			hostImpl.setDirectory("");
 		}
 		else {
-			hostImpl.setProtocol(protocol);
-		}
-
-		if (streamer == null) {
-			hostImpl.setStreamer("");
-		}
-		else {
-			hostImpl.setStreamer(streamer);
-		}
-
-		hostImpl.setPort(port);
-
-		if (serverRoot == null) {
-			hostImpl.setServerRoot("");
-		}
-		else {
-			hostImpl.setServerRoot(serverRoot);
+			hostImpl.setDirectory(directory);
 		}
 
 		if (name == null) {
@@ -131,6 +111,14 @@ public class HostCacheModel implements CacheModel<Host>, Externalizable {
 		}
 
 		hostImpl.setDefaultHost(defaultHost);
+
+		if (prefix == null) {
+			hostImpl.setPrefix("");
+		}
+		else {
+			hostImpl.setPrefix(prefix);
+		}
+
 		hostImpl.setGroupId(groupId);
 		hostImpl.setCompanyId(companyId);
 		hostImpl.setUserId(userId);
@@ -164,14 +152,11 @@ public class HostCacheModel implements CacheModel<Host>, Externalizable {
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
 		hostId = objectInput.readLong();
-		protocol = objectInput.readUTF();
-		streamer = objectInput.readUTF();
-
-		port = objectInput.readInt();
-		serverRoot = objectInput.readUTF();
+		directory = objectInput.readUTF();
 		name = objectInput.readUTF();
 
 		defaultHost = objectInput.readInt();
+		prefix = objectInput.readUTF();
 
 		groupId = objectInput.readLong();
 
@@ -187,27 +172,11 @@ public class HostCacheModel implements CacheModel<Host>, Externalizable {
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
 		objectOutput.writeLong(hostId);
 
-		if (protocol == null) {
+		if (directory == null) {
 			objectOutput.writeUTF("");
 		}
 		else {
-			objectOutput.writeUTF(protocol);
-		}
-
-		if (streamer == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(streamer);
-		}
-
-		objectOutput.writeInt(port);
-
-		if (serverRoot == null) {
-			objectOutput.writeUTF("");
-		}
-		else {
-			objectOutput.writeUTF(serverRoot);
+			objectOutput.writeUTF(directory);
 		}
 
 		if (name == null) {
@@ -218,6 +187,13 @@ public class HostCacheModel implements CacheModel<Host>, Externalizable {
 		}
 
 		objectOutput.writeInt(defaultHost);
+
+		if (prefix == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(prefix);
+		}
 
 		objectOutput.writeLong(groupId);
 
@@ -237,12 +213,10 @@ public class HostCacheModel implements CacheModel<Host>, Externalizable {
 	}
 
 	public long hostId;
-	public String protocol;
-	public String streamer;
-	public int port;
-	public String serverRoot;
+	public String directory;
 	public String name;
 	public int defaultHost;
+	public String prefix;
 	public long groupId;
 	public long companyId;
 	public long userId;

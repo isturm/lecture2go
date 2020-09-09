@@ -61,7 +61,7 @@ public class CreatorCacheModel implements CacheModel<Creator>, Externalizable {
 
 	@Override
 	public String toString() {
-		StringBundler sb = new StringBundler(27);
+		StringBundler sb = new StringBundler(31);
 
 		sb.append("{creatorId=");
 		sb.append(creatorId);
@@ -77,6 +77,10 @@ public class CreatorCacheModel implements CacheModel<Creator>, Externalizable {
 		sb.append(gender);
 		sb.append(", fullName=");
 		sb.append(fullName);
+		sb.append(", affiliation=");
+		sb.append(affiliation);
+		sb.append(", orcidId=");
+		sb.append(orcidId);
 		sb.append(", groupId=");
 		sb.append(groupId);
 		sb.append(", companyId=");
@@ -142,6 +146,20 @@ public class CreatorCacheModel implements CacheModel<Creator>, Externalizable {
 			creatorImpl.setFullName(fullName);
 		}
 
+		if (affiliation == null) {
+			creatorImpl.setAffiliation("");
+		}
+		else {
+			creatorImpl.setAffiliation(affiliation);
+		}
+
+		if (orcidId == null) {
+			creatorImpl.setOrcidId("");
+		}
+		else {
+			creatorImpl.setOrcidId(orcidId);
+		}
+
 		creatorImpl.setGroupId(groupId);
 		creatorImpl.setCompanyId(companyId);
 		creatorImpl.setUserId(userId);
@@ -181,6 +199,8 @@ public class CreatorCacheModel implements CacheModel<Creator>, Externalizable {
 		jobTitle = objectInput.readUTF();
 		gender = objectInput.readUTF();
 		fullName = objectInput.readUTF();
+		affiliation = objectInput.readUTF();
+		orcidId = objectInput.readUTF();
 
 		groupId = objectInput.readLong();
 
@@ -238,6 +258,20 @@ public class CreatorCacheModel implements CacheModel<Creator>, Externalizable {
 			objectOutput.writeUTF(fullName);
 		}
 
+		if (affiliation == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(affiliation);
+		}
+
+		if (orcidId == null) {
+			objectOutput.writeUTF("");
+		}
+		else {
+			objectOutput.writeUTF(orcidId);
+		}
+
 		objectOutput.writeLong(groupId);
 
 		objectOutput.writeLong(companyId);
@@ -262,6 +296,8 @@ public class CreatorCacheModel implements CacheModel<Creator>, Externalizable {
 	public String jobTitle;
 	public String gender;
 	public String fullName;
+	public String affiliation;
+	public String orcidId;
 	public long groupId;
 	public long companyId;
 	public long userId;

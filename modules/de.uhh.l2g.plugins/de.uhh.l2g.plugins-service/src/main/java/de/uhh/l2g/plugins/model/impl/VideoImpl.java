@@ -19,19 +19,24 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 
-import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
+
+import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.util.FileUtil;
 import com.liferay.portal.kernel.util.PropsUtil;
 
 import de.uhh.l2g.plugins.model.Host;
 import de.uhh.l2g.plugins.model.Producer;
+import de.uhh.l2g.plugins.model.Segment;
 import de.uhh.l2g.plugins.service.CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.ProducerLocalServiceUtil;
 import de.uhh.l2g.plugins.service.SegmentLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
+import de.uhh.l2g.plugins.util.ProzessManager;
 
 /**
  * The extended model implementation for the Video service. Represents a row in the &quot;LG_Video&quot; database table, with each column mapped to a property of this class.
@@ -48,20 +53,21 @@ public class VideoImpl extends VideoBaseImpl {
 	 *
 	 * Never reference this class directly. All methods that expect a video model instance should use the {@link de.uhh.l2g.plugins.model.Video} interface instead.
 	 */
-
+	
 	/**
 	 * This model uses quite a few constants, some may be better kept in a config file...
 	 */
 	private static final String WEBHOME 				= PropsUtil.get("lecture2go.web.home");
 	private static final String WEBROOT 				= PropsUtil.get("lecture2go.web.root");
 	private static final String MEDIA_REPOSITORY		= PropsUtil.get("lecture2go.media.repository");
+	private static final String TENANT_SUB_FOLDER		= PropsUtil.get("lecture2go.media.repository.tenantpath"); 
 	private static final String IMAGES_REPOSITORY		= PropsUtil.get("lecture2go.images.system.path") + "/";
 	private static final String DOWNLOAD_SERVER			= PropsUtil.get("lecture2go.downloadserver.web.root");
 	private static final String IMAGES_URL 				= PropsUtil.get("lecture2go.web.root") + "/images/";
 	private static final String CHAPTERFOLDER 			= PropsUtil.get("lecture2go.chapters.web.root");
 	private static final String CAPTIONSFOLDER 			= PropsUtil.get("lecture2go.captions.web.root");
-	private static final String DOWNLOADFOLDER 			= DOWNLOAD_SERVER + "/abo/";
-	private static final String VIDEOREPFOLDER 			= DOWNLOAD_SERVER + "/videorep/";
+	private static final String DOWNLOADFOLDER 			= DOWNLOAD_SERVER + "/" + PropsUtil.get("lecture2go.downloadserver.path") + "/";
+	private static final String VIDEOREPFOLDER 			= DOWNLOAD_SERVER + "/" + PropsUtil.get("lecture2go.downloadserver.videorep.path") + "/";
 
 	private static final String VIDEO_URL_BASE 			= WEBHOME + "/l2go/-/get/v/";
 	private static final String LECTURESERIES_URL_BASE 	= WEBHOME + "/l2go/-/get/l/";
@@ -71,15 +77,15 @@ public class VideoImpl extends VideoBaseImpl {
 	private static final String IMAGE_SUFFIX 			= ".jpg";
 	private static final String IMAGE_MEDIUM_SUFFIX 	= "_m.jpg";
 	private static final String IMAGE_SMALL_SUFFIX 		= "_s.jpg";
-	private static final String IMAGE_NO_MEDIA	 		= "/o/de.uhh.l2g.themes.uhhci/images/nomedia.png";
-	private static final String IMAGE_NO_MEDIA_MEDIUM 	= "/o/de.uhh.l2g.themes.uhhci/images/nomedia.png";
-	private static final String IMAGE_NO_MEDIA_SMALL 	= "/o/de.uhh.l2g.themes.uhhci/images/nomedia.png";
-	private static final String IMAGE_AUDIO 			= "/o/de.uhh.l2g.themes.uhhci/images/audio_only_big.png";
-	private static final String IMAGE_AUDIO_MEDIUM 		= "/o/de.uhh.l2g.themes.uhhci/images/audio_only_medium.png";
-	private static final String IMAGE_AUDIO_SMALL 		= "/o/de.uhh.l2g.themes.uhhci/images/audio_only_small.png";
-	private static final String IMAGE_NO_IMAGE 			= "/o/de.uhh.l2g.themes.uhhci/images/noimage.png";
-	private static final String IMAGE_NO_IMAGE_MEDIUM 	= "/o/de.uhh.l2g.themes.uhhci/images/noimage.png";
-	private static final String IMAGE_NO_IMAGE_SMALL 	= "/o/de.uhh.l2g.themes.uhhci/images/noimage.png";
+	private static final String IMAGE_NO_MEDIA	 		= "/lecture2go-portlet/img/nomedia.png";
+	private static final String IMAGE_NO_MEDIA_MEDIUM 	= "/lecture2go-portlet/img/nomedia.png";
+	private static final String IMAGE_NO_MEDIA_SMALL 	= "/lecture2go-portlet/img/nomedia.png";
+	private static final String IMAGE_AUDIO 			= "/lecture2go-portlet/img/audio_only_big.png";
+	private static final String IMAGE_AUDIO_MEDIUM 		= "/lecture2go-portlet/img/audio_only_medium.png";
+	private static final String IMAGE_AUDIO_SMALL 		= "/lecture2go-portlet/img/audio_only_small.png";
+	private static final String IMAGE_NO_IMAGE 			= "/lecture2go-portlet/img/noimage.png";
+	private static final String IMAGE_NO_IMAGE_MEDIUM 	= "/lecture2go-portlet/img/noimage.png";
+	private static final String IMAGE_NO_IMAGE_SMALL 	= "/lecture2go-portlet/img/noimage.png";
 	
 	private static final String FILE_SUFFIX_MP4		= ".mp4";
 	private static final String FILE_SUFFIX_MP3 	= ".mp3";
@@ -95,7 +101,7 @@ public class VideoImpl extends VideoBaseImpl {
 	private static final int EMBED_WIDTH	= 647;
 	private static final int EMBED_HEIGHT	= 373;
 
-	private static final String HTML5_EMBED_VIDEO_START 	= "<video width='" + EMBED_WIDTH + "' height='" + EMBED_HEIGHT + "' controls><source src='";
+	private static final String HTML5_EMBED_VIDEO_START 	= "<video width='" + EMBED_WIDTH + "' height='" + EMBED_HEIGHT;
 	private static final String HTML5_EMBED_VIDEO_END		= "' type='video/mp4'>Your browser does not support the video tag.</video>"; 
 	private static final String HTML5_EMBED_AUDIO_START 	= "<audio controls><source src='";
 	private static final String HTML5_EMBED_AUDIO_END		= "' type='audio/mpeg'>Your browser does not support the audio element.</audio>";  
@@ -122,7 +128,7 @@ public class VideoImpl extends VideoBaseImpl {
 	private ArrayList<String> playerUris;
 	private JSONArray jsonPlayerUris;
 	private JSONArray jsonPlayerTracks;
-
+	
 	private String vttChapterFile;
 	private String vttCaptionUrl;
 	private String vttThumbsFilde;
@@ -150,6 +156,7 @@ public class VideoImpl extends VideoBaseImpl {
 	private File oggFile;
 	private File webmFile;
 	private File vttFile;
+
 	
 	private String mp4DownloadLink;
 	private String pdfDownloadLink;
@@ -171,6 +178,10 @@ public class VideoImpl extends VideoBaseImpl {
 	
 	public VideoImpl() {
 		
+	}
+	
+	public boolean isWithMissingMetadata() {
+		return VideoLocalServiceUtil.hasMissingMetadata(getVideoId());
 	}
 	
 	public Host getHost() {
@@ -287,7 +298,7 @@ public class VideoImpl extends VideoBaseImpl {
 	 */
 	public JSONArray getJsonPlayerTracks() {
 		if (jsonPlayerTracks == null) {
-			VideoLocalServiceUtil.addTracksToVideoPlayer(this);
+			VideoLocalServiceUtil.addTextTracks2Video(this);
 		}
 		return jsonPlayerTracks;
 	}
@@ -295,6 +306,7 @@ public class VideoImpl extends VideoBaseImpl {
 	public void setJsonPlayerTracks(JSONArray jsonPlayerTracks) {
 		this.jsonPlayerTracks = jsonPlayerTracks;
 	}
+	
 	
 	/**
 	 * Returns the complete embed code for commsy depending on the openaccess field
@@ -322,9 +334,9 @@ public class VideoImpl extends VideoBaseImpl {
 			String vId = "0";
 			if(this.getOpenAccess()==1)vId = getVideoId()+"";
 			else vId = getSPreffix();
-			embedIframe = "<iframe src='"+WEBHOME+"/iframe?obj="+vId+"' frameborder='0' width='"+EMBED_WIDTH+"' height='"+EMBED_HEIGHT+"' allowfullscreen></iframe>";
+			embedIframe = "<iframe src='"+WEBROOT+"/lecture2go-portlet/player/iframe/?v="+vId+"' frameborder='0' width='"+EMBED_WIDTH+"' height='"+EMBED_HEIGHT+"' allowfullscreen></iframe>";
 		}
-		return embedIframe; 
+		return embedIframe;
 	}
 	
 	public void setEmbedIframe(String embedIframe) {
@@ -363,7 +375,7 @@ public class VideoImpl extends VideoBaseImpl {
 	public void setVttChapterFile(String vttChapterFile) {
 		this.vttChapterFile = vttChapterFile;
 	}
-
+	
 	/**
 	 * Returns the url to the vtt-caption-file
 	 */
@@ -868,10 +880,6 @@ public class VideoImpl extends VideoBaseImpl {
 		this.imageMedium = imageMedium;
 	}
 
-	public boolean isHasCaption() {
-		return getVttFile().isFile();
-	}
-
 	/**
 	 * Returns the title in a truncated form
 	 */
@@ -936,6 +944,10 @@ public class VideoImpl extends VideoBaseImpl {
 		this.creators = creators;
 	}
 	
+	public boolean isHasCaption() {
+		return getVttFile().isFile();
+	}
+	
 	/**
 	 * Checks if filename and container format exists (= file was correctly uploaded)
 	 * @return true if exists, false if not
@@ -957,7 +969,7 @@ public class VideoImpl extends VideoBaseImpl {
 	 * @return the directory of the video
 	 */
 	private String getHomedirPath(){
-		return MEDIA_REPOSITORY + "/" + getHost().getServerRoot() + "/" + getProducer().getHomeDir() + "/";
+		return MEDIA_REPOSITORY + "/" + getHost().getDirectory() + "/" + getProducer().getHomeDir() + "/";
 	}
 	
 	/**
@@ -984,9 +996,9 @@ public class VideoImpl extends VideoBaseImpl {
 	 */
 	private String getVideoEmbedHtml5() {
 		if(getOpenAccess()==1){
-			return HTML5_EMBED_VIDEO_START + DOWNLOADFOLDER + getPreffix() + FILE_SUFFIX_MP4 + HTML5_EMBED_VIDEO_END;
+			return HTML5_EMBED_VIDEO_START + "' controls='' " + "poster='"+getImage()+"'><source src='" + DOWNLOADFOLDER + getPreffix() + FILE_SUFFIX_MP4 + HTML5_EMBED_VIDEO_END;
 		} else {
-			return HTML5_EMBED_VIDEO_START + VIDEOREPFOLDER + getHost().getServerRoot() + "/" + getProducer().getHomeDir() + "/" + getSPreffix() + getDownloadSuffix() + FILE_SUFFIX_MP4 + HTML5_EMBED_VIDEO_END;
+			return HTML5_EMBED_VIDEO_START + "' controls='' " + "poster='"+getImage()+"'><source src='" + VIDEOREPFOLDER + getHost().getDirectory() + "/" + getProducer().getHomeDir() + "/" + getSPreffix() + getDownloadSuffix() + FILE_SUFFIX_MP4 + HTML5_EMBED_VIDEO_END;
 		}
 	}
 	
@@ -998,7 +1010,7 @@ public class VideoImpl extends VideoBaseImpl {
 		if(getOpenAccess()==1){
 			return HTML5_EMBED_AUDIO_START + DOWNLOADFOLDER + getPreffix() + FILE_SUFFIX_MP3 + HTML5_EMBED_AUDIO_END;
 		}else{
-			return HTML5_EMBED_AUDIO_START + VIDEOREPFOLDER + getHost().getServerRoot() + "/" + getProducer().getHomeDir() + "/" + getSecureFilename()+ HTML5_EMBED_AUDIO_END;
+			return HTML5_EMBED_AUDIO_START + VIDEOREPFOLDER + getHost().getDirectory() + "/" + getProducer().getHomeDir() + "/" + getSecureFilename()+ HTML5_EMBED_AUDIO_END;
 		}	
 	}
 	
@@ -1044,7 +1056,9 @@ public class VideoImpl extends VideoBaseImpl {
 	 * @return the download link
 	 */
 	private String getSecureFileDownloadLink(String suffix) {
-		return DOWNLOAD_SERVLET_BASE + getDownloadLink() + "&downloadPath=/" + getHost().getName() + "/" + getProducer().getHomeDir() + "/" + getSPreffix() + suffix;
+		// this is an optional part for allowing tenant specific paths
+		String subFolder = TENANT_SUB_FOLDER != null ? TENANT_SUB_FOLDER + "/" : "";
+		return DOWNLOAD_SERVLET_BASE + getDownloadLink() + "&downloadPath=/" + subFolder + getHost().getDirectory() + "/" + getProducer().getHomeDir() + "/" + getSPreffix() + suffix;
 	}
 	
 	/**
@@ -1070,7 +1084,6 @@ public class VideoImpl extends VideoBaseImpl {
 	      SimpleDateFormat dateFormatter =  new SimpleDateFormat(targetFormat); 
 	      return dateFormatter.format(generationDate);
 	    } catch (ParseException e) {
-	      //e.printStackTrace();
 	      // return the unformatted date if something goes wrong
 	      return unformattedDate;
 	    }

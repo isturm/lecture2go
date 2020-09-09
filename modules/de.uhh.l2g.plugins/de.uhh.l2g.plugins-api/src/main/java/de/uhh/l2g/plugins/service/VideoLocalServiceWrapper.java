@@ -53,6 +53,26 @@ public class VideoLocalServiceWrapper
 	}
 
 	/**
+	 * This adds the "tracks" section for the video player json if there are any captions or chapters
+	 */
+	@Override
+	public void addTextTracks2Video(de.uhh.l2g.plugins.model.Video video) {
+		_videoLocalService.addTextTracks2Video(video);
+	}
+
+	/**
+	 * This adds the "tracks" section for the video player json if there are any captions or chapters and sets the label to
+	 * language of the caption file (translated to the userLocale)
+	 */
+	@Override
+	public void addTextTracks2VideoWithLanguageLabel(
+		de.uhh.l2g.plugins.model.Video video, java.util.Locale userLocale) {
+
+		_videoLocalService.addTextTracks2VideoWithLanguageLabel(
+			video, userLocale);
+	}
+
+	/**
 	 * This adds the "tracks" section for the video player json if there are any
 	 * captions or chapters
 	 */
@@ -309,6 +329,16 @@ public class VideoLocalServiceWrapper
 
 		return _videoLocalService.fileStringSegmentFoundInArray(
 			file, jsonArray);
+	}
+
+	/**
+	 * This method is only used to fix missing database entries
+	 * Uses the lectureseries information for filling the missing data
+	 */
+	@Override
+	public void fixMissingMetadataForVideosFromRelatedLectureseries() {
+		_videoLocalService.
+			fixMissingMetadataForVideosFromRelatedLectureseries();
 	}
 
 	@Override
@@ -612,6 +642,26 @@ public class VideoLocalServiceWrapper
 		return _videoLocalService.getVideosCount();
 	}
 
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Video>
+		getVideosWithMissingMetadata() {
+
+		return _videoLocalService.getVideosWithMissingMetadata();
+	}
+
+	@Override
+	public boolean hasMissingMetadata(Long videoId) {
+		return _videoLocalService.hasMissingMetadata(videoId);
+	}
+
+	@Override
+	public de.uhh.l2g.plugins.model.Video incrementHitCounter(
+			de.uhh.l2g.plugins.model.Video video)
+		throws com.liferay.portal.kernel.exception.SystemException {
+
+		return _videoLocalService.incrementHitCounter(video);
+	}
+
 	/**
 	 * Checks if file is a symoblic link
 	 *
@@ -621,6 +671,32 @@ public class VideoLocalServiceWrapper
 	@Override
 	public boolean isSymlink(java.io.File file) {
 		return _videoLocalService.isSymlink(file);
+	}
+
+	/**
+	 * Tries to retrieve the language from the caption file and returns a translated language display name
+	 *
+	 * Reads first lines of the file (specs of webvtt define headers must be before first blank line) and looks for a language property
+	 *
+	 * @param captionFile the caption file from which the language will be extracted
+	 * @param userLocale the locale which is used to return the translated language display name
+	 * @return the language display name in the language of the locale property or "Default" if none found
+	 */
+	@Override
+	public String retrieveLanguageDisplayNameOfCaptionFile(
+		java.io.File captionFile, java.util.Locale userLocale) {
+
+		return _videoLocalService.retrieveLanguageDisplayNameOfCaptionFile(
+			captionFile, userLocale);
+	}
+
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.Video>
+		stripVideosWithMissingMetadataFromList(
+			java.util.List<de.uhh.l2g.plugins.model.Video> videos) {
+
+		return _videoLocalService.stripVideosWithMissingMetadataFromList(
+			videos);
 	}
 
 	@Override

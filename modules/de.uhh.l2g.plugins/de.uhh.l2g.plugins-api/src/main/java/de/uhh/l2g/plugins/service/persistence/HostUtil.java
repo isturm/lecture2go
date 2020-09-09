@@ -121,321 +121,107 @@ public class HostUtil {
 	}
 
 	/**
-	 * Returns all the hosts where groupId = &#63;.
+	 * Returns the host where defaultHost = &#63; or throws a <code>NoSuchHostException</code> if it could not be found.
 	 *
-	 * @param groupId the group ID
-	 * @return the matching hosts
+	 * @param defaultHost the default host
+	 * @return the matching host
+	 * @throws NoSuchHostException if a matching host could not be found
 	 */
-	public static List<Host> findByGroup(long groupId) {
-		return getPersistence().findByGroup(groupId);
+	public static Host findBydefaultHost(int defaultHost)
+		throws de.uhh.l2g.plugins.exception.NoSuchHostException {
+
+		return getPersistence().findBydefaultHost(defaultHost);
 	}
 
 	/**
-	 * Returns a range of all the hosts where groupId = &#63;.
+	 * Returns the host where defaultHost = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>HostModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of hosts
-	 * @param end the upper bound of the range of hosts (not inclusive)
-	 * @return the range of matching hosts
+	 * @param defaultHost the default host
+	 * @return the matching host, or <code>null</code> if a matching host could not be found
 	 */
-	public static List<Host> findByGroup(long groupId, int start, int end) {
-		return getPersistence().findByGroup(groupId, start, end);
+	public static Host fetchBydefaultHost(int defaultHost) {
+		return getPersistence().fetchBydefaultHost(defaultHost);
 	}
 
 	/**
-	 * Returns an ordered range of all the hosts where groupId = &#63;.
+	 * Returns the host where defaultHost = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>HostModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of hosts
-	 * @param end the upper bound of the range of hosts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching hosts
-	 */
-	public static List<Host> findByGroup(
-		long groupId, int start, int end,
-		OrderByComparator<Host> orderByComparator) {
-
-		return getPersistence().findByGroup(
-			groupId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the hosts where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>HostModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of hosts
-	 * @param end the upper bound of the range of hosts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param defaultHost the default host
 	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching hosts
+	 * @return the matching host, or <code>null</code> if a matching host could not be found
 	 */
-	public static List<Host> findByGroup(
-		long groupId, int start, int end,
-		OrderByComparator<Host> orderByComparator, boolean useFinderCache) {
+	public static Host fetchBydefaultHost(
+		int defaultHost, boolean useFinderCache) {
 
-		return getPersistence().findByGroup(
-			groupId, start, end, orderByComparator, useFinderCache);
+		return getPersistence().fetchBydefaultHost(defaultHost, useFinderCache);
 	}
 
 	/**
-	 * Returns the first host in the ordered set where groupId = &#63;.
+	 * Removes the host where defaultHost = &#63; from the database.
 	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching host
-	 * @throws NoSuchHostException if a matching host could not be found
+	 * @param defaultHost the default host
+	 * @return the host that was removed
 	 */
-	public static Host findByGroup_First(
-			long groupId, OrderByComparator<Host> orderByComparator)
+	public static Host removeBydefaultHost(int defaultHost)
 		throws de.uhh.l2g.plugins.exception.NoSuchHostException {
 
-		return getPersistence().findByGroup_First(groupId, orderByComparator);
+		return getPersistence().removeBydefaultHost(defaultHost);
 	}
 
 	/**
-	 * Returns the first host in the ordered set where groupId = &#63;.
+	 * Returns the number of hosts where defaultHost = &#63;.
 	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching host, or <code>null</code> if a matching host could not be found
-	 */
-	public static Host fetchByGroup_First(
-		long groupId, OrderByComparator<Host> orderByComparator) {
-
-		return getPersistence().fetchByGroup_First(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last host in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching host
-	 * @throws NoSuchHostException if a matching host could not be found
-	 */
-	public static Host findByGroup_Last(
-			long groupId, OrderByComparator<Host> orderByComparator)
-		throws de.uhh.l2g.plugins.exception.NoSuchHostException {
-
-		return getPersistence().findByGroup_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last host in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching host, or <code>null</code> if a matching host could not be found
-	 */
-	public static Host fetchByGroup_Last(
-		long groupId, OrderByComparator<Host> orderByComparator) {
-
-		return getPersistence().fetchByGroup_Last(groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the hosts before and after the current host in the ordered set where groupId = &#63;.
-	 *
-	 * @param hostId the primary key of the current host
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next host
-	 * @throws NoSuchHostException if a host with the primary key could not be found
-	 */
-	public static Host[] findByGroup_PrevAndNext(
-			long hostId, long groupId,
-			OrderByComparator<Host> orderByComparator)
-		throws de.uhh.l2g.plugins.exception.NoSuchHostException {
-
-		return getPersistence().findByGroup_PrevAndNext(
-			hostId, groupId, orderByComparator);
-	}
-
-	/**
-	 * Removes all the hosts where groupId = &#63; from the database.
-	 *
-	 * @param groupId the group ID
-	 */
-	public static void removeByGroup(long groupId) {
-		getPersistence().removeByGroup(groupId);
-	}
-
-	/**
-	 * Returns the number of hosts where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
+	 * @param defaultHost the default host
 	 * @return the number of matching hosts
 	 */
-	public static int countByGroup(long groupId) {
-		return getPersistence().countByGroup(groupId);
+	public static int countBydefaultHost(int defaultHost) {
+		return getPersistence().countBydefaultHost(defaultHost);
 	}
 
 	/**
-	 * Returns all the hosts where companyId = &#63;.
+	 * Returns the host where companyId = &#63; or throws a <code>NoSuchHostException</code> if it could not be found.
 	 *
 	 * @param companyId the company ID
-	 * @return the matching hosts
+	 * @return the matching host
+	 * @throws NoSuchHostException if a matching host could not be found
 	 */
-	public static List<Host> findByCompany(long companyId) {
-		return getPersistence().findByCompany(companyId);
+	public static Host findByhostId(long companyId)
+		throws de.uhh.l2g.plugins.exception.NoSuchHostException {
+
+		return getPersistence().findByhostId(companyId);
 	}
 
 	/**
-	 * Returns a range of all the hosts where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>HostModelImpl</code>.
-	 * </p>
+	 * Returns the host where companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param companyId the company ID
-	 * @param start the lower bound of the range of hosts
-	 * @param end the upper bound of the range of hosts (not inclusive)
-	 * @return the range of matching hosts
+	 * @return the matching host, or <code>null</code> if a matching host could not be found
 	 */
-	public static List<Host> findByCompany(long companyId, int start, int end) {
-		return getPersistence().findByCompany(companyId, start, end);
+	public static Host fetchByhostId(long companyId) {
+		return getPersistence().fetchByhostId(companyId);
 	}
 
 	/**
-	 * Returns an ordered range of all the hosts where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>HostModelImpl</code>.
-	 * </p>
+	 * Returns the host where companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param companyId the company ID
-	 * @param start the lower bound of the range of hosts
-	 * @param end the upper bound of the range of hosts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching hosts
-	 */
-	public static List<Host> findByCompany(
-		long companyId, int start, int end,
-		OrderByComparator<Host> orderByComparator) {
-
-		return getPersistence().findByCompany(
-			companyId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the hosts where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>HostModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of hosts
-	 * @param end the upper bound of the range of hosts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching hosts
+	 * @return the matching host, or <code>null</code> if a matching host could not be found
 	 */
-	public static List<Host> findByCompany(
-		long companyId, int start, int end,
-		OrderByComparator<Host> orderByComparator, boolean useFinderCache) {
-
-		return getPersistence().findByCompany(
-			companyId, start, end, orderByComparator, useFinderCache);
+	public static Host fetchByhostId(long companyId, boolean useFinderCache) {
+		return getPersistence().fetchByhostId(companyId, useFinderCache);
 	}
 
 	/**
-	 * Returns the first host in the ordered set where companyId = &#63;.
+	 * Removes the host where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching host
-	 * @throws NoSuchHostException if a matching host could not be found
+	 * @return the host that was removed
 	 */
-	public static Host findByCompany_First(
-			long companyId, OrderByComparator<Host> orderByComparator)
+	public static Host removeByhostId(long companyId)
 		throws de.uhh.l2g.plugins.exception.NoSuchHostException {
 
-		return getPersistence().findByCompany_First(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the first host in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching host, or <code>null</code> if a matching host could not be found
-	 */
-	public static Host fetchByCompany_First(
-		long companyId, OrderByComparator<Host> orderByComparator) {
-
-		return getPersistence().fetchByCompany_First(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last host in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching host
-	 * @throws NoSuchHostException if a matching host could not be found
-	 */
-	public static Host findByCompany_Last(
-			long companyId, OrderByComparator<Host> orderByComparator)
-		throws de.uhh.l2g.plugins.exception.NoSuchHostException {
-
-		return getPersistence().findByCompany_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last host in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching host, or <code>null</code> if a matching host could not be found
-	 */
-	public static Host fetchByCompany_Last(
-		long companyId, OrderByComparator<Host> orderByComparator) {
-
-		return getPersistence().fetchByCompany_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the hosts before and after the current host in the ordered set where companyId = &#63;.
-	 *
-	 * @param hostId the primary key of the current host
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next host
-	 * @throws NoSuchHostException if a host with the primary key could not be found
-	 */
-	public static Host[] findByCompany_PrevAndNext(
-			long hostId, long companyId,
-			OrderByComparator<Host> orderByComparator)
-		throws de.uhh.l2g.plugins.exception.NoSuchHostException {
-
-		return getPersistence().findByCompany_PrevAndNext(
-			hostId, companyId, orderByComparator);
-	}
-
-	/**
-	 * Removes all the hosts where companyId = &#63; from the database.
-	 *
-	 * @param companyId the company ID
-	 */
-	public static void removeByCompany(long companyId) {
-		getPersistence().removeByCompany(companyId);
+		return getPersistence().removeByhostId(companyId);
 	}
 
 	/**
@@ -444,677 +230,122 @@ public class HostUtil {
 	 * @param companyId the company ID
 	 * @return the number of matching hosts
 	 */
-	public static int countByCompany(long companyId) {
-		return getPersistence().countByCompany(companyId);
+	public static int countByhostId(long companyId) {
+		return getPersistence().countByhostId(companyId);
 	}
 
 	/**
-	 * Returns all the hosts where groupId = &#63; and companyId = &#63;.
+	 * Returns the host where name = &#63; or throws a <code>NoSuchHostException</code> if it could not be found.
 	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @return the matching hosts
-	 */
-	public static List<Host> findByGroupAndCompany(
-		long groupId, long companyId) {
-
-		return getPersistence().findByGroupAndCompany(groupId, companyId);
-	}
-
-	/**
-	 * Returns a range of all the hosts where groupId = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>HostModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of hosts
-	 * @param end the upper bound of the range of hosts (not inclusive)
-	 * @return the range of matching hosts
-	 */
-	public static List<Host> findByGroupAndCompany(
-		long groupId, long companyId, int start, int end) {
-
-		return getPersistence().findByGroupAndCompany(
-			groupId, companyId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the hosts where groupId = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>HostModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of hosts
-	 * @param end the upper bound of the range of hosts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching hosts
-	 */
-	public static List<Host> findByGroupAndCompany(
-		long groupId, long companyId, int start, int end,
-		OrderByComparator<Host> orderByComparator) {
-
-		return getPersistence().findByGroupAndCompany(
-			groupId, companyId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the hosts where groupId = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>HostModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of hosts
-	 * @param end the upper bound of the range of hosts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching hosts
-	 */
-	public static List<Host> findByGroupAndCompany(
-		long groupId, long companyId, int start, int end,
-		OrderByComparator<Host> orderByComparator, boolean useFinderCache) {
-
-		return getPersistence().findByGroupAndCompany(
-			groupId, companyId, start, end, orderByComparator, useFinderCache);
-	}
-
-	/**
-	 * Returns the first host in the ordered set where groupId = &#63; and companyId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching host
-	 * @throws NoSuchHostException if a matching host could not be found
-	 */
-	public static Host findByGroupAndCompany_First(
-			long groupId, long companyId,
-			OrderByComparator<Host> orderByComparator)
-		throws de.uhh.l2g.plugins.exception.NoSuchHostException {
-
-		return getPersistence().findByGroupAndCompany_First(
-			groupId, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the first host in the ordered set where groupId = &#63; and companyId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching host, or <code>null</code> if a matching host could not be found
-	 */
-	public static Host fetchByGroupAndCompany_First(
-		long groupId, long companyId,
-		OrderByComparator<Host> orderByComparator) {
-
-		return getPersistence().fetchByGroupAndCompany_First(
-			groupId, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last host in the ordered set where groupId = &#63; and companyId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching host
-	 * @throws NoSuchHostException if a matching host could not be found
-	 */
-	public static Host findByGroupAndCompany_Last(
-			long groupId, long companyId,
-			OrderByComparator<Host> orderByComparator)
-		throws de.uhh.l2g.plugins.exception.NoSuchHostException {
-
-		return getPersistence().findByGroupAndCompany_Last(
-			groupId, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last host in the ordered set where groupId = &#63; and companyId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching host, or <code>null</code> if a matching host could not be found
-	 */
-	public static Host fetchByGroupAndCompany_Last(
-		long groupId, long companyId,
-		OrderByComparator<Host> orderByComparator) {
-
-		return getPersistence().fetchByGroupAndCompany_Last(
-			groupId, companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the hosts before and after the current host in the ordered set where groupId = &#63; and companyId = &#63;.
-	 *
-	 * @param hostId the primary key of the current host
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next host
-	 * @throws NoSuchHostException if a host with the primary key could not be found
-	 */
-	public static Host[] findByGroupAndCompany_PrevAndNext(
-			long hostId, long groupId, long companyId,
-			OrderByComparator<Host> orderByComparator)
-		throws de.uhh.l2g.plugins.exception.NoSuchHostException {
-
-		return getPersistence().findByGroupAndCompany_PrevAndNext(
-			hostId, groupId, companyId, orderByComparator);
-	}
-
-	/**
-	 * Removes all the hosts where groupId = &#63; and companyId = &#63; from the database.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 */
-	public static void removeByGroupAndCompany(long groupId, long companyId) {
-		getPersistence().removeByGroupAndCompany(groupId, companyId);
-	}
-
-	/**
-	 * Returns the number of hosts where groupId = &#63; and companyId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @return the number of matching hosts
-	 */
-	public static int countByGroupAndCompany(long groupId, long companyId) {
-		return getPersistence().countByGroupAndCompany(groupId, companyId);
-	}
-
-	/**
-	 * Returns all the hosts where companyId = &#63; and groupId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param groupId the group ID
-	 * @return the matching hosts
-	 */
-	public static List<Host> findByCompanyIdAndGroupId(
-		long companyId, long groupId) {
-
-		return getPersistence().findByCompanyIdAndGroupId(companyId, groupId);
-	}
-
-	/**
-	 * Returns a range of all the hosts where companyId = &#63; and groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>HostModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of hosts
-	 * @param end the upper bound of the range of hosts (not inclusive)
-	 * @return the range of matching hosts
-	 */
-	public static List<Host> findByCompanyIdAndGroupId(
-		long companyId, long groupId, int start, int end) {
-
-		return getPersistence().findByCompanyIdAndGroupId(
-			companyId, groupId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the hosts where companyId = &#63; and groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>HostModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of hosts
-	 * @param end the upper bound of the range of hosts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching hosts
-	 */
-	public static List<Host> findByCompanyIdAndGroupId(
-		long companyId, long groupId, int start, int end,
-		OrderByComparator<Host> orderByComparator) {
-
-		return getPersistence().findByCompanyIdAndGroupId(
-			companyId, groupId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the hosts where companyId = &#63; and groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>HostModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of hosts
-	 * @param end the upper bound of the range of hosts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching hosts
-	 */
-	public static List<Host> findByCompanyIdAndGroupId(
-		long companyId, long groupId, int start, int end,
-		OrderByComparator<Host> orderByComparator, boolean useFinderCache) {
-
-		return getPersistence().findByCompanyIdAndGroupId(
-			companyId, groupId, start, end, orderByComparator, useFinderCache);
-	}
-
-	/**
-	 * Returns the first host in the ordered set where companyId = &#63; and groupId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching host
-	 * @throws NoSuchHostException if a matching host could not be found
-	 */
-	public static Host findByCompanyIdAndGroupId_First(
-			long companyId, long groupId,
-			OrderByComparator<Host> orderByComparator)
-		throws de.uhh.l2g.plugins.exception.NoSuchHostException {
-
-		return getPersistence().findByCompanyIdAndGroupId_First(
-			companyId, groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the first host in the ordered set where companyId = &#63; and groupId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching host, or <code>null</code> if a matching host could not be found
-	 */
-	public static Host fetchByCompanyIdAndGroupId_First(
-		long companyId, long groupId,
-		OrderByComparator<Host> orderByComparator) {
-
-		return getPersistence().fetchByCompanyIdAndGroupId_First(
-			companyId, groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last host in the ordered set where companyId = &#63; and groupId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching host
-	 * @throws NoSuchHostException if a matching host could not be found
-	 */
-	public static Host findByCompanyIdAndGroupId_Last(
-			long companyId, long groupId,
-			OrderByComparator<Host> orderByComparator)
-		throws de.uhh.l2g.plugins.exception.NoSuchHostException {
-
-		return getPersistence().findByCompanyIdAndGroupId_Last(
-			companyId, groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last host in the ordered set where companyId = &#63; and groupId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching host, or <code>null</code> if a matching host could not be found
-	 */
-	public static Host fetchByCompanyIdAndGroupId_Last(
-		long companyId, long groupId,
-		OrderByComparator<Host> orderByComparator) {
-
-		return getPersistence().fetchByCompanyIdAndGroupId_Last(
-			companyId, groupId, orderByComparator);
-	}
-
-	/**
-	 * Returns the hosts before and after the current host in the ordered set where companyId = &#63; and groupId = &#63;.
-	 *
-	 * @param hostId the primary key of the current host
-	 * @param companyId the company ID
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next host
-	 * @throws NoSuchHostException if a host with the primary key could not be found
-	 */
-	public static Host[] findByCompanyIdAndGroupId_PrevAndNext(
-			long hostId, long companyId, long groupId,
-			OrderByComparator<Host> orderByComparator)
-		throws de.uhh.l2g.plugins.exception.NoSuchHostException {
-
-		return getPersistence().findByCompanyIdAndGroupId_PrevAndNext(
-			hostId, companyId, groupId, orderByComparator);
-	}
-
-	/**
-	 * Removes all the hosts where companyId = &#63; and groupId = &#63; from the database.
-	 *
-	 * @param companyId the company ID
-	 * @param groupId the group ID
-	 */
-	public static void removeByCompanyIdAndGroupId(
-		long companyId, long groupId) {
-
-		getPersistence().removeByCompanyIdAndGroupId(companyId, groupId);
-	}
-
-	/**
-	 * Returns the number of hosts where companyId = &#63; and groupId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param groupId the group ID
-	 * @return the number of matching hosts
-	 */
-	public static int countByCompanyIdAndGroupId(long companyId, long groupId) {
-		return getPersistence().countByCompanyIdAndGroupId(companyId, groupId);
-	}
-
-	/**
-	 * Returns the host where groupId = &#63; and hostId = &#63; or throws a <code>NoSuchHostException</code> if it could not be found.
-	 *
-	 * @param groupId the group ID
-	 * @param hostId the host ID
+	 * @param name the name
 	 * @return the matching host
 	 * @throws NoSuchHostException if a matching host could not be found
 	 */
-	public static Host findByG_H(long groupId, long hostId)
+	public static Host findByname(String name)
 		throws de.uhh.l2g.plugins.exception.NoSuchHostException {
 
-		return getPersistence().findByG_H(groupId, hostId);
+		return getPersistence().findByname(name);
 	}
 
 	/**
-	 * Returns the host where groupId = &#63; and hostId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the host where name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @param groupId the group ID
-	 * @param hostId the host ID
+	 * @param name the name
 	 * @return the matching host, or <code>null</code> if a matching host could not be found
 	 */
-	public static Host fetchByG_H(long groupId, long hostId) {
-		return getPersistence().fetchByG_H(groupId, hostId);
+	public static Host fetchByname(String name) {
+		return getPersistence().fetchByname(name);
 	}
 
 	/**
-	 * Returns the host where groupId = &#63; and hostId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the host where name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
-	 * @param groupId the group ID
-	 * @param hostId the host ID
+	 * @param name the name
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching host, or <code>null</code> if a matching host could not be found
 	 */
-	public static Host fetchByG_H(
-		long groupId, long hostId, boolean useFinderCache) {
-
-		return getPersistence().fetchByG_H(groupId, hostId, useFinderCache);
+	public static Host fetchByname(String name, boolean useFinderCache) {
+		return getPersistence().fetchByname(name, useFinderCache);
 	}
 
 	/**
-	 * Removes the host where groupId = &#63; and hostId = &#63; from the database.
+	 * Removes the host where name = &#63; from the database.
 	 *
-	 * @param groupId the group ID
-	 * @param hostId the host ID
+	 * @param name the name
 	 * @return the host that was removed
 	 */
-	public static Host removeByG_H(long groupId, long hostId)
+	public static Host removeByname(String name)
 		throws de.uhh.l2g.plugins.exception.NoSuchHostException {
 
-		return getPersistence().removeByG_H(groupId, hostId);
+		return getPersistence().removeByname(name);
 	}
 
 	/**
-	 * Returns the number of hosts where groupId = &#63; and hostId = &#63;.
+	 * Returns the number of hosts where name = &#63;.
 	 *
-	 * @param groupId the group ID
-	 * @param hostId the host ID
+	 * @param name the name
 	 * @return the number of matching hosts
 	 */
-	public static int countByG_H(long groupId, long hostId) {
-		return getPersistence().countByG_H(groupId, hostId);
+	public static int countByname(String name) {
+		return getPersistence().countByname(name);
 	}
 
 	/**
-	 * Returns the host where companyId = &#63; and groupId = &#63; or throws a <code>NoSuchHostException</code> if it could not be found.
+	 * Returns the host where directory = &#63; or throws a <code>NoSuchHostException</code> if it could not be found.
 	 *
-	 * @param companyId the company ID
-	 * @param groupId the group ID
+	 * @param directory the directory
 	 * @return the matching host
 	 * @throws NoSuchHostException if a matching host could not be found
 	 */
-	public static Host findByDefaultHost(long companyId, long groupId)
+	public static Host findBydirectory(String directory)
 		throws de.uhh.l2g.plugins.exception.NoSuchHostException {
 
-		return getPersistence().findByDefaultHost(companyId, groupId);
+		return getPersistence().findBydirectory(directory);
 	}
 
 	/**
-	 * Returns the host where companyId = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the host where directory = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @param companyId the company ID
-	 * @param groupId the group ID
+	 * @param directory the directory
 	 * @return the matching host, or <code>null</code> if a matching host could not be found
 	 */
-	public static Host fetchByDefaultHost(long companyId, long groupId) {
-		return getPersistence().fetchByDefaultHost(companyId, groupId);
+	public static Host fetchBydirectory(String directory) {
+		return getPersistence().fetchBydirectory(directory);
 	}
 
 	/**
-	 * Returns the host where companyId = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the host where directory = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
-	 * @param companyId the company ID
-	 * @param groupId the group ID
+	 * @param directory the directory
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching host, or <code>null</code> if a matching host could not be found
 	 */
-	public static Host fetchByDefaultHost(
-		long companyId, long groupId, boolean useFinderCache) {
+	public static Host fetchBydirectory(
+		String directory, boolean useFinderCache) {
 
-		return getPersistence().fetchByDefaultHost(
-			companyId, groupId, useFinderCache);
+		return getPersistence().fetchBydirectory(directory, useFinderCache);
 	}
 
 	/**
-	 * Removes the host where companyId = &#63; and groupId = &#63; from the database.
+	 * Removes the host where directory = &#63; from the database.
 	 *
-	 * @param companyId the company ID
-	 * @param groupId the group ID
+	 * @param directory the directory
 	 * @return the host that was removed
 	 */
-	public static Host removeByDefaultHost(long companyId, long groupId)
+	public static Host removeBydirectory(String directory)
 		throws de.uhh.l2g.plugins.exception.NoSuchHostException {
 
-		return getPersistence().removeByDefaultHost(companyId, groupId);
+		return getPersistence().removeBydirectory(directory);
 	}
 
 	/**
-	 * Returns the number of hosts where companyId = &#63; and groupId = &#63;.
+	 * Returns the number of hosts where directory = &#63;.
 	 *
-	 * @param companyId the company ID
-	 * @param groupId the group ID
+	 * @param directory the directory
 	 * @return the number of matching hosts
 	 */
-	public static int countByDefaultHost(long companyId, long groupId) {
-		return getPersistence().countByDefaultHost(companyId, groupId);
-	}
-
-	/**
-	 * Returns all the hosts where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching hosts
-	 */
-	public static List<Host> findByCompanyId(long companyId) {
-		return getPersistence().findByCompanyId(companyId);
-	}
-
-	/**
-	 * Returns a range of all the hosts where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>HostModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of hosts
-	 * @param end the upper bound of the range of hosts (not inclusive)
-	 * @return the range of matching hosts
-	 */
-	public static List<Host> findByCompanyId(
-		long companyId, int start, int end) {
-
-		return getPersistence().findByCompanyId(companyId, start, end);
-	}
-
-	/**
-	 * Returns an ordered range of all the hosts where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>HostModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of hosts
-	 * @param end the upper bound of the range of hosts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching hosts
-	 */
-	public static List<Host> findByCompanyId(
-		long companyId, int start, int end,
-		OrderByComparator<Host> orderByComparator) {
-
-		return getPersistence().findByCompanyId(
-			companyId, start, end, orderByComparator);
-	}
-
-	/**
-	 * Returns an ordered range of all the hosts where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>HostModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of hosts
-	 * @param end the upper bound of the range of hosts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching hosts
-	 */
-	public static List<Host> findByCompanyId(
-		long companyId, int start, int end,
-		OrderByComparator<Host> orderByComparator, boolean useFinderCache) {
-
-		return getPersistence().findByCompanyId(
-			companyId, start, end, orderByComparator, useFinderCache);
-	}
-
-	/**
-	 * Returns the first host in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching host
-	 * @throws NoSuchHostException if a matching host could not be found
-	 */
-	public static Host findByCompanyId_First(
-			long companyId, OrderByComparator<Host> orderByComparator)
-		throws de.uhh.l2g.plugins.exception.NoSuchHostException {
-
-		return getPersistence().findByCompanyId_First(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the first host in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching host, or <code>null</code> if a matching host could not be found
-	 */
-	public static Host fetchByCompanyId_First(
-		long companyId, OrderByComparator<Host> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_First(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last host in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching host
-	 * @throws NoSuchHostException if a matching host could not be found
-	 */
-	public static Host findByCompanyId_Last(
-			long companyId, OrderByComparator<Host> orderByComparator)
-		throws de.uhh.l2g.plugins.exception.NoSuchHostException {
-
-		return getPersistence().findByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the last host in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching host, or <code>null</code> if a matching host could not be found
-	 */
-	public static Host fetchByCompanyId_Last(
-		long companyId, OrderByComparator<Host> orderByComparator) {
-
-		return getPersistence().fetchByCompanyId_Last(
-			companyId, orderByComparator);
-	}
-
-	/**
-	 * Returns the hosts before and after the current host in the ordered set where companyId = &#63;.
-	 *
-	 * @param hostId the primary key of the current host
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next host
-	 * @throws NoSuchHostException if a host with the primary key could not be found
-	 */
-	public static Host[] findByCompanyId_PrevAndNext(
-			long hostId, long companyId,
-			OrderByComparator<Host> orderByComparator)
-		throws de.uhh.l2g.plugins.exception.NoSuchHostException {
-
-		return getPersistence().findByCompanyId_PrevAndNext(
-			hostId, companyId, orderByComparator);
-	}
-
-	/**
-	 * Removes all the hosts where companyId = &#63; from the database.
-	 *
-	 * @param companyId the company ID
-	 */
-	public static void removeByCompanyId(long companyId) {
-		getPersistence().removeByCompanyId(companyId);
-	}
-
-	/**
-	 * Returns the number of hosts where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the number of matching hosts
-	 */
-	public static int countByCompanyId(long companyId) {
-		return getPersistence().countByCompanyId(companyId);
+	public static int countBydirectory(String directory) {
+		return getPersistence().countBydirectory(directory);
 	}
 
 	/**

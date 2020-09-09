@@ -1054,6 +1054,11 @@ public class VideoWrapper
 	}
 
 	@Override
+	public boolean isWithMissingMetadata() {
+		return model.isWithMissingMetadata();
+	}
+
+	@Override
 	public void persist() {
 		model.persist();
 	}

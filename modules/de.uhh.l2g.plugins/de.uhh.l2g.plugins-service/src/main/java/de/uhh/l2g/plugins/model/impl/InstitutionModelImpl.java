@@ -116,23 +116,17 @@ public class InstitutionModelImpl
 			"value.object.column.bitmask.enabled.de.uhh.l2g.plugins.model.Institution"),
 		true);
 
-	public static final long COMPANYID_COLUMN_BITMASK = 1L;
+	public static final long LEVEL_COLUMN_BITMASK = 1L;
 
-	public static final long GROUPID_COLUMN_BITMASK = 2L;
+	public static final long NAME_COLUMN_BITMASK = 2L;
 
-	public static final long INSTITUTIONID_COLUMN_BITMASK = 4L;
+	public static final long PARENTID_COLUMN_BITMASK = 4L;
 
-	public static final long LEVEL_COLUMN_BITMASK = 8L;
+	public static final long SORT_COLUMN_BITMASK = 8L;
 
-	public static final long NAME_COLUMN_BITMASK = 16L;
+	public static final long TYP_COLUMN_BITMASK = 16L;
 
-	public static final long PARENTID_COLUMN_BITMASK = 32L;
-
-	public static final long SORT_COLUMN_BITMASK = 64L;
-
-	public static final long TYP_COLUMN_BITMASK = 128L;
-
-	public static final long WWW_COLUMN_BITMASK = 256L;
+	public static final long WWW_COLUMN_BITMASK = 32L;
 
 	public static final long LOCK_EXPIRATION_TIME = GetterUtil.getLong(
 		de.uhh.l2g.plugins.service.util.ServiceProps.get(
@@ -310,19 +304,7 @@ public class InstitutionModelImpl
 
 	@Override
 	public void setInstitutionId(long institutionId) {
-		_columnBitmask |= INSTITUTIONID_COLUMN_BITMASK;
-
-		if (!_setOriginalInstitutionId) {
-			_setOriginalInstitutionId = true;
-
-			_originalInstitutionId = _institutionId;
-		}
-
 		_institutionId = institutionId;
-	}
-
-	public long getOriginalInstitutionId() {
-		return _originalInstitutionId;
 	}
 
 	@Override
@@ -473,19 +455,7 @@ public class InstitutionModelImpl
 
 	@Override
 	public void setGroupId(long groupId) {
-		_columnBitmask |= GROUPID_COLUMN_BITMASK;
-
-		if (!_setOriginalGroupId) {
-			_setOriginalGroupId = true;
-
-			_originalGroupId = _groupId;
-		}
-
 		_groupId = groupId;
-	}
-
-	public long getOriginalGroupId() {
-		return _originalGroupId;
 	}
 
 	@Override
@@ -495,19 +465,7 @@ public class InstitutionModelImpl
 
 	@Override
 	public void setCompanyId(long companyId) {
-		_columnBitmask |= COMPANYID_COLUMN_BITMASK;
-
-		if (!_setOriginalCompanyId) {
-			_setOriginalCompanyId = true;
-
-			_originalCompanyId = _companyId;
-		}
-
 		_companyId = companyId;
-	}
-
-	public long getOriginalCompanyId() {
-		return _originalCompanyId;
 	}
 
 	public long getColumnBitmask() {
@@ -623,11 +581,6 @@ public class InstitutionModelImpl
 	public void resetOriginalValues() {
 		InstitutionModelImpl institutionModelImpl = this;
 
-		institutionModelImpl._originalInstitutionId =
-			institutionModelImpl._institutionId;
-
-		institutionModelImpl._setOriginalInstitutionId = false;
-
 		institutionModelImpl._originalParentId = institutionModelImpl._parentId;
 
 		institutionModelImpl._setOriginalParentId = false;
@@ -645,15 +598,6 @@ public class InstitutionModelImpl
 		institutionModelImpl._originalSort = institutionModelImpl._sort;
 
 		institutionModelImpl._setOriginalSort = false;
-
-		institutionModelImpl._originalGroupId = institutionModelImpl._groupId;
-
-		institutionModelImpl._setOriginalGroupId = false;
-
-		institutionModelImpl._originalCompanyId =
-			institutionModelImpl._companyId;
-
-		institutionModelImpl._setOriginalCompanyId = false;
 
 		institutionModelImpl._columnBitmask = 0;
 	}
@@ -773,8 +717,6 @@ public class InstitutionModelImpl
 	}
 
 	private long _institutionId;
-	private long _originalInstitutionId;
-	private boolean _setOriginalInstitutionId;
 	private long _parentId;
 	private long _originalParentId;
 	private boolean _setOriginalParentId;
@@ -791,11 +733,7 @@ public class InstitutionModelImpl
 	private int _originalSort;
 	private boolean _setOriginalSort;
 	private long _groupId;
-	private long _originalGroupId;
-	private boolean _setOriginalGroupId;
 	private long _companyId;
-	private long _originalCompanyId;
-	private boolean _setOriginalCompanyId;
 	private long _columnBitmask;
 	private Institution _escapedModel;
 

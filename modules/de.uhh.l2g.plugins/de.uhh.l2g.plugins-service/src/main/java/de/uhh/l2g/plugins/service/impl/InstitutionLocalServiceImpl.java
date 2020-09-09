@@ -15,22 +15,33 @@
 package de.uhh.l2g.plugins.service.impl;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
 
+import com.liferay.counter.kernel.model.Counter;
+import com.liferay.counter.kernel.service.CounterLocalServiceUtil;
+import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
-import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.service.ServiceContext;
+import com.liferay.portal.kernel.util.PropsUtil;
 import com.liferay.portal.kernel.util.Validator;
 
 import de.uhh.l2g.plugins.exception.InstitutionNameException;
 import de.uhh.l2g.plugins.exception.NoSuchInstitutionException;
-import de.uhh.l2g.plugins.model.Host;
+import de.uhh.l2g.plugins.model.Creator;
 import de.uhh.l2g.plugins.model.Institution;
+import de.uhh.l2g.plugins.model.Institution_Host;
+import de.uhh.l2g.plugins.model.impl.InstitutionImpl;
+import de.uhh.l2g.plugins.model.impl.Institution_HostImpl;
+import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Institution_HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.InstitutionLocalServiceBaseImpl;
@@ -56,63 +67,50 @@ import de.uhh.l2g.plugins.service.base.InstitutionLocalServiceBaseImpl;
 public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl {
 	/*
 	 * NOTE FOR DEVELOPERS:
-	 *
+	 * 
 	 * Never reference this interface directly. Always use {@link
 	 * de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil} to access the
 	 * institution local service.
 	 */
-	protected static Log LOG = LogFactoryUtil.getLog(Institution.class.getName());	
-	 
+	protected static Log LOG = LogFactoryUtil.getLog(Institution.class.getName());
+
+	public Institution addInstitution(Institution object){
+		Long id;
+		try {
+			id = counterLocalService.increment(Institution.class.getName());
+			object.setPrimaryKey(id);
+			super.addInstitution(object);
+		} catch (SystemException e) {
+			LOG.error("can't add new object with id " + object.getPrimaryKey() + "!");
+		}
+		return object;
+	}
+	
 	public Institution getById(long institutionId) throws SystemException {
 		return institutionPersistence.fetchByPrimaryKey(institutionId);
 	}
 
-	public List<Institution> getByGroupId(long groupId) throws SystemException {
-		return institutionPersistence.findByGroupId(groupId);
-	}
-
 	public List<Institution> getRootInstitutionsByOpenAccessVideos() throws SystemException {
-		return institutionFinder.findRootInstitutionsByOpenAccessVideos(); 
-	}
-	
-	public Institution getByGroupIdAndId(long groupId, long institutionId) throws SystemException {
-		return institutionPersistence.fetchByG_I(groupId, institutionId);
+		return institutionFinder.findRootInstitutionsByOpenAccessVideos();
 	}
 
-	public Institution getRootByGroupId(long companyId, long groupId) throws SystemException {
-		return (Institution) institutionPersistence.fetchByRoot(companyId, groupId);
-	}
-
-	public List<Institution> getByGroupIdAndParent(long groupId, long parentId) throws SystemException {
-		return institutionPersistence.findByG_P(groupId, parentId);
-	}
-
-	public List<Institution> getByGroupIdAndParent(long groupId, long parentId, int start, int end) throws SystemException {
-		return institutionPersistence.findByG_P(groupId, parentId, start, end);
-	}
-
-	public int getByGroupIdAndParentCount(long groupId, long parentId) throws SystemException {
-		return institutionPersistence.countByG_P(groupId, parentId);
-	}
-
-	public List<Institution> getByParentId(long parentId, String type) throws SystemException {
+	public List<Institution> getByParentIdList(long parentId) throws SystemException {
 		return institutionPersistence.findByParent(parentId);
 	}
 
-	public Institution getRoot(long companyId, long groupId) throws NoSuchInstitutionException, SystemException{
-		return institutionPersistence.findByRoot(companyId, groupId);
+	public int getByParentIdCount(long parentId) throws SystemException {
+		return institutionPersistence.countByParent(parentId);
 	}
-	
-	public Institution getRootByParentAndCompanyAndGroup(long parentId, long companyId, long groupId) throws NoSuchInstitutionException, SystemException{
-		return institutionPersistence.findByParentAndCompanyAndGroup(parentId, companyId, groupId);
+
+	public List<Institution> getByParentId(long parentId) throws SystemException {
+		return institutionPersistence.findByParent(parentId);
 	}
-	
-	public  List<Institution> getByParentId(long parentId) throws SystemException {
-		List<Institution> institutions = institutionPersistence.findByParent(parentId);
-		return institutions;
+
+	public Institution getRoot() throws NoSuchInstitutionException, SystemException {
+		return institutionPersistence.findByParent(0).iterator().next();
 	}
-	
-	public Map<String, String> getByParent(long parentId) throws SystemException {
+
+	public Map<String, String> getByParentIdMap(long parentId) throws SystemException {
 		Map<String, String> institutions = new LinkedHashMap<String, String>();
 		List<Institution> fList = institutionPersistence.findByParent(parentId);
 
@@ -170,136 +168,236 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 	}
 
 	protected void validate(String name) throws PortalException {
-
 		if (Validator.isNull(name)) {
 			throw new InstitutionNameException();
 		}
-
 	}
 
-	protected void up(){}
+	protected void up() {
+	}
 
-	protected void down() {}
+	protected void down() {
+	}
 
-
-    /** Refreshes sort number for given institution
-     *  Adds new number on insert (newpos > 0) - shifts numbers on delete (newpos = 0)
-     *
-     */
-	protected int updateSort(Institution inst, int newpos) throws SystemException{
+	/**
+	 * Refreshes sort number for given institution Adds new number on insert
+	 * (newpos > 0) - shifts numbers on delete (newpos = 0)
+	 *
+	 */
+	protected int updateSort(Institution inst, int newpos) throws SystemException {
 		int validPosition = 0;
 		int curPos = 1;
 		int prevPos = inst.getSort();
 
-		//System.out.println(inst.getSort());
-		int subElements = InstitutionLocalServiceUtil.getByGroupIdAndParentCount(inst.getGroupId(), inst.getParentId());
+		// System.out.println(inst.getSort());
+		int subElements = getByParentIdCount(inst.getParentId());
 
-		if (subElements < 1) validPosition = 1; // There is nothing to reorder and only one valid position
-		else{ // sort Elements newpos <= 1 => shift all, newpos > max attach at back
-			List<Institution> subtree = InstitutionLocalServiceUtil.getByGroupIdAndParent(inst.getGroupId(), inst.getParentId());
+		if (subElements < 1)
+			validPosition = 1; // There is nothing to reorder and only one valid
+								// position
+		else { // sort Elements newpos <= 1 => shift all, newpos > max attach at
+				// back
+			List<Institution> subtree = getByParentId(inst.getParentId());
 
-			//delete (virtually append to end and shift all other down)
+			// delete (virtually append to end and shift all other down)
 			int increment = 0;
-			//System.out.println("Start: " + curPos + " " + newpos + " " + prevPos  + " " +increment+ " " +validPosition);
-			for (Institution subInstitution: subtree){
-				 if (newpos <= curPos && increment == 0){ //insert new Institution here
-					 if (newpos > 0) {
-						 validPosition = curPos;
-						 increment = 1; //shift all follwing up
-					 }
-					 else { //newpos = 0 <=> remove 
-						 if (curPos > prevPos) increment = -1;
-							//System.out.println(subInstitution.getInstitutionId() +" "+ subInstitution.getName()+ " " + curPos + " " + increment+ " " +validPosition);
-							
-					 }
-				 }
-				 subInstitution.setSort(curPos + increment);
-				 institutionPersistence.update(subInstitution);
-				 //System.out.println(subInstitution.getInstitutionId() +" "+ subInstitution.getName()+ " " + curPos + " " + increment+ " " +validPosition);
-				 curPos++;
+			// System.out.println("Start: " + curPos + " " + newpos + " " +
+			// prevPos + " " +increment+ " " +validPosition);
+			for (Institution subInstitution : subtree) {
+				if (newpos <= curPos && increment == 0) { // insert new
+															// Institution here
+					if (newpos > 0) {
+						validPosition = curPos;
+						increment = 1; // shift all follwing up
+					} else { // newpos = 0 <=> remove
+						if (curPos > prevPos)
+							increment = -1;
+						// System.out.println(subInstitution.getInstitutionId()
+						// +" "+ subInstitution.getName()+ " " + curPos + " " +
+						// increment+ " " +validPosition);
+
+					}
+				}
+				subInstitution.setSort(curPos + increment);
+				institutionPersistence.update(subInstitution);
+				// System.out.println(subInstitution.getInstitutionId() +" "+
+				// subInstitution.getName()+ " " + curPos + " " + increment+ " "
+				// +validPosition);
+				curPos++;
 
 			}
-			if (increment == 0) validPosition = curPos;
+			if (increment == 0)
+				validPosition = curPos;
 
 		}
 
-
-		//System.out.println(validPosition);
+		// System.out.println(validPosition);
 
 		return validPosition;
 	}
-	
-    /** Refreshes sort of subinstitutions for given parent
-     *  Brings values in natural order starting with 1
-     *  
-     *  Finder results must be preorderd by sort
-     */
-	protected void reorderChildren(Institution inst) throws SystemException{
 
-		int subElements = InstitutionLocalServiceUtil.getByGroupIdAndParentCount(inst.getGroupId(), inst.getPrimaryKey());
-
-		// There is nothing to reorder if number of children is smaller 1   
+	/**
+	 * Refreshes sort of subinstitutions for given parent Brings values in
+	 * natural order starting with 1
+	 * 
+	 * Finder results must be preorderd by sort
+	 */
+	protected void reorderChildren(Institution inst) throws SystemException {
+		int subElements = getByParentIdCount(inst.getPrimaryKey());
+		// There is nothing to reorder if number of children is smaller 1
 		int startPos = 1;
 		if (subElements > 1) { // sort Elements newpos <= 1 => shift all
-			List<Institution> subtree = InstitutionLocalServiceUtil.getByGroupIdAndParent(inst.getGroupId(), inst.getPrimaryKey());
-
+			List<Institution> subtree = InstitutionLocalServiceUtil.getByParentId(inst.getPrimaryKey());
+			//
 			int increment = 0;
-			for (Institution subInstitution: subtree){
-				//System.out.println("Reorder: "+startPos + increment);
-				 subInstitution.setSort(startPos + increment);
-				 institutionPersistence.update(subInstitution);
-				 increment++;
-
+			for (Institution subInstitution : subtree) {
+				// System.out.println("Reorder: "+startPos + increment);
+				subInstitution.setSort(startPos + increment);
+				institutionPersistence.update(subInstitution);
+				increment++;
 			}
-
 		}
 	}
-	
-	public Institution updateInstitution(long institutionId, String name, int sort,
-		       ServiceContext serviceContext) throws PortalException,
-		       SystemException {
-		    long groupId = serviceContext.getScopeGroupId();
-		    long companyId = serviceContext.getCompanyId();
-		    long userId = serviceContext.getUserId();
 
-		    User user = userPersistence.findByPrimaryKey(userId);
+	public long getDefaultInstitutionId() throws SystemException {
+		Institution defaultInstitution = institutionPersistence.findByParent(0).iterator().next();
+		//
+		if (defaultInstitution == null)
+			return 0;
+		else
+			return defaultInstitution.getPrimaryKey();
+	}
 
+	public Institution addDefaultInstitution(ServiceContext serviceContext) throws SystemException, PortalException {
+		long institutionId = counterLocalService.increment(Institution.class.getName());
+		Institution defaultInstitution = institutionPersistence.create(institutionId);
+		// ParentId = 0 marks default
+		defaultInstitution.setName(PropsUtil.get("lecture2go.default.rootInstitution"));
+		// Set Top Level Attributes
+		defaultInstitution.setParentId(0);
+		defaultInstitution.setLevel(0);
+		defaultInstitution.setParentId(0);
+		defaultInstitution.setTyp("tree1");
+		defaultInstitution.setExpandoBridgeAttributes(serviceContext);
+		institutionPersistence.update(defaultInstitution);
+		// add default host if set
+		long hostId = HostLocalServiceUtil.getDefaultHost().getHostId();
+		if (hostId > 0) {
+			Institution_HostLocalServiceUtil.addEntry(institutionId, hostId, serviceContext);
+		}
+		//
+		return defaultInstitution;
+	}
 
-			validate(name);
+	public Institution addInstitution(String name, long hostId, long parentId, int sort) throws SystemException, PortalException {
+		validate(name);
+		long institutionId = counterLocalService.increment(Institution.class.getName());
+		Institution institution = InstitutionLocalServiceUtil.createInstitution(institutionId);
+		institution.setInstitutionId(institutionId);
+		Institution parent = InstitutionLocalServiceUtil.getById(parentId);
+		institution.setName(name);
+		institution.setParentId(parentId);
+		institution.setTyp("tree1"); // there is no tree2 anymore
 
-		    Institution institution = getInstitution(institutionId);
+		if (parentId > 0 && parentId < Long.MAX_VALUE)
+			institution.setLevel(parent.getLevel() + 1);
+		else
+			institution.setLevel(0);
 
-		    institution.setName(name);
-			institution.setGroupId(groupId);
-			institution.setCompanyId(companyId);
+		if (sort <= 0)
+			sort = 1;
+		institution.setSort(updateSort(institution, sort));
+		//
+		Institution nI = InstitutionLocalServiceUtil.addInstitution(institution);
 
-			if(sort <= 0) sort = 1;
-			institution.setSort(updateSort(institution,sort));
-
-			institution.setExpandoBridgeAttributes(serviceContext);
-
-			//System.out.println(institutionId+" "+institution.getPrimaryKey() );
-
-			institutionPersistence.update(institution);
-			//refresh order
-			if(institution.getParentId()>0) reorderChildren(getById(institution.getParentId()));
-			
-			//Refresh LinkTable Resources if existing
-			try{
-				Host host = Institution_HostLocalServiceUtil.getByGroupIdAndInstitutionId(companyId, groupId, institutionId);
-				//Dummy Call: Actually never change Host 
-				Institution_HostLocalServiceUtil.updateEntry(institutionId, host.getPrimaryKey(), serviceContext);
-			} catch (Exception e) {
-			    //TODO: Update Parent...
-			}
-
-		    resourceLocalService.updateResources(user.getCompanyId(), groupId,
-		         Institution.class.getName(), institutionId,
-		         serviceContext.getGroupPermissions(),
-		         serviceContext.getGuestPermissions());
-
-		    return institution;
-
+		// only add if set
+		if (hostId > 0) {
+			long id = counterLocalService.increment(Institution_Host.class.getName());
+			Institution_Host institution_Host = Institution_HostLocalServiceUtil.createInstitution_Host(id);
+			institution_Host.setInstitutionId(nI.getInstitutionId());
+			institution_Host.setHostId(hostId);
+			Institution_HostLocalServiceUtil.addInstitution_Host(institution_Host);
 		}
 
+		return institution;
+	}
+
+	public Institution updateInstitution(long institutionId, String name, int sort) throws PortalException, SystemException {
+		validate(name);
+		Institution institution = getInstitution(institutionId);
+		institution.setName(name);
+		if (sort <= 0)
+			sort = 1;
+		institution.setSort(updateSort(institution, sort));
+		institutionPersistence.update(institution);
+		// refresh order
+		if (institution.getParentId() > 0)
+			reorderChildren(getById(institution.getParentId()));
+		return institution;
+	}
+
+	public Institution removeByInstitutionId(Long institutionId) {
+		Institution ret = InstitutionLocalServiceUtil.createInstitution(0);
+		try {
+			ret = institutionPersistence.remove(institutionId);
+		} catch (Exception e) {
+			System.out.println("Could not delete " + ret.getName());
+		}
+		return ret;
+	}
+
+	public Institution deleteInstitution(long institutionId) throws PortalException, SystemException {
+		Institution institution = getInstitution(institutionId);
+		// Check if Institution is empty, i.e. no subfacilities, lecture series,
+		// videos, and members
+		if (getLockingElements(institutionId) < 1) {
+			updateSort(institution, 0);
+			institution = InstitutionLocalServiceUtil.deleteInstitution(institution);
+
+			// Remove anything from link table if there...
+			List<Institution_Host> linstitution_Host = Institution_HostLocalServiceUtil.getListByInstitutionId(institutionId);
+			if (linstitution_Host.size() > 0) {
+				for (Institution_Host link : linstitution_Host) {
+					long ihId = link.getPrimaryKey();
+					// System.out.println(ihId);
+					Institution_HostLocalServiceUtil.deleteLinkById(ihId);
+				}
+			}
+		} else {
+			System.out.println("Could not delte " + institution.getName() + "because there are lectures, videos or other entity instances associated with this institution");
+		}
+
+		return institution;
+	}
+	
+	/**
+	 * Prepares the list of institutions for pending producers selection
+	 * (institutions which should not be selected can be defined via properties file)
+	 * @return the list of institutions for the producer to select
+	 * @throws SystemException
+	 */
+	public List<Institution> getForProducerPending() throws SystemException {
+		// this is a unmodifiable list, so we copy the elements later on
+		List<Institution> institutions = getByLevel(1);
+		 
+		if (PropsUtil.contains("lecture2go.producer.pending.restrictedinstitutions")) {
+			// get the restricted institutions ids from the properties file
+			String[] restrictInstitutionIds = PropsUtil.getArray("lecture2go.producer.pending.restrictedinstitutions");
+			
+			List<Long> restrictInstitutionIdsList = new ArrayList<Long>();
+			for (String restrictInstitutionIdString : restrictInstitutionIds) {
+				restrictInstitutionIdsList.add(Long.parseLong(restrictInstitutionIdString));
+			}
+			
+			List<Institution> nonRestrictedInstitutions = new ArrayList<Institution>();
+			for (Institution institution: institutions) {
+				if (!restrictInstitutionIdsList.contains(institution.getInstitutionId())) {
+					nonRestrictedInstitutions.add(institution);
+				}
+			}
+			return nonRestrictedInstitutions;
+		}
+		return institutions;
+	}
+	
 }

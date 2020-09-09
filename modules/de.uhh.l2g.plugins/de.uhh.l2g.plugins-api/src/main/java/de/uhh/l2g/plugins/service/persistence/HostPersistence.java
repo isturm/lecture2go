@@ -42,281 +42,80 @@ public interface HostPersistence extends BasePersistence<Host> {
 	 */
 
 	/**
-	 * Returns all the hosts where groupId = &#63;.
+	 * Returns the host where defaultHost = &#63; or throws a <code>NoSuchHostException</code> if it could not be found.
 	 *
-	 * @param groupId the group ID
-	 * @return the matching hosts
+	 * @param defaultHost the default host
+	 * @return the matching host
+	 * @throws NoSuchHostException if a matching host could not be found
 	 */
-	public java.util.List<Host> findByGroup(long groupId);
+	public Host findBydefaultHost(int defaultHost) throws NoSuchHostException;
 
 	/**
-	 * Returns a range of all the hosts where groupId = &#63;.
+	 * Returns the host where defaultHost = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>HostModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of hosts
-	 * @param end the upper bound of the range of hosts (not inclusive)
-	 * @return the range of matching hosts
+	 * @param defaultHost the default host
+	 * @return the matching host, or <code>null</code> if a matching host could not be found
 	 */
-	public java.util.List<Host> findByGroup(long groupId, int start, int end);
+	public Host fetchBydefaultHost(int defaultHost);
 
 	/**
-	 * Returns an ordered range of all the hosts where groupId = &#63;.
+	 * Returns the host where defaultHost = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>HostModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of hosts
-	 * @param end the upper bound of the range of hosts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching hosts
-	 */
-	public java.util.List<Host> findByGroup(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Host>
-			orderByComparator);
-
-	/**
-	 * Returns an ordered range of all the hosts where groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>HostModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of hosts
-	 * @param end the upper bound of the range of hosts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
+	 * @param defaultHost the default host
 	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching hosts
+	 * @return the matching host, or <code>null</code> if a matching host could not be found
 	 */
-	public java.util.List<Host> findByGroup(
-		long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Host>
-			orderByComparator,
-		boolean useFinderCache);
+	public Host fetchBydefaultHost(int defaultHost, boolean useFinderCache);
 
 	/**
-	 * Returns the first host in the ordered set where groupId = &#63;.
+	 * Removes the host where defaultHost = &#63; from the database.
 	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching host
-	 * @throws NoSuchHostException if a matching host could not be found
+	 * @param defaultHost the default host
+	 * @return the host that was removed
 	 */
-	public Host findByGroup_First(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<Host>
-				orderByComparator)
-		throws NoSuchHostException;
+	public Host removeBydefaultHost(int defaultHost) throws NoSuchHostException;
 
 	/**
-	 * Returns the first host in the ordered set where groupId = &#63;.
+	 * Returns the number of hosts where defaultHost = &#63;.
 	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching host, or <code>null</code> if a matching host could not be found
-	 */
-	public Host fetchByGroup_First(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<Host>
-			orderByComparator);
-
-	/**
-	 * Returns the last host in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching host
-	 * @throws NoSuchHostException if a matching host could not be found
-	 */
-	public Host findByGroup_Last(
-			long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<Host>
-				orderByComparator)
-		throws NoSuchHostException;
-
-	/**
-	 * Returns the last host in the ordered set where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching host, or <code>null</code> if a matching host could not be found
-	 */
-	public Host fetchByGroup_Last(
-		long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<Host>
-			orderByComparator);
-
-	/**
-	 * Returns the hosts before and after the current host in the ordered set where groupId = &#63;.
-	 *
-	 * @param hostId the primary key of the current host
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next host
-	 * @throws NoSuchHostException if a host with the primary key could not be found
-	 */
-	public Host[] findByGroup_PrevAndNext(
-			long hostId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<Host>
-				orderByComparator)
-		throws NoSuchHostException;
-
-	/**
-	 * Removes all the hosts where groupId = &#63; from the database.
-	 *
-	 * @param groupId the group ID
-	 */
-	public void removeByGroup(long groupId);
-
-	/**
-	 * Returns the number of hosts where groupId = &#63;.
-	 *
-	 * @param groupId the group ID
+	 * @param defaultHost the default host
 	 * @return the number of matching hosts
 	 */
-	public int countByGroup(long groupId);
+	public int countBydefaultHost(int defaultHost);
 
 	/**
-	 * Returns all the hosts where companyId = &#63;.
+	 * Returns the host where companyId = &#63; or throws a <code>NoSuchHostException</code> if it could not be found.
 	 *
 	 * @param companyId the company ID
-	 * @return the matching hosts
+	 * @return the matching host
+	 * @throws NoSuchHostException if a matching host could not be found
 	 */
-	public java.util.List<Host> findByCompany(long companyId);
+	public Host findByhostId(long companyId) throws NoSuchHostException;
 
 	/**
-	 * Returns a range of all the hosts where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>HostModelImpl</code>.
-	 * </p>
+	 * Returns the host where companyId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
 	 * @param companyId the company ID
-	 * @param start the lower bound of the range of hosts
-	 * @param end the upper bound of the range of hosts (not inclusive)
-	 * @return the range of matching hosts
+	 * @return the matching host, or <code>null</code> if a matching host could not be found
 	 */
-	public java.util.List<Host> findByCompany(
-		long companyId, int start, int end);
+	public Host fetchByhostId(long companyId);
 
 	/**
-	 * Returns an ordered range of all the hosts where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>HostModelImpl</code>.
-	 * </p>
+	 * Returns the host where companyId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
 	 * @param companyId the company ID
-	 * @param start the lower bound of the range of hosts
-	 * @param end the upper bound of the range of hosts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching hosts
-	 */
-	public java.util.List<Host> findByCompany(
-		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Host>
-			orderByComparator);
-
-	/**
-	 * Returns an ordered range of all the hosts where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>HostModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of hosts
-	 * @param end the upper bound of the range of hosts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
 	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching hosts
+	 * @return the matching host, or <code>null</code> if a matching host could not be found
 	 */
-	public java.util.List<Host> findByCompany(
-		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Host>
-			orderByComparator,
-		boolean useFinderCache);
+	public Host fetchByhostId(long companyId, boolean useFinderCache);
 
 	/**
-	 * Returns the first host in the ordered set where companyId = &#63;.
+	 * Removes the host where companyId = &#63; from the database.
 	 *
 	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching host
-	 * @throws NoSuchHostException if a matching host could not be found
+	 * @return the host that was removed
 	 */
-	public Host findByCompany_First(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<Host>
-				orderByComparator)
-		throws NoSuchHostException;
-
-	/**
-	 * Returns the first host in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching host, or <code>null</code> if a matching host could not be found
-	 */
-	public Host fetchByCompany_First(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<Host>
-			orderByComparator);
-
-	/**
-	 * Returns the last host in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching host
-	 * @throws NoSuchHostException if a matching host could not be found
-	 */
-	public Host findByCompany_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<Host>
-				orderByComparator)
-		throws NoSuchHostException;
-
-	/**
-	 * Returns the last host in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching host, or <code>null</code> if a matching host could not be found
-	 */
-	public Host fetchByCompany_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<Host>
-			orderByComparator);
-
-	/**
-	 * Returns the hosts before and after the current host in the ordered set where companyId = &#63;.
-	 *
-	 * @param hostId the primary key of the current host
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next host
-	 * @throws NoSuchHostException if a host with the primary key could not be found
-	 */
-	public Host[] findByCompany_PrevAndNext(
-			long hostId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<Host>
-				orderByComparator)
-		throws NoSuchHostException;
-
-	/**
-	 * Removes all the hosts where companyId = &#63; from the database.
-	 *
-	 * @param companyId the company ID
-	 */
-	public void removeByCompany(long companyId);
+	public Host removeByhostId(long companyId) throws NoSuchHostException;
 
 	/**
 	 * Returns the number of hosts where companyId = &#63;.
@@ -324,558 +123,91 @@ public interface HostPersistence extends BasePersistence<Host> {
 	 * @param companyId the company ID
 	 * @return the number of matching hosts
 	 */
-	public int countByCompany(long companyId);
+	public int countByhostId(long companyId);
 
 	/**
-	 * Returns all the hosts where groupId = &#63; and companyId = &#63;.
+	 * Returns the host where name = &#63; or throws a <code>NoSuchHostException</code> if it could not be found.
 	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @return the matching hosts
-	 */
-	public java.util.List<Host> findByGroupAndCompany(
-		long groupId, long companyId);
-
-	/**
-	 * Returns a range of all the hosts where groupId = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>HostModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of hosts
-	 * @param end the upper bound of the range of hosts (not inclusive)
-	 * @return the range of matching hosts
-	 */
-	public java.util.List<Host> findByGroupAndCompany(
-		long groupId, long companyId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the hosts where groupId = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>HostModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of hosts
-	 * @param end the upper bound of the range of hosts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching hosts
-	 */
-	public java.util.List<Host> findByGroupAndCompany(
-		long groupId, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Host>
-			orderByComparator);
-
-	/**
-	 * Returns an ordered range of all the hosts where groupId = &#63; and companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>HostModelImpl</code>.
-	 * </p>
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of hosts
-	 * @param end the upper bound of the range of hosts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching hosts
-	 */
-	public java.util.List<Host> findByGroupAndCompany(
-		long groupId, long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Host>
-			orderByComparator,
-		boolean useFinderCache);
-
-	/**
-	 * Returns the first host in the ordered set where groupId = &#63; and companyId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching host
-	 * @throws NoSuchHostException if a matching host could not be found
-	 */
-	public Host findByGroupAndCompany_First(
-			long groupId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<Host>
-				orderByComparator)
-		throws NoSuchHostException;
-
-	/**
-	 * Returns the first host in the ordered set where groupId = &#63; and companyId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching host, or <code>null</code> if a matching host could not be found
-	 */
-	public Host fetchByGroupAndCompany_First(
-		long groupId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<Host>
-			orderByComparator);
-
-	/**
-	 * Returns the last host in the ordered set where groupId = &#63; and companyId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching host
-	 * @throws NoSuchHostException if a matching host could not be found
-	 */
-	public Host findByGroupAndCompany_Last(
-			long groupId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<Host>
-				orderByComparator)
-		throws NoSuchHostException;
-
-	/**
-	 * Returns the last host in the ordered set where groupId = &#63; and companyId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching host, or <code>null</code> if a matching host could not be found
-	 */
-	public Host fetchByGroupAndCompany_Last(
-		long groupId, long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<Host>
-			orderByComparator);
-
-	/**
-	 * Returns the hosts before and after the current host in the ordered set where groupId = &#63; and companyId = &#63;.
-	 *
-	 * @param hostId the primary key of the current host
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next host
-	 * @throws NoSuchHostException if a host with the primary key could not be found
-	 */
-	public Host[] findByGroupAndCompany_PrevAndNext(
-			long hostId, long groupId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<Host>
-				orderByComparator)
-		throws NoSuchHostException;
-
-	/**
-	 * Removes all the hosts where groupId = &#63; and companyId = &#63; from the database.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 */
-	public void removeByGroupAndCompany(long groupId, long companyId);
-
-	/**
-	 * Returns the number of hosts where groupId = &#63; and companyId = &#63;.
-	 *
-	 * @param groupId the group ID
-	 * @param companyId the company ID
-	 * @return the number of matching hosts
-	 */
-	public int countByGroupAndCompany(long groupId, long companyId);
-
-	/**
-	 * Returns all the hosts where companyId = &#63; and groupId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param groupId the group ID
-	 * @return the matching hosts
-	 */
-	public java.util.List<Host> findByCompanyIdAndGroupId(
-		long companyId, long groupId);
-
-	/**
-	 * Returns a range of all the hosts where companyId = &#63; and groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>HostModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of hosts
-	 * @param end the upper bound of the range of hosts (not inclusive)
-	 * @return the range of matching hosts
-	 */
-	public java.util.List<Host> findByCompanyIdAndGroupId(
-		long companyId, long groupId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the hosts where companyId = &#63; and groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>HostModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of hosts
-	 * @param end the upper bound of the range of hosts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching hosts
-	 */
-	public java.util.List<Host> findByCompanyIdAndGroupId(
-		long companyId, long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Host>
-			orderByComparator);
-
-	/**
-	 * Returns an ordered range of all the hosts where companyId = &#63; and groupId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>HostModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param groupId the group ID
-	 * @param start the lower bound of the range of hosts
-	 * @param end the upper bound of the range of hosts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching hosts
-	 */
-	public java.util.List<Host> findByCompanyIdAndGroupId(
-		long companyId, long groupId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Host>
-			orderByComparator,
-		boolean useFinderCache);
-
-	/**
-	 * Returns the first host in the ordered set where companyId = &#63; and groupId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching host
-	 * @throws NoSuchHostException if a matching host could not be found
-	 */
-	public Host findByCompanyIdAndGroupId_First(
-			long companyId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<Host>
-				orderByComparator)
-		throws NoSuchHostException;
-
-	/**
-	 * Returns the first host in the ordered set where companyId = &#63; and groupId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching host, or <code>null</code> if a matching host could not be found
-	 */
-	public Host fetchByCompanyIdAndGroupId_First(
-		long companyId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<Host>
-			orderByComparator);
-
-	/**
-	 * Returns the last host in the ordered set where companyId = &#63; and groupId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching host
-	 * @throws NoSuchHostException if a matching host could not be found
-	 */
-	public Host findByCompanyIdAndGroupId_Last(
-			long companyId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<Host>
-				orderByComparator)
-		throws NoSuchHostException;
-
-	/**
-	 * Returns the last host in the ordered set where companyId = &#63; and groupId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching host, or <code>null</code> if a matching host could not be found
-	 */
-	public Host fetchByCompanyIdAndGroupId_Last(
-		long companyId, long groupId,
-		com.liferay.portal.kernel.util.OrderByComparator<Host>
-			orderByComparator);
-
-	/**
-	 * Returns the hosts before and after the current host in the ordered set where companyId = &#63; and groupId = &#63;.
-	 *
-	 * @param hostId the primary key of the current host
-	 * @param companyId the company ID
-	 * @param groupId the group ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next host
-	 * @throws NoSuchHostException if a host with the primary key could not be found
-	 */
-	public Host[] findByCompanyIdAndGroupId_PrevAndNext(
-			long hostId, long companyId, long groupId,
-			com.liferay.portal.kernel.util.OrderByComparator<Host>
-				orderByComparator)
-		throws NoSuchHostException;
-
-	/**
-	 * Removes all the hosts where companyId = &#63; and groupId = &#63; from the database.
-	 *
-	 * @param companyId the company ID
-	 * @param groupId the group ID
-	 */
-	public void removeByCompanyIdAndGroupId(long companyId, long groupId);
-
-	/**
-	 * Returns the number of hosts where companyId = &#63; and groupId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param groupId the group ID
-	 * @return the number of matching hosts
-	 */
-	public int countByCompanyIdAndGroupId(long companyId, long groupId);
-
-	/**
-	 * Returns the host where groupId = &#63; and hostId = &#63; or throws a <code>NoSuchHostException</code> if it could not be found.
-	 *
-	 * @param groupId the group ID
-	 * @param hostId the host ID
+	 * @param name the name
 	 * @return the matching host
 	 * @throws NoSuchHostException if a matching host could not be found
 	 */
-	public Host findByG_H(long groupId, long hostId) throws NoSuchHostException;
+	public Host findByname(String name) throws NoSuchHostException;
 
 	/**
-	 * Returns the host where groupId = &#63; and hostId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the host where name = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @param groupId the group ID
-	 * @param hostId the host ID
+	 * @param name the name
 	 * @return the matching host, or <code>null</code> if a matching host could not be found
 	 */
-	public Host fetchByG_H(long groupId, long hostId);
+	public Host fetchByname(String name);
 
 	/**
-	 * Returns the host where groupId = &#63; and hostId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the host where name = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
-	 * @param groupId the group ID
-	 * @param hostId the host ID
+	 * @param name the name
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching host, or <code>null</code> if a matching host could not be found
 	 */
-	public Host fetchByG_H(long groupId, long hostId, boolean useFinderCache);
+	public Host fetchByname(String name, boolean useFinderCache);
 
 	/**
-	 * Removes the host where groupId = &#63; and hostId = &#63; from the database.
+	 * Removes the host where name = &#63; from the database.
 	 *
-	 * @param groupId the group ID
-	 * @param hostId the host ID
+	 * @param name the name
 	 * @return the host that was removed
 	 */
-	public Host removeByG_H(long groupId, long hostId)
-		throws NoSuchHostException;
+	public Host removeByname(String name) throws NoSuchHostException;
 
 	/**
-	 * Returns the number of hosts where groupId = &#63; and hostId = &#63;.
+	 * Returns the number of hosts where name = &#63;.
 	 *
-	 * @param groupId the group ID
-	 * @param hostId the host ID
+	 * @param name the name
 	 * @return the number of matching hosts
 	 */
-	public int countByG_H(long groupId, long hostId);
+	public int countByname(String name);
 
 	/**
-	 * Returns the host where companyId = &#63; and groupId = &#63; or throws a <code>NoSuchHostException</code> if it could not be found.
+	 * Returns the host where directory = &#63; or throws a <code>NoSuchHostException</code> if it could not be found.
 	 *
-	 * @param companyId the company ID
-	 * @param groupId the group ID
+	 * @param directory the directory
 	 * @return the matching host
 	 * @throws NoSuchHostException if a matching host could not be found
 	 */
-	public Host findByDefaultHost(long companyId, long groupId)
-		throws NoSuchHostException;
+	public Host findBydirectory(String directory) throws NoSuchHostException;
 
 	/**
-	 * Returns the host where companyId = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
+	 * Returns the host where directory = &#63; or returns <code>null</code> if it could not be found. Uses the finder cache.
 	 *
-	 * @param companyId the company ID
-	 * @param groupId the group ID
+	 * @param directory the directory
 	 * @return the matching host, or <code>null</code> if a matching host could not be found
 	 */
-	public Host fetchByDefaultHost(long companyId, long groupId);
+	public Host fetchBydirectory(String directory);
 
 	/**
-	 * Returns the host where companyId = &#63; and groupId = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
+	 * Returns the host where directory = &#63; or returns <code>null</code> if it could not be found, optionally using the finder cache.
 	 *
-	 * @param companyId the company ID
-	 * @param groupId the group ID
+	 * @param directory the directory
 	 * @param useFinderCache whether to use the finder cache
 	 * @return the matching host, or <code>null</code> if a matching host could not be found
 	 */
-	public Host fetchByDefaultHost(
-		long companyId, long groupId, boolean useFinderCache);
+	public Host fetchBydirectory(String directory, boolean useFinderCache);
 
 	/**
-	 * Removes the host where companyId = &#63; and groupId = &#63; from the database.
+	 * Removes the host where directory = &#63; from the database.
 	 *
-	 * @param companyId the company ID
-	 * @param groupId the group ID
+	 * @param directory the directory
 	 * @return the host that was removed
 	 */
-	public Host removeByDefaultHost(long companyId, long groupId)
-		throws NoSuchHostException;
+	public Host removeBydirectory(String directory) throws NoSuchHostException;
 
 	/**
-	 * Returns the number of hosts where companyId = &#63; and groupId = &#63;.
+	 * Returns the number of hosts where directory = &#63;.
 	 *
-	 * @param companyId the company ID
-	 * @param groupId the group ID
+	 * @param directory the directory
 	 * @return the number of matching hosts
 	 */
-	public int countByDefaultHost(long companyId, long groupId);
-
-	/**
-	 * Returns all the hosts where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the matching hosts
-	 */
-	public java.util.List<Host> findByCompanyId(long companyId);
-
-	/**
-	 * Returns a range of all the hosts where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>HostModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of hosts
-	 * @param end the upper bound of the range of hosts (not inclusive)
-	 * @return the range of matching hosts
-	 */
-	public java.util.List<Host> findByCompanyId(
-		long companyId, int start, int end);
-
-	/**
-	 * Returns an ordered range of all the hosts where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>HostModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of hosts
-	 * @param end the upper bound of the range of hosts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @return the ordered range of matching hosts
-	 */
-	public java.util.List<Host> findByCompanyId(
-		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Host>
-			orderByComparator);
-
-	/**
-	 * Returns an ordered range of all the hosts where companyId = &#63;.
-	 *
-	 * <p>
-	 * Useful when paginating results. Returns a maximum of <code>end - start</code> instances. <code>start</code> and <code>end</code> are not primary keys, they are indexes in the result set. Thus, <code>0</code> refers to the first result in the set. Setting both <code>start</code> and <code>end</code> to <code>QueryUtil#ALL_POS</code> will return the full result set. If <code>orderByComparator</code> is specified, then the query will include the given ORDER BY logic. If <code>orderByComparator</code> is absent, then the query will include the default ORDER BY logic from <code>HostModelImpl</code>.
-	 * </p>
-	 *
-	 * @param companyId the company ID
-	 * @param start the lower bound of the range of hosts
-	 * @param end the upper bound of the range of hosts (not inclusive)
-	 * @param orderByComparator the comparator to order the results by (optionally <code>null</code>)
-	 * @param useFinderCache whether to use the finder cache
-	 * @return the ordered range of matching hosts
-	 */
-	public java.util.List<Host> findByCompanyId(
-		long companyId, int start, int end,
-		com.liferay.portal.kernel.util.OrderByComparator<Host>
-			orderByComparator,
-		boolean useFinderCache);
-
-	/**
-	 * Returns the first host in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching host
-	 * @throws NoSuchHostException if a matching host could not be found
-	 */
-	public Host findByCompanyId_First(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<Host>
-				orderByComparator)
-		throws NoSuchHostException;
-
-	/**
-	 * Returns the first host in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the first matching host, or <code>null</code> if a matching host could not be found
-	 */
-	public Host fetchByCompanyId_First(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<Host>
-			orderByComparator);
-
-	/**
-	 * Returns the last host in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching host
-	 * @throws NoSuchHostException if a matching host could not be found
-	 */
-	public Host findByCompanyId_Last(
-			long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<Host>
-				orderByComparator)
-		throws NoSuchHostException;
-
-	/**
-	 * Returns the last host in the ordered set where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the last matching host, or <code>null</code> if a matching host could not be found
-	 */
-	public Host fetchByCompanyId_Last(
-		long companyId,
-		com.liferay.portal.kernel.util.OrderByComparator<Host>
-			orderByComparator);
-
-	/**
-	 * Returns the hosts before and after the current host in the ordered set where companyId = &#63;.
-	 *
-	 * @param hostId the primary key of the current host
-	 * @param companyId the company ID
-	 * @param orderByComparator the comparator to order the set by (optionally <code>null</code>)
-	 * @return the previous, current, and next host
-	 * @throws NoSuchHostException if a host with the primary key could not be found
-	 */
-	public Host[] findByCompanyId_PrevAndNext(
-			long hostId, long companyId,
-			com.liferay.portal.kernel.util.OrderByComparator<Host>
-				orderByComparator)
-		throws NoSuchHostException;
-
-	/**
-	 * Removes all the hosts where companyId = &#63; from the database.
-	 *
-	 * @param companyId the company ID
-	 */
-	public void removeByCompanyId(long companyId);
-
-	/**
-	 * Returns the number of hosts where companyId = &#63;.
-	 *
-	 * @param companyId the company ID
-	 * @return the number of matching hosts
-	 */
-	public int countByCompanyId(long companyId);
+	public int countBydirectory(String directory);
 
 	/**
 	 * Caches the host in the entity cache if it is enabled.

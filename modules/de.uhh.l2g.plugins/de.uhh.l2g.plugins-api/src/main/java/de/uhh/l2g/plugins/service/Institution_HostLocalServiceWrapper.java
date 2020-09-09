@@ -129,17 +129,6 @@ public class Institution_HostLocalServiceWrapper
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.model.Institution_Host deleteLinkById(
-			long institutionHostId,
-			com.liferay.portal.kernel.service.ServiceContext serviceContext)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			   com.liferay.portal.kernel.exception.SystemException {
-
-		return _institution_HostLocalService.deleteLinkById(
-			institutionHostId, serviceContext);
-	}
-
-	@Override
 	public de.uhh.l2g.plugins.model.Institution_Host deleteLinkByInstitution(
 			de.uhh.l2g.plugins.model.Institution institution, long groupId,
 			long companyId)
@@ -269,50 +258,20 @@ public class Institution_HostLocalServiceWrapper
 	}
 
 	@Override
-	public int getByCompanyIdAndHostIdCount(long companyId, long hostId)
+	public java.util.List<de.uhh.l2g.plugins.model.Institution> getByHostId(
+			long hostId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			   com.liferay.portal.kernel.exception.SystemException {
 
-		return _institution_HostLocalService.getByCompanyIdAndHostIdCount(
-			companyId, hostId);
+		return _institution_HostLocalService.getByHostId(hostId);
 	}
 
 	@Override
-	public java.util.List<de.uhh.l2g.plugins.model.Institution_Host>
-			getByGroupId(long groupId)
+	public int getByHostIdCount(long hostId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			   com.liferay.portal.kernel.exception.SystemException {
 
-		return _institution_HostLocalService.getByGroupId(groupId);
-	}
-
-	@Override
-	public java.util.List<de.uhh.l2g.plugins.model.Institution>
-			getByGroupIdAndHostId(long groupId, long hostId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			   com.liferay.portal.kernel.exception.SystemException {
-
-		return _institution_HostLocalService.getByGroupIdAndHostId(
-			groupId, hostId);
-	}
-
-	@Override
-	public int getByGroupIdAndHostIdCount(long groupId, long hostId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			   com.liferay.portal.kernel.exception.SystemException {
-
-		return _institution_HostLocalService.getByGroupIdAndHostIdCount(
-			groupId, hostId);
-	}
-
-	@Override
-	public de.uhh.l2g.plugins.model.Host getByGroupIdAndInstitutionId(
-			long companyId, long groupId, long institutionId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			   com.liferay.portal.kernel.exception.SystemException {
-
-		return _institution_HostLocalService.getByGroupIdAndInstitutionId(
-			companyId, groupId, institutionId);
+		return _institution_HostLocalService.getByHostIdCount(hostId);
 	}
 
 	@Override
@@ -335,9 +294,8 @@ public class Institution_HostLocalServiceWrapper
 	 * Assume one Institution has at most one Host that remains constant
 	 */
 	@Override
-	public long getDefaultInstitutionHostId(long companyId, long groupId) {
-		return _institution_HostLocalService.getDefaultInstitutionHostId(
-			companyId, groupId);
+	public long getDefaultInstitutionHostId() {
+		return _institution_HostLocalService.getDefaultInstitutionHostId();
 	}
 
 	@Override
@@ -393,37 +351,22 @@ public class Institution_HostLocalServiceWrapper
 	}
 
 	@Override
-	public de.uhh.l2g.plugins.model.Institution_Host
-			getLinkByGroupIdAndInstitutionId(long groupId, long institutionId)
+	public de.uhh.l2g.plugins.model.Institution_Host getLinkByInstitutionId(
+			long institutionId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			   com.liferay.portal.kernel.exception.SystemException {
 
-		return _institution_HostLocalService.getLinkByGroupIdAndInstitutionId(
-			groupId, institutionId);
+		return _institution_HostLocalService.getLinkByInstitutionId(
+			institutionId);
 	}
 
 	@Override
 	public java.util.List<de.uhh.l2g.plugins.model.Institution_Host>
-			getListByGroupIdAndHostId(long groupId, long hostId)
+			getListByHostId(long hostId)
 		throws com.liferay.portal.kernel.exception.PortalException,
 			   com.liferay.portal.kernel.exception.SystemException {
 
-		return _institution_HostLocalService.getListByGroupIdAndHostId(
-			groupId, hostId);
-	}
-
-	/**
-	 * Actually this should never give a list because, there can be only one host per isntitution
-	 */
-	@Override
-	public java.util.List<de.uhh.l2g.plugins.model.Institution_Host>
-			getListByGroupIdAndInstitutionId(
-				long companyId, long groupId, long institutionId)
-		throws com.liferay.portal.kernel.exception.PortalException,
-			   com.liferay.portal.kernel.exception.SystemException {
-
-		return _institution_HostLocalService.getListByGroupIdAndInstitutionId(
-			companyId, groupId, institutionId);
+		return _institution_HostLocalService.getListByHostId(hostId);
 	}
 
 	@Override

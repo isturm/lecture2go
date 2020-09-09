@@ -4,9 +4,9 @@ Bundle-Version: 1.0.0
 -includeresource: META-INF/service.xml=../de.uhh.l2g.plugins-service/service.xml
 Export-Package: \
 	com.josephoconnell.html,\
-	de.uhh.l2g.plugins.exception,\
 	de.uhh.l2g.plugins.model,\
 	de.uhh.l2g.plugins.service,\
 	de.uhh.l2g.plugins.service.persistence,\
-	de.uhh.l2g.plugins.util
+	de.uhh.l2g.plugins.util,\
+	de.uhh.l2g.plugins.exception
 Web-ContextPath: /de.uhh.l2g.plugins-api

@@ -18,11 +18,16 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.liferay.portal.kernel.bean.PortletBeanLocatorUtil;
+import com.liferay.portal.kernel.dao.orm.DynamicQuery;
+import com.liferay.portal.kernel.dao.orm.DynamicQueryFactoryUtil;
+import com.liferay.portal.kernel.dao.orm.OrderFactoryUtil;
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.language.LanguageUtil;
 import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
+import com.liferay.portal.kernel.model.ResourceConstants;
 import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.servlet.SessionMessages;
 import com.liferay.portal.kernel.util.GetterUtil;
@@ -31,12 +36,30 @@ import com.liferay.portal.kernel.util.Validator;
 
 import de.uhh.l2g.plugins.exception.HostNameException;
 import de.uhh.l2g.plugins.exception.HostStreamerException;
-import de.uhh.l2g.plugins.exception.NoPropertyException;
 import de.uhh.l2g.plugins.model.Host;
+import de.uhh.l2g.plugins.service.HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Institution_HostLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.HostLocalServiceBaseImpl;
 import de.uhh.l2g.plugins.util.RepositoryManager;
 
+/**
+ * The implementation of the host local service.
+ *
+ * <p>
+ * All custom service methods should be put in this class. Whenever methods are
+ * added, rerun ServiceBuilder to copy their definitions into the
+ * {@link de.uhh.l2g.plugins.service.HostLocalService} interface.
+ *
+ * <p>
+ * This is a local service. Methods of this service will not have security
+ * checks based on the propagated JAAS credentials because this service can only
+ * be accessed from within the same VM.
+ * </p>
+ *
+ * @author Iavor Sturm
+ * @see de.uhh.l2g.plugins.service.base.HostLocalServiceBaseImpl
+ * @see de.uhh.l2g.plugins.service.HostLocalServiceUtil
+ */
 public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 	/*
 	 * NOTE FOR DEVELOPERS:
@@ -57,58 +80,62 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 		try {
 			h = Institution_HostLocalServiceUtil.getByInstitutionId(institutionId);
 		} catch (PortalException e) {
-			//e.printStackTrace();
+			LOG.debug("Can't fetch host by institution id "+institutionId);
 		}
 		return h;
 	}
 
+	public int countAll(){
+		int count = 0;
+		try {
+			count = hostPersistence.countAll();
+		} catch (SystemException e) {
+			LOG.debug("Can't fetch number of hosts");
+		}
+		return count;
+	}
+	
+	public List<Host> getAll(){
+		List<Host> ret = new ArrayList<Host>(); 
+		try {
+			ret = hostPersistence.findAll();
+		} catch (SystemException e) {
+			LOG.debug("Can't fetch list of all hosts");
+		}
+		return ret;
+	}
+	
+	public List<Host> getAll(int start, int end){
+		List<Host> ret = new ArrayList<Host>(); 
+		try {
+			ret = hostPersistence.findAll(start, end);
+		} catch (SystemException e) {
+			LOG.debug("Can't fetch list of hosts");
+		}
+		return ret;
+	}
+	
 	public Host getByHostId(long hostId) throws SystemException {
 		return hostPersistence.fetchByPrimaryKey(hostId);
 	}
-
-	public List<Host> getByCompanyId(long companyId) throws SystemException {
-		return hostPersistence.findByCompany(companyId);
-	}
 	
-	public List<Host> getByGroupId(long groupId) throws SystemException {
-		return hostPersistence.findByGroup(groupId);
-	}
-
-	public List<Host> getByGroupId(long groupId, int start, int end) throws SystemException {
-		return hostPersistence.findByGroup(groupId, start, end);
-	}
-
-	public int getByGroupIdCount(long groupId) throws SystemException {
-		return hostPersistence.countByGroup(groupId);
-	}
-
-	public Host getByGroupIdAndHostId(long groupId, long hostId) throws SystemException {
-		return hostPersistence.fetchByG_H(groupId, hostId);
-	}
-
-	public List<Host> getByCompanyIdAndGroupId(long companyId, long groupId) throws SystemException {
-		return hostPersistence.findByCompanyIdAndGroupId(companyId, groupId);
-	}
-
-	public Host getByDefault(long companyId, long groupId) throws SystemException {
-		Host defaultHost = hostPersistence.fetchByDefaultHost(companyId, groupId, false);
+	public Host getDefaultHost(){
+		Host defaultHost = HostLocalServiceUtil.createHost(0);
+		try {
+			defaultHost = hostPersistence.fetchBydefaultHost(0);
+		} catch (Exception e) {
+			LOG.debug("Can't fetch default host");
+		}
 		return defaultHost;
 	}
 
-	public long getDefaultHostId(long companyId, long groupId) throws SystemException {
-		Host defaultHost = hostPersistence.fetchByDefaultHost(companyId, groupId, false);
-		if (defaultHost == null) return 0;
-		else return defaultHost.getPrimaryKey();
-	}
-
 	/** Host is locked if it is linked to an institution */
-	public int getLockingElements(long companyId, long hostId) throws SystemException {
+	public int getLockingElements(long hostId) throws SystemException {
 		int c = 0;
 		try {
-			c = Institution_HostLocalServiceUtil.getByCompanyIdAndHostIdCount(companyId, hostId);
+			c = Institution_HostLocalServiceUtil.getByHostIdCount(hostId);
 		} catch (PortalException e) {
-			// TODO Auto-generated catch block
-			//e.printStackTrace();
+			LOG.debug("Can't fetch locking elements");
 		}
 		return c;
 	}
@@ -124,64 +151,32 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 		}
 	}
 
-	public static final String DEFAULT_STREAMER = "Default";
-
-	/**
-	 * Special handling for default entries (no update)
-	 * 
-	 */
-	public Host addDefaultHost(ServiceContext serviceContext) throws SystemException, PortalException {
-		long groupId = serviceContext.getScopeGroupId();
-		long companyId = serviceContext.getCompanyId();
+	public Host addHost(String name, String prefix) throws SystemException, PortalException {
 		long hostId = counterLocalService.increment(Host.class.getName());
+		Host host = hostPersistence.create(hostId);
+		host.setName(name);
+		host.setPrefix(prefix);
+		host.setDirectory("vh_"+hostId);
+		super.addHost(host);
 
-		Host defaultHost = hostPersistence.create(hostId);
-
-		LOG.debug("Writing Host");
-		defaultHost.setName(DEFAULT_STREAMER);
-		defaultHost.setGroupId(groupId);
-		defaultHost.setCompanyId(companyId);
-
-		// Load from Portal Properties
-		String streamer = GetterUtil.getString(PropsUtil.get("lecture2go.default.streamingHost"));
-		String protocol = GetterUtil.getString(PropsUtil.get("lecture2go.default.streamingProtocol"));
-		String serverRoot = GetterUtil.getString(PropsUtil.get("lecture2go.default.serverRoot"));
-		int port = Integer.valueOf(GetterUtil.getInteger(PropsUtil.get("lecture2go.default.streamingPort")));
-
-		if (streamer.isEmpty()) {
-			streamer = RepositoryManager.SYS_SERVER;
-			LOG.error("Portal property lecture2go.default.streamingHost not set. Using default!");
-		}
-		if (protocol.isEmpty()) {
-			protocol = RepositoryManager.SYS_PROTOCOL;
-			LOG.error("Portal property lecture2go.default.streamingProtocol not set. Using default!");
-		}
-		if (serverRoot.isEmpty()) {
-			serverRoot = RepositoryManager.SYS_ROOT;
-			LOG.error("Portal property lecture2go.default.serverRoot not set. Using default!");
-		}
-		if (port == 0) {
-			port = RepositoryManager.SYS_PORT;
-			LOG.error("Portal property lecture2go.default.streamingPort not set. Using default!");
-		}
-		defaultHost.setStreamer(streamer);
-		defaultHost.setProtocol(protocol);
-		defaultHost.setServerRoot(serverRoot);
-		defaultHost.setPort(port);
-		defaultHost.setDefaultHost(1);
-		hostPersistence.update(defaultHost);
-
-		String repository = GetterUtil.getString(PropsUtil.get("lecture2go.media.repository"));
-		if (repository.isEmpty()) {
-			LOG.error("Portal property lecture2go.media.repository not set. This path must be specified set before installation!");
-			throw new NoPropertyException();
-		}
+		// Create Directory
 		try {
-			RepositoryManager.createFolder(PropsUtil.get("lecture2go.media.repository") + "/" + defaultHost.getServerRoot());
+			RepositoryManager.createFolder(PropsUtil.get("lecture2go.media.repository") + "/" + host.getDirectory());
 		} catch (IOException e) {
-			LOG.error("Folder creation failed!", e);
+			// TODO Auto-generated catch block
+			//e.printStackTrace();
 		}
-		return defaultHost;
+		return host;
+	}
+
+	public Host updateHost(long hostId, String name, String prefix) throws SystemException, PortalException {
+		Host host = getHost(hostId);
+		host.setName(name);
+		host.setPrefix(prefix);
+		// host.setStreamingServerTemplateId(streamingServerTemplateId);
+		// Server Root will be constant over all changes
+		hostPersistence.update(host);
+		return host;
 	}
 
 	/**
@@ -191,11 +186,12 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 	 * 
 	 */
 	public Host deleteHost(long hostId, ServiceContext serviceContext) throws PortalException, SystemException {
-		long groupId = serviceContext.getScopeGroupId();
+		long companyId = serviceContext.getCompanyId();
 		Host host = getHost(hostId);
-		int l = getLockingElements(groupId, hostId);
-		//
+		int l = getLockingElements(hostId);
+
 		if (l < 1) {
+			resourceLocalService.deleteResource(companyId, Host.class.getName(), ResourceConstants.SCOPE_INDIVIDUAL, hostId);
 			host = deleteHost(hostId);
 		} else {
 			String message = LanguageUtil.format(serviceContext.getLocale(), "There are {0} objects still refering to this institution", l);
@@ -203,16 +199,6 @@ public class HostLocalServiceImpl extends HostLocalServiceBaseImpl {
 			System.out.println("Could not delete Host because it is still used by " + l + " Institutions");
 		}
 		return host;
-
 	}
 
-	public List<Host> getAll(){
-		List<Host> ret = new ArrayList<Host>(); 
-		try {
-			ret = hostPersistence.findAll();
-		} catch (SystemException e) {
-			LOG.debug("Can't fetch list of all hosts");
-		}
-		return ret;
-	}
 }

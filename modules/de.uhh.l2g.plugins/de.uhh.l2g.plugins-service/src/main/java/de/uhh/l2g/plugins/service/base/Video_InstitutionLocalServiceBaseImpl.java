@@ -62,6 +62,9 @@ import de.uhh.l2g.plugins.service.persistence.LicenseFinder;
 import de.uhh.l2g.plugins.service.persistence.LicensePersistence;
 import de.uhh.l2g.plugins.service.persistence.MediaTypePersistence;
 import de.uhh.l2g.plugins.service.persistence.MetadataPersistence;
+import de.uhh.l2g.plugins.service.persistence.OaiRecordPersistence;
+import de.uhh.l2g.plugins.service.persistence.OaiRecord_OaiSetPersistence;
+import de.uhh.l2g.plugins.service.persistence.OaiSetPersistence;
 import de.uhh.l2g.plugins.service.persistence.OfficePersistence;
 import de.uhh.l2g.plugins.service.persistence.ProducerFinder;
 import de.uhh.l2g.plugins.service.persistence.ProducerPersistence;
@@ -1078,6 +1081,132 @@ public abstract class Video_InstitutionLocalServiceBaseImpl
 	}
 
 	/**
+	 * Returns the oai record local service.
+	 *
+	 * @return the oai record local service
+	 */
+	public de.uhh.l2g.plugins.service.OaiRecordLocalService
+		getOaiRecordLocalService() {
+
+		return oaiRecordLocalService;
+	}
+
+	/**
+	 * Sets the oai record local service.
+	 *
+	 * @param oaiRecordLocalService the oai record local service
+	 */
+	public void setOaiRecordLocalService(
+		de.uhh.l2g.plugins.service.OaiRecordLocalService
+			oaiRecordLocalService) {
+
+		this.oaiRecordLocalService = oaiRecordLocalService;
+	}
+
+	/**
+	 * Returns the oai record persistence.
+	 *
+	 * @return the oai record persistence
+	 */
+	public OaiRecordPersistence getOaiRecordPersistence() {
+		return oaiRecordPersistence;
+	}
+
+	/**
+	 * Sets the oai record persistence.
+	 *
+	 * @param oaiRecordPersistence the oai record persistence
+	 */
+	public void setOaiRecordPersistence(
+		OaiRecordPersistence oaiRecordPersistence) {
+
+		this.oaiRecordPersistence = oaiRecordPersistence;
+	}
+
+	/**
+	 * Returns the oai record_ oai set local service.
+	 *
+	 * @return the oai record_ oai set local service
+	 */
+	public de.uhh.l2g.plugins.service.OaiRecord_OaiSetLocalService
+		getOaiRecord_OaiSetLocalService() {
+
+		return oaiRecord_OaiSetLocalService;
+	}
+
+	/**
+	 * Sets the oai record_ oai set local service.
+	 *
+	 * @param oaiRecord_OaiSetLocalService the oai record_ oai set local service
+	 */
+	public void setOaiRecord_OaiSetLocalService(
+		de.uhh.l2g.plugins.service.OaiRecord_OaiSetLocalService
+			oaiRecord_OaiSetLocalService) {
+
+		this.oaiRecord_OaiSetLocalService = oaiRecord_OaiSetLocalService;
+	}
+
+	/**
+	 * Returns the oai record_ oai set persistence.
+	 *
+	 * @return the oai record_ oai set persistence
+	 */
+	public OaiRecord_OaiSetPersistence getOaiRecord_OaiSetPersistence() {
+		return oaiRecord_OaiSetPersistence;
+	}
+
+	/**
+	 * Sets the oai record_ oai set persistence.
+	 *
+	 * @param oaiRecord_OaiSetPersistence the oai record_ oai set persistence
+	 */
+	public void setOaiRecord_OaiSetPersistence(
+		OaiRecord_OaiSetPersistence oaiRecord_OaiSetPersistence) {
+
+		this.oaiRecord_OaiSetPersistence = oaiRecord_OaiSetPersistence;
+	}
+
+	/**
+	 * Returns the oai set local service.
+	 *
+	 * @return the oai set local service
+	 */
+	public de.uhh.l2g.plugins.service.OaiSetLocalService
+		getOaiSetLocalService() {
+
+		return oaiSetLocalService;
+	}
+
+	/**
+	 * Sets the oai set local service.
+	 *
+	 * @param oaiSetLocalService the oai set local service
+	 */
+	public void setOaiSetLocalService(
+		de.uhh.l2g.plugins.service.OaiSetLocalService oaiSetLocalService) {
+
+		this.oaiSetLocalService = oaiSetLocalService;
+	}
+
+	/**
+	 * Returns the oai set persistence.
+	 *
+	 * @return the oai set persistence
+	 */
+	public OaiSetPersistence getOaiSetPersistence() {
+		return oaiSetPersistence;
+	}
+
+	/**
+	 * Sets the oai set persistence.
+	 *
+	 * @param oaiSetPersistence the oai set persistence
+	 */
+	public void setOaiSetPersistence(OaiSetPersistence oaiSetPersistence) {
+		this.oaiSetPersistence = oaiSetPersistence;
+	}
+
+	/**
 	 * Returns the office local service.
 	 *
 	 * @return the office local service
@@ -2086,6 +2215,30 @@ public abstract class Video_InstitutionLocalServiceBaseImpl
 
 	@BeanReference(type = MetadataPersistence.class)
 	protected MetadataPersistence metadataPersistence;
+
+	@BeanReference(
+		type = de.uhh.l2g.plugins.service.OaiRecordLocalService.class
+	)
+	protected de.uhh.l2g.plugins.service.OaiRecordLocalService
+		oaiRecordLocalService;
+
+	@BeanReference(type = OaiRecordPersistence.class)
+	protected OaiRecordPersistence oaiRecordPersistence;
+
+	@BeanReference(
+		type = de.uhh.l2g.plugins.service.OaiRecord_OaiSetLocalService.class
+	)
+	protected de.uhh.l2g.plugins.service.OaiRecord_OaiSetLocalService
+		oaiRecord_OaiSetLocalService;
+
+	@BeanReference(type = OaiRecord_OaiSetPersistence.class)
+	protected OaiRecord_OaiSetPersistence oaiRecord_OaiSetPersistence;
+
+	@BeanReference(type = de.uhh.l2g.plugins.service.OaiSetLocalService.class)
+	protected de.uhh.l2g.plugins.service.OaiSetLocalService oaiSetLocalService;
+
+	@BeanReference(type = OaiSetPersistence.class)
+	protected OaiSetPersistence oaiSetPersistence;
 
 	@BeanReference(type = de.uhh.l2g.plugins.service.OfficeLocalService.class)
 	protected de.uhh.l2g.plugins.service.OfficeLocalService officeLocalService;

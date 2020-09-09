@@ -32,6 +32,8 @@ create table LG_Creator (
 	jobTitle VARCHAR(75) null,
 	gender VARCHAR(75) null,
 	fullName VARCHAR(75) null,
+	affiliation VARCHAR(75) null,
+	orcidId VARCHAR(75) null,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -42,12 +44,10 @@ create table LG_Creator (
 
 create table LG_Host (
 	hostId LONG not null primary key,
-	protocol VARCHAR(75) null,
-	streamer VARCHAR(75) null,
-	port INTEGER,
-	serverRoot VARCHAR(75) null,
+	directory VARCHAR(75) null,
 	name VARCHAR(75) null,
 	defaultHost INTEGER,
+	prefix VARCHAR(75) null,
 	groupId LONG,
 	companyId LONG,
 	userId LONG,
@@ -169,6 +169,27 @@ create table LG_Metadata (
 	userName VARCHAR(75) null,
 	createDate DATE null,
 	modifiedDate DATE null
+);
+
+create table LG_OaiRecord (
+	oaiRecordId LONG not null primary key,
+	videoId LONG,
+	identifier VARCHAR(75) null,
+	datestamp DATE null,
+	deleted BOOLEAN
+);
+
+create table LG_OaiRecord_OaiSet (
+	oaiRecordOaiSetId LONG not null primary key,
+	oaiRecordId LONG,
+	oaiSetId LONG
+);
+
+create table LG_OaiSet (
+	oaiSetId LONG not null primary key,
+	setSpec VARCHAR(75) null,
+	setName VARCHAR(75) null,
+	setDescription VARCHAR(75) null
 );
 
 create table LG_Office (

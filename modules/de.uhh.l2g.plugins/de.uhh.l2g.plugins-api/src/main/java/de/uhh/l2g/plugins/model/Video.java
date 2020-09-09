@@ -56,6 +56,8 @@ public interface Video extends PersistedModel, VideoModel {
 
 		};
 
+	public boolean isWithMissingMetadata();
+
 	public de.uhh.l2g.plugins.model.Host getHost();
 
 	public de.uhh.l2g.plugins.model.Producer getProducer();
@@ -385,8 +387,6 @@ public interface Video extends PersistedModel, VideoModel {
 
 	public void setImageMedium(String imageMedium);
 
-	public boolean isHasCaption();
-
 	/**
 	 * Returns the title in a truncated form
 	 */
@@ -411,5 +411,7 @@ public interface Video extends PersistedModel, VideoModel {
 	public String getCreators();
 
 	public void setCreators(String creators);
+
+	public boolean isHasCaption();
 
 }
