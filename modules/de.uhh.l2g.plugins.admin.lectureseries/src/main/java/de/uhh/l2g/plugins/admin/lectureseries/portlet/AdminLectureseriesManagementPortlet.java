@@ -170,7 +170,7 @@ public class AdminLectureseriesManagementPortlet extends MVCPortlet {
 			try {
 				c = CoordinatorLocalServiceUtil.getCoordinator(remoteUser.getUserId());
 				if (institutionId == 0) institutionId = c.getInstitutionId();
-				institutions = InstitutionLocalServiceUtil.getByParent(c.getInstitutionId());
+				institutions = InstitutionLocalServiceUtil.getByParentIdMap(c.getInstitutionId());
 				producers = ProducerLocalServiceUtil.getProducersByInstitutionId(c.getInstitutionId());
 			} catch (Exception e) {
 				_log.info("can not instatiate coordinator from remote user with id " + remoteUser.getUserId());
@@ -182,7 +182,7 @@ public class AdminLectureseriesManagementPortlet extends MVCPortlet {
 			try {
 				p = ProducerLocalServiceUtil.getProdUcer(remoteUser.getUserId());
 				if (institutionId == 0) institutionId = p.getInstitutionId();
-				institutions = InstitutionLocalServiceUtil.getByParent(p.getInstitutionId());
+				institutions = InstitutionLocalServiceUtil.getByParentIdMap(p.getInstitutionId());
 			} catch (Exception e) {
 				_log.info("can not instantiate producer from remote user with id " + remoteUser.getUserId());
 			}

@@ -245,7 +245,7 @@ public class ViewRenderList implements MVCRenderCommand {
 		//
 		Institution rInst = InstitutionLocalServiceUtil.createInstitution(0);
 		try {
-			rInst = InstitutionLocalServiceUtil.getRootByParentAndCompanyAndGroup(0, companyId, groupId);
+			rInst = InstitutionLocalServiceUtil.getRoot();
 		} catch (Exception e) {
 			_log.error("can't get rInst bei company and group id");
 		}

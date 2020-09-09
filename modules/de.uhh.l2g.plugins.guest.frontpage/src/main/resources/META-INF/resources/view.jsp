@@ -6,15 +6,15 @@
 
 <div class="front-page-teaser">
 	<div class="bg-video-container">
-		<video id="bg-vid" autoplay loop
+		<video id="bg-vid" loop
 			poster="/o/de.uhh.l2g.themes.uhhci/images/background_still.jpg"
 			preload="none" muted>
 			<!-- the video source is added dynamically to avoid unnecessary traffic -->
-			<img src="/o/de.uhh.l2g.themes.uhhci/images/background_still.jpg">
+			<img src="/o/de.uhh.l2g.themes.uhhci/images/background_still.jpg" alt="Background image">
 		</video>
 		<div class="dark-overlay"></div>
-		<div id="vid-control">
-			<i class="icon-pause"></i>
+		<div id="vid-control" role="button" tabindex="0" aria-label="Pause Video">
+			<i class="icon-play"></i>
 		</div>
 	</div>
 	<div class="l2go-info-container">
@@ -31,9 +31,7 @@
 			</div>
 
 			<div class="l2go-subtitle">
-				<p>
-					<liferay-ui:message key="l2go-description" />
-				</p>
+				<p><liferay-ui:message key="l2go-description"/></p>
 			</div>
 			
 			<div class="autocompleteSearch">
