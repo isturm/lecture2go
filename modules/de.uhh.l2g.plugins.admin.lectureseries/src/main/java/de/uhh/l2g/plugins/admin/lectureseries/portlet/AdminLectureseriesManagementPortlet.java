@@ -65,7 +65,6 @@ import de.uhh.l2g.plugins.service.TagcloudLocalServiceUtil;
 import de.uhh.l2g.plugins.service.TermLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
-import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.persistence.CreatorUtil;
 import de.uhh.l2g.plugins.util.EmailManager;
 import de.uhh.l2g.plugins.util.FileManager;
@@ -218,7 +217,6 @@ public class AdminLectureseriesManagementPortlet extends MVCPortlet {
 			Lectureseries_InstitutionLocalServiceUtil.removeByLectureseriesId(lId);//institution
 			Producer_LectureseriesLocalServiceUtil.removeByLectureseriesId(lId);//producer
 			VideoLocalServiceUtil.unlinkLectureseriesFromVideos(lId);//video
-			Video_LectureseriesLocalServiceUtil.removeByLectureseriesId(lId);//video links to lecture series
 			TagcloudLocalServiceUtil.deleteByObjectId(lId);//tag cloud
 		} catch (PortalException e) {
 			e.printStackTrace();

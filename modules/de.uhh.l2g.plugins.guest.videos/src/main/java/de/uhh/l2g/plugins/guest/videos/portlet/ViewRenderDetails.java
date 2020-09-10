@@ -23,7 +23,6 @@ import de.uhh.l2g.plugins.model.Metadata;
 import de.uhh.l2g.plugins.model.Segment;
 import de.uhh.l2g.plugins.model.Video;
 import de.uhh.l2g.plugins.model.Video_Institution;
-import de.uhh.l2g.plugins.model.Video_Lectureseries;
 import de.uhh.l2g.plugins.model.Video_MediaType;
 import de.uhh.l2g.plugins.service.LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.MediaTypeLocalServiceUtil;
@@ -31,7 +30,6 @@ import de.uhh.l2g.plugins.service.MetadataLocalServiceUtil;
 import de.uhh.l2g.plugins.service.SegmentLocalServiceUtil;
 import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
-import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_MediaTypeLocalServiceUtil;
 import de.uhh.l2g.plugins.util.ProzessManager;
 
@@ -149,13 +147,6 @@ public class ViewRenderDetails implements MVCRenderCommand {
 			} catch (SystemException e) {
 			}
 
-			// lectureseries for video
-			List<Video_Lectureseries> vl = new ArrayList<Video_Lectureseries>();
-			try {
-				vl = Video_LectureseriesLocalServiceUtil.getByVideo(video.getVideoId());
-			} catch (Exception e) {
-			}
-
 			// institutions for video
 			List<Video_Institution> vi = new ArrayList<Video_Institution>();
 			vi = Video_InstitutionLocalServiceUtil.getByVideo(video.getVideoId());
@@ -229,7 +220,6 @@ public class ViewRenderDetails implements MVCRenderCommand {
 
 			renderRequest.setAttribute("videoMetadata", m);
 			renderRequest.setAttribute("videoInstitutions", vi);
-			renderRequest.setAttribute("videoLectureseries", vl);
 			renderRequest.setAttribute("video", video);
 			renderRequest.setAttribute("relatedVideos", relatedVideos);
 			renderRequest.setAttribute("segments", segments);

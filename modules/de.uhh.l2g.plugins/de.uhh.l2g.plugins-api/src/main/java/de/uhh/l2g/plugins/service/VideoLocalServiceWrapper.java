@@ -34,10 +34,11 @@ public class VideoLocalServiceWrapper
 	 * required properties for jwplayer in portal-ext.properties file
 	 *
 	 * [host]=configured host in database (automatically e.g. streaming.server.com)
-	 * [ext]=file extension (automatically e.g mp3) [l2go_path]=generated lecture2go
-	 * file path (automatically e.g. 3l2gproducer1) [filename]=video file name
-	 * (automatically e.g 00.000_video_2015-06-08_08-06.mp4) [protocol]=host
-	 * protocol (automatically e.g rtmpt) [port]=host port (automatically e.g 80)
+	 * [ext]=file extension (automatically e.g mp3)
+	 * [l2go_path]=generated lecture2go file path (automatically e.g. 3l2gproducer1)
+	 * [filename]=video file name (automatically e.g 00.000_video_2015-06-08_08-06.mp4)
+	 * [protocol]=host protocol (automatically e.g rtmpt)
+	 * [port]=host port (automatically e.g 80)
 	 * [smilfile]=adaptive streaming file
 	 *
 	 * example for lecture2go configuration

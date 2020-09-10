@@ -69,7 +69,6 @@ import de.uhh.l2g.plugins.model.Video;
 import de.uhh.l2g.plugins.model.Video_Category;
 import de.uhh.l2g.plugins.model.Video_Creator;
 import de.uhh.l2g.plugins.model.Video_Institution;
-import de.uhh.l2g.plugins.model.Video_Lectureseries;
 import de.uhh.l2g.plugins.model.Video_MediaType;
 import de.uhh.l2g.plugins.service.CategoryLocalServiceUtil;
 import de.uhh.l2g.plugins.service.CoordinatorLocalServiceUtil;
@@ -89,7 +88,6 @@ import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_CategoryLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_InstitutionLocalServiceUtil;
-import de.uhh.l2g.plugins.service.Video_LectureseriesLocalServiceUtil;
 import de.uhh.l2g.plugins.service.Video_MediaTypeLocalServiceUtil;
 import de.uhh.l2g.plugins.util.FFmpegManager;
 import de.uhh.l2g.plugins.util.FileManager;
@@ -555,13 +553,6 @@ public class AdminVideoManagementPortlet extends MVCPortlet {
 		p.setNumberOfProductions(n);
 		ProducerLocalServiceUtil.updateProducer(p);
 
-		// link to lectureseries list
-		Video_Lectureseries vl = Video_LectureseriesLocalServiceUtil.createVideo_Lectureseries(0);
-		vl.setLectureseriesId(lectureseriesId);
-		vl.setVideoId(newVideo.getVideoId());
-		vl.setOpenAccess(newVideo.getOpenAccess());
-		Video_LectureseriesLocalServiceUtil.addVideo_Lectureseries(vl);
-
 		// link to mediaType list
 		Video_MediaType video_mediaType = Video_MediaTypeLocalServiceUtil.createVideo_MediaType(0);
 		video_mediaType.setMediaTypeId(mediaTypeId);
@@ -946,8 +937,6 @@ public class AdminVideoManagementPortlet extends MVCPortlet {
 				else {
 					java.util.Date date = new java.util.Date();
 					video.setLectureseriesId(-date.getTime());
-					// update table video_lectureseries
-					Video_LectureseriesLocalServiceUtil.removeByVideoId(video.getVideoId());
 				}
 				video.setTags(tags);
 
@@ -1125,8 +1114,6 @@ public class AdminVideoManagementPortlet extends MVCPortlet {
 				else {
 					java.util.Date date = new java.util.Date();
 					video.setLectureseriesId(-date.getTime());
-					// update table video_lectureseries
-					Video_LectureseriesLocalServiceUtil.removeByVideoId(video.getVideoId());
 				}
 				video.setTags(tags);
 				if (lId > 0) {
@@ -1150,15 +1137,8 @@ public class AdminVideoManagementPortlet extends MVCPortlet {
 						vi.setInstitutionParentId(in.getParentId());
 						Video_InstitutionLocalServiceUtil.addVideo_Institution(vi);
 					}
-					// update lg_video_lectureseries
-					Video_Lectureseries vl = Video_LectureseriesLocalServiceUtil.createVideo_Lectureseries(0);
-					vl.setVideoId(video.getVideoId());
-					vl.setLectureseriesId(lId);
-					vl.setOpenAccess(video.getOpenAccess());
-					Video_LectureseriesLocalServiceUtil.removeByVideoId(video.getVideoId());// delete old entries
-					Video_LectureseriesLocalServiceUtil.addVideo_Lectureseries(vl);// add new
-					LectureseriesLocalServiceUtil.updateLectureseries(newLect);
 					// update lectureseries
+					LectureseriesLocalServiceUtil.updateLectureseries(newLect);
 					LectureseriesLocalServiceUtil.updateOpenAccess(video, newLect);
 					LectureseriesLocalServiceUtil.updatePreviewVideoOpenAccess(newLect);
 				}
