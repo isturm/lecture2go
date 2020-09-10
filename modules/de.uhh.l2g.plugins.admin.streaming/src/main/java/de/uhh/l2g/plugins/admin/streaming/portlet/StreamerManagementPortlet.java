@@ -91,9 +91,8 @@ public class StreamerManagementPortlet extends MVCPortlet {
 		long reqHostId = ParamUtil.getLong(request, "hostId");
 		String backURL = ParamUtil.getString(request, "backURL");
         //
-		String protocol = ParamUtil.getString(request, "protocol");
-		String streamer = ParamUtil.getString(request, "streamer");
-		int port = ParamUtil.getInteger(request, "port");
+		String hostName = ParamUtil.getString(request, "hostName");
+		String hostPrefix = ParamUtil.getString(request, "hostPrefix");
 		//
 		Long userId = new Long(request.getRemoteUser());
 		User user = UserLocalServiceUtil.getUser(userId);
@@ -102,9 +101,8 @@ public class StreamerManagementPortlet extends MVCPortlet {
 		//
 		try {
 			Host host = HostLocalServiceUtil.getHost(reqHostId);
-			host.setProtocol(protocol);
-			host.setStreamer(streamer);
-			host.setPort(port);
+			host.setName(hostName);
+			host.setPrefix(hostPrefix);
 			//
 			host.setUserId(userId);
 			host.setUserName(user.getScreenName());
@@ -144,9 +142,8 @@ public class StreamerManagementPortlet extends MVCPortlet {
 	
 	public void add(ActionRequest request, ActionResponse response) throws PortalException, SystemException {
 		String hostName = "";
-		String streamer = ParamUtil.getString(request, "streamer");
-		String protocol = ParamUtil.getString(request, "protocol");
-		int port = ParamUtil.getInteger(request, "port");
+		String hostPrefix = ParamUtil.getString(request, "hostPrefix");
+		//
 		String backURL = ParamUtil.getString(request, "backURL");
 		//
 		Long userId = new Long(request.getRemoteUser());
@@ -154,25 +151,21 @@ public class StreamerManagementPortlet extends MVCPortlet {
 		long companyId = user.getCompanyId();
 		long groupId = user.getGroupId();
 		//
-		_log.info("Trying to add " + hostName + ": " + streamer);
+		_log.info("Trying to add " + hostName );
 		try {
 			Host host = HostLocalServiceUtil.createHost(0);
-			host.setProtocol(protocol);
-			host.setPort(port);
-			host.setStreamer(streamer);
+			host.setPrefix(hostPrefix);
+			host.setName(RepositoryManager.prepareServerRoot(host.getHostId()));
 			//
 			host.setUserId(userId);
 			host.setUserName(user.getScreenName());
 			host.setCompanyId(companyId);
 			host.setGroupId(groupId);
 			host = HostLocalServiceUtil.addHost(host);
-			// update server root
-			host.setServerRoot(RepositoryManager.prepareServerRoot(host.getHostId()));
-			host.setName(RepositoryManager.prepareServerRoot(host.getHostId()));
 			HostLocalServiceUtil.updateHost(host);
 			// Create Directory
 			try {
-				RepositoryManager.createFolder(PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot());
+				RepositoryManager.createFolder(PropsUtil.get("lecture2go.media.repository") + "/" + host.getDirectory());
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
@@ -194,7 +187,7 @@ public class StreamerManagementPortlet extends MVCPortlet {
 		long institutionId = ParamUtil.getLong(request, "treeRootId");
 		_log.info("Root: " + institutionId);
 		try {
-			InstitutionLocalServiceUtil.updateInstitution(institutionId, institutionName, 1, serviceContext);
+			InstitutionLocalServiceUtil.updateInstitution(institutionId, institutionName, 1);
 			response.setRenderParameter("mvcPath", "/admin/institutionList.jsp");
 		} catch (Exception e) {
 			SessionErrors.add(request, e.getClass().getName());

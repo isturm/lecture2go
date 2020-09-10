@@ -225,6 +225,30 @@ public class LectureseriesLocalServiceImpl extends LectureseriesLocalServiceBase
 		LectureseriesLocalServiceUtil.updateLectureseries(lectureseries);
 	}
 
+	public void updateUploadLatestOpenAccessVideoAndGenerationDate() throws SystemException{
+		List<Lectureseries> all = getAll();
+		ListIterator<Lectureseries> itAll = all.listIterator();
+		while(itAll.hasNext()){
+			Lectureseries l = itAll.next();
+			Video v = new VideoImpl();
+			v = VideoLocalServiceUtil.getLatestOpenAccessVideoForLectureseries(l.getLectureseriesId());
+			l.setLatestVideoGenerationDate(v.getGenerationDate());
+			l.setLatestOpenAccessVideoId(v.getVideoId());
+			if(v.getUploadDate()!=null)l.setLatestVideoUploadDate(v.getUploadDate());
+			else {
+				SimpleDateFormat format = new SimpleDateFormat("yyyy-MM-dd_HH-mm");
+				Date d = new Date();
+				try {
+					d = format.parse(v.getGenerationDate());
+					l.setLatestVideoUploadDate(d);
+				} catch (ParseException e) {
+					//e.printStackTrace();
+				}
+			}
+			LectureseriesLocalServiceUtil.updateLectureseries(l);
+		}
+	}
+	
 	public void updateUploadAndGenerationDate() throws SystemException {
 		List<Lectureseries> all = getAll();
 		ListIterator<Lectureseries> itAll = all.listIterator();

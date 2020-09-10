@@ -3,4 +3,14 @@ Bundle-SymbolicName: de.uhh.l2g.plugins.service
 Bundle-Version: 1.0.0
 Liferay-Require-SchemaVersion: 1.0.0
 Liferay-Service: true
-Export-Package: de.uhh.l2g.plugins.exception
+Export-Package: \
+	de.uhh.l2g.plugins.util,\
+	de.uhh.l2g.plugins.service.persistence,\
+	de.uhh.l2g.plugins.service,\
+	de.uhh.l2g.plugins.model,\
+	de.uhh.l2g.plugins.exception
+	
+	
+Import-Package: \
+	!org.apache.*,\
+	*

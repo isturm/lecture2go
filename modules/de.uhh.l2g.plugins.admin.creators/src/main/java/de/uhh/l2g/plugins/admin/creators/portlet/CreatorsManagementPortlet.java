@@ -59,6 +59,8 @@ public class CreatorsManagementPortlet extends MVCPortlet {
 		String mn = ParamUtil.getString(request, "middleName");
 		String ln = ParamUtil.getString(request, "lastName");
 		String t = ParamUtil.getString(request, "jobTitle");
+		String a= ParamUtil.getString(request, "affiliation");
+		String o= ParamUtil.getString(request, "orcidId");
 		//
 		Long userId = new Long(request.getRemoteUser());
 		User user = UserLocalServiceUtil.getUser(userId);
@@ -72,6 +74,8 @@ public class CreatorsManagementPortlet extends MVCPortlet {
 				creator.setMiddleName(mn);
 				creator.setLastName(ln);
 				creator.setJobTitle(t);
+				creator.setAffiliation(a);
+				creator.setOrcidId(o);				
 				creator.setFullName(fullName(fn, mn, ln, t));
 				//
 				creator.setCompanyId(companyId);
@@ -123,6 +127,8 @@ public class CreatorsManagementPortlet extends MVCPortlet {
 		String mn = ParamUtil.getString(request, "middleName");
 		String ln = ParamUtil.getString(request, "lastName");
 		String t = ParamUtil.getString(request, "jobTitle");
+		String a= ParamUtil.getString(request, "affiliation");
+		String o= ParamUtil.getString(request, "orcidId");
 		//
 		Long userId = new Long(request.getRemoteUser());
 		User user = UserLocalServiceUtil.getUser(userId);
@@ -136,6 +142,8 @@ public class CreatorsManagementPortlet extends MVCPortlet {
 				creator.setMiddleName(mn);
 				creator.setLastName(ln);
 				creator.setJobTitle(t);
+				creator.setAffiliation(a);
+				creator.setOrcidId(o);				
 				creator.setFullName(fullName(fn, mn, ln, t));
 				//
 				creator.setCompanyId(companyId);

@@ -438,8 +438,7 @@ public class AdminVideoManagementPortlet extends MVCPortlet {
 			host = HostLocalServiceUtil.getByHostId(reqVideo.getHostId());
 
 			// repo
-			uploadRepository = PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/"
-					+ reqProducer.getIdNum();
+			uploadRepository = PropsUtil.get("lecture2go.media.repository") + "/" + host.getDirectory() + "/" + reqProducer.getIdNum();
 
 			// lecture series
 			if (reqVideo.getVideoId() > 0)
@@ -1281,7 +1280,7 @@ public class AdminVideoManagementPortlet extends MVCPortlet {
 			try {
 				Host host = HostLocalServiceUtil.getHost(video.getHostId());
 				Producer producer = ProducerLocalServiceUtil.getProducer(video.getProducerId());
-				String url = PropsUtil.get("lecture2go.media.repository") + "/" + host.getServerRoot() + "/"
+				String url = PropsUtil.get("lecture2go.media.repository") + "/" + host.getDirectory() + "/"
 						+ producer.getHomeDir() + "/";
 				long producerId = video.getProducerId();
 				List<Video> lockedVideosByProducer;
@@ -1611,7 +1610,7 @@ public class AdminVideoManagementPortlet extends MVCPortlet {
 			String fPath = "";
 			try {
 				fPath = PropsUtil.get("lecture2go.media.repository") + "/"
-						+ HostLocalServiceUtil.getByHostId(video.getHostId()).getServerRoot() + "/"
+						+ HostLocalServiceUtil.getByHostId(video.getHostId()).getDirectory() + "/"
 						+ ProducerLocalServiceUtil.getProducer(video.getProducerId()).getHomeDir() + "/";
 				mainContainerFormat = VideoLocalServiceUtil.getVideo(videoId).getContainerFormat();
 			} catch (PortalException e) {

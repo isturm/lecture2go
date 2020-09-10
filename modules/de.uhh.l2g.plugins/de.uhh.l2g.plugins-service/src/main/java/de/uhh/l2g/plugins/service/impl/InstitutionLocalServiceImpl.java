@@ -369,7 +369,7 @@ public class InstitutionLocalServiceImpl extends InstitutionLocalServiceBaseImpl
 
 		return institution;
 	}
-	
+
 	/**
 	 * Prepares the list of institutions for pending producers selection
 	 * (institutions which should not be selected can be defined via properties file)
