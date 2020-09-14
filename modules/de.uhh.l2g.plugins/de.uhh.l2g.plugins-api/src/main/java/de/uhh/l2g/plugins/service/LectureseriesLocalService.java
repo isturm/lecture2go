@@ -304,4 +304,7 @@ public interface LectureseriesLocalService
 
 	public void updateUploadAndGenerationDate() throws SystemException;
 
+	public void updateUploadLatestOpenAccessVideoAndGenerationDate()
+		throws SystemException;
+
 }

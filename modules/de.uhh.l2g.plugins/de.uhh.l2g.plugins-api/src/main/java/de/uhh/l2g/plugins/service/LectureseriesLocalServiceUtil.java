@@ -395,6 +395,12 @@ public class LectureseriesLocalServiceUtil {
 		getService().updateUploadAndGenerationDate();
 	}
 
+	public static void updateUploadLatestOpenAccessVideoAndGenerationDate()
+		throws com.liferay.portal.kernel.exception.SystemException {
+
+		getService().updateUploadLatestOpenAccessVideoAndGenerationDate();
+	}
+
 	public static LectureseriesLocalService getService() {
 		return _serviceTracker.getService();
 	}

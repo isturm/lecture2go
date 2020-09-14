@@ -425,6 +425,14 @@ public class LectureseriesLocalServiceWrapper
 	}
 
 	@Override
+	public void updateUploadLatestOpenAccessVideoAndGenerationDate()
+		throws com.liferay.portal.kernel.exception.SystemException {
+
+		_lectureseriesLocalService.
+			updateUploadLatestOpenAccessVideoAndGenerationDate();
+	}
+
+	@Override
 	public LectureseriesLocalService getWrappedService() {
 		return _lectureseriesLocalService;
 	}
