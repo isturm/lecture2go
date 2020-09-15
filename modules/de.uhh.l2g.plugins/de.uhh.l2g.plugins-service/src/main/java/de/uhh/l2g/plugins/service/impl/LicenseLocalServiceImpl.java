@@ -15,6 +15,8 @@
 package de.uhh.l2g.plugins.service.impl;
 
 import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -48,7 +50,21 @@ public class LicenseLocalServiceImpl extends LicenseLocalServiceBaseImpl {
 	 * de.uhh.l2g.plugins.service.LicenseLocalServiceUtil} to access the license
 	 * local service.
 	 */
+	
+	protected static Log LOG = LogFactoryUtil.getLog(License.class.getName());
 
+	public License addLicense(License object){
+		Long id;
+		try {
+			id = counterLocalService.increment(License.class.getName());
+			object.setPrimaryKey(id);
+			super.addLicense(object);
+		} catch (SystemException e) {
+			LOG.error("can't add new object with id " + object.getPrimaryKey() + "!");
+		}
+		return object;
+	}
+	
 	public List<License> getBySelectable(boolean isSelectable) throws SystemException {
 		return licensePersistence.findBySelectable(isSelectable);
 	}
