@@ -14,6 +14,11 @@
 
 package de.uhh.l2g.plugins.service.impl;
 
+import java.util.List;
+
+import com.liferay.portal.kernel.exception.SystemException;
+
+import de.uhh.l2g.plugins.model.OaiSet;
 import de.uhh.l2g.plugins.service.base.OaiSetLocalServiceBaseImpl;
 
 /**
@@ -34,6 +39,14 @@ public class OaiSetLocalServiceImpl extends OaiSetLocalServiceBaseImpl {
 	/*
 	 * NOTE FOR DEVELOPERS:
 	 *
-	 * Never reference this class directly. Use <code>de.uhh.l2g.plugins.service.OaiSetLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>de.uhh.l2g.plugins.service.OaiSetLocalServiceUtil</code>.
+	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.OaiSetLocalServiceUtil} to access the oai set local service.
 	 */
+	
+	public List<OaiSet> getAll() throws SystemException{
+		return oaiSetPersistence.findAll();
+	}
+	
+	public List<OaiSet> getByOaiRecordId(long oaiRecordId) {
+		return oaiSetFinder.findByOaiRecord(oaiRecordId);
+	}
 }
