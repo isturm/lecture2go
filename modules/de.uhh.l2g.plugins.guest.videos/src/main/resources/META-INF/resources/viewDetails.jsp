@@ -6,9 +6,6 @@
 	type="java.util.List<de.uhh.l2g.plugins.model.Video>" scope="request" />
 <jsp:useBean id="segments"
 	type="java.util.List<de.uhh.l2g.plugins.model.Segment>" scope="request" />
-<jsp:useBean id="videoLectureseries"
-	type="java.util.List<de.uhh.l2g.plugins.model.Video_Lectureseries>"
-	scope="request" />
 <jsp:useBean id="videoInstitutions"
 	type="java.util.List<de.uhh.l2g.plugins.model.Video_Institution>"
 	scope="request" />
