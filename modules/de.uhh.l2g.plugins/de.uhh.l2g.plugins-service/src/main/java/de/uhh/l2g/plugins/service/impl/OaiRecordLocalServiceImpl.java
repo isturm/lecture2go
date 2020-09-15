@@ -14,6 +14,22 @@
 
 package de.uhh.l2g.plugins.service.impl;
 
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
+import de.uhh.l2g.plugins.exception.NoSuchOaiRecordException;
+import de.uhh.l2g.plugins.model.OaiRecord;
+import de.uhh.l2g.plugins.model.Video;
+import de.uhh.l2g.plugins.model.Video_Category;
+import de.uhh.l2g.plugins.model.Video_Creator;
+import de.uhh.l2g.plugins.service.VideoLocalServiceUtil;
+import de.uhh.l2g.plugins.service.Video_CategoryLocalServiceUtil;
+import de.uhh.l2g.plugins.service.Video_CreatorLocalServiceUtil;
 import de.uhh.l2g.plugins.service.base.OaiRecordLocalServiceBaseImpl;
 
 /**
@@ -36,4 +52,76 @@ public class OaiRecordLocalServiceImpl extends OaiRecordLocalServiceBaseImpl {
 	 *
 	 * Never reference this class directly. Use <code>de.uhh.l2g.plugins.service.OaiRecordLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>de.uhh.l2g.plugins.service.OaiRecordLocalServiceUtil</code>.
 	 */
+	
+	protected static Log LOG = LogFactoryUtil.getLog(OaiRecord.class.getName());
+
+	public OaiRecord addOaiRecord(OaiRecord object){
+		Long id;
+		try {
+			id = counterLocalService.increment(OaiRecord.class.getName());
+			object.setPrimaryKey(id);
+			super.addOaiRecord(object);
+		} catch (SystemException e) {
+			LOG.error("can't add new object with id " + object.getPrimaryKey() + "!");
+		}
+		return object;
+	}
+	
+	public OaiRecord getByVideo(Long videoId) throws SystemException, NoSuchOaiRecordException {
+		return oaiRecordPersistence.findByVideo(videoId);
+	}
+	
+	public OaiRecord getByIdentifier(String identifier) throws SystemException, NoSuchOaiRecordException {
+		return oaiRecordPersistence.findByIdentifier(identifier);
+	}
+	
+	public Date getEarliestDatestamp() {
+		return oaiRecordFinder.findEarliestDatestamp();
+	}
+	
+	public List<OaiRecord> getByCreator(Long creatorId) throws SystemException, NoSuchOaiRecordException {
+		List<Video_Creator>  vcl = Video_CreatorLocalServiceUtil.getByCreator(creatorId);
+		List<OaiRecord> oaiRecords = new ArrayList<OaiRecord>();
+
+		for (Video_Creator vc: vcl) {
+			try {
+				OaiRecord oaiRecord = getByVideo(vc.getVideoId());
+				oaiRecords.add(oaiRecord);
+			} catch (NoSuchOaiRecordException e) {
+				// no OAIrecord for video, do nothing
+			}
+		}
+		return oaiRecords;
+	}
+	
+	public List<OaiRecord> getByCategory(Long categoryId) throws SystemException, NoSuchOaiRecordException {
+		List<Video_Category>  vcl = Video_CategoryLocalServiceUtil.getByCategory(categoryId);
+		List<OaiRecord> oaiRecords = new ArrayList<OaiRecord>();
+
+		for (Video_Category vc: vcl) {
+			try {
+				OaiRecord oaiRecord = getByVideo(vc.getVideoId());
+				oaiRecords.add(oaiRecord);
+			} catch (NoSuchOaiRecordException e) {
+				// no OAIrecord for video, do nothing
+			}
+		}
+		return oaiRecords;
+	}
+	
+	public List<OaiRecord> getByLectureseries(Long lectureseriesId) throws SystemException, NoSuchOaiRecordException {
+		List<Video> vl = VideoLocalServiceUtil.getByLectureseries(lectureseriesId);
+		
+		List<OaiRecord> oaiRecords = new ArrayList<OaiRecord>();
+
+		for (Video v: vl) {
+			try {
+				OaiRecord oaiRecord = getByVideo(v.getVideoId());
+				oaiRecords.add(oaiRecord);
+			} catch (NoSuchOaiRecordException e) {
+				// no OAIrecord for video, do nothing
+			}
+		}
+		return oaiRecords;
+	}
 }
