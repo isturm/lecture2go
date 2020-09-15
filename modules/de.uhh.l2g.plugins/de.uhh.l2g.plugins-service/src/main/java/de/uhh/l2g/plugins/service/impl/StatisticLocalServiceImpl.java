@@ -62,10 +62,19 @@ public class StatisticLocalServiceImpl
 	 * Never reference this interface directly. Always use {@link de.uhh.l2g.plugins.service.StatisticLocalServiceUtil} to access the institution_ host local service.
 	 */
 
+	public Statistic addStatistic(Statistic object){
+		Long id;
+		try {
+			id = counterLocalService.increment(Statistic.class.getName());
+			object.setPrimaryKey(id);
+			super.addStatistic(object);
+		} catch (SystemException e) {
+			LOG.error("can't add new object with id " + object.getPrimaryKey() + "!");
+		}
+		return object;
+	}
+		
 	public JSONObject getAllStatistics() throws SystemException {
-			//generate view, if not existing
-			statisticFinder.createVideoStatisticView();
-			//
 			return statisticFinder.findAllStatistics();
 	}
 		
