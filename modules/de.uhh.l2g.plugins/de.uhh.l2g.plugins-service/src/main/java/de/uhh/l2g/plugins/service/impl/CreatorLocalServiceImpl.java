@@ -26,9 +26,12 @@ import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.json.JSONArray;
 import com.liferay.portal.kernel.json.JSONFactoryUtil;
 import com.liferay.portal.kernel.json.JSONObject;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.util.HtmlUtil;
 import com.liferay.portal.kernel.util.StringPool;
 
+import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
@@ -71,6 +74,20 @@ public class CreatorLocalServiceImpl extends CreatorLocalServiceBaseImpl {
 	 * de.uhh.l2g.plugins.service.CreatorLocalServiceUtil} to access the creator
 	 * local service.
 	 */
+
+	protected static Log LOG = LogFactoryUtil.getLog(Creator.class.getName());
+
+	public Creator addCreator(Creator object){
+		Long id;
+		try {
+			id = counterLocalService.increment(Creator.class.getName());
+			object.setPrimaryKey(id);
+			super.addCreator(object);
+		} catch (SystemException e) {
+			LOG.error("can't add new object with id " + object.getPrimaryKey() + "!");
+		}
+		return object;
+	}
 
 	public List<Creator> getAll() throws SystemException {
 		List<Creator> cl = new ArrayList<Creator>();
@@ -217,9 +234,11 @@ public class CreatorLocalServiceImpl extends CreatorLocalServiceBaseImpl {
 			int i = 0;
 			for (Creator creator : creatorList) {
 				String fn = creator.getFullName();
+				String fnEncoded = URLEncoder.encode(fn);
+				
 				// ?_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery=Prof. Dr. Marc Frey
 				String fnLink = "<a href='/l2go/-/get/0/0/0/0/0/0/?_lgopenaccessvideos_WAR_lecture2goportlet_searchQuery="
-						+ fn + "'>" + fn + "</a>";
+						+ fnEncoded + "'>" + fn + "</a>";
 				;
 				creatorFullnameList.add(fnLink);
 				i++;
@@ -251,6 +270,8 @@ public class CreatorLocalServiceImpl extends CreatorLocalServiceBaseImpl {
 			c.put("jobTitle", cr.getJobTitle());
 			c.put("gender", cr.getGender());
 			c.put("fullName", cr.getFullName());
+			c.put("affiliation", cr.getAffiliation());
+			c.put("orcidId", cr.getOrcidId());
 			json.put(c);
 		}
 		return json;
@@ -270,6 +291,8 @@ public class CreatorLocalServiceImpl extends CreatorLocalServiceBaseImpl {
 			c.put("jobTitle", cr.getJobTitle());
 			c.put("gender", cr.getGender());
 			c.put("fullName", cr.getFullName());
+			c.put("affiliation", cr.getAffiliation());
+			c.put("orcidId", cr.getOrcidId());
 			json.put(c);
 		}
 		return json;
@@ -287,6 +310,8 @@ public class CreatorLocalServiceImpl extends CreatorLocalServiceBaseImpl {
 		c.put("jobTitle", cr.getJobTitle());
 		c.put("gender", cr.getGender());
 		c.put("fullName", cr.getFullName());
+		c.put("affiliation", cr.getAffiliation());
+		c.put("orcidId", cr.getOrcidId());
 		json.put(c);
 		return json;
 	}
@@ -302,6 +327,8 @@ public class CreatorLocalServiceImpl extends CreatorLocalServiceBaseImpl {
 		c.put("jobTitle", cr.getJobTitle());
 		c.put("gender", cr.getGender());
 		c.put("fullName", cr.getFullName());
+		c.put("affiliation", cr.getAffiliation());
+		c.put("orcidId", cr.getOrcidId());
 		return c;
 	}
 
