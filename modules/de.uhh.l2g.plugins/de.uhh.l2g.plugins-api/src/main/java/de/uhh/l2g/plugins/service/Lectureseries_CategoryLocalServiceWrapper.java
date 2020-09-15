@@ -292,6 +292,12 @@ public class Lectureseries_CategoryLocalServiceWrapper
 	}
 
 	@Override
+	public boolean removeByLectureseriesId(Long lectureseriesId) {
+		return _lectureseries_CategoryLocalService.removeByLectureseriesId(
+			lectureseriesId);
+	}
+
+	@Override
 	public void updateCategoryByLectureseriesAndCategory(
 		Long lectureseriesId, Long categoryId, Long newCategoryId) {
 

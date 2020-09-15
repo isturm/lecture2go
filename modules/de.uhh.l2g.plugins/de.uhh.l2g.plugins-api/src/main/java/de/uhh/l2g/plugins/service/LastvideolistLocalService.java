@@ -78,20 +78,9 @@ public interface LastvideolistLocalService
 	 * @return the new lastvideolist
 	 */
 	@Transactional(enabled = false)
-	public Lastvideolist createLastvideolist(int lastvideolistId);
+	public Lastvideolist createLastvideolist(long lastvideolistId);
 
 	public void deleteByVideoId(Long videoId);
-
-	/**
-	 * Deletes the lastvideolist with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param lastvideolistId the primary key of the lastvideolist
-	 * @return the lastvideolist that was removed
-	 * @throws PortalException if a lastvideolist with the primary key could not be found
-	 */
-	@Indexable(type = IndexableType.DELETE)
-	public Lastvideolist deleteLastvideolist(int lastvideolistId)
-		throws PortalException;
 
 	/**
 	 * Deletes the lastvideolist from the database. Also notifies the appropriate model listeners.
@@ -101,6 +90,17 @@ public interface LastvideolistLocalService
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	public Lastvideolist deleteLastvideolist(Lastvideolist lastvideolist);
+
+	/**
+	 * Deletes the lastvideolist with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param lastvideolistId the primary key of the lastvideolist
+	 * @return the lastvideolist that was removed
+	 * @throws PortalException if a lastvideolist with the primary key could not be found
+	 */
+	@Indexable(type = IndexableType.DELETE)
+	public Lastvideolist deleteLastvideolist(long lastvideolistId)
+		throws PortalException;
 
 	/**
 	 * @throws PortalException
@@ -176,7 +176,7 @@ public interface LastvideolistLocalService
 		DynamicQuery dynamicQuery, Projection projection);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Lastvideolist fetchLastvideolist(int lastvideolistId);
+	public Lastvideolist fetchLastvideolist(long lastvideolistId);
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
@@ -192,7 +192,7 @@ public interface LastvideolistLocalService
 	 * @throws PortalException if a lastvideolist with the primary key could not be found
 	 */
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
-	public Lastvideolist getLastvideolist(int lastvideolistId)
+	public Lastvideolist getLastvideolist(long lastvideolistId)
 		throws PortalException;
 
 	/**

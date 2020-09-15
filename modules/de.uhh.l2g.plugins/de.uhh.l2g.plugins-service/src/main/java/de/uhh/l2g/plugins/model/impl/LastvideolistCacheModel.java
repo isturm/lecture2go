@@ -124,7 +124,7 @@ public class LastvideolistCacheModel
 
 	@Override
 	public void readExternal(ObjectInput objectInput) throws IOException {
-		lastvideolistId = objectInput.readInt();
+		lastvideolistId = objectInput.readLong();
 
 		videoId = objectInput.readLong();
 
@@ -140,7 +140,7 @@ public class LastvideolistCacheModel
 
 	@Override
 	public void writeExternal(ObjectOutput objectOutput) throws IOException {
-		objectOutput.writeInt(lastvideolistId);
+		objectOutput.writeLong(lastvideolistId);
 
 		objectOutput.writeLong(videoId);
 
@@ -161,7 +161,7 @@ public class LastvideolistCacheModel
 		objectOutput.writeLong(modifiedDate);
 	}
 
-	public int lastvideolistId;
+	public long lastvideolistId;
 	public long videoId;
 	public long groupId;
 	public long companyId;

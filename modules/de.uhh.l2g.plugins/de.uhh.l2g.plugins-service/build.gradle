@@ -40,10 +40,15 @@ dependencies {
 	// https://mvnrepository.com/artifact/javax.xml.rpc/javax.xml.rpc-api
 	compile group: 'javax.xml.rpc', name: 'javax.xml.rpc-api', version: '1.1.2'
 
+	// https://mvnrepository.com/artifact/org.jsoup/jsoup
+	compileInclude group: 'org.jsoup', name: 'jsoup', version: '1.13.1'
+	
+	// https://mvnrepository.com/artifact/junit/junit
+	compileInclude group: 'junit', name: 'junit', version: '4.13'
+	
 	compileOnly project(":modules:de.uhh.l2g.plugins:de.uhh.l2g.plugins-api")
 	compileOnly 'commons-lang:commons-lang:2.6'
 	
-	compile 'org.jsoup:jsoup:1.13.1'
 }
 
 buildService {

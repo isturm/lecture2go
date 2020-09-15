@@ -237,6 +237,8 @@ public interface Lectureseries_CategoryLocalService
 	public PersistedModel getPersistedModel(Serializable primaryKeyObj)
 		throws PortalException;
 
+	public boolean removeByLectureseriesId(Long lectureseriesId);
+
 	public void updateCategoryByLectureseriesAndCategory(
 		Long lectureseriesId, Long categoryId, Long newCategoryId);
 

@@ -262,7 +262,7 @@ public class LastvideolistUtil {
 	 * @throws NoSuchLastvideolistException if a lastvideolist with the primary key could not be found
 	 */
 	public static Lastvideolist[] findByVideo_PrevAndNext(
-			int lastvideolistId, long videoId,
+			long lastvideolistId, long videoId,
 			OrderByComparator<Lastvideolist> orderByComparator)
 		throws de.uhh.l2g.plugins.exception.NoSuchLastvideolistException {
 
@@ -427,7 +427,7 @@ public class LastvideolistUtil {
 	 * @throws NoSuchLastvideolistException if a lastvideolist with the primary key could not be found
 	 */
 	public static Lastvideolist[] findByGroup_PrevAndNext(
-			int lastvideolistId, long groupId,
+			long lastvideolistId, long groupId,
 			OrderByComparator<Lastvideolist> orderByComparator)
 		throws de.uhh.l2g.plugins.exception.NoSuchLastvideolistException {
 
@@ -596,7 +596,7 @@ public class LastvideolistUtil {
 	 * @throws NoSuchLastvideolistException if a lastvideolist with the primary key could not be found
 	 */
 	public static Lastvideolist[] findByCompany_PrevAndNext(
-			int lastvideolistId, long companyId,
+			long lastvideolistId, long companyId,
 			OrderByComparator<Lastvideolist> orderByComparator)
 		throws de.uhh.l2g.plugins.exception.NoSuchLastvideolistException {
 
@@ -781,7 +781,7 @@ public class LastvideolistUtil {
 	 * @throws NoSuchLastvideolistException if a lastvideolist with the primary key could not be found
 	 */
 	public static Lastvideolist[] findByGroupAndCompany_PrevAndNext(
-			int lastvideolistId, long groupId, long companyId,
+			long lastvideolistId, long groupId, long companyId,
 			OrderByComparator<Lastvideolist> orderByComparator)
 		throws de.uhh.l2g.plugins.exception.NoSuchLastvideolistException {
 
@@ -834,7 +834,7 @@ public class LastvideolistUtil {
 	 * @param lastvideolistId the primary key for the new lastvideolist
 	 * @return the new lastvideolist
 	 */
-	public static Lastvideolist create(int lastvideolistId) {
+	public static Lastvideolist create(long lastvideolistId) {
 		return getPersistence().create(lastvideolistId);
 	}
 
@@ -845,7 +845,7 @@ public class LastvideolistUtil {
 	 * @return the lastvideolist that was removed
 	 * @throws NoSuchLastvideolistException if a lastvideolist with the primary key could not be found
 	 */
-	public static Lastvideolist remove(int lastvideolistId)
+	public static Lastvideolist remove(long lastvideolistId)
 		throws de.uhh.l2g.plugins.exception.NoSuchLastvideolistException {
 
 		return getPersistence().remove(lastvideolistId);
@@ -862,7 +862,7 @@ public class LastvideolistUtil {
 	 * @return the lastvideolist
 	 * @throws NoSuchLastvideolistException if a lastvideolist with the primary key could not be found
 	 */
-	public static Lastvideolist findByPrimaryKey(int lastvideolistId)
+	public static Lastvideolist findByPrimaryKey(long lastvideolistId)
 		throws de.uhh.l2g.plugins.exception.NoSuchLastvideolistException {
 
 		return getPersistence().findByPrimaryKey(lastvideolistId);
@@ -874,7 +874,7 @@ public class LastvideolistUtil {
 	 * @param lastvideolistId the primary key of the lastvideolist
 	 * @return the lastvideolist, or <code>null</code> if a lastvideolist with the primary key could not be found
 	 */
-	public static Lastvideolist fetchByPrimaryKey(int lastvideolistId) {
+	public static Lastvideolist fetchByPrimaryKey(long lastvideolistId) {
 		return getPersistence().fetchByPrimaryKey(lastvideolistId);
 	}
 

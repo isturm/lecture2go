@@ -165,7 +165,7 @@ public interface LastvideolistPersistence
 	 * @throws NoSuchLastvideolistException if a lastvideolist with the primary key could not be found
 	 */
 	public Lastvideolist[] findByVideo_PrevAndNext(
-			int lastvideolistId, long videoId,
+			long lastvideolistId, long videoId,
 			com.liferay.portal.kernel.util.OrderByComparator<Lastvideolist>
 				orderByComparator)
 		throws NoSuchLastvideolistException;
@@ -308,7 +308,7 @@ public interface LastvideolistPersistence
 	 * @throws NoSuchLastvideolistException if a lastvideolist with the primary key could not be found
 	 */
 	public Lastvideolist[] findByGroup_PrevAndNext(
-			int lastvideolistId, long groupId,
+			long lastvideolistId, long groupId,
 			com.liferay.portal.kernel.util.OrderByComparator<Lastvideolist>
 				orderByComparator)
 		throws NoSuchLastvideolistException;
@@ -451,7 +451,7 @@ public interface LastvideolistPersistence
 	 * @throws NoSuchLastvideolistException if a lastvideolist with the primary key could not be found
 	 */
 	public Lastvideolist[] findByCompany_PrevAndNext(
-			int lastvideolistId, long companyId,
+			long lastvideolistId, long companyId,
 			com.liferay.portal.kernel.util.OrderByComparator<Lastvideolist>
 				orderByComparator)
 		throws NoSuchLastvideolistException;
@@ -604,7 +604,7 @@ public interface LastvideolistPersistence
 	 * @throws NoSuchLastvideolistException if a lastvideolist with the primary key could not be found
 	 */
 	public Lastvideolist[] findByGroupAndCompany_PrevAndNext(
-			int lastvideolistId, long groupId, long companyId,
+			long lastvideolistId, long groupId, long companyId,
 			com.liferay.portal.kernel.util.OrderByComparator<Lastvideolist>
 				orderByComparator)
 		throws NoSuchLastvideolistException;
@@ -646,7 +646,7 @@ public interface LastvideolistPersistence
 	 * @param lastvideolistId the primary key for the new lastvideolist
 	 * @return the new lastvideolist
 	 */
-	public Lastvideolist create(int lastvideolistId);
+	public Lastvideolist create(long lastvideolistId);
 
 	/**
 	 * Removes the lastvideolist with the primary key from the database. Also notifies the appropriate model listeners.
@@ -655,7 +655,7 @@ public interface LastvideolistPersistence
 	 * @return the lastvideolist that was removed
 	 * @throws NoSuchLastvideolistException if a lastvideolist with the primary key could not be found
 	 */
-	public Lastvideolist remove(int lastvideolistId)
+	public Lastvideolist remove(long lastvideolistId)
 		throws NoSuchLastvideolistException;
 
 	public Lastvideolist updateImpl(Lastvideolist lastvideolist);
@@ -667,7 +667,7 @@ public interface LastvideolistPersistence
 	 * @return the lastvideolist
 	 * @throws NoSuchLastvideolistException if a lastvideolist with the primary key could not be found
 	 */
-	public Lastvideolist findByPrimaryKey(int lastvideolistId)
+	public Lastvideolist findByPrimaryKey(long lastvideolistId)
 		throws NoSuchLastvideolistException;
 
 	/**
@@ -676,7 +676,7 @@ public interface LastvideolistPersistence
 	 * @param lastvideolistId the primary key of the lastvideolist
 	 * @return the lastvideolist, or <code>null</code> if a lastvideolist with the primary key could not be found
 	 */
-	public Lastvideolist fetchByPrimaryKey(int lastvideolistId);
+	public Lastvideolist fetchByPrimaryKey(long lastvideolistId);
 
 	/**
 	 * Returns all the lastvideolists.

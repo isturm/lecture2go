@@ -57,27 +57,13 @@ public class LastvideolistLocalServiceUtil {
 	 * @return the new lastvideolist
 	 */
 	public static de.uhh.l2g.plugins.model.Lastvideolist createLastvideolist(
-		int lastvideolistId) {
+		long lastvideolistId) {
 
 		return getService().createLastvideolist(lastvideolistId);
 	}
 
 	public static void deleteByVideoId(Long videoId) {
 		getService().deleteByVideoId(videoId);
-	}
-
-	/**
-	 * Deletes the lastvideolist with the primary key from the database. Also notifies the appropriate model listeners.
-	 *
-	 * @param lastvideolistId the primary key of the lastvideolist
-	 * @return the lastvideolist that was removed
-	 * @throws PortalException if a lastvideolist with the primary key could not be found
-	 */
-	public static de.uhh.l2g.plugins.model.Lastvideolist deleteLastvideolist(
-			int lastvideolistId)
-		throws com.liferay.portal.kernel.exception.PortalException {
-
-		return getService().deleteLastvideolist(lastvideolistId);
 	}
 
 	/**
@@ -90,6 +76,20 @@ public class LastvideolistLocalServiceUtil {
 		de.uhh.l2g.plugins.model.Lastvideolist lastvideolist) {
 
 		return getService().deleteLastvideolist(lastvideolist);
+	}
+
+	/**
+	 * Deletes the lastvideolist with the primary key from the database. Also notifies the appropriate model listeners.
+	 *
+	 * @param lastvideolistId the primary key of the lastvideolist
+	 * @return the lastvideolist that was removed
+	 * @throws PortalException if a lastvideolist with the primary key could not be found
+	 */
+	public static de.uhh.l2g.plugins.model.Lastvideolist deleteLastvideolist(
+			long lastvideolistId)
+		throws com.liferay.portal.kernel.exception.PortalException {
+
+		return getService().deleteLastvideolist(lastvideolistId);
 	}
 
 	/**
@@ -189,7 +189,7 @@ public class LastvideolistLocalServiceUtil {
 	}
 
 	public static de.uhh.l2g.plugins.model.Lastvideolist fetchLastvideolist(
-		int lastvideolistId) {
+		long lastvideolistId) {
 
 		return getService().fetchLastvideolist(lastvideolistId);
 	}
@@ -215,7 +215,7 @@ public class LastvideolistLocalServiceUtil {
 	 * @throws PortalException if a lastvideolist with the primary key could not be found
 	 */
 	public static de.uhh.l2g.plugins.model.Lastvideolist getLastvideolist(
-			int lastvideolistId)
+			long lastvideolistId)
 		throws com.liferay.portal.kernel.exception.PortalException {
 
 		return getService().getLastvideolist(lastvideolistId);

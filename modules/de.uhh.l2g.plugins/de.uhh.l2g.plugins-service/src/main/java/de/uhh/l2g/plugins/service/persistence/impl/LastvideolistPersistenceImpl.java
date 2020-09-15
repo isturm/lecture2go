@@ -367,7 +367,7 @@ public class LastvideolistPersistenceImpl
 	 */
 	@Override
 	public Lastvideolist[] findByVideo_PrevAndNext(
-			int lastvideolistId, long videoId,
+			long lastvideolistId, long videoId,
 			OrderByComparator<Lastvideolist> orderByComparator)
 		throws NoSuchLastvideolistException {
 
@@ -865,7 +865,7 @@ public class LastvideolistPersistenceImpl
 	 */
 	@Override
 	public Lastvideolist[] findByGroup_PrevAndNext(
-			int lastvideolistId, long groupId,
+			long lastvideolistId, long groupId,
 			OrderByComparator<Lastvideolist> orderByComparator)
 		throws NoSuchLastvideolistException {
 
@@ -1368,7 +1368,7 @@ public class LastvideolistPersistenceImpl
 	 */
 	@Override
 	public Lastvideolist[] findByCompany_PrevAndNext(
-			int lastvideolistId, long companyId,
+			long lastvideolistId, long companyId,
 			OrderByComparator<Lastvideolist> orderByComparator)
 		throws NoSuchLastvideolistException {
 
@@ -1899,7 +1899,7 @@ public class LastvideolistPersistenceImpl
 	 */
 	@Override
 	public Lastvideolist[] findByGroupAndCompany_PrevAndNext(
-			int lastvideolistId, long groupId, long companyId,
+			long lastvideolistId, long groupId, long companyId,
 			OrderByComparator<Lastvideolist> orderByComparator)
 		throws NoSuchLastvideolistException {
 
@@ -2129,7 +2129,7 @@ public class LastvideolistPersistenceImpl
 		setModelClass(Lastvideolist.class);
 
 		setModelImplClass(LastvideolistImpl.class);
-		setModelPKClass(int.class);
+		setModelPKClass(long.class);
 		setEntityCacheEnabled(LastvideolistModelImpl.ENTITY_CACHE_ENABLED);
 	}
 
@@ -2233,7 +2233,7 @@ public class LastvideolistPersistenceImpl
 	 * @return the new lastvideolist
 	 */
 	@Override
-	public Lastvideolist create(int lastvideolistId) {
+	public Lastvideolist create(long lastvideolistId) {
 		Lastvideolist lastvideolist = new LastvideolistImpl();
 
 		lastvideolist.setNew(true);
@@ -2252,7 +2252,7 @@ public class LastvideolistPersistenceImpl
 	 * @throws NoSuchLastvideolistException if a lastvideolist with the primary key could not be found
 	 */
 	@Override
-	public Lastvideolist remove(int lastvideolistId)
+	public Lastvideolist remove(long lastvideolistId)
 		throws NoSuchLastvideolistException {
 
 		return remove((Serializable)lastvideolistId);
@@ -2562,7 +2562,7 @@ public class LastvideolistPersistenceImpl
 	 * @throws NoSuchLastvideolistException if a lastvideolist with the primary key could not be found
 	 */
 	@Override
-	public Lastvideolist findByPrimaryKey(int lastvideolistId)
+	public Lastvideolist findByPrimaryKey(long lastvideolistId)
 		throws NoSuchLastvideolistException {
 
 		return findByPrimaryKey((Serializable)lastvideolistId);
@@ -2575,7 +2575,7 @@ public class LastvideolistPersistenceImpl
 	 * @return the lastvideolist, or <code>null</code> if a lastvideolist with the primary key could not be found
 	 */
 	@Override
-	public Lastvideolist fetchByPrimaryKey(int lastvideolistId) {
+	public Lastvideolist fetchByPrimaryKey(long lastvideolistId) {
 		return fetchByPrimaryKey((Serializable)lastvideolistId);
 	}
 

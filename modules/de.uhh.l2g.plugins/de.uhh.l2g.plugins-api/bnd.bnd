@@ -8,5 +8,16 @@ Export-Package: \
 	de.uhh.l2g.plugins.service,\
 	de.uhh.l2g.plugins.service.persistence,\
 	de.uhh.l2g.plugins.util,\
-	de.uhh.l2g.plugins.exception
+	de.uhh.l2g.plugins.exception,\
+	com.josephoconnell.html,\
+	de.uhh.l2g.plugins.exception,\
+	de.uhh.l2g.plugins.model,\
+	de.uhh.l2g.plugins.service,\
+	de.uhh.l2g.plugins.service.persistence,\
+	de.uhh.l2g.plugins.util
 Web-ContextPath: /de.uhh.l2g.plugins-api
+Import-Package: \
+	,!*junit*,\
+	,!*http*,\
+	,\
+	*
