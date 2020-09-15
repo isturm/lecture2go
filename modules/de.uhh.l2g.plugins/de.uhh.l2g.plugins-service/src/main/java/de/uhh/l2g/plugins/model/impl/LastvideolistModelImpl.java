@@ -14,6 +14,8 @@
 
 package de.uhh.l2g.plugins.model.impl;
 
+import com.liferay.expando.kernel.model.ExpandoBridge;
+import com.liferay.expando.kernel.util.ExpandoBridgeFactoryUtil;
 import com.liferay.petra.string.StringBundler;
 import com.liferay.portal.kernel.bean.AutoEscapeBeanHandler;
 import com.liferay.portal.kernel.exception.PortalException;
@@ -21,6 +23,7 @@ import com.liferay.portal.kernel.model.CacheModel;
 import com.liferay.portal.kernel.model.ModelWrapper;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.model.impl.BaseModelImpl;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.GetterUtil;
 import com.liferay.portal.kernel.util.ProxyUtil;
@@ -65,7 +68,7 @@ public class LastvideolistModelImpl
 	public static final String TABLE_NAME = "LG_Lastvideolist";
 
 	public static final Object[][] TABLE_COLUMNS = {
-		{"lastvideolistId", Types.INTEGER}, {"videoId", Types.BIGINT},
+		{"lastvideolistId", Types.BIGINT}, {"videoId", Types.BIGINT},
 		{"groupId", Types.BIGINT}, {"companyId", Types.BIGINT},
 		{"userId", Types.BIGINT}, {"userName", Types.VARCHAR},
 		{"createDate", Types.TIMESTAMP}, {"modifiedDate", Types.TIMESTAMP}
@@ -75,7 +78,7 @@ public class LastvideolistModelImpl
 		new HashMap<String, Integer>();
 
 	static {
-		TABLE_COLUMNS_MAP.put("lastvideolistId", Types.INTEGER);
+		TABLE_COLUMNS_MAP.put("lastvideolistId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("videoId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("groupId", Types.BIGINT);
 		TABLE_COLUMNS_MAP.put("companyId", Types.BIGINT);
@@ -86,7 +89,7 @@ public class LastvideolistModelImpl
 	}
 
 	public static final String TABLE_SQL_CREATE =
-		"create table LG_Lastvideolist (lastvideolistId INTEGER not null primary key,videoId LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null)";
+		"create table LG_Lastvideolist (lastvideolistId LONG not null primary key,videoId LONG,groupId LONG,companyId LONG,userId LONG,userName VARCHAR(75) null,createDate DATE null,modifiedDate DATE null)";
 
 	public static final String TABLE_SQL_DROP = "drop table LG_Lastvideolist";
 
@@ -133,12 +136,12 @@ public class LastvideolistModelImpl
 	}
 
 	@Override
-	public int getPrimaryKey() {
+	public long getPrimaryKey() {
 		return _lastvideolistId;
 	}
 
 	@Override
-	public void setPrimaryKey(int primaryKey) {
+	public void setPrimaryKey(long primaryKey) {
 		setLastvideolistId(primaryKey);
 	}
 
@@ -149,7 +152,7 @@ public class LastvideolistModelImpl
 
 	@Override
 	public void setPrimaryKeyObj(Serializable primaryKeyObj) {
-		setPrimaryKey(((Integer)primaryKeyObj).intValue());
+		setPrimaryKey(((Long)primaryKeyObj).longValue());
 	}
 
 	@Override
@@ -260,8 +263,7 @@ public class LastvideolistModelImpl
 			"lastvideolistId", Lastvideolist::getLastvideolistId);
 		attributeSetterBiConsumers.put(
 			"lastvideolistId",
-			(BiConsumer<Lastvideolist, Integer>)
-				Lastvideolist::setLastvideolistId);
+			(BiConsumer<Lastvideolist, Long>)Lastvideolist::setLastvideolistId);
 		attributeGetterFunctions.put("videoId", Lastvideolist::getVideoId);
 		attributeSetterBiConsumers.put(
 			"videoId",
@@ -300,12 +302,12 @@ public class LastvideolistModelImpl
 	}
 
 	@Override
-	public int getLastvideolistId() {
+	public long getLastvideolistId() {
 		return _lastvideolistId;
 	}
 
 	@Override
-	public void setLastvideolistId(int lastvideolistId) {
+	public void setLastvideolistId(long lastvideolistId) {
 		_lastvideolistId = lastvideolistId;
 	}
 
@@ -447,6 +449,19 @@ public class LastvideolistModelImpl
 	}
 
 	@Override
+	public ExpandoBridge getExpandoBridge() {
+		return ExpandoBridgeFactoryUtil.getExpandoBridge(
+			getCompanyId(), Lastvideolist.class.getName(), getPrimaryKey());
+	}
+
+	@Override
+	public void setExpandoBridgeAttributes(ServiceContext serviceContext) {
+		ExpandoBridge expandoBridge = getExpandoBridge();
+
+		expandoBridge.setAttributes(serviceContext);
+	}
+
+	@Override
 	public Lastvideolist toEscapedModel() {
 		if (_escapedModel == null) {
 			Function<InvocationHandler, Lastvideolist>
@@ -481,7 +496,7 @@ public class LastvideolistModelImpl
 
 	@Override
 	public int compareTo(Lastvideolist lastvideolist) {
-		int primaryKey = lastvideolist.getPrimaryKey();
+		long primaryKey = lastvideolist.getPrimaryKey();
 
 		if (getPrimaryKey() < primaryKey) {
 			return -1;
@@ -506,7 +521,7 @@ public class LastvideolistModelImpl
 
 		Lastvideolist lastvideolist = (Lastvideolist)object;
 
-		int primaryKey = lastvideolist.getPrimaryKey();
+		long primaryKey = lastvideolist.getPrimaryKey();
 
 		if (getPrimaryKey() == primaryKey) {
 			return true;
@@ -518,7 +533,7 @@ public class LastvideolistModelImpl
 
 	@Override
 	public int hashCode() {
-		return getPrimaryKey();
+		return (int)getPrimaryKey();
 	}
 
 	@Override
@@ -669,7 +684,7 @@ public class LastvideolistModelImpl
 
 	}
 
-	private int _lastvideolistId;
+	private long _lastvideolistId;
 	private long _videoId;
 	private long _originalVideoId;
 	private boolean _setOriginalVideoId;

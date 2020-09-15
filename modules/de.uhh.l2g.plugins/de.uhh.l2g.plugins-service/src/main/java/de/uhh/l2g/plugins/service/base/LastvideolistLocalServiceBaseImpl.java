@@ -134,7 +134,7 @@ public abstract class LastvideolistLocalServiceBaseImpl
 	 */
 	@Override
 	@Transactional(enabled = false)
-	public Lastvideolist createLastvideolist(int lastvideolistId) {
+	public Lastvideolist createLastvideolist(long lastvideolistId) {
 		return lastvideolistPersistence.create(lastvideolistId);
 	}
 
@@ -147,7 +147,7 @@ public abstract class LastvideolistLocalServiceBaseImpl
 	 */
 	@Indexable(type = IndexableType.DELETE)
 	@Override
-	public Lastvideolist deleteLastvideolist(int lastvideolistId)
+	public Lastvideolist deleteLastvideolist(long lastvideolistId)
 		throws PortalException {
 
 		return lastvideolistPersistence.remove(lastvideolistId);
@@ -253,7 +253,7 @@ public abstract class LastvideolistLocalServiceBaseImpl
 	}
 
 	@Override
-	public Lastvideolist fetchLastvideolist(int lastvideolistId) {
+	public Lastvideolist fetchLastvideolist(long lastvideolistId) {
 		return lastvideolistPersistence.fetchByPrimaryKey(lastvideolistId);
 	}
 
@@ -265,7 +265,7 @@ public abstract class LastvideolistLocalServiceBaseImpl
 	 * @throws PortalException if a lastvideolist with the primary key could not be found
 	 */
 	@Override
-	public Lastvideolist getLastvideolist(int lastvideolistId)
+	public Lastvideolist getLastvideolist(long lastvideolistId)
 		throws PortalException {
 
 		return lastvideolistPersistence.findByPrimaryKey(lastvideolistId);

@@ -56,7 +56,7 @@ public class LastvideolistWrapper
 
 	@Override
 	public void setModelAttributes(Map<String, Object> attributes) {
-		Integer lastvideolistId = (Integer)attributes.get("lastvideolistId");
+		Long lastvideolistId = (Long)attributes.get("lastvideolistId");
 
 		if (lastvideolistId != null) {
 			setLastvideolistId(lastvideolistId);
@@ -141,7 +141,7 @@ public class LastvideolistWrapper
 	 * @return the lastvideolist ID of this lastvideolist
 	 */
 	@Override
-	public int getLastvideolistId() {
+	public long getLastvideolistId() {
 		return model.getLastvideolistId();
 	}
 
@@ -161,7 +161,7 @@ public class LastvideolistWrapper
 	 * @return the primary key of this lastvideolist
 	 */
 	@Override
-	public int getPrimaryKey() {
+	public long getPrimaryKey() {
 		return model.getPrimaryKey();
 	}
 
@@ -246,7 +246,7 @@ public class LastvideolistWrapper
 	 * @param lastvideolistId the lastvideolist ID of this lastvideolist
 	 */
 	@Override
-	public void setLastvideolistId(int lastvideolistId) {
+	public void setLastvideolistId(long lastvideolistId) {
 		model.setLastvideolistId(lastvideolistId);
 	}
 
@@ -266,7 +266,7 @@ public class LastvideolistWrapper
 	 * @param primaryKey the primary key of this lastvideolist
 	 */
 	@Override
-	public void setPrimaryKey(int primaryKey) {
+	public void setPrimaryKey(long primaryKey) {
 		model.setPrimaryKey(primaryKey);
 	}
 

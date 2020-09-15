@@ -271,6 +271,10 @@ public class Lectureseries_CategoryLocalServiceUtil {
 		return getService().getPersistedModel(primaryKeyObj);
 	}
 
+	public static boolean removeByLectureseriesId(Long lectureseriesId) {
+		return getService().removeByLectureseriesId(lectureseriesId);
+	}
+
 	public static void updateCategoryByLectureseriesAndCategory(
 		Long lectureseriesId, Long categoryId, Long newCategoryId) {
 

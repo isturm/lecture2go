@@ -119,7 +119,7 @@
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="companyId" type="com.liferay.portal.dao.orm.hibernate.LongType" />
 	</class>
 	<class name="de.uhh.l2g.plugins.model.impl.LastvideolistImpl" table="LG_Lastvideolist">
-		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="lastvideolistId" type="int">
+		<id access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="lastvideolistId" type="long">
 			<generator class="assigned" />
 		</id>
 		<property access="com.liferay.portal.dao.orm.hibernate.LiferayPropertyAccessor" name="videoId" type="com.liferay.portal.dao.orm.hibernate.LongType" />

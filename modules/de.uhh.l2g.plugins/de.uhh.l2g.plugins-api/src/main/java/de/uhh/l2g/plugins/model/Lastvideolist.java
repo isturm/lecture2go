@@ -36,17 +36,17 @@ public interface Lastvideolist extends LastvideolistModel, PersistedModel {
 	 *
 	 * Never modify this interface directly. Add methods to <code>de.uhh.l2g.plugins.model.impl.LastvideolistImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
-	public static final Accessor<Lastvideolist, Integer>
-		LASTVIDEOLIST_ID_ACCESSOR = new Accessor<Lastvideolist, Integer>() {
+	public static final Accessor<Lastvideolist, Long>
+		LASTVIDEOLIST_ID_ACCESSOR = new Accessor<Lastvideolist, Long>() {
 
 			@Override
-			public Integer get(Lastvideolist lastvideolist) {
+			public Long get(Lastvideolist lastvideolist) {
 				return lastvideolist.getLastvideolistId();
 			}
 
 			@Override
-			public Class<Integer> getAttributeClass() {
-				return Integer.class;
+			public Class<Long> getAttributeClass() {
+				return Long.class;
 			}
 
 			@Override

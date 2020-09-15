@@ -77,7 +77,7 @@ create table LG_Institution_Host (
 );
 
 create table LG_Lastvideolist (
-	lastvideolistId INTEGER not null primary key,
+	lastvideolistId LONG not null primary key,
 	videoId LONG,
 	groupId LONG,
 	companyId LONG,

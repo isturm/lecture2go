@@ -137,6 +137,19 @@ public class SegmentLocalServiceImpl extends SegmentLocalServiceBaseImpl {
 		 segmentPersistence.removeByVideo(videoId);
 	}
 	
+	/**
+	 * Adds the segment to the database and generates thumb nail. Also notifies the appropriate model listeners.
+	 *
+	 * @param segment the segment
+	 * @return the segment that was added
+	 * @throws SystemException if a system exception occurred
+	 */
+	public Segment createSegment(Segment segment) throws SystemException, PortalException{
+		Segment s = SegmentLocalServiceUtil.addSegment(segment);
+		Segment sNew = getSegmentById(s.getPrimaryKey());
+		return sNew;
+	}
+	
 	public Segment removeSegment(Long segmentId) throws SystemException, PortalException{
 		Segment s = SegmentLocalServiceUtil.deleteSegment(segmentId);
 		//delete thumb nails
