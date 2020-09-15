@@ -326,8 +326,7 @@
     </entity>
     <entity name="Lastvideolist" local-service="true"
     	remote-service="false">
-    	<column name="lastvideolistId" type="int" primary="true"
-    		>
+    	<column name="lastvideolistId" type="long" primary="true">
     	</column>
     	<column name="videoId" type="long"></column>
     	<column name="groupId" type="long"></column>
