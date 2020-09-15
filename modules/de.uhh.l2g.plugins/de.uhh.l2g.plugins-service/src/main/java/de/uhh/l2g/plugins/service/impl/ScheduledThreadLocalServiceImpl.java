@@ -14,8 +14,6 @@
 
 package de.uhh.l2g.plugins.service.impl;
 
-import java.util.Date;
-
 import com.liferay.portal.kernel.exception.PortalException;
 import com.liferay.portal.kernel.exception.SystemException;
 import com.liferay.portal.kernel.model.User;
@@ -67,15 +65,6 @@ public class ScheduledThreadLocalServiceImpl
 	
 	public ScheduledThread addScheduledThread(String schedulerClassName, String cronText, ServiceContext serviceContext) throws SystemException, PortalException {
 
-		long groupId = serviceContext.getScopeGroupId();
-		long userId = serviceContext.getUserId();
-		long companyId = serviceContext.getCompanyId();
-		
-		User user = userPersistence.findByPrimaryKey(userId);
-		
-		Date now = new Date();
-
-
 		long scheduleId = counterLocalService.increment(ScheduledThread.class.getName());
 
 		ScheduledThread schedule = scheduledThreadPersistence.create(scheduleId);
@@ -107,11 +96,6 @@ public class ScheduledThreadLocalServiceImpl
 	
 	public ScheduledThread updateScheduledThread(String schedulerClassName, String cronText, ServiceContext serviceContext) throws SystemException, PortalException {
 
-		long companyId = serviceContext.getCompanyId();
-		long groupId = serviceContext.getScopeGroupId();
-		long userId = serviceContext.getUserId();
-
-		User user = userPersistence.findByPrimaryKey(userId);
 		//LOG.info("Update: " +schedulerClassName +" "+cronText);
 		//Date now = new Date();
 
