@@ -5,5 +5,7 @@ Export-Package: \
 	de.uhh.l2g.plugins.util,\
 	de.uhh.l2g.plugins.admin.scheduler.portlet,\
 	de.uhh.l2g.plugins.admin.scheduler.constants
-Import-Package: *
+Import-Package: \
+	,!*http*,\
+	*
 Private-Package: de.uhh.l2g.plugins.util

@@ -12,5 +12,5 @@ Export-Package: \
 	
 	
 Import-Package: \
-	!org.apache.*,\
+	!*http*,\
 	*
