@@ -11,6 +11,7 @@ import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 public class Lecture2GoRoleChecker extends RoleLocalServiceUtil {
 	
 	private  boolean producer = false;
+	private  boolean producerPending = false;
 	private  boolean coordinator = false;
 	private  boolean l2gAdmin = false;
 	
@@ -21,6 +22,7 @@ public class Lecture2GoRoleChecker extends RoleLocalServiceUtil {
 			l2gAdmin = isL2gAdmin(remoteUser);
 			coordinator = isCoordinator(remoteUser);
 			producer = isProducer(remoteUser);
+			producerPending = isProducerPending(remoteUser);
 			if (l2gAdmin) {
 				coordinator = false;
 				producer = false;
@@ -56,6 +58,25 @@ public class Lecture2GoRoleChecker extends RoleLocalServiceUtil {
 
 	public void setL2gAdmin(boolean l2gAdmin) {
 		this.l2gAdmin = l2gAdmin;
+	}
+
+	public  boolean isProducerPending(User user) {
+		List<Role> rL = new ArrayList<Role>();
+		try {
+			rL = user.getRoles();
+		} catch (SystemException e) {
+			////e.printStackTrace();
+		}
+		for (Role role : rL) if(role.getName().equals("L2Go Producer Pending"))producerPending=true;
+		return producerPending;
+	}
+	
+	public boolean isProducerPending() {
+		return producerPending;
+	}
+
+	public void setProducerPending(boolean producerPending) {
+		this.producerPending = producerPending;
 	}
 
 	public  boolean isProducer(User user) {
