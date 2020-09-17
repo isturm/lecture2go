@@ -17,10 +17,13 @@ import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
 import com.liferay.portal.kernel.service.RoleLocalServiceUtil;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
+import com.liferay.portal.kernel.util.PropsUtil;
 
 import de.uhh.l2g.plugins.admin.roles.constants.AdminRolesPortletKeys;
 import de.uhh.l2g.plugins.admin.roles.search.UserDisplayTerms;
 import de.uhh.l2g.plugins.admin.roles.search.UserSearchContainer;
+import de.uhh.l2g.plugins.model.Institution;
+import de.uhh.l2g.plugins.service.InstitutionLocalServiceUtil;
 import de.uhh.l2g.plugins.util.Lecture2GoRoleChecker;
 import com.liferay.portal.kernel.model.Role;;
 
@@ -48,7 +51,7 @@ public class ViewListMVCRenderCommand implements MVCRenderCommand {
 		
 		//portletURL
 		PortletURL portletURL = renderResponse.createRenderURL();
-		portletURL.setParameter("roleId", roleId.toString() );
+		portletURL.addProperty("roleId", roleId.toString());
 
 		//
 		UserSearchContainer userSearchContainer = new UserSearchContainer(renderRequest, portletURL);	
@@ -62,8 +65,8 @@ public class ViewListMVCRenderCommand implements MVCRenderCommand {
 		PortletURL backURL = portletURL;
 		String delta = ParamUtil.getString(renderRequest, "delta");
 		String cur = ParamUtil.getString(renderRequest, "cur");
-		backURL.setParameter("delta", delta);
-		backURL.setParameter("cur", cur);
+		backURL.addProperty("delta", delta);
+		backURL.addProperty("cur", cur);
 		//
 		User remoteUser = UserLocalServiceUtil.createUser(0);
 		//
@@ -81,6 +84,7 @@ public class ViewListMVCRenderCommand implements MVCRenderCommand {
 		boolean permissionAdmin = l2goRole.isL2gAdmin();
 		boolean permissionCoordinator = l2goRole.isCoordinator();
 		boolean permissionProducer = l2goRole.isProducer();
+		boolean permissionProducerPending = l2goRole.isProducerPending();
 		
 		// prepare l2go roles
 		List<Role> l2goRoles = new ArrayList<Role>();
@@ -97,10 +101,14 @@ public class ViewListMVCRenderCommand implements MVCRenderCommand {
 		if(roleId>0) user = UserLocalServiceUtil.getRoleUsers(roleId);
 		else user = UserLocalServiceUtil.getCompanyUsers(remoteUser.getCompanyId(), com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS, com.liferay.portal.kernel.dao.orm.QueryUtil.ALL_POS);
 		
+		String articleId = PropsUtil.get("lecture2go.producer.pending.articleId");
+		List<Institution> institutions = InstitutionLocalServiceUtil.getForProducerPending();
+
 		//initialize all view variables		
 		renderRequest.setAttribute("permissionAdmin", permissionAdmin);
 		renderRequest.setAttribute("permissionCoordinator", permissionCoordinator);
 		renderRequest.setAttribute("permissionProducer", permissionProducer);
+		renderRequest.setAttribute("permissionProducerPending", permissionProducerPending);
 		renderRequest.setAttribute("roleId", roleId);
 		renderRequest.setAttribute("portletURL", portletURL);
 		renderRequest.setAttribute("backURL", backURL);
@@ -110,6 +118,9 @@ public class ViewListMVCRenderCommand implements MVCRenderCommand {
 		renderRequest.setAttribute("userSearchContainer", userSearchContainer);
 		renderRequest.setAttribute("displayTerms", displayTerms);
 		renderRequest.setAttribute("keywords", keywords);
+
+		renderRequest.setAttribute("articleId", articleId);
+		renderRequest.setAttribute("institutions", institutions);
 		
 		//
 		
