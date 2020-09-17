@@ -1,0 +1,6 @@
+Bundle-Name: de.uhh.l2g.plugins.hook.login
+Bundle-SymbolicName: de.uhh.l2g.plugins.hook.login
+Bundle-Version: 1.0.0
+Import-Package: \
+	!*http*,\
+	*

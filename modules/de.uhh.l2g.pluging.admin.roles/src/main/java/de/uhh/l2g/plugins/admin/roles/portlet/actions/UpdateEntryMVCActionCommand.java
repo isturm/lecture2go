@@ -172,7 +172,7 @@ public class UpdateEntryMVCActionCommand implements MVCActionCommand {
 		return ret;
 	}
 	
-	private void deleteL2GoRole(String n, User u) throws PortalException, SystemException{
+	public void deleteL2GoRole(String n, User u) throws PortalException, SystemException{
 		Role r = RoleLocalServiceUtil.getRole(u.getCompanyId(), n);
 		RoleLocalServiceUtil.deleteUserRole(u.getUserId(), r);
 		UserLocalServiceUtil.deleteRoleUser(r.getRoleId(), u.getUserId());		
@@ -192,7 +192,7 @@ public class UpdateEntryMVCActionCommand implements MVCActionCommand {
 		}
 	}
 
-	private void handleProducerRequest(User user, Long producerInstitutionId) throws NumberFormatException, PortalException, SystemException, IOException {
+	public void handleProducerRequest(User user, Long producerInstitutionId) throws NumberFormatException, PortalException, SystemException, IOException {
 		Producer p = ProducerLocalServiceUtil.createProducer(0);
 		//initialize producer
 		try {
@@ -221,6 +221,8 @@ public class UpdateEntryMVCActionCommand implements MVCActionCommand {
 			ProducerLocalServiceUtil.updateProducer(p);				
 			// finaly add role to user
 			addL2GoRole(AdminRolesPortletKeys.L2G_PRODUCER, user);
+			//remove producer pending
+			deleteL2GoRole(AdminRolesPortletKeys.L2G_PRODUCER_PENDING,user);
 			UserLocalServiceUtil.addRoleUser(RoleLocalServiceUtil.getRole(user.getCompanyId(), AdminRolesPortletKeys.L2G_PRODUCER).getRoleId(), user.getUserId());	
 		}else{
 			_log.error("system permission error!");

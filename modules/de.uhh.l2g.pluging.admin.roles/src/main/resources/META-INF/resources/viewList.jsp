@@ -18,16 +18,13 @@
 
 <c:choose>
 	<c:when test = "${permissionProducerPending}">
-		<portlet:actionURL name="editRole" var="editURL">
-			<portlet:param name="userId" value='${userId}'/>
-			<portlet:param name="backURL" value="/"/>
-		</portlet:actionURL>
+		<portlet:actionURL name="/panding" var="updateURL"/>
 		
 		<div id="pending-producer-text">
 			<liferay-ui:message key="pending-producer-note"/>
 		</div>
 		
-		<aui:form action="${editURL}" method="post">
+		<aui:form action="${updateURL}" method="post">
 			<aui:fieldset helpMessage="" column="true">
 					<div id="metadata-upload">
 						<c:if test='${permissionProducerPending}'>
@@ -39,6 +36,7 @@
 								</aui:select>
 						</c:if>
 						<aui:input type="hidden" name="isStud" value="false"/>				
+						<aui:input type="hidden" name="userId" value="${userId}"/>				
 					
 						<aui:button-row>
 				      		<aui:button type="submit" name="submit"/>
