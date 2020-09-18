@@ -151,7 +151,7 @@ public class ProzessManager {
 				VideoLocalServiceUtil.updateVideo(video);
 				
 				// publish the video to the OAI-PMH repository
-				//TODO oaipmh integration OaiPmhManager.publish(video.getVideoId());
+				OaiPmhManager.publish(video.getVideoId());
 			}
 		} catch (Exception e) {}
 		
@@ -235,7 +235,7 @@ public class ProzessManager {
 			VideoLocalServiceUtil.updateVideo(video);
 			
 			// unpublish the video from the OAI-PMH repository
-			//TODO oaipmh integration OaiPmhManager.unpublish(video.getVideoId());
+			OaiPmhManager.unpublish(video.getVideoId());
 		
 			String videoSPreffix = video.getSPreffix();
 			//for images
@@ -398,7 +398,7 @@ public class ProzessManager {
 		}
 		
 		// unpublish the video from the OAI-PMH repository
-		//TODO oai pmh implementation OaiPmhManager.unpublish(video.getVideoId());
+		OaiPmhManager.unpublish(video.getVideoId());
 		
 		//delete physical files 
 		String videoPreffix = "";
