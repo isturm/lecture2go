@@ -16,6 +16,7 @@ import org.osgi.service.component.annotations.Component;
 	property = {
 		"com.liferay.portlet.display-category=lecture2go.plugins",
 		"com.liferay.portlet.instanceable=false",
+		"com.liferay.portlet.header-portlet-javascript=/js/de.uhh.l2g.admin.roles.js",
 		"javax.portlet.display-name=Admin Roles",
 		"javax.portlet.init-param.template-path=/",
 		"javax.portlet.init-param.view-template=/viewList.jsp",

@@ -14,7 +14,7 @@ import de.uhh.l2g.plugins.model.OaiSet;
 import de.uhh.l2g.plugins.service.persistence.OaiSetFinder;
  
 
-public class OaiSetFinderImpl extends BasePersistenceImpl<OaiSet> implements OaiSetFinder {
+public class OaiSetFinderImpl extends OaiSetFinderBaseImpl implements OaiSetFinder {
 	public static final String FIND_BY_OAI_RECORD = OaiSetFinder.class.getName() + ".findByOaiRecord";
 	
 	@ServiceReference(type = CustomSQL.class)

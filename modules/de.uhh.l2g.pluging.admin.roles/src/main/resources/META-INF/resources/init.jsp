@@ -25,6 +25,8 @@
 <%@ page import="de.uhh.l2g.plugins.admin.roles.util.TextManager"%>
 <%@ page import="de.uhh.l2g.plugins.admin.roles.search.UserSearchHelper"%>
 
+<%@ page import="de.uhh.l2g.plugins.model.Institution" %>
+
 <liferay-theme:defineObjects />
 
 <portlet:defineObjects />

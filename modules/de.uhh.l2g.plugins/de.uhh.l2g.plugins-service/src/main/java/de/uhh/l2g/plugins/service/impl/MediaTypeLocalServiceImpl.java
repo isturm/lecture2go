@@ -15,7 +15,12 @@
 package de.uhh.l2g.plugins.service.impl;
 
 import com.liferay.portal.kernel.exception.PortalException;
+import com.liferay.portal.kernel.exception.SystemException;
+import com.liferay.portal.kernel.log.Log;
+import com.liferay.portal.kernel.log.LogFactoryUtil;
+
 import de.uhh.l2g.plugins.model.MediaType;
+import de.uhh.l2g.plugins.model.Video;
 import de.uhh.l2g.plugins.service.base.MediaTypeLocalServiceBaseImpl;
 
 import java.util.ArrayList;
@@ -41,6 +46,20 @@ public class MediaTypeLocalServiceImpl extends MediaTypeLocalServiceBaseImpl {
 	 * Never reference this class directly. Use <code>de.uhh.l2g.plugins.service.MediaTypeLocalService</code> via injection or a <code>org.osgi.util.tracker.ServiceTracker</code> or use <code>de.uhh.l2g.plugins.service.MediaTypeLocalServiceUtil</code>.
 	 */
 
+	protected static Log LOG = LogFactoryUtil.getLog(Video.class.getName());
+
+	public MediaType addMediaType(MediaType object){
+		Long id;
+		try {
+			id = counterLocalService.increment(MediaType.class.getName());
+			object.setPrimaryKey(id);
+			super.addMediaType(object);
+		} catch (SystemException e) {
+			LOG.error("can't add new object with id " + object.getPrimaryKey() + "!");
+		}
+		return object;
+	}
+	
 	@Override
 	public List<MediaType> getMediaTypesFromVideoIds(ArrayList<Long> videoIds) {
 		ArrayList<MediaType> mediaTypes = new ArrayList<>();
