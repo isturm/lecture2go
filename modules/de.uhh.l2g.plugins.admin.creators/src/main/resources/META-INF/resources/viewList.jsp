@@ -100,8 +100,12 @@
                 </portlet:actionURL>
 
                 <liferay-ui:search-container-column-text>
+                
                     <c:set var="lectserCreators"
                            value="<%=Lectureseries_CreatorLocalServiceUtil.getByCreator(creator.getCreatorId())%>"/>
+                    
+                    <div class="admin-title">${creator.fullName}</div>
+                    
                     <c:forEach items="${lectserCreators}" var="lecre" varStatus="status">
 
                         <c:set var="lecrId" value="${lecre.lectureseriesId}"/>
@@ -109,9 +113,8 @@
                                value="<%=LectureseriesLocalServiceUtil.getLectureseries((Long)pageContext.getAttribute("lecrId"))%>"/>
                         <c:set var="term"
                                value="<%=TermLocalServiceUtil.getById(LectureseriesLocalServiceUtil.getLectureseries((Long)pageContext.getAttribute("lecrId")).getTermId())%>"/>
-                        <div class="admin-title"><c:out value="${lectureseries.name} - ${term.prefix} ${term.year}"/></div>
+                        <div class="admin-subtitle"><c:out value="${lectureseries.name} - ${term.prefix} ${term.year}"/></div>
                     </c:forEach>
-                    <div class="admin-subtitle">${creator.fullName}</div>
                     <c:set var="videoCreators"
                            value="<%=Video_CreatorLocalServiceUtil.getByCreator(creator.getCreatorId())%>"/>
                     <div class="video-creators">

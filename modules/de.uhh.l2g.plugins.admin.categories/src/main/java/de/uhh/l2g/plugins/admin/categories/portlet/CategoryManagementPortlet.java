@@ -27,6 +27,7 @@ import com.liferay.portal.kernel.util.ParamUtil;
 import de.uhh.l2g.plugins.admin.categories.constants.CategoryManagementPortletKeys;
 import de.uhh.l2g.plugins.model.Category;
 import de.uhh.l2g.plugins.service.CategoryLocalServiceUtil;
+import de.uhh.l2g.plugins.util.OaiPmhManager;
 
 /**
  * @author isturm
@@ -132,6 +133,9 @@ public class CategoryManagementPortlet extends MVCPortlet {
 			category.setUserName(user.getScreenName());
 			//
 			CategoryLocalServiceUtil.updateCategory(category);
+			
+			// update the datestamp of all OAIRecords linked to the changed category
+			OaiPmhManager.modifyByCategory(reqCategoryId);
 		} catch (Exception e) {
 			_log.error("Unable to update category.");
 			SessionErrors.add(request, e.getClass().getName());

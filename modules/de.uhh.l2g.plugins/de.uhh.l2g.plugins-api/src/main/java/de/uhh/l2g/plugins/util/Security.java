@@ -1,5 +1,7 @@
 package de.uhh.l2g.plugins.util;
 
+import com.liferay.portal.kernel.util.PropsUtil;
+
 /***************************************************************************
  * The Lecture2Go software is based on the liferay portal 6.1.1 
  * <http://www.liferay.com>
@@ -35,6 +37,11 @@ package de.uhh.l2g.plugins.util;
 
 import java.math.BigInteger;
 import java.util.Base64;
+
+import javax.crypto.Mac;
+import javax.crypto.spec.SecretKeySpec;
+
+import org.apache.commons.codec.binary.Hex;
 
 /**
  * The Class Security.
@@ -147,6 +154,44 @@ public class Security {
 		if (p_sString == null || p_sString.equals("")) return null;
 		byte[] decoded = Base64.getDecoder().decode(p_sString);
 		return new String(decoded.toString());
+	}
+	
+	
+	/**
+	 * Hash algorithm (copy from s3 handling)
+	 * @param data
+	 * @param key
+	 * @return
+	 * @throws Exception
+	 */
+	public static byte[] HmacSHA256(String data, byte[] key) throws Exception {
+	    String algorithm="HmacSHA256";
+	    Mac mac = Mac.getInstance(algorithm);
+	    mac.init(new SecretKeySpec(key, algorithm));
+	    return mac.doFinal(data.getBytes("UTF-8"));
+	}
+	
+	/**
+	 * Hex encode (copy from s3 handling)
+	 * @param signer
+	 * @return
+	 */
+	public static String getSignatureKey(byte[] signer) {
+		return new String(Hex.encodeHex(signer));
+	}
+
+	/**
+	 * Hash the datestamp and message to sign (copy from s3 handling)
+	 * @param dateStamp
+	 * @param toSign
+	 * @return
+	 * @throws Exception
+	 */
+	public static byte[] getSignatureKey(String dateStamp, String toSign) throws Exception {
+	    byte[] kSecret = (PropsUtil.get("lecture2go.fileupload.secret")).getBytes("UTF-8");
+	    byte[] kDate = HmacSHA256(dateStamp, kSecret);
+	    byte[] dataSigning = HmacSHA256(toSign, kDate);
+	    return dataSigning;
 	}
 
 }

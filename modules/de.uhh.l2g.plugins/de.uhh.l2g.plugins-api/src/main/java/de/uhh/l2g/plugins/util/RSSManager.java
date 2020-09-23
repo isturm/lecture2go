@@ -362,6 +362,8 @@ public class RSSManager {
 	public void createRssFile(List<Video> videoList, String type) throws IOException, PortalException, SystemException {
 		Log LOG = LogFactoryUtil.getLog(RSSManager.class.getName());
 		
+		XmlUtil xmlUtil = new XmlUtil();
+		
 		// prepare the publication date (the current time) in RFC-822 date-time format
 		SimpleDateFormat formatter = new SimpleDateFormat("EEE, dd MMM yyyy HH:mm:ss Z", Locale.ENGLISH);
 		formatter.setTimeZone(TimeZone.getTimeZone("CET"));
@@ -400,7 +402,7 @@ public class RSSManager {
 				Lectureseries lec = LectureseriesLocalServiceUtil.getLectureseries(videoList.get(0).getLectureseriesId());
 				// replace empty description value with real description if there is any (all html tags removed)
 				if (!(lec.getLongDesc().isEmpty())) {
-					description = lec.getLongDesc().replaceAll("\\<[^>]*>","");
+					description = xmlUtil.cleanInvalidXmlCharacters(lec.getLongDesc().replaceAll("\\<[^>]*>",""));
 				}
 			} catch (Exception e) {
 			}
@@ -427,7 +429,7 @@ public class RSSManager {
 			rootElement.appendChild(channelElement);
 			// title
 			Element titleElement = doc.createElement("title");
-			titleElement.setTextContent(title);
+			titleElement.setTextContent(xmlUtil.cleanInvalidXmlCharacters(title));
 			channelElement.appendChild(titleElement);
 			// link
 			Element linkElement = doc.createElement("link");

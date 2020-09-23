@@ -25,10 +25,12 @@
             <aui:row>
                 <aui:col>
                     <div class="inputs">
-                        <aui:input name="jobTitle" value="${creator.jobTitle}" type="text" label="job-title"/>
+                        <aui:input name="jobTitle" value="${creator.jobTitle}" type="text" label="job-title" helpMessage="job-title-help-text"/>
                         <aui:input name="firstName" value="${creator.firstName}" type="text" label="first-name"/>
                         <aui:input name="middleName" value="${creator.middleName}" type="text" label="middle-name"/>
                         <aui:input name="lastName" value="${creator.lastName}" type="text" label="last-name"/>
+                        <aui:input name="affiliation" value="${creator.affiliation}" type="text" label="affiliation" helpMessage="institution-of-creator-explanation"/>
+                        <aui:input name="orcidId" value="${creator.orcidId}" type="text" label="orcid-id" helpMessage="orcid-explanation"/>
                         <aui:input name="creatorId" value="${creator.creatorId}" type="hidden"/>
                     </div>
                 </aui:col>
