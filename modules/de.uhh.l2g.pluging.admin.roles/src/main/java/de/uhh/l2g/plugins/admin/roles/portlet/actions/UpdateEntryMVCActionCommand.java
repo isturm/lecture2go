@@ -194,17 +194,22 @@ public class UpdateEntryMVCActionCommand implements MVCActionCommand {
 
 	public void handleProducerRequest(User user, Long producerInstitutionId) throws NumberFormatException, PortalException, SystemException, IOException {
 		Producer p = ProducerLocalServiceUtil.createProducer(0);
+		boolean existingProducer = false;
 		//initialize producer
 		try {
 			p = ProducerLocalServiceUtil.getProducer(user.getUserId());
+			existingProducer = true;
 		} catch (Exception e) {
 			p.setProducerId(user.getUserId());
 		}
 		// save role to l2go producer table
 		p.setInstitutionId(producerInstitutionId);
 		p.setApproved(1);
-		// home directory 
-		p.setHomeDir(user.getScreenName());
+		// home directory
+		if (!existingProducer) {
+			// only set home directory for new producers
+			p.setHomeDir(user.getScreenName());
+		}
 		p.setIdNum(user.getScreenName());
 		// repository for producer
 		Host h = HostLocalServiceUtil.createHost(0);

@@ -33,6 +33,13 @@ public class Video_MediaTypeLocalServiceWrapper
 		_video_MediaTypeLocalService = video_MediaTypeLocalService;
 	}
 
+	@Override
+	public de.uhh.l2g.plugins.model.Video_MediaType addMediaType(
+		de.uhh.l2g.plugins.model.Video_MediaType object) {
+
+		return _video_MediaTypeLocalService.addMediaType(object);
+	}
+
 	/**
 	 * Adds the video_ media type to the database. Also notifies the appropriate model listeners.
 	 *

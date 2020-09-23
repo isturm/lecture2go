@@ -20,6 +20,7 @@
 <jsp:useBean id="terms" type="java.util.List<de.uhh.l2g.plugins.model.Term>" scope="request"/>
 <jsp:useBean id="mediaTypes" type="java.util.List<de.uhh.l2g.plugins.model.MediaType>" scope="request"/>
 <jsp:useBean id="categories" type="java.util.List<de.uhh.l2g.plugins.model.Category>" scope="request"/>
+<jsp:useBean id="producersSubInstitutions" type="java.util.List<de.uhh.l2g.plugins.model.Institution>" scope="request"/>
 <jsp:useBean id="uploadRepository" type="java.lang.String" scope="request"/>
 <jsp:useBean id="imageRepository" type="java.lang.String" scope="request"/>
 <jsp:useBean id="backURL" type="java.lang.String" scope="request"/>
@@ -148,12 +149,11 @@
 	                </aui:select>
 	
 	                <div id="options">
-	                    <aui:select id="subInstitutionId" size="1" name="subInstitutionId"
-	                                label="sub-institution">
+	                    <aui:select id="subInstitutionId" size="1" name="subInstitutionId" label="sub-institution">
 	                        <aui:option value="" selected="true"><liferay-ui:message
 	                                key="select-sub-institution"/></aui:option>
-	                        <c:forEach items="${reqSubInstitutions}" var="item">
-	                            <aui:option value='${item.institutionId}'>${item.institutionId}</aui:option>
+	                        <c:forEach items="${producersSubInstitutions}" var="item">
+	                            <aui:option value='${item.institutionId}'>${item.name}</aui:option>
 	                        </c:forEach>
 	                    </aui:select>
 	
@@ -161,10 +161,8 @@
 	                        <c:forEach items="${reqSubInstitutions}" var="item">
 	                            <div id='${item.institutionId}'>
 	                                    ${item.institutionId} &nbsp;&nbsp;&nbsp;
-	                                <a class="icon-large icon-remove" style='cursor:pointer;'
-	                                   onClick='document.getElementById("${item.institutionId}").remove();'></a>
-	                                <aui:input type="hidden" name="institutions" id="institutions"
-	                                           value="${item.institutionId}"/>
+	                                <a class="icon-large icon-remove" style='cursor:pointer;' onClick='document.getElementById("${item.institutionId}").remove();'></a>
+	                                <aui:input type="hidden" name="institutions" id="institutions" value="${item.institutionId}"/>
 	                            </div>
 	                        </c:forEach>
 	                    </div>

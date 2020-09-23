@@ -191,6 +191,18 @@ public class OaiSetLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static java.util.List<de.uhh.l2g.plugins.model.OaiSet> getAll()
+		throws com.liferay.portal.kernel.exception.SystemException {
+
+		return getService().getAll();
+	}
+
+	public static java.util.List<de.uhh.l2g.plugins.model.OaiSet>
+		getByOaiRecordId(long oaiRecordId) {
+
+		return getService().getByOaiRecordId(oaiRecordId);
+	}
+
 	public static
 		com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 			getIndexableActionableDynamicQuery() {

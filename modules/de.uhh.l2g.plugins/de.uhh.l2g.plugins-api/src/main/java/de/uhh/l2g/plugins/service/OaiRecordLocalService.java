@@ -30,10 +30,12 @@ import com.liferay.portal.kernel.transaction.Propagation;
 import com.liferay.portal.kernel.transaction.Transactional;
 import com.liferay.portal.kernel.util.OrderByComparator;
 
+import de.uhh.l2g.plugins.exception.NoSuchOaiRecordException;
 import de.uhh.l2g.plugins.model.OaiRecord;
 
 import java.io.Serializable;
 
+import java.util.Date;
 import java.util.List;
 
 import org.osgi.annotation.versioning.ProviderType;
@@ -177,6 +179,29 @@ public interface OaiRecordLocalService
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public ActionableDynamicQuery getActionableDynamicQuery();
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<OaiRecord> getByCategory(Long categoryId)
+		throws NoSuchOaiRecordException, SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<OaiRecord> getByCreator(Long creatorId)
+		throws NoSuchOaiRecordException, SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public OaiRecord getByIdentifier(String identifier)
+		throws NoSuchOaiRecordException, SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public List<OaiRecord> getByLectureseries(Long lectureseriesId)
+		throws NoSuchOaiRecordException, SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public OaiRecord getByVideo(Long videoId)
+		throws NoSuchOaiRecordException, SystemException;
+
+	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
+	public Date getEarliestDatestamp();
 
 	@Transactional(propagation = Propagation.SUPPORTS, readOnly = true)
 	public IndexableActionableDynamicQuery getIndexableActionableDynamicQuery();

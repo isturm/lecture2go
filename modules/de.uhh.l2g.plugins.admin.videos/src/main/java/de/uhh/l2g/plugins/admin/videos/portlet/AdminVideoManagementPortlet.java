@@ -148,8 +148,7 @@ public class AdminVideoManagementPortlet extends MVCPortlet {
 	}
 
 	@Override
-	public void render(RenderRequest renderRequest, RenderResponse renderResponse)
-			throws IOException, PortletException {
+	public void render(RenderRequest renderRequest, RenderResponse renderResponse) throws IOException, PortletException {
 		String mvcPath = ParamUtil.getString(renderRequest, "mvcPath");
 		String backURL = ParamUtil.getString(renderRequest, "backURL");
 
@@ -192,13 +191,13 @@ public class AdminVideoManagementPortlet extends MVCPortlet {
 		// if coordinator, producer or lecture series clicked,
 		// add to portlet url
 		if (coordinatorId > 0)
-			portletURL.setParameter("coordinatorId", coordinatorId.toString());
+			portletURL.addProperty("coordinatorId", coordinatorId.toString());
 		if (producerId > 0)
-			portletURL.setParameter("producerId", producerId.toString());
+			portletURL.addProperty("producerId", producerId.toString());
 		if (lectureseriesId > 0)
-			portletURL.setParameter("lectureseriesId", lectureseriesId.toString());
+			portletURL.addProperty("lectureseriesId", lectureseriesId.toString());
 		if (mediaTypeId > 0)
-			portletURL.setParameter("mediaTypeId", String.valueOf(mediaTypeId));
+			portletURL.addProperty("mediaTypeId", String.valueOf(mediaTypeId));
 		// detail all possible view variables
 		Long videoId = ParamUtil.getLong(renderRequest, "videoId", 0);
 		AtomicBoolean is360Video = new AtomicBoolean(false);
@@ -243,6 +242,7 @@ public class AdminVideoManagementPortlet extends MVCPortlet {
 		Host host = HostLocalServiceUtil.createHost(0);
 		String uploadRepository = "";
 		JSONArray assignedCreators = JSONFactoryUtil.createJSONArray();
+
 
 		Locale locale = renderRequest.getLocale();
 		ResourceBundle resourceBundle = ResourceBundleUtil.getBundle("content.Language", locale, getClass());
@@ -450,12 +450,14 @@ public class AdminVideoManagementPortlet extends MVCPortlet {
 
 			// creators
 			assignedCreators = CreatorLocalServiceUtil.getJSONCreatorsByVideoId(reqVideo.getVideoId());
+			
 		}
 
 		// assign to render request and response finally
 		renderRequest.setAttribute("uploadRepository", uploadRepository);
 		renderRequest.setAttribute("imageRepository", PropsUtil.get("lecture2go.images.system.path"));
 		renderRequest.setAttribute("reqHost", host);
+		renderRequest.setAttribute("producersSubInstitutions", producersSubInstitutions);
 		renderRequest.setAttribute("terms", terms);
 		renderRequest.setAttribute("mediaTypes", mediaTypes);
 		renderRequest.setAttribute("categories", categories);
@@ -499,13 +501,13 @@ public class AdminVideoManagementPortlet extends MVCPortlet {
 		reqMetadata = MetadataLocalServiceUtil.addMetadata(reqMetadata);
 
 		// lecture series
-		Long lectureseriesId = new Long(request.getParameter("lectureseriesId"));
+		Long lectureseriesId = ParamUtil.getLong(request, "lectureseriesId",0);
 
 		// media type
-		long mediaTypeId = new Long(request.getParameter("mediaTypeId"));
+		long mediaTypeId =  ParamUtil.getLong(request, "mediaTypeId",0);
 
 		// forward to the render method
-		response.setRenderParameter("lectureseriesId", lectureseriesId + "");
+		response.addProperty("lectureseriesId", lectureseriesId + "");
 		//
 		Lectureseries reqLectureseries = LectureseriesLocalServiceUtil.createLectureseries(0);
 		try {
@@ -519,11 +521,11 @@ public class AdminVideoManagementPortlet extends MVCPortlet {
 		}
 
 		// producer
-		Long producerId = new Long(request.getParameter("producerId"));
+		Long producerId = ParamUtil.getLong(request, "producerId",0); 
 		Producer reqProducer = ProducerLocalServiceUtil.createProducer(0);
 		reqProducer = (Producer) ProducerLocalServiceUtil.getProdUcer(producerId);
 		// forward to the render method
-		response.setRenderParameter("producerId", producerId + "");
+		response.addProperty("producerId", producerId + "");
 		//
 		// video
 		Video newVideo = VideoLocalServiceUtil.createVideo(0);
@@ -543,7 +545,7 @@ public class AdminVideoManagementPortlet extends MVCPortlet {
 		// save it
 		Video video = VideoLocalServiceUtil.addVideo(newVideo);
 		// forward to the render method
-		response.setRenderParameter("videoId", video.getVideoId() + "");
+		response.addProperty("videoId", video.getVideoId() + "");
 
 		// update uploads for producer
 		Producer p = ProducerLocalServiceUtil.createProducer(0);
@@ -609,9 +611,9 @@ public class AdminVideoManagementPortlet extends MVCPortlet {
 		// add tags to tag cloud
 		TagcloudLocalServiceUtil.generateForVideo(video.getVideoId());
 		//
-		String backURL = request.getParameter("backURL");
-		response.setRenderParameter("backURL", backURL);
-		response.setRenderParameter("mvcPath", "/viewEdit.jsp");
+		String backURL = ParamUtil.getString(request, "backURL",""); 
+		response.addProperty("backURL", backURL);
+		response.addProperty("mvcPath", "/viewEdit.jsp");
 	}
 
 	public void serveResource(ResourceRequest resourceRequest, ResourceResponse resourceResponse)

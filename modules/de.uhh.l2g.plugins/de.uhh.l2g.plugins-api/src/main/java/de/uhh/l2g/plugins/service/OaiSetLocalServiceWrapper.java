@@ -194,6 +194,20 @@ public class OaiSetLocalServiceWrapper
 	}
 
 	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.OaiSet> getAll()
+		throws com.liferay.portal.kernel.exception.SystemException {
+
+		return _oaiSetLocalService.getAll();
+	}
+
+	@Override
+	public java.util.List<de.uhh.l2g.plugins.model.OaiSet> getByOaiRecordId(
+		long oaiRecordId) {
+
+		return _oaiSetLocalService.getByOaiRecordId(oaiRecordId);
+	}
+
+	@Override
 	public com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 		getIndexableActionableDynamicQuery() {
 

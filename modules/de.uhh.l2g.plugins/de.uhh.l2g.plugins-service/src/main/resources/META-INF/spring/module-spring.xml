@@ -43,10 +43,12 @@
 	<bean class="de.uhh.l2g.plugins.service.persistence.impl.MetadataPersistenceImpl" id="de.uhh.l2g.plugins.service.persistence.MetadataPersistence" />
 	<bean class="de.uhh.l2g.plugins.service.impl.OaiRecordLocalServiceImpl" id="de.uhh.l2g.plugins.service.OaiRecordLocalService" />
 	<bean class="de.uhh.l2g.plugins.service.persistence.impl.OaiRecordPersistenceImpl" id="de.uhh.l2g.plugins.service.persistence.OaiRecordPersistence" />
+	<bean class="de.uhh.l2g.plugins.service.persistence.impl.OaiRecordFinderImpl" id="de.uhh.l2g.plugins.service.persistence.OaiRecordFinder" />
 	<bean class="de.uhh.l2g.plugins.service.impl.OaiRecord_OaiSetLocalServiceImpl" id="de.uhh.l2g.plugins.service.OaiRecord_OaiSetLocalService" />
 	<bean class="de.uhh.l2g.plugins.service.persistence.impl.OaiRecord_OaiSetPersistenceImpl" id="de.uhh.l2g.plugins.service.persistence.OaiRecord_OaiSetPersistence" />
 	<bean class="de.uhh.l2g.plugins.service.impl.OaiSetLocalServiceImpl" id="de.uhh.l2g.plugins.service.OaiSetLocalService" />
 	<bean class="de.uhh.l2g.plugins.service.persistence.impl.OaiSetPersistenceImpl" id="de.uhh.l2g.plugins.service.persistence.OaiSetPersistence" />
+	<bean class="de.uhh.l2g.plugins.service.persistence.impl.OaiSetFinderImpl" id="de.uhh.l2g.plugins.service.persistence.OaiSetFinder" />
 	<bean class="de.uhh.l2g.plugins.service.impl.OfficeLocalServiceImpl" id="de.uhh.l2g.plugins.service.OfficeLocalService" />
 	<bean class="de.uhh.l2g.plugins.service.persistence.impl.OfficePersistenceImpl" id="de.uhh.l2g.plugins.service.persistence.OfficePersistence" />
 	<bean class="de.uhh.l2g.plugins.service.impl.ProducerLocalServiceImpl" id="de.uhh.l2g.plugins.service.ProducerLocalService" />

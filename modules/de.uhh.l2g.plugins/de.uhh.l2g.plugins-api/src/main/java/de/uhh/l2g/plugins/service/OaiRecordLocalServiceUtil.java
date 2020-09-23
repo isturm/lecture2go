@@ -196,6 +196,49 @@ public class OaiRecordLocalServiceUtil {
 		return getService().getActionableDynamicQuery();
 	}
 
+	public static java.util.List<de.uhh.l2g.plugins.model.OaiRecord>
+			getByCategory(Long categoryId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			   de.uhh.l2g.plugins.exception.NoSuchOaiRecordException {
+
+		return getService().getByCategory(categoryId);
+	}
+
+	public static java.util.List<de.uhh.l2g.plugins.model.OaiRecord>
+			getByCreator(Long creatorId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			   de.uhh.l2g.plugins.exception.NoSuchOaiRecordException {
+
+		return getService().getByCreator(creatorId);
+	}
+
+	public static de.uhh.l2g.plugins.model.OaiRecord getByIdentifier(
+			String identifier)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			   de.uhh.l2g.plugins.exception.NoSuchOaiRecordException {
+
+		return getService().getByIdentifier(identifier);
+	}
+
+	public static java.util.List<de.uhh.l2g.plugins.model.OaiRecord>
+			getByLectureseries(Long lectureseriesId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			   de.uhh.l2g.plugins.exception.NoSuchOaiRecordException {
+
+		return getService().getByLectureseries(lectureseriesId);
+	}
+
+	public static de.uhh.l2g.plugins.model.OaiRecord getByVideo(Long videoId)
+		throws com.liferay.portal.kernel.exception.SystemException,
+			   de.uhh.l2g.plugins.exception.NoSuchOaiRecordException {
+
+		return getService().getByVideo(videoId);
+	}
+
+	public static java.util.Date getEarliestDatestamp() {
+		return getService().getEarliestDatestamp();
+	}
+
 	public static
 		com.liferay.portal.kernel.dao.orm.IndexableActionableDynamicQuery
 			getIndexableActionableDynamicQuery() {

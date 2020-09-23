@@ -61,6 +61,7 @@ public interface Video_MediaTypeLocalService
 	 *
 	 * Never modify or reference this interface directly. Always use {@link Video_MediaTypeLocalServiceUtil} to access the video_ media type local service. Add custom service methods to <code>de.uhh.l2g.plugins.service.impl.Video_MediaTypeLocalServiceImpl</code> and rerun ServiceBuilder to automatically copy the method declarations to this interface.
 	 */
+	public Video_MediaType addMediaType(Video_MediaType object);
 
 	/**
 	 * Adds the video_ media type to the database. Also notifies the appropriate model listeners.

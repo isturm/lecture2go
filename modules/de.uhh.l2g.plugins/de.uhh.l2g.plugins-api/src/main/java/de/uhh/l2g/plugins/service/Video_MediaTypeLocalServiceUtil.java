@@ -37,6 +37,11 @@ public class Video_MediaTypeLocalServiceUtil {
 	 *
 	 * Never modify this class directly. Add custom service methods to <code>de.uhh.l2g.plugins.service.impl.Video_MediaTypeLocalServiceImpl</code> and rerun ServiceBuilder to regenerate this class.
 	 */
+	public static de.uhh.l2g.plugins.model.Video_MediaType addMediaType(
+		de.uhh.l2g.plugins.model.Video_MediaType object) {
+
+		return getService().addMediaType(object);
+	}
 
 	/**
 	 * Adds the video_ media type to the database. Also notifies the appropriate model listeners.
