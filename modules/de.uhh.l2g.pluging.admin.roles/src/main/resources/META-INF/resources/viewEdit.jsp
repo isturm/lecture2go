@@ -11,9 +11,9 @@
 <jsp:useBean id="reqUserId" type="java.lang.Long" scope="request"/>
 
 <portlet:actionURL name="/update" var="updateURL"/>
-
+<div id="title"></div><liferay-ui:message  key="l2go-roles-for"/> ${title}</div>
 <aui:form action="${updateURL}" method="post">
-    <aui:fieldset helpMessage="" column="true" label='${title}'>
+    <aui:fieldset helpMessage="" column="true">
         <div class="edit-user">
             <div>
                <span class="edit-label col-6"><liferay-ui:message  key="set-coordinator-for-institution"/></span>

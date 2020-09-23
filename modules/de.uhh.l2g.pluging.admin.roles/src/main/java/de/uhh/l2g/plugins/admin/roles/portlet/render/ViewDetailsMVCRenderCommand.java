@@ -2,6 +2,7 @@ package de.uhh.l2g.plugins.admin.roles.portlet.render;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
 
 import javax.portlet.PortletException;
 import javax.portlet.RenderRequest;
@@ -14,6 +15,7 @@ import com.liferay.portal.kernel.log.Log;
 import com.liferay.portal.kernel.log.LogFactoryUtil;
 import com.liferay.portal.kernel.model.User;
 import com.liferay.portal.kernel.portlet.bridges.mvc.MVCRenderCommand;
+import com.liferay.portal.kernel.service.ServiceContext;
 import com.liferay.portal.kernel.service.UserLocalServiceUtil;
 import com.liferay.portal.kernel.util.ParamUtil;
 
@@ -101,7 +103,7 @@ public class ViewDetailsMVCRenderCommand implements MVCRenderCommand {
 			// _log.error("producer can't be fatched for the user id "+reqUserId+" !");
 		}
 		
-		String title = LanguageUtil.get(remoteUser.getLocale(), "l2go-roles-for")+" "+reqUser.getFullName();
+		String title = reqUser.getFullName();
 		
 		renderRequest.setAttribute("cInstitutions", cInstitutions);
 		renderRequest.setAttribute("allInstitutions", allInstitutions);
