@@ -26,4 +26,6 @@ Export-Package: \
 	
 Import-Package: \
 	!*http*,\
+	,!*codec*,\
+	,!*amazonaws*,\
 	*

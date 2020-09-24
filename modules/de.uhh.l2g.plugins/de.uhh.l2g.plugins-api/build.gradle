@@ -28,8 +28,8 @@ dependencies {
     
 	compileOnly 'javax.portlet:portlet-api:3.0.0'
 	
-	compile group: 'com.amazonaws', name: 'aws-java-sdk-core', version: '1.11.864'
-	compile group: 'com.amazonaws', name: 'aws-java-sdk-s3', version: '1.11.864'
-	compile group: 'com.amazonaws', name: 'aws-java-sdk-kms', version: '1.11.864'
+	// https://mvnrepository.com/artifact/com.amazonaws/aws-java-sdk-osgi
+	compile group: 'com.amazonaws', name: 'aws-java-sdk-osgi', version: '1.11.867'
+	
 	
 }

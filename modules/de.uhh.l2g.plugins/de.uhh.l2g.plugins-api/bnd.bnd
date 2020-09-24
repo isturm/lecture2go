@@ -19,5 +19,6 @@ Web-ContextPath: /de.uhh.l2g.plugins-api
 Import-Package: \
 	,!*junit*,\
 	,!*http*,\
-	,\
+	,!*codec*,\
+	,!*amazonaws*,\
 	*
