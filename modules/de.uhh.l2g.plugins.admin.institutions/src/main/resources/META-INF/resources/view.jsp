@@ -30,7 +30,7 @@
 						<aui:input name="institution" label="institution" required="true" inlineField="true"/>
 		            		<aui:select name="hostId" id="select-streamer" label="streaming-server-name">
 								<c:forEach items="${hostList}" var="host">
-									<aui:option label="${host.name}" value="${host.hostId}"/>
+									<aui:option label="${host.name}" value="${host.name}"/>
 								</c:forEach>
 						    </aui:select>
 					    <aui:input name='parent' type='hidden' inlineField="true" value='${root.institutionId}'/>
